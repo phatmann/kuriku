@@ -1,0 +1,87 @@
+//
+//  JournalViewController.m
+//  Kuriku
+//
+//  Created by Tony Mann on 12/11/13.
+//  Copyright (c) 2013 7Actions. All rights reserved.
+//
+
+#import "JournalViewController.h"
+#import "Entry.h"
+#import "EntryCell.h"
+#import <InnerBand/InnerBand.h>
+
+@interface JournalViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@end
+
+@implementation JournalViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //[self.tableView registerClass:[EntryCell class] forCellReuseIdentifier:@"EntryCell"];
+    [self performFetch];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+    
+- (void)performFetch {
+    NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createDate" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:fetchRequest
+                                     managedObjectContext:context
+                                     sectionNameKeyPath:@"createDate"
+                                     cacheName:nil];
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+}
+    
+#pragma mark - Table View Delegate
+    
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [[self.fetchedResultsController sections] count];
+}
+    
+- (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
+    if ([[self.fetchedResultsController sections] count] > 0) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+        return [sectionInfo numberOfObjects];
+    }
+    
+    return 0;
+}
+    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    EntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EntryCell" forIndexPath:indexPath];
+    Entry *entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.titleLabel.text = entry.title;
+    return cell;
+}
+    
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if ([[self.fetchedResultsController sections] count] > 0) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+        return [sectionInfo name];
+    }
+    
+    return nil;
+}
+    
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return [self.fetchedResultsController sectionIndexTitles];
+}
+    
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+}
+
+
+@end

@@ -1,0 +1,10 @@
+PODS:
+  - InnerBand (1.0.6)
+
+DEPENDENCIES:
+  - InnerBand
+
+SPEC CHECKSUMS:
+  InnerBand: 35a7b4f965322f75449a5d5d9329d07725a77abb
+
+COCOAPODS: 0.28.0

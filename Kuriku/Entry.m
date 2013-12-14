@@ -8,7 +8,7 @@
 
 #import "Entry.h"
 #import "Journal.h"
-
+#import <InnerBand/InnerBand.h>
 
 @implementation Entry
 
@@ -17,7 +17,15 @@
 @dynamic urgency;
 @dynamic dueDate;
 @dynamic startDate;
+@dynamic createDate;
 @dynamic star;
 @dynamic journal;
 
+- (void)awakeFromInsert {
+    [super awakeFromInsert];
+    
+    self.createDate = [[NSDate date] dateAsMidnight];
+    self.journal = [Journal first];
+}
+    
 @end

@@ -7,12 +7,20 @@
 //
 
 #import "KurikuAppDelegate.h"
+#import <InnerBand/InnerBand.h>
+#import "Journal.h"
 
 @implementation KurikuAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    Journal *journal = [Journal first];
+    
+    if (!journal) {
+        journal = [Journal create];
+        [[IBCoreDataStore mainStore] save];
+    }
+    
     return YES;
 }
 							

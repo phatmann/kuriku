@@ -1,5 +1,5 @@
 //
-//  KSecondViewController.h
+//  KTodoViewController.h
 //  Kuriku
 //
 //  Created by Tony Mann on 12/11/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DiscoverViewController : UIViewController
+@interface TodoViewController : UIViewController
 
 @end

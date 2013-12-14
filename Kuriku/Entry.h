@@ -13,11 +13,12 @@
 
 @interface Entry : NSManagedObject
 
-@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString *title;
 @property (nonatomic) int16_t importance;
 @property (nonatomic) int16_t urgency;
-@property (nonatomic) NSTimeInterval dueDate;
-@property (nonatomic) NSTimeInterval startDate;
+@property (nonatomic) NSDate *dueDate;
+@property (nonatomic) NSDate *startDate;
+@property (nonatomic) NSDate *createDate;
 @property (nonatomic) BOOL star;
 @property (nonatomic, retain) Journal *journal;
 

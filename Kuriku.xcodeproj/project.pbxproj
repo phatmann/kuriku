@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BEDA4BF7CDB24C2E98718580 /* libPods-Kuriku.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F11D2E34FF94EF8A9986734 /* libPods-Kuriku.a */; };
+		EA89E74E185C074600643266 /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EntryViewController.m */; };
+		EA89E750185C136400643266 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA89E74F185C136400643266 /* CoreData.framework */; };
+		EA89E753185C15A300643266 /* EntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E752185C15A300643266 /* EntryCell.m */; };
 		EAAC95501858F7D400E8BAB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC954F1858F7D400E8BAB5 /* Foundation.framework */; };
 		EAAC95521858F7D400E8BAB5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC95511858F7D400E8BAB5 /* CoreGraphics.framework */; };
 		EAAC95541858F7D400E8BAB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC95531858F7D400E8BAB5 /* UIKit.framework */; };
@@ -16,7 +20,7 @@
 		EAAC95631858F7D400E8BAB5 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAC95611858F7D400E8BAB5 /* Main_iPhone.storyboard */; };
 		EAAC95661858F7D400E8BAB5 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */; };
 		EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC95681858F7D400E8BAB5 /* JournalViewController.m */; };
-		EAAC956C1858F7D400E8BAB5 /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC956B1858F7D400E8BAB5 /* DiscoverViewController.m */; };
+		EAAC956C1858F7D400E8BAB5 /* TodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */; };
 		EAAC956E1858F7D400E8BAB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAAC956D1858F7D400E8BAB5 /* Images.xcassets */; };
 		EAAC95751858F7D400E8BAB5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC95741858F7D400E8BAB5 /* XCTest.framework */; };
 		EAAC95761858F7D400E8BAB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC954F1858F7D400E8BAB5 /* Foundation.framework */; };
@@ -39,6 +43,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kuriku.xcconfig"; path = "Pods/Pods-Kuriku.xcconfig"; sourceTree = "<group>"; };
+		9F11D2E34FF94EF8A9986734 /* libPods-Kuriku.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Kuriku.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA89E74C185C074600643266 /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
+		EA89E74D185C074600643266 /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
+		EA89E74F185C136400643266 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		EA89E751185C15A300643266 /* EntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryCell.h; sourceTree = "<group>"; };
+		EA89E752185C15A300643266 /* EntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryCell.m; sourceTree = "<group>"; };
 		EAAC954C1858F7D400E8BAB5 /* Kuriku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kuriku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAAC954F1858F7D400E8BAB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EAAC95511858F7D400E8BAB5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,8 +64,8 @@
 		EAAC95651858F7D400E8BAB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		EAAC95671858F7D400E8BAB5 /* JournalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JournalViewController.h; sourceTree = "<group>"; };
 		EAAC95681858F7D400E8BAB5 /* JournalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JournalViewController.m; sourceTree = "<group>"; };
-		EAAC956A1858F7D400E8BAB5 /* DiscoverViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscoverViewController.h; sourceTree = "<group>"; };
-		EAAC956B1858F7D400E8BAB5 /* DiscoverViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscoverViewController.m; sourceTree = "<group>"; };
+		EAAC956A1858F7D400E8BAB5 /* TodoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodoViewController.h; sourceTree = "<group>"; };
+		EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoViewController.m; sourceTree = "<group>"; };
 		EAAC956D1858F7D400E8BAB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EAAC95731858F7D400E8BAB5 /* KurikuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KurikuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAAC95741858F7D400E8BAB5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -73,9 +84,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA89E750185C136400643266 /* CoreData.framework in Frameworks */,
 				EAAC95521858F7D400E8BAB5 /* CoreGraphics.framework in Frameworks */,
 				EAAC95541858F7D400E8BAB5 /* UIKit.framework in Frameworks */,
 				EAAC95501858F7D400E8BAB5 /* Foundation.framework in Frameworks */,
+				BEDA4BF7CDB24C2E98718580 /* libPods-Kuriku.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +112,7 @@
 				EAAC957A1858F7D400E8BAB5 /* KurikuTests */,
 				EAAC954E1858F7D400E8BAB5 /* Frameworks */,
 				EAAC954D1858F7D400E8BAB5 /* Products */,
+				21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,10 +128,12 @@
 		EAAC954E1858F7D400E8BAB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA89E74F185C136400643266 /* CoreData.framework */,
 				EAAC954F1858F7D400E8BAB5 /* Foundation.framework */,
 				EAAC95511858F7D400E8BAB5 /* CoreGraphics.framework */,
 				EAAC95531858F7D400E8BAB5 /* UIKit.framework */,
 				EAAC95741858F7D400E8BAB5 /* XCTest.framework */,
+				9F11D2E34FF94EF8A9986734 /* libPods-Kuriku.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,14 +141,18 @@
 		EAAC95551858F7D400E8BAB5 /* Kuriku */ = {
 			isa = PBXGroup;
 			children = (
-				EAAC955E1858F7D400E8BAB5 /* KurikuAppDelegate.h */,
-				EAAC955F1858F7D400E8BAB5 /* KurikuAppDelegate.m */,
 				EAAC95611858F7D400E8BAB5 /* Main_iPhone.storyboard */,
 				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
+				EAAC955E1858F7D400E8BAB5 /* KurikuAppDelegate.h */,
+				EAAC955F1858F7D400E8BAB5 /* KurikuAppDelegate.m */,
 				EAAC95671858F7D400E8BAB5 /* JournalViewController.h */,
 				EAAC95681858F7D400E8BAB5 /* JournalViewController.m */,
-				EAAC956A1858F7D400E8BAB5 /* DiscoverViewController.h */,
-				EAAC956B1858F7D400E8BAB5 /* DiscoverViewController.m */,
+				EAAC956A1858F7D400E8BAB5 /* TodoViewController.h */,
+				EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */,
+				EA89E74C185C074600643266 /* EntryViewController.h */,
+				EA89E74D185C074600643266 /* EntryViewController.m */,
+				EA89E751185C15A300643266 /* EntryCell.h */,
+				EA89E752185C15A300643266 /* EntryCell.m */,
 				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
 				EAAC95561858F7D400E8BAB5 /* Supporting Files */,
 				EAAC958C1859327D00E8BAB5 /* Kuriku.xcdatamodeld */,
@@ -180,9 +200,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAAC95841858F7D400E8BAB5 /* Build configuration list for PBXNativeTarget "Kuriku" */;
 			buildPhases = (
+				6EE91D824E604E72921D9F81 /* Check Pods Manifest.lock */,
 				EAAC95481858F7D400E8BAB5 /* Sources */,
 				EAAC95491858F7D400E8BAB5 /* Frameworks */,
 				EAAC954A1858F7D400E8BAB5 /* Resources */,
+				EE0BFDFB17AB46F6826FCE76 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,13 +289,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6EE91D824E604E72921D9F81 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EE0BFDFB17AB46F6826FCE76 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-Kuriku-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EAAC95481858F7D400E8BAB5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAAC956C1858F7D400E8BAB5 /* DiscoverViewController.m in Sources */,
+				EAAC956C1858F7D400E8BAB5 /* TodoViewController.m in Sources */,
+				EA89E74E185C074600643266 /* EntryViewController.m in Sources */,
 				EAAC9591185936A300E8BAB5 /* Journal.m in Sources */,
+				EA89E753185C15A300643266 /* EntryCell.m in Sources */,
 				EAAC9594185936A400E8BAB5 /* Entry.m in Sources */,
 				EAAC958E1859327D00E8BAB5 /* Kuriku.xcdatamodeld in Sources */,
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
@@ -412,6 +469,7 @@
 		};
 		EAAC95851858F7D400E8BAB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -425,6 +483,7 @@
 		};
 		EAAC95861858F7D400E8BAB5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
