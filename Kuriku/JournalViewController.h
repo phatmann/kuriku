@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <InnerBand/InnerBand.h>
 
-@interface JournalViewController : UIViewController
+@interface JournalViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
 @end

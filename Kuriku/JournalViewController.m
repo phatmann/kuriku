@@ -9,7 +9,6 @@
 #import "JournalViewController.h"
 #import "Entry.h"
 #import "EntryCell.h"
-#import <InnerBand/InnerBand.h>
 
 @interface JournalViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -39,6 +38,7 @@
                                      managedObjectContext:context
                                      sectionNameKeyPath:@"createDate"
                                      cacheName:nil];
+    self.fetchedResultsController.delegate = self;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
 }
@@ -83,5 +83,11 @@
     return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
+#pragma mark - Fetched Results Controller Delegate
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView reloadData];
+}
 
 @end
