@@ -31,12 +31,12 @@
 - (void)performFetch {
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createDate" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
                                      managedObjectContext:context
-                                     sectionNameKeyPath:@"createDate"
+                                     sectionNameKeyPath:@"journalDate"
                                      cacheName:nil];
     self.fetchedResultsController.delegate = self;
     NSError *error;

@@ -16,15 +16,26 @@
 @dynamic importance;
 @dynamic urgency;
 @dynamic dueDate;
+@dynamic journalDate;
 @dynamic startDate;
-@dynamic createDate;
+@dynamic timestamp;
 @dynamic star;
 @dynamic journal;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
     
-    self.createDate = [[NSDate date] dateAsMidnight];
+    static NSDateFormatter *dateFormatter;
+    
+    if (!dateFormatter) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateStyle = NSDateFormatterShortStyle;
+        dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    }
+    
+    self.timestamp = [NSDate date];
+    NSDate *dateWithNoTime = [self.timestamp dateAsMidnight];
+    self.journalDate = [dateFormatter stringFromDate:dateWithNoTime];
     self.journal = [Journal first];
 }
     

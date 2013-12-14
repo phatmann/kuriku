@@ -27,8 +27,8 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aKD-IV-7AV">
-                                <rect key="frame" x="20" y="20" width="280" height="455"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aKD-IV-7AV">
+                                <rect key="frame" x="20" y="40" width="280" height="455"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -72,7 +72,7 @@
                             <constraint firstItem="FwH-HP-JkA" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" id="Q7s-YP-gbV"/>
                             <constraint firstItem="aKD-IV-7AV" firstAttribute="bottom" secondItem="FwH-HP-JkA" secondAttribute="top" id="da3-M6-eLt"/>
                             <constraint firstAttribute="trailing" secondItem="FwH-HP-JkA" secondAttribute="trailing" id="eAd-eW-aLv"/>
-                            <constraint firstItem="aKD-IV-7AV" firstAttribute="top" secondItem="2VE-Yg-loa" secondAttribute="top" constant="20" symbolic="YES" id="gCL-zU-2bJ"/>
+                            <constraint firstItem="aKD-IV-7AV" firstAttribute="top" secondItem="X0C-EJ-ULc" secondAttribute="bottom" constant="20" symbolic="YES" id="nKq-ex-4bm"/>
                             <constraint firstItem="aKD-IV-7AV" firstAttribute="centerX" secondItem="FwH-HP-JkA" secondAttribute="centerX" id="o7F-EF-PBe"/>
                             <constraint firstItem="aKD-IV-7AV" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" constant="20" symbolic="YES" id="sJp-bZ-rTL"/>
                         </constraints>
