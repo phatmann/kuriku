@@ -13,9 +13,5 @@
 
 @dynamic name;
 @dynamic entries;
-    
-- (NSDictionary *)entriesGroupedByDate {
-    return nil;
-}
 
 @end

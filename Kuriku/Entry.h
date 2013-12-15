@@ -18,9 +18,13 @@
 @property (nonatomic) int16_t urgency;
 @property (nonatomic) NSDate *dueDate;
 @property (nonatomic) NSDate *startDate;
-@property (nonatomic) NSString *journalDate;
+@property (nonatomic) NSString *journalDateString;
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic) BOOL star;
 @property (nonatomic, strong) Journal *journal;
+
+@property (nonatomic) NSDate *journalDate;
+
++ (NSDate *)journalDateFromString:(NSString *)journalDateString;
 
 @end

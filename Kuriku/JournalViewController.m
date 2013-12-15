@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self.tableView registerClass:[EntryCell class] forCellReuseIdentifier:@"EntryCell"];
     [self performFetch];
 }
 
@@ -46,7 +45,7 @@
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
                                      managedObjectContext:context
-                                     sectionNameKeyPath:@"journalDate"
+                                     sectionNameKeyPath:@"journalDateString"
                                      cacheName:nil];
     self.fetchedResultsController.delegate = self;
     NSError *error;
@@ -76,22 +75,15 @@
     
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([[self.fetchedResultsController sections] count] > 0) {
-        static NSDateFormatter *shortDateFormatter;
         static NSDateFormatter *longDateFormatter;
-        
-        if (!shortDateFormatter) {
-            shortDateFormatter = [NSDateFormatter new];
-            shortDateFormatter.dateStyle = NSDateFormatterShortStyle;
-        }
         
         if (!longDateFormatter) {
             longDateFormatter = [NSDateFormatter new];
-            [longDateFormatter setDateFormat:@"E, MMM d"];
+            [longDateFormatter setDateFormat:@"E MMM d"];
         }
         
         id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-        NSString *dateString = [sectionInfo name];
-        NSDate *date = [shortDateFormatter dateFromString:dateString];
+        NSDate *date = [Entry journalDateFromString:[sectionInfo name]];
         return [longDateFormatter stringFromDate:date];
     }
     
@@ -113,20 +105,14 @@
 }
 
 - (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
-    static NSDateFormatter *shortDateFormatter;
     static NSDateFormatter *tinyDateFormatter;
-    
-    if (!shortDateFormatter) {
-        shortDateFormatter = [NSDateFormatter new];
-        shortDateFormatter.dateStyle = NSDateFormatterShortStyle;
-    }
     
     if (!tinyDateFormatter) {
         tinyDateFormatter = [NSDateFormatter new];
-        [tinyDateFormatter setDateFormat:@"MM/d"];
+        [tinyDateFormatter setDateFormat:@"MMM d"];
     }
     
-    NSDate *date = [shortDateFormatter dateFromString:sectionName];
+    NSDate *date = [Entry journalDateFromString:sectionName];
     return [tinyDateFormatter stringFromDate:date];
 }
 

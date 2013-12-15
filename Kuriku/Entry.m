@@ -10,13 +10,17 @@
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
+@interface Entry ()
+
+@end
+
 @implementation Entry
 
 @dynamic title;
 @dynamic importance;
 @dynamic urgency;
 @dynamic dueDate;
-@dynamic journalDate;
+@dynamic journalDateString;
 @dynamic startDate;
 @dynamic timestamp;
 @dynamic star;
@@ -24,7 +28,27 @@
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
-    
+
+    self.timestamp = [NSDate date];
+    self.journalDate = [self.timestamp dateAsMidnight];
+    self.journal = [Journal first];
+}
+
+- (void)setJournalDate:(NSDate *)date {
+    self.journalDateString = [journalDateFormatter() stringFromDate:date];
+}
+
+- (NSDate *)journalDate {
+    return [Entry journalDateFromString:self.journalDateString];
+}
+
++ (NSDate *)journalDateFromString:(NSString *)journalDateString {
+    return [journalDateFormatter() dateFromString:journalDateString];
+}
+
+#pragma mark -
+
+NSDateFormatter* journalDateFormatter() {
     static NSDateFormatter *dateFormatter;
     
     if (!dateFormatter) {
@@ -33,10 +57,7 @@
         dateFormatter.timeStyle = NSDateFormatterNoStyle;
     }
     
-    self.timestamp = [NSDate date];
-    NSDate *dateWithNoTime = [self.timestamp dateAsMidnight];
-    self.journalDate = [dateFormatter stringFromDate:dateWithNoTime];
-    self.journal = [Journal first];
+    return dateFormatter;
 }
-    
+
 @end
