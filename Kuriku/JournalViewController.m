@@ -59,7 +59,6 @@
 }
     
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     EntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EntryCell" forIndexPath:indexPath];
     Entry *entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.titleLabel.text = entry.title;
@@ -68,8 +67,23 @@
     
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([[self.fetchedResultsController sections] count] > 0) {
+        static NSDateFormatter *shortDateFormatter;
+        static NSDateFormatter *longDateFormatter;
+        
+        if (!shortDateFormatter) {
+            shortDateFormatter = [NSDateFormatter new];
+            shortDateFormatter.dateStyle = NSDateFormatterShortStyle;
+        }
+        
+        if (!longDateFormatter) {
+            longDateFormatter = [NSDateFormatter new];
+            longDateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        }
+        
         id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-        return [sectionInfo name];
+        NSString *dateString = [sectionInfo name];
+        NSDate *date = [shortDateFormatter dateFromString:dateString];
+        return [longDateFormatter stringFromDate:date];
     }
     
     return nil;
@@ -85,9 +99,13 @@
 
 #pragma mark - Fetched Results Controller Delegate
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView reloadData];
 }
+
+- (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
+    return sectionName;
+}
+
 
 @end
