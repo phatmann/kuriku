@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.tabBarController setEdgesForExtendedLayout:UIRectEdgeNone];
     [self performFetch];
 }
 
@@ -40,9 +41,8 @@
 - (void)performFetch {
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
-    NSSortDescriptor *sortByUrgencyDescriptor = [[NSSortDescriptor alloc] initWithKey:@"urgency" ascending:NO];
-    NSSortDescriptor *sortByImportanceDescriptor = [[NSSortDescriptor alloc] initWithKey:@"importance" ascending:NO];
-    [fetchRequest setSortDescriptors:@[sortByUrgencyDescriptor, sortByImportanceDescriptor]];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"priority" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
                                      managedObjectContext:context

@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.tabBarController setEdgesForExtendedLayout:UIRectEdgeNone];
     [self performFetch];
 }
 
