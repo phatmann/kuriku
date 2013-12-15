@@ -9,6 +9,7 @@
 #import "JournalViewController.h"
 #import "Entry.h"
 #import "EntryCell.h"
+#import "EntryViewController.h"
 
 @interface JournalViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -27,6 +28,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    EntryCell *cell = sender;
+    EntryViewController *entryViewController = segue.destinationViewController;
+    entryViewController.entry = cell.entry;
+}
+
+#pragma mark -
     
 - (void)performFetch {
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
@@ -60,8 +70,7 @@
     
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     EntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EntryCell" forIndexPath:indexPath];
-    Entry *entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.titleLabel.text = entry.title;
+    cell.entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
     return cell;
 }
     

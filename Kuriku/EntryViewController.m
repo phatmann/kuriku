@@ -18,27 +18,29 @@
 
 @implementation EntryViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+    if (self.entry)
+        self.titleField.text = self.entry.title;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
     
 - (IBAction)cancelButtonWasTapped:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
     
 - (IBAction)saveButtonWasTapped:(UIBarButtonItem *)sender {
-    Entry *entry = [Entry create];
-    entry.title = self.titleField.text;
+    if (!self.entry)
+        self.entry = [Entry create];
+    
+    self.entry.title = self.titleField.text;
     [[IBCoreDataStore mainStore] save];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

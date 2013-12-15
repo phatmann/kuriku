@@ -43,7 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kuriku.xcconfig"; path = "Pods/Pods-Kuriku.xcconfig"; sourceTree = "<group>"; };
+		21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kuriku.xcconfig"; path = "../Pods/Pods-Kuriku.xcconfig"; sourceTree = "<group>"; };
 		9F11D2E34FF94EF8A9986734 /* libPods-Kuriku.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Kuriku.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA89E74C185C074600643266 /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
@@ -112,7 +112,6 @@
 				EAAC957A1858F7D400E8BAB5 /* KurikuTests */,
 				EAAC954E1858F7D400E8BAB5 /* Frameworks */,
 				EAAC954D1858F7D400E8BAB5 /* Products */,
-				21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -153,13 +152,13 @@
 				EA89E74D185C074600643266 /* EntryViewController.m */,
 				EA89E751185C15A300643266 /* EntryCell.h */,
 				EA89E752185C15A300643266 /* EntryCell.m */,
-				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
-				EAAC95561858F7D400E8BAB5 /* Supporting Files */,
-				EAAC958C1859327D00E8BAB5 /* Kuriku.xcdatamodeld */,
 				EAAC9592185936A400E8BAB5 /* Entry.h */,
 				EAAC9593185936A400E8BAB5 /* Entry.m */,
 				EAAC958F185936A300E8BAB5 /* Journal.h */,
 				EAAC9590185936A300E8BAB5 /* Journal.m */,
+				EAAC958C1859327D00E8BAB5 /* Kuriku.xcdatamodeld */,
+				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
+				EAAC95561858F7D400E8BAB5 /* Supporting Files */,
 			);
 			path = Kuriku;
 			sourceTree = "<group>";
@@ -167,6 +166,7 @@
 		EAAC95561858F7D400E8BAB5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */,
 				EAAC95571858F7D400E8BAB5 /* Kuriku-Info.plist */,
 				EAAC95581858F7D400E8BAB5 /* InfoPlist.strings */,
 				EAAC955B1858F7D400E8BAB5 /* main.m */,

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Entry;
+
 @interface EntryViewController : UIViewController
+
+@property (strong, nonatomic) Entry *entry;
 
 @end

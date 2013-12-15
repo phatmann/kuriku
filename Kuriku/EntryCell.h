@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Entry;
+
 @interface EntryCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
+@property (strong, nonatomic) Entry *entry;
+
 @end

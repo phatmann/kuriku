@@ -7,9 +7,10 @@
 //
 
 #import "EntryCell.h"
+#import "Entry.h"
 
 @interface EntryCell ()
-
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @end
 
 @implementation EntryCell
@@ -23,11 +24,10 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+- (void)setEntry:(Entry *)entry
 {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    _entry = entry;
+    self.titleLabel.text = entry.title;
 }
 
 @end
