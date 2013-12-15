@@ -77,7 +77,7 @@
         
         if (!longDateFormatter) {
             longDateFormatter = [NSDateFormatter new];
-            longDateFormatter.dateStyle = NSDateFormatterMediumStyle;
+            [longDateFormatter setDateFormat:@"E, MMM d"];
         }
         
         id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
@@ -104,7 +104,21 @@
 }
 
 - (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
-    return sectionName;
+    static NSDateFormatter *shortDateFormatter;
+    static NSDateFormatter *tinyDateFormatter;
+    
+    if (!shortDateFormatter) {
+        shortDateFormatter = [NSDateFormatter new];
+        shortDateFormatter.dateStyle = NSDateFormatterShortStyle;
+    }
+    
+    if (!tinyDateFormatter) {
+        tinyDateFormatter = [NSDateFormatter new];
+        [tinyDateFormatter setDateFormat:@"MM/d"];
+    }
+    
+    NSDate *date = [shortDateFormatter dateFromString:sectionName];
+    return [tinyDateFormatter stringFromDate:date];
 }
 
 
