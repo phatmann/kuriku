@@ -27,7 +27,19 @@
 - (void)setEntry:(Entry *)entry
 {
     _entry = entry;
-    self.titleLabel.text = entry.title;
+    
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc]
+                                        initWithString:self.entry.title
+                                        attributes:@{}];
+    
+    NSString *subtitle = [NSString stringWithFormat:@"  %d %d", entry.urgency, entry.importance];
+    
+    [title appendAttributedString:[[NSAttributedString alloc]
+                                   initWithString:subtitle
+                                   attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:10]}]];
+
+    
+    self.titleLabel.attributedText = title;
 }
 
 @end
