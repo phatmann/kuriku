@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <InnerBand/InnerBand.h>
 
-@interface TodoViewController : UIViewController
+@interface TodoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
 @end
