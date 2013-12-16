@@ -11,6 +11,9 @@
 
 @class Journal;
 
+static const int EntryImportanceDefaultValue = 5;
+static const int EntryUrgencyDefaultValue    = 0;
+
 @interface Entry : NSManagedObject
 
 @property (nonatomic, strong) NSString *title;

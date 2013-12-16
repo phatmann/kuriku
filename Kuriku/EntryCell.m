@@ -19,7 +19,9 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        UIView *subview = [[NSBundle mainBundle] loadNibNamed:@"EntryCell" owner:self options:nil][0];
+        [self.contentView addSubview:subview];
+        // TODO: layout subview
     }
     return self;
 }
@@ -37,7 +39,6 @@
     [title appendAttributedString:[[NSAttributedString alloc]
                                    initWithString:subtitle
                                    attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:10]}]];
-
     
     self.titleLabel.attributedText = title;
 }

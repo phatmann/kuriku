@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <InnerBand/InnerBand.h>
+#import "EntryListViewController.h"
 
-@interface JournalViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface JournalViewController : EntryListViewController
 
 @end

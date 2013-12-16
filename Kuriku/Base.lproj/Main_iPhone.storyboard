@@ -20,35 +20,6 @@
                                 <rect key="frame" x="20" y="72" width="280" height="351"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" id="Rhz-yd-rpt" userLabel="Entry Cell" customClass="EntryCell">
-                                        <rect key="frame" x="0.0" y="86" width="280" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rhz-yd-rpt" id="sqX-OQ-wt3">
-                                            <rect key="frame" x="0.0" y="0.0" width="280" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDr-Lr-6e4" userLabel="Title">
-                                                    <rect key="frame" x="20" y="0.0" width="240" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="SDr-Lr-6e4" secondAttribute="bottom" id="9Kg-5n-JSd"/>
-                                                <constraint firstAttribute="trailing" secondItem="SDr-Lr-6e4" secondAttribute="trailing" constant="20" symbolic="YES" id="EWw-CL-Ru1"/>
-                                                <constraint firstItem="SDr-Lr-6e4" firstAttribute="leading" secondItem="sqX-OQ-wt3" secondAttribute="leading" constant="20" symbolic="YES" id="Mh5-hg-tew"/>
-                                                <constraint firstItem="SDr-Lr-6e4" firstAttribute="top" secondItem="sqX-OQ-wt3" secondAttribute="top" id="mhh-Qd-j1E"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="SDr-Lr-6e4" id="Lv1-4N-hJv"/>
-                                            <segue destination="XCd-pD-Vz0" kind="push" identifier="edit entry" id="Dsp-rr-cZs"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="CZ4-MO-1fc" id="Rbh-2U-xO8"/>
@@ -67,6 +38,7 @@
                     <tabBarItem key="tabBarItem" title="Journal" image="journal" id="u1e-5L-l1D"/>
                     <connections>
                         <outlet property="tableView" destination="aKD-IV-7AV" id="NrM-gl-Iga"/>
+                        <segue destination="XCd-pD-Vz0" kind="push" identifier="edit entry" id="6hw-8y-Pc3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
@@ -89,35 +61,6 @@
                                 <rect key="frame" x="20" y="72" width="280" height="351"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" id="dBK-f2-nPp" userLabel="Entry Cell" customClass="EntryCell">
-                                        <rect key="frame" x="0.0" y="86" width="280" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dBK-f2-nPp" id="qRe-50-4fv">
-                                            <rect key="frame" x="0.0" y="0.0" width="280" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJs-Dd-OAh" userLabel="Title">
-                                                    <rect key="frame" x="20" y="0.0" width="240" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="fJs-Dd-OAh" firstAttribute="top" secondItem="qRe-50-4fv" secondAttribute="top" id="HGP-yq-zHD"/>
-                                                <constraint firstItem="fJs-Dd-OAh" firstAttribute="leading" secondItem="qRe-50-4fv" secondAttribute="leading" constant="20" symbolic="YES" id="Ibx-Gg-hRo"/>
-                                                <constraint firstAttribute="bottom" secondItem="fJs-Dd-OAh" secondAttribute="bottom" id="PfL-m9-u0R"/>
-                                                <constraint firstAttribute="trailing" secondItem="fJs-Dd-OAh" secondAttribute="trailing" constant="20" symbolic="YES" id="mEf-9m-JNw"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="fJs-Dd-OAh" id="SCv-lm-OV0"/>
-                                            <segue destination="XCd-pD-Vz0" kind="push" id="0hK-Fc-CR7"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="QUy-BD-bpt" id="DZG-q6-ZcC"/>
@@ -136,6 +79,7 @@
                     <tabBarItem key="tabBarItem" title="Todo" image="todo" id="Z7h-1E-pvt"/>
                     <connections>
                         <outlet property="tableView" destination="xfL-Hz-Rmj" id="Lj3-pa-4is"/>
+                        <segue destination="XCd-pD-Vz0" kind="push" identifier="edit entry" id="1av-td-vF4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qq-4t-Ow8" sceneMemberID="firstResponder"/>
@@ -146,6 +90,7 @@
         <scene sceneID="Vex-rW-GRa">
             <objects>
                 <tabBarController id="8YX-ce-x5E" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Kuriku" id="Gx5-pi-C7R">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="saM-iL-xyS">
                             <connections>
@@ -284,6 +229,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Dsp-rr-cZs"/>
+        <segue reference="1av-td-vF4"/>
     </inferredMetricsTieBreakers>
 </document>

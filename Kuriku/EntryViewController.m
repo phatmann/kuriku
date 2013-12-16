@@ -23,12 +23,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-    if (!self.entry)
-        self.entry = [Entry create];
-        
-    self.titleField.text        = self.entry.title;
-    self.urgencySlider.value    = self.entry.urgency;
-    self.importanceSlider.value = self.entry.importance;
+    if (self.entry) {
+        self.titleField.text        = self.entry.title;
+        self.urgencySlider.value    = self.entry.urgency;
+        self.importanceSlider.value = self.entry.importance;
+    } else {
+        self.urgencySlider.value    = EntryUrgencyDefaultValue;
+        self.importanceSlider.value = EntryImportanceDefaultValue;
+    }
     
     [self.titleField becomeFirstResponder];
 }
@@ -43,6 +45,9 @@
 }
     
 - (IBAction)saveButtonWasTapped:(UIBarButtonItem *)sender {
+    if (!self.entry)
+        self.entry = [Entry create];
+    
     self.entry.title      = self.titleField.text;
     self.entry.urgency    = self.urgencySlider.value;
     self.entry.importance = self.importanceSlider.value;

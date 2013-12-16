@@ -8,33 +8,8 @@
 
 #import "JournalViewController.h"
 #import "Entry.h"
-#import "EntryCell.h"
-#import "EntryViewController.h"
-
-@interface JournalViewController ()
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@end
 
 @implementation JournalViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self.tabBarController setEdgesForExtendedLayout:UIRectEdgeNone];
-    [self performFetch];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    EntryCell *cell = sender;
-    EntryViewController *entryViewController = segue.destinationViewController;
-    entryViewController.entry = cell.entry;
-}
 
 #pragma mark -
     
@@ -54,25 +29,6 @@
 }
     
 #pragma mark - Table View Delegate
-    
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.fetchedResultsController sections] count];
-}
-    
-- (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
-    if ([[self.fetchedResultsController sections] count] > 0) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-        return [sectionInfo numberOfObjects];
-    }
-    
-    return 0;
-}
-    
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EntryCell" forIndexPath:indexPath];
-    cell.entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-    return cell;
-}
     
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([[self.fetchedResultsController sections] count] > 0) {
@@ -100,10 +56,6 @@
 }
 
 #pragma mark - Fetched Results Controller Delegate
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [self.tableView reloadData];
-}
 
 - (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
     static NSDateFormatter *tinyDateFormatter;
