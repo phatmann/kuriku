@@ -25,6 +25,7 @@
 @dynamic priority;
 @dynamic timestamp;
 @dynamic star;
+@dynamic status;
 @dynamic journal;
 
 - (void)awakeFromInsert {
