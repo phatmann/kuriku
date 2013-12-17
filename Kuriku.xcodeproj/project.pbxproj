@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BEDA4BF7CDB24C2E98718580 /* libPods-Kuriku.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F11D2E34FF94EF8A9986734 /* libPods-Kuriku.a */; };
 		EA048CAA1860832500990957 /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CA91860832500990957 /* Todo.m */; };
+		EA048CB91860BC5700990957 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CB81860BC5700990957 /* Action.m */; };
 		EA35308A185F228B0024E7C9 /* TodoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA353089185F228A0024E7C9 /* TodoCell.xib */; };
 		EA35308D185F23C20024E7C9 /* EntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* EntryListViewController.m */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
@@ -50,6 +51,8 @@
 		9F11D2E34FF94EF8A9986734 /* libPods-Kuriku.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Kuriku.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA048CA81860831E00990957 /* Todo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Todo.h; sourceTree = "<group>"; };
 		EA048CA91860832500990957 /* Todo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Todo.m; sourceTree = "<group>"; };
+		EA048CB71860BC5700990957 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
+		EA048CB81860BC5700990957 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Action.m; sourceTree = "<group>"; };
 		EA353089185F228A0024E7C9 /* TodoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoCell.xib; sourceTree = "<group>"; };
 		EA35308B185F23C20024E7C9 /* EntryListViewController.h */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = EntryListViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA35308C185F23C20024E7C9 /* EntryListViewController.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = EntryListViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
@@ -122,6 +125,8 @@
 				EAAC9593185936A400E8BAB5 /* Entry.m */,
 				EA048CA81860831E00990957 /* Todo.h */,
 				EA048CA91860832500990957 /* Todo.m */,
+				EA048CB71860BC5700990957 /* Action.h */,
+				EA048CB81860BC5700990957 /* Action.m */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				EAAC958E1859327D00E8BAB5 /* Kuriku.xcdatamodeld in Sources */,
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
 				EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */,
+				EA048CB91860BC5700990957 /* Action.m in Sources */,
 				EAAC955C1858F7D400E8BAB5 /* main.m in Sources */,
 				EA048CAA1860832500990957 /* Todo.m in Sources */,
 			);

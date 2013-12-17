@@ -27,5 +27,17 @@ static const int TodoUrgencyDefaultValue    = 0;
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) BOOL star;
 @property (nonatomic) int16_t status;
+@property (nonatomic, strong) NSSet *actions;
 
 @end
+
+@interface Todo (CoreDataGeneratedAccessors)
+
+- (void)addActionsObject:(NSManagedObject *)value;
+- (void)removeActionsObject:(NSManagedObject *)value;
+- (void)addActions:(NSSet *)values;
+- (void)removeActions:(NSSet *)values;
+
+@end
+
+

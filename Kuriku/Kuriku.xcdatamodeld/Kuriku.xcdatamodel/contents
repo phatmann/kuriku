@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13A603" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Action" parentEntity="Entry" syncable="YES">
+    <entity name="Action" representedClassName="Action" parentEntity="Entry" syncable="YES">
         <relationship name="todo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Todo" inverseName="actions" inverseEntity="Todo" syncable="YES"/>
     </entity>
     <entity name="Entry" representedClassName="Entry" isAbstract="YES" syncable="YES">

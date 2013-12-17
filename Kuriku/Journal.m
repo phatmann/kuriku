@@ -8,7 +8,6 @@
 
 #import "Journal.h"
 
-
 @implementation Journal
 
 @dynamic name;

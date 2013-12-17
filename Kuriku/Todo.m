@@ -22,6 +22,7 @@
 @dynamic priority;
 @dynamic star;
 @dynamic status;
+@dynamic actions;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
