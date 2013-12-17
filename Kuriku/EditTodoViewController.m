@@ -30,9 +30,8 @@
     } else {
         self.urgencySlider.value    = TodoUrgencyDefaultValue;
         self.importanceSlider.value = TodoImportanceDefaultValue;
+        [self.titleField becomeFirstResponder];
     }
-    
-    [self.titleField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {

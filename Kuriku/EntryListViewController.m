@@ -8,7 +8,11 @@
 
 #import "EntryListViewController.h"
 #import "TodoCell.h"
+#import "ActionCell.h"
 #import "EditTodoViewController.h"
+#import "Entry.h"
+#import "Todo.h"
+#import "Action.h"
 
 @interface EntryListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -49,8 +53,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell" forIndexPath:indexPath];
-    cell.todo = (Todo *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    Entry* entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if ([entry isKindOfClass:[Todo class]]) {
+        TodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell" forIndexPath:indexPath];
+        cell.todo = (Todo *)entry;
+        return cell;
+    }
+    
+    ActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ActionCell" forIndexPath:indexPath];
+    cell.action = (Action *)entry;
     return cell;
 }
 

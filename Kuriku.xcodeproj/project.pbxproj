@@ -10,6 +10,8 @@
 		BEDA4BF7CDB24C2E98718580 /* libPods-Kuriku.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F11D2E34FF94EF8A9986734 /* libPods-Kuriku.a */; };
 		EA048CAA1860832500990957 /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CA91860832500990957 /* Todo.m */; };
 		EA048CB91860BC5700990957 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CB81860BC5700990957 /* Action.m */; };
+		EA048CBB1860C8E600990957 /* ActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA048CBA1860C8E600990957 /* ActionCell.xib */; };
+		EA048CBF1860C93600990957 /* ActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CBE1860C93600990957 /* ActionCell.m */; };
 		EA35308A185F228B0024E7C9 /* TodoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA353089185F228A0024E7C9 /* TodoCell.xib */; };
 		EA35308D185F23C20024E7C9 /* EntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* EntryListViewController.m */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
@@ -53,6 +55,9 @@
 		EA048CA91860832500990957 /* Todo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Todo.m; sourceTree = "<group>"; };
 		EA048CB71860BC5700990957 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
 		EA048CB81860BC5700990957 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Action.m; sourceTree = "<group>"; };
+		EA048CBA1860C8E600990957 /* ActionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActionCell.xib; sourceTree = "<group>"; };
+		EA048CBD1860C92A00990957 /* ActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionCell.h; sourceTree = "<group>"; };
+		EA048CBE1860C93600990957 /* ActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionCell.m; sourceTree = "<group>"; };
 		EA353089185F228A0024E7C9 /* TodoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoCell.xib; sourceTree = "<group>"; };
 		EA35308B185F23C20024E7C9 /* EntryListViewController.h */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = EntryListViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA35308C185F23C20024E7C9 /* EntryListViewController.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = EntryListViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
@@ -131,6 +136,19 @@
 			name = Entities;
 			sourceTree = "<group>";
 		};
+		EA048CBC1860C91400990957 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EA048CBA1860C8E600990957 /* ActionCell.xib */,
+				EA048CBD1860C92A00990957 /* ActionCell.h */,
+				EA048CBE1860C93600990957 /* ActionCell.m */,
+				EA353089185F228A0024E7C9 /* TodoCell.xib */,
+				EA89E752185C15A300643266 /* TodoCell.m */,
+				EA89E751185C15A300643266 /* TodoCell.h */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		EAAC95431858F7D400E8BAB5 = {
 			isa = PBXGroup;
 			children = (
@@ -168,7 +186,7 @@
 			children = (
 				EAAC95611858F7D400E8BAB5 /* Main_iPhone.storyboard */,
 				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
-				EA353089185F228A0024E7C9 /* TodoCell.xib */,
+				EA048CBC1860C91400990957 /* Cells */,
 				EAAC955E1858F7D400E8BAB5 /* KurikuAppDelegate.h */,
 				EAAC955F1858F7D400E8BAB5 /* KurikuAppDelegate.m */,
 				EAAC95671858F7D400E8BAB5 /* JournalViewController.h */,
@@ -179,8 +197,6 @@
 				EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */,
 				EA89E74C185C074600643266 /* EditTodoViewController.h */,
 				EA89E74D185C074600643266 /* EditTodoViewController.m */,
-				EA89E751185C15A300643266 /* TodoCell.h */,
-				EA89E752185C15A300643266 /* TodoCell.m */,
 				EA048CAB186083FF00990957 /* Entities */,
 				EAAC958C1859327D00E8BAB5 /* Kuriku.xcdatamodeld */,
 				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
@@ -303,6 +319,7 @@
 				EA35308A185F228B0024E7C9 /* TodoCell.xib in Resources */,
 				EAAC95631858F7D400E8BAB5 /* Main_iPhone.storyboard in Resources */,
 				EAAC955A1858F7D400E8BAB5 /* InfoPlist.strings in Resources */,
+				EA048CBB1860C8E600990957 /* ActionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +381,7 @@
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
 				EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */,
 				EA048CB91860BC5700990957 /* Action.m in Sources */,
+				EA048CBF1860C93600990957 /* ActionCell.m in Sources */,
 				EAAC955C1858F7D400E8BAB5 /* main.m in Sources */,
 				EA048CAA1860832500990957 /* Todo.m in Sources */,
 			);

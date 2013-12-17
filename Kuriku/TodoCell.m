@@ -15,17 +15,6 @@
 
 @implementation TodoCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        UIView *subview = [[NSBundle mainBundle] loadNibNamed:@"TodoCell" owner:self options:nil][0];
-        [self.contentView addSubview:subview];
-        // TODO: layout subview
-    }
-    return self;
-}
-
 - (void)setTodo:(Todo *)todo
 {
     _todo = todo;
