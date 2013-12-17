@@ -1,16 +1,16 @@
 //
-//  EntryViewController.m
+//  EditTodoViewController.m
 //  Kuriku
 //
 //  Created by Tony Mann on 12/13/13.
 //  Copyright (c) 2013 7Actions. All rights reserved.
 //
 
-#import "EntryViewController.h"
-#import "Entry.h"
+#import "EditTodoViewController.h"
+#import "Todo.h"
 #import <InnerBand/InnerBand.h>
 
-@interface EntryViewController ()
+@interface EditTodoViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *titleField;
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
@@ -18,18 +18,18 @@
 
 @end
 
-@implementation EntryViewController
+@implementation EditTodoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-    if (self.entry) {
-        self.titleField.text        = self.entry.title;
-        self.urgencySlider.value    = self.entry.urgency;
-        self.importanceSlider.value = self.entry.importance;
+    if (self.todo) {
+        self.titleField.text        = self.todo.title;
+        self.urgencySlider.value    = self.todo.urgency;
+        self.importanceSlider.value = self.todo.importance;
     } else {
-        self.urgencySlider.value    = EntryUrgencyDefaultValue;
-        self.importanceSlider.value = EntryImportanceDefaultValue;
+        self.urgencySlider.value    = TodoUrgencyDefaultValue;
+        self.importanceSlider.value = TodoImportanceDefaultValue;
     }
     
     [self.titleField becomeFirstResponder];
@@ -45,12 +45,12 @@
 }
     
 - (IBAction)saveButtonWasTapped:(UIBarButtonItem *)sender {
-    if (!self.entry)
-        self.entry = [Entry create];
+    if (!self.todo)
+        self.todo = [Todo create];
     
-    self.entry.title      = self.titleField.text;
-    self.entry.urgency    = self.urgencySlider.value;
-    self.entry.importance = self.importanceSlider.value;
+    self.todo.title      = self.titleField.text;
+    self.todo.urgency    = self.urgencySlider.value;
+    self.todo.importance = self.importanceSlider.value;
     
     [[IBCoreDataStore mainStore] save];
     [self.navigationController popViewControllerAnimated:YES];

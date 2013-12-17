@@ -15,7 +15,7 @@
     
 - (void)performFetch {
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Todo"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]

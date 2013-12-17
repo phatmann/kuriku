@@ -17,15 +17,8 @@
 @implementation Entry
 
 @dynamic title;
-@dynamic importance;
-@dynamic urgency;
-@dynamic dueDate;
 @dynamic journalDateString;
-@dynamic startDate;
-@dynamic priority;
 @dynamic timestamp;
-@dynamic star;
-@dynamic status;
 @dynamic journal;
 
 - (void)awakeFromInsert {
@@ -46,15 +39,6 @@
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString {
     return [journalDateFormatter() dateFromString:journalDateString];
-}
-
-- (void)didChangeValueForKey:(NSString *)key {
-    [super didChangeValueForKey:key];
-    
-    if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"]) {
-        static const int maxValue = 10;
-        self.priority = (self.urgency + self.importance) / (maxValue * 2.0f);
-    }
 }
 
 #pragma mark -

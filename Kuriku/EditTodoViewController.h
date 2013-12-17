@@ -1,5 +1,5 @@
 //
-//  EntryViewController.h
+//  EditTodoViewController.h
 //  Kuriku
 //
 //  Created by Tony Mann on 12/13/13.
@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class Entry;
+@class Todo;
 
-@interface EntryViewController : UIViewController
+@interface EditTodoViewController : UIViewController
 
-@property (strong, nonatomic) Entry *entry;
+@property (strong, nonatomic) Todo *todo;
 
 @end

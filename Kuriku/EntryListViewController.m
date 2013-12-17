@@ -7,8 +7,8 @@
 //
 
 #import "EntryListViewController.h"
-#import "EntryCell.h"
-#import "EntryViewController.h"
+#import "TodoCell.h"
+#import "EditTodoViewController.h"
 
 @interface EntryListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -18,15 +18,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"EntryCell" bundle:nil] forCellReuseIdentifier:@"EntryCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"TodoCell" bundle:nil] forCellReuseIdentifier:@"TodoCell"];
     [self performFetch];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    EntryCell *cell = sender;
-    EntryViewController *entryViewController = segue.destinationViewController;
-    entryViewController.entry = cell.entry;
+    TodoCell *cell = sender;
+    EditTodoViewController *entryViewController = segue.destinationViewController;
+    entryViewController.todo = cell.todo;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,8 +49,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EntryCell" forIndexPath:indexPath];
-    cell.entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    TodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell" forIndexPath:indexPath];
+    cell.todo = (Todo *)[self.fetchedResultsController objectAtIndexPath:indexPath];
     return cell;
 }
 

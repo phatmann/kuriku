@@ -11,28 +11,11 @@
 
 @class Journal;
 
-typedef enum {
-    EntryStatusNotStarted,
-    EntryStatusInProgress,
-    EntryStatusCompleted,
-    EntryStatusCanceled
-} EntryStatus;
-
-static const int EntryImportanceDefaultValue = 5;
-static const int EntryUrgencyDefaultValue    = 0;
-
 @interface Entry : NSManagedObject
 
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic) int16_t importance;
-@property (nonatomic) int16_t urgency;
-@property (nonatomic) float_t priority;
-@property (nonatomic) NSDate *dueDate;
-@property (nonatomic) NSDate *startDate;
 @property (nonatomic) NSString *journalDateString;
 @property (nonatomic, strong) NSDate *timestamp;
-@property (nonatomic) BOOL star;
-@property (nonatomic) int16_t status;
 @property (nonatomic, strong) Journal *journal;
 
 @property (nonatomic) NSDate *journalDate;

@@ -1,5 +1,5 @@
 //
-//  EntryCell.h
+//  TodoCell.h
 //  Kuriku
 //
 //  Created by Tony Mann on 12/14/13.
@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class Entry;
+@class Todo;
 
-@interface EntryCell : UITableViewCell
+@interface TodoCell : UITableViewCell
 
-@property (strong, nonatomic) Entry *entry;
+@property (strong, nonatomic) Todo *todo;
 
 @end

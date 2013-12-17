@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13A603" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Entry" representedClassName="Entry" syncable="YES">
-        <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="importance" attributeType="Integer 16" minValueString="0" maxValueString="10" defaultValueString="5" syncable="YES"/>
+    <entity name="Action" parentEntity="Entry" syncable="YES">
+        <relationship name="todo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Todo" inverseName="actions" inverseEntity="Todo" syncable="YES"/>
+    </entity>
+    <entity name="Entry" representedClassName="Entry" isAbstract="YES" syncable="YES">
         <attribute name="journalDateString" attributeType="String" syncable="YES"/>
-        <attribute name="priority" attributeType="Float" defaultValueString="0.0" indexed="YES" syncable="YES"/>
-        <attribute name="star" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
-        <attribute name="urgency" attributeType="Integer 16" minValueString="0" maxValueString="10" defaultValueString="0" syncable="YES"/>
         <relationship name="journal" maxCount="1" deletionRule="Cascade" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
     </entity>
     <entity name="Journal" representedClassName="Journal" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="journal" inverseEntity="Entry" syncable="YES"/>
     </entity>
+    <entity name="Todo" representedClassName="Todo" parentEntity="Entry" syncable="YES">
+        <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="importance" attributeType="Integer 16" minValueString="0" maxValueString="10" defaultValueString="5" syncable="YES"/>
+        <attribute name="priority" attributeType="Float" defaultValueString="0.0" indexed="YES" syncable="YES"/>
+        <attribute name="star" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="urgency" attributeType="Integer 16" minValueString="0" maxValueString="10" defaultValueString="0" syncable="YES"/>
+        <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="todo" inverseEntity="Action" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Entry" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Journal" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Todo" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Action" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

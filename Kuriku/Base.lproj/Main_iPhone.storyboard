@@ -113,10 +113,10 @@
             </objects>
             <point key="canvasLocation" x="96" y="204"/>
         </scene>
-        <!--Entry View Controller-->
+        <!--Edit Todo View Controller-->
         <scene sceneID="A5X-eb-pge">
             <objects>
-                <viewController id="XCd-pD-Vz0" customClass="EntryViewController" sceneMemberID="viewController">
+                <viewController id="XCd-pD-Vz0" customClass="EditTodoViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HGY-p7-RAf"/>
                         <viewControllerLayoutGuide type="bottom" id="oEu-rv-aZn"/>
