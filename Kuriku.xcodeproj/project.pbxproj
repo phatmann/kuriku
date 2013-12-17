@@ -121,9 +121,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		EA048CAB186083FF00990957 /* Entities */ = {
+		EA048CAB186083FF00990957 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				EAAC958C1859327D00E8BAB5 /* Kuriku.xcdatamodeld */,
 				EAAC958F185936A300E8BAB5 /* Journal.h */,
 				EAAC9590185936A300E8BAB5 /* Journal.m */,
 				EAAC9592185936A400E8BAB5 /* Entry.h */,
@@ -133,7 +134,7 @@
 				EA048CB71860BC5700990957 /* Action.h */,
 				EA048CB81860BC5700990957 /* Action.m */,
 			);
-			name = Entities;
+			name = Data;
 			sourceTree = "<group>";
 		};
 		EA048CBC1860C91400990957 /* Cells */ = {
@@ -147,6 +148,31 @@
 				EA89E751185C15A300643266 /* TodoCell.h */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		EA10F1241860EDF40084F6C8 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EAAC95611858F7D400E8BAB5 /* Main_iPhone.storyboard */,
+				EAAC955E1858F7D400E8BAB5 /* KurikuAppDelegate.h */,
+				EAAC955F1858F7D400E8BAB5 /* KurikuAppDelegate.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		EA10F1251860EDFF0084F6C8 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EAAC95671858F7D400E8BAB5 /* JournalViewController.h */,
+				EAAC95681858F7D400E8BAB5 /* JournalViewController.m */,
+				EA35308B185F23C20024E7C9 /* EntryListViewController.h */,
+				EA35308C185F23C20024E7C9 /* EntryListViewController.m */,
+				EAAC956A1858F7D400E8BAB5 /* TodoViewController.h */,
+				EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */,
+				EA89E74C185C074600643266 /* EditTodoViewController.h */,
+				EA89E74D185C074600643266 /* EditTodoViewController.m */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		EAAC95431858F7D400E8BAB5 = {
@@ -184,23 +210,13 @@
 		EAAC95551858F7D400E8BAB5 /* Kuriku */ = {
 			isa = PBXGroup;
 			children = (
-				EAAC95611858F7D400E8BAB5 /* Main_iPhone.storyboard */,
-				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
+				EA10F1241860EDF40084F6C8 /* App */,
 				EA048CBC1860C91400990957 /* Cells */,
-				EAAC955E1858F7D400E8BAB5 /* KurikuAppDelegate.h */,
-				EAAC955F1858F7D400E8BAB5 /* KurikuAppDelegate.m */,
-				EAAC95671858F7D400E8BAB5 /* JournalViewController.h */,
-				EAAC95681858F7D400E8BAB5 /* JournalViewController.m */,
-				EA35308B185F23C20024E7C9 /* EntryListViewController.h */,
-				EA35308C185F23C20024E7C9 /* EntryListViewController.m */,
-				EAAC956A1858F7D400E8BAB5 /* TodoViewController.h */,
-				EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */,
-				EA89E74C185C074600643266 /* EditTodoViewController.h */,
-				EA89E74D185C074600643266 /* EditTodoViewController.m */,
-				EA048CAB186083FF00990957 /* Entities */,
-				EAAC958C1859327D00E8BAB5 /* Kuriku.xcdatamodeld */,
+				EA10F1251860EDFF0084F6C8 /* View Controllers */,
+				EA048CAB186083FF00990957 /* Data */,
 				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
 				EAAC95561858F7D400E8BAB5 /* Supporting Files */,
+				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
 			);
 			path = Kuriku;
 			sourceTree = "<group>";
