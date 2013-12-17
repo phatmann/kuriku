@@ -13,24 +13,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="280" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lre-Il-pkw" userLabel="Checkbox">
-                        <rect key="frame" x="10" y="0.0" width="20" height="43"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="20" id="xDv-K0-iBT"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <state key="normal" image="checkbox">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <state key="selected" image="checkbox-checked"/>
-                        <state key="highlighted" image="checkbox-highlighted"/>
-                        <connections>
-                            <action selector="checkboxWasTapped" destination="EO8-ag-nKp" eventType="touchUpInside" id="E5F-Q8-OBM"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBO-UK-Sdh" userLabel="Title">
-                        <rect key="frame" x="40" y="0.0" width="230" height="43"/>
+                        <rect key="frame" x="20" y="0.0" width="240" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -38,24 +22,15 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="lre-Il-pkw" firstAttribute="top" secondItem="heM-G2-le1" secondAttribute="top" id="3rL-1w-MOh"/>
                     <constraint firstItem="rBO-UK-Sdh" firstAttribute="top" secondItem="heM-G2-le1" secondAttribute="top" id="CJ6-lq-6S7"/>
                     <constraint firstAttribute="bottom" secondItem="rBO-UK-Sdh" secondAttribute="bottom" id="EgR-Zd-jXv"/>
-                    <constraint firstItem="lre-Il-pkw" firstAttribute="leading" secondItem="heM-G2-le1" secondAttribute="leading" constant="10" id="ING-im-JMc"/>
-                    <constraint firstItem="rBO-UK-Sdh" firstAttribute="leading" secondItem="lre-Il-pkw" secondAttribute="trailing" constant="10" id="NfE-Ib-gkq"/>
-                    <constraint firstAttribute="bottom" secondItem="lre-Il-pkw" secondAttribute="bottom" id="TKX-a1-4ws"/>
-                    <constraint firstAttribute="trailing" secondItem="rBO-UK-Sdh" secondAttribute="trailing" constant="10" id="c0X-uz-hIe"/>
+                    <constraint firstAttribute="trailing" secondItem="rBO-UK-Sdh" secondAttribute="trailing" constant="20" symbolic="YES" id="c0X-uz-hIe"/>
+                    <constraint firstItem="rBO-UK-Sdh" firstAttribute="leading" secondItem="heM-G2-le1" secondAttribute="leading" constant="20" symbolic="YES" id="jEn-Ov-ml6"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="checkbox" destination="lre-Il-pkw" id="eYb-Ns-FCJ"/>
                 <outlet property="titleLabel" destination="rBO-UK-Sdh" id="X7D-0s-3JS"/>
             </connections>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="checkbox" width="16" height="16"/>
-        <image name="checkbox-checked" width="16" height="16"/>
-        <image name="checkbox-highlighted" width="16" height="16"/>
-    </resources>
 </document>

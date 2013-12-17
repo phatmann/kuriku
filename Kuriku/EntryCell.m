@@ -11,12 +11,12 @@
 
 @interface EntryCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIButton *checkbox;
 @end
 
 @implementation EntryCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *subview = [[NSBundle mainBundle] loadNibNamed:@"EntryCell" owner:self options:nil][0];
@@ -26,7 +26,8 @@
     return self;
 }
 
-- (void)setEntry:(Entry *)entry {
+- (void)setEntry:(Entry *)entry
+{
     _entry = entry;
     
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc]
@@ -40,10 +41,6 @@
                                    attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:10]}]];
     
     self.titleLabel.attributedText = title;
-}
-
-- (IBAction)checkboxWasTapped {
-    self.checkbox.selected = !self.checkbox.selected;
 }
 
 @end
