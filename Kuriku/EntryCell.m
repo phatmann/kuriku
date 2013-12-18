@@ -22,26 +22,33 @@
 - (void)setEntry:(Entry *)entry
 {
     _entry = entry;
-    self.titleLabel.text = entry.todo.title;
-    self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
+    
+    NSDictionary *attributes;
     
     switch (entry.type) {
         case EntryTypeCreateTodo:
+            attributes = @{};
             self.typeLabel.text = @"NEW";
             break;
             
         case EntryTypeTakeAction:
+            attributes = @{NSFontAttributeName:[UIFont italicSystemFontOfSize:self.titleLabel.font.pointSize]};
             self.typeLabel.text = @"ACTION";
             break;
             
         case EntryTypeCompleteTodo:
+            attributes = @{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle)};
             self.typeLabel.text = @"COMPLETE";
             break;
             
         case EntryTypeContinueTodo:
+            attributes = @{};
             self.typeLabel.text = @"CONTINUE";
             break;
     }
+    
+    self.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:entry.todo.title attributes:attributes];
+    self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
 }
 
 @end
