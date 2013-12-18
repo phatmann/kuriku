@@ -12,7 +12,6 @@
 #import "Entry.h"
 
 @interface ListViewController ()
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) Todo *selectedTodo;
 @end
 
@@ -31,6 +30,7 @@
 {
     Todo *todo = sender;
     EditTodoViewController *entryViewController = segue.destinationViewController;
+    entryViewController.delegate = self;
     entryViewController.todo = todo;
 }
 
@@ -98,6 +98,12 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView reloadData];
+}
+
+#pragma mark - Edit Todo Controller Delegate
+
+- (void)todoWasEdited:(Todo *)todo {
+    // Subclasses can override
 }
 
 #pragma mark - 

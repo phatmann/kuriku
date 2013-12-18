@@ -84,6 +84,12 @@
     return [tinyDateFormatter stringFromDate:date];
 }
 
+#pragma mark - Edit Todo Controller Delegate
+
+- (void)todoWasEdited:(Todo *)todo {
+    [self.tableView reloadData];
+}
+
 #pragma mark -
 
 - (Entry *)entryAtIndexPath:(NSIndexPath *)indexPath {

@@ -58,6 +58,7 @@
     self.todo.importance = self.importanceSlider.value;
     
     [[IBCoreDataStore mainStore] save];
+    [self.delegate todoWasEdited:self.todo];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

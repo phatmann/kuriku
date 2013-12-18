@@ -10,8 +10,15 @@
 
 @class Todo;
 
+@protocol EditTodoViewControllerDelegate <NSObject>
+
+- (void)todoWasEdited:(Todo *)todo;
+
+@end
+
 @interface EditTodoViewController : UIViewController
 
 @property (strong, nonatomic) Todo *todo;
+@property (weak, nonatomic) id<EditTodoViewControllerDelegate> delegate;
 
 @end
