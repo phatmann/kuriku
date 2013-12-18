@@ -19,9 +19,12 @@
 {
     _todo = todo;
     
+    NSDictionary *attributes = todo.status == TodoStatusCompleted ?
+        @{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle)} : @{};
+    
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc]
                                         initWithString:todo.title
-                                        attributes:@{}];
+                                        attributes:attributes];
     
     NSString *subtitle = [NSString stringWithFormat:@"  %d %d", todo.urgency, todo.importance];
     

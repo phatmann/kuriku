@@ -16,7 +16,7 @@
 
 @interface EntryListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSIndexPath *selectedIndexPath;
+@property (strong, nonatomic) Entry *selectedEntry;
 @end
 
 @implementation EntryListViewController
@@ -70,9 +70,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    self.selectedIndexPath = indexPath;
+    self.selectedEntry = [self entryAtIndexPath:indexPath];
+    Todo *todo = (Todo *)self.selectedEntry;
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mark complete", @"Take action", nil];
+    NSString *completionActionName = todo.status == TodoStatusCompleted ? @"Unmark completed" : @"Mark completed";
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:completionActionName, @"Take action", nil];
     [actionSheet showInView:self.view];
 }
 
@@ -95,10 +98,13 @@
     int markCompletedButtonIndex = actionSheet.firstOtherButtonIndex;
     int takeActionButtonIndex    = markCompletedButtonIndex + 1;
     
-    Todo *todo = (Todo *)[self entryAtIndexPath:self.selectedIndexPath];
+    Todo *todo = (Todo *)self.selectedEntry;
     
     if (buttonIndex == markCompletedButtonIndex) {
-        todo.status = TodoStatusCompleted;
+        if (todo.status == TodoStatusCompleted)
+            todo.status = TodoStatusNotStarted;
+        else
+            todo.status = TodoStatusCompleted;
     } else if (buttonIndex == takeActionButtonIndex) {
         // TODO
     }
