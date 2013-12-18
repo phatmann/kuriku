@@ -9,11 +9,20 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Journal;
+@class Journal, Todo;
+
+typedef enum {
+    EntryTypeCreateTodo,
+    EntryTypeTakeAction,
+    EntryTypeCompleteTodo,
+    EntryTypeContinueTodo
+} EntryType;
 
 @interface Entry : NSManagedObject
 
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic) int16_t type;
+@property (nonatomic, retain) Todo *todo;
+
 @property (nonatomic) NSString *journalDateString;
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic, strong) Journal *journal;

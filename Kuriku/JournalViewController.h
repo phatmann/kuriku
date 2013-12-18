@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EntryListViewController.h"
+#import "ListViewController.h"
 
-@interface JournalViewController : EntryListViewController
+@interface JournalViewController : ListViewController
 
 @end

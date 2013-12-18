@@ -8,12 +8,13 @@
 
 #import "JournalViewController.h"
 #import "Entry.h"
+#import "EntryCell.h"
 
 @implementation JournalViewController
 
 #pragma mark -
     
-- (void)performFetch {
+- (void)createFetchedResultsController {
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
@@ -23,12 +24,26 @@
                                      managedObjectContext:context
                                      sectionNameKeyPath:@"journalDateString"
                                      cacheName:nil];
-    self.fetchedResultsController.delegate = self;
-    NSError *error;
-    [self.fetchedResultsController performFetch:&error];
 }
     
 #pragma mark - Table View Delegate
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    EntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EntryCell" forIndexPath:indexPath];
+    cell.entry = [self entryAtIndexPath:indexPath];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    Entry *entry = [self entryAtIndexPath:indexPath];
+    [self showTodoActionSheet:entry.todo];
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    Entry *entry = [self entryAtIndexPath:indexPath];
+    [self showEditTodoView:entry.todo];
+}
     
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([[self.fetchedResultsController sections] count] > 0) {
@@ -69,5 +84,10 @@
     return [tinyDateFormatter stringFromDate:date];
 }
 
+#pragma mark -
+
+- (Entry *)entryAtIndexPath:(NSIndexPath *)indexPath {
+    return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+}
 
 @end

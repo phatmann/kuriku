@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 7Actions. All rights reserved.
 //
 
-#import "Entry.h"
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 typedef enum {
     TodoStatusNormal,
@@ -17,25 +18,27 @@ typedef enum {
 static const int TodoImportanceDefaultValue = 5;
 static const int TodoUrgencyDefaultValue    = 0;
 
-@interface Todo : Entry
+@interface Todo : NSManagedObject
 
+@property (nonatomic, strong) NSString *title;
 @property (nonatomic) int16_t importance;
 @property (nonatomic) int16_t urgency;
 @property (nonatomic) float_t priority;
+@property (nonatomic) NSDate *createDate;
 @property (nonatomic) NSDate *dueDate;
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) BOOL star;
 @property (nonatomic) int16_t status;
-@property (nonatomic, strong) NSSet *actions;
+@property (nonatomic, strong) NSSet *entries;
 
 @end
 
 @interface Todo (CoreDataGeneratedAccessors)
 
-- (void)addActionsObject:(NSManagedObject *)value;
-- (void)removeActionsObject:(NSManagedObject *)value;
-- (void)addActions:(NSSet *)values;
-- (void)removeActions:(NSSet *)values;
+- (void)addEntriesObject:(NSManagedObject *)value;
+- (void)removeEntriesObject:(NSManagedObject *)value;
+- (void)addEntries:(NSSet *)values;
+- (void)removeEntries:(NSSet *)values;
 
 @end
 

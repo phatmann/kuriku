@@ -16,10 +16,11 @@
 
 @implementation Entry
 
-@dynamic title;
 @dynamic journalDateString;
 @dynamic timestamp;
+@dynamic todo;
 @dynamic journal;
+@dynamic type;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];

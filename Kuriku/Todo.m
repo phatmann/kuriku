@@ -15,17 +15,20 @@
 
 @implementation Todo
 
+@dynamic title;
 @dynamic importance;
 @dynamic urgency;
+@dynamic createDate;
 @dynamic dueDate;
 @dynamic startDate;
 @dynamic priority;
 @dynamic star;
 @dynamic status;
-@dynamic actions;
+@dynamic entries;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
+    self.createDate = [NSDate date];
 }
 
 - (void)didChangeValueForKey:(NSString *)key {

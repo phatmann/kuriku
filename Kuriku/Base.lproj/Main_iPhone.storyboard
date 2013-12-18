@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Spm-Ra-g4i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Spm-Ra-g4i">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -20,6 +20,46 @@
                                 <rect key="frame" x="20" y="72" width="280" height="351"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" id="17P-5o-DvO" userLabel="Entry Cell" customClass="EntryCell">
+                                        <rect key="frame" x="0.0" y="86" width="280" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="17P-5o-DvO" id="gjI-eT-jYN">
+                                            <rect key="frame" x="0.0" y="0.0" width="233" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TYPE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naT-or-Sdq" userLabel="Type">
+                                                    <rect key="frame" x="20" y="17" width="75" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="75" id="hw0-Fg-EkE"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GgI-2J-7Mc" userLabel="Todo Title">
+                                                    <rect key="frame" x="100" y="11" width="113" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="GgI-2J-7Mc" firstAttribute="baseline" secondItem="naT-or-Sdq" secondAttribute="baseline" id="7BH-l4-SDc"/>
+                                                <constraint firstAttribute="trailing" secondItem="GgI-2J-7Mc" secondAttribute="trailing" constant="20" symbolic="YES" id="CaD-og-LIs"/>
+                                                <constraint firstItem="GgI-2J-7Mc" firstAttribute="leading" secondItem="naT-or-Sdq" secondAttribute="trailing" constant="5" id="IqS-jI-4Xe"/>
+                                                <constraint firstItem="naT-or-Sdq" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="20" id="Ybo-JZ-3mg"/>
+                                                <constraint firstAttribute="centerY" secondItem="GgI-2J-7Mc" secondAttribute="centerY" id="fqV-rM-NgM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="GgI-2J-7Mc" id="ieM-Oq-QyS"/>
+                                            <outlet property="typeLabel" destination="naT-or-Sdq" id="zea-a3-RMM"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="CZ4-MO-1fc" id="Rbh-2U-xO8"/>
@@ -38,7 +78,7 @@
                     <tabBarItem key="tabBarItem" title="Journal" image="journal" id="u1e-5L-l1D"/>
                     <connections>
                         <outlet property="tableView" destination="aKD-IV-7AV" id="NrM-gl-Iga"/>
-                        <segue destination="XCd-pD-Vz0" kind="push" identifier="edit entry" id="6hw-8y-Pc3"/>
+                        <segue destination="XCd-pD-Vz0" kind="push" identifier="Edit todo" id="6hw-8y-Pc3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
@@ -61,6 +101,34 @@
                                 <rect key="frame" x="20" y="72" width="280" height="351"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TodoCell" id="Mr5-rG-tpb" userLabel="Todo Cell" customClass="TodoCell">
+                                        <rect key="frame" x="0.0" y="86" width="280" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mr5-rG-tpb" id="Jm0-Yg-Mzw">
+                                            <rect key="frame" x="0.0" y="0.0" width="233" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0va-am-PJi" userLabel="Title">
+                                                    <rect key="frame" x="20" y="0.0" width="193" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="0va-am-PJi" secondAttribute="trailing" constant="20" symbolic="YES" id="8nQ-FN-Rcy"/>
+                                                <constraint firstItem="0va-am-PJi" firstAttribute="top" secondItem="Jm0-Yg-Mzw" secondAttribute="top" id="Qm3-Le-hsu"/>
+                                                <constraint firstItem="0va-am-PJi" firstAttribute="leading" secondItem="Jm0-Yg-Mzw" secondAttribute="leading" constant="20" symbolic="YES" id="RaC-HC-5ae"/>
+                                                <constraint firstAttribute="bottom" secondItem="0va-am-PJi" secondAttribute="bottom" id="kdf-zb-BOF"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="0va-am-PJi" id="sbD-zn-boU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="QUy-BD-bpt" id="DZG-q6-ZcC"/>
@@ -79,7 +147,7 @@
                     <tabBarItem key="tabBarItem" title="Todo" image="todo" id="Z7h-1E-pvt"/>
                     <connections>
                         <outlet property="tableView" destination="xfL-Hz-Rmj" id="Lj3-pa-4is"/>
-                        <segue destination="XCd-pD-Vz0" kind="push" identifier="edit entry" id="1av-td-vF4"/>
+                        <segue destination="XCd-pD-Vz0" kind="push" identifier="Edit todo" id="1av-td-vF4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qq-4t-Ow8" sceneMemberID="firstResponder"/>

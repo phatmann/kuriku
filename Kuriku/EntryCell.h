@@ -1,5 +1,5 @@
 //
-//  ActionCell.h
+//  EntryCell.h
 //  Kuriku
 //
 //  Created by Tony Mann on 12/14/13.
@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class Action;
+@class Entry;
 
-@interface ActionCell : UITableViewCell
+@interface EntryCell : UITableViewCell
 
-@property (strong, nonatomic) Action *action;
+@property (strong, nonatomic) Entry *entry;
 
 @end

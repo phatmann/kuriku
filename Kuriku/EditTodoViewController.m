@@ -8,6 +8,7 @@
 
 #import "EditTodoViewController.h"
 #import "Todo.h"
+#import "Entry.h"
 #import <InnerBand/InnerBand.h>
 
 @interface EditTodoViewController ()
@@ -44,8 +45,13 @@
 }
     
 - (IBAction)saveButtonWasTapped:(UIBarButtonItem *)sender {
-    if (!self.todo)
+    if (!self.todo) {
         self.todo = [Todo create];
+        
+        Entry *entry = [Entry create];
+        entry.todo = self.todo;
+        entry.type = EntryTypeCreateTodo;
+    }
     
     self.todo.title      = self.titleField.text;
     self.todo.urgency    = self.urgencySlider.value;

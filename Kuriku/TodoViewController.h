@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EntryListViewController.h"
+#import "ListViewController.h"
 
-@interface TodoViewController : EntryListViewController
+@interface TodoViewController : ListViewController
 
 @end
