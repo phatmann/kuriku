@@ -19,8 +19,8 @@
 {
     _todo = todo;
     
-    NSDictionary *attributes = todo.status == TodoStatusCompleted ?
-        @{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle)} : @{};
+    NSDictionary *attributes = todo.status == TodoStatusNormal ?
+        @{} : @{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle)};
     
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc]
                                         initWithString:todo.title

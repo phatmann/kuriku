@@ -9,8 +9,7 @@
 #import "Entry.h"
 
 typedef enum {
-    TodoStatusNotStarted,
-    TodoStatusInProgress,
+    TodoStatusNormal,
     TodoStatusCompleted,
     TodoStatusCanceled
 } TodoStatus;

@@ -71,12 +71,15 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.selectedEntry = [self entryAtIndexPath:indexPath];
-    Todo *todo = (Todo *)self.selectedEntry;
     
-    NSString *completionActionName = todo.status == TodoStatusCompleted ? @"Unmark completed" : @"Mark completed";
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:completionActionName, @"Take action", nil];
-    [actionSheet showInView:self.view];
+    if ([self.selectedEntry  isKindOfClass:[Todo class]]) {
+        Todo *todo = (Todo *)self.selectedEntry;
+        
+        NSString *completionActionName = todo.status == TodoStatusNormal ? @"Mark completed" : @"Unmark completed";
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:completionActionName, @"Take action", nil];
+        [actionSheet showInView:self.view];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -89,7 +92,9 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"edit entry" sender:cell];
+    
+    if ([cell isKindOfClass:[TodoCell class]])
+        [self performSegueWithIdentifier:@"edit entry" sender:cell];
 }
 
 #pragma mark - Action Sheet Delegate
@@ -101,13 +106,17 @@
     Todo *todo = (Todo *)self.selectedEntry;
     
     if (buttonIndex == markCompletedButtonIndex) {
-        if (todo.status == TodoStatusCompleted)
-            todo.status = TodoStatusNotStarted;
-        else
+        if (todo.status == TodoStatusNormal)
             todo.status = TodoStatusCompleted;
+        else
+            todo.status = TodoStatusNormal;
     } else if (buttonIndex == takeActionButtonIndex) {
-        // TODO
+        Action *action = [Action create];
+        action.title = todo.title;
+        action.todo  = todo;
     }
+    
+    [[IBCoreDataStore mainStore] save];
 }
 
 #pragma mark - Fetched Results Controller Delegate
