@@ -8,9 +8,13 @@
 
 #import "TodoCell.h"
 #import "Todo.h"
+#import <InnerBand/InnerBand.h>
 
 @interface TodoCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *urgencyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *importanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastActionDateLabel;
 @end
 
 @implementation TodoCell
@@ -22,17 +26,11 @@
     NSDictionary *attributes = todo.status == TodoStatusNormal ?
         @{} : @{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle)};
     
-    NSMutableAttributedString *title = [[NSMutableAttributedString alloc]
-                                        initWithString:todo.title
-                                        attributes:attributes];
+    self.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:todo.title attributes:attributes];
     
-    NSString *subtitle = [NSString stringWithFormat:@"  %d %d", todo.urgency, todo.importance];
-    
-    [title appendAttributedString:[[NSAttributedString alloc]
-                                   initWithString:subtitle
-                                   attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:10]}]];
-    
-    self.titleLabel.attributedText = title;
+    self.urgencyLabel.text = [@(todo.urgency) stringValue];
+    self.importanceLabel.text = [@(todo.importance) stringValue];
+    self.lastActionDateLabel.text = [todo.lastActionDate formattedDatePattern:@"M/d"];
 }
 
 @end

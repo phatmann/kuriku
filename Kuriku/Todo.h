@@ -31,6 +31,8 @@ static const int TodoUrgencyDefaultValue    = 0;
 @property (nonatomic) int16_t status;
 @property (nonatomic, strong) NSSet *entries;
 
+@property (nonatomic, readonly) NSDate *lastActionDate;
+
 @end
 
 @interface Todo (CoreDataGeneratedAccessors)
