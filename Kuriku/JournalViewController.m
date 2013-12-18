@@ -8,6 +8,7 @@
 
 #import "JournalViewController.h"
 #import "Entry.h"
+#import "Todo.h"
 #import "EntryCell.h"
 
 @implementation JournalViewController
@@ -68,6 +69,19 @@
     
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Entry *entry = [self entryAtIndexPath:indexPath];
+    return entry.type == EntryTypeCreateTodo ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Entry *entry = [self entryAtIndexPath:indexPath];
+        [entry.todo destroy];
+        [[IBCoreDataStore mainStore] save];
+    }
 }
 
 #pragma mark - Fetched Results Controller Delegate

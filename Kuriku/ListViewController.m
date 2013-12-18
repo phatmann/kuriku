@@ -28,10 +28,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    Todo *todo = sender;
-    EditTodoViewController *entryViewController = segue.destinationViewController;
-    entryViewController.delegate = self;
-    entryViewController.todo = todo;
+    if ([segue.identifier isEqualToString:@"Edit todo"]) {
+        Todo *todo = sender;
+        EditTodoViewController *entryViewController = segue.destinationViewController;
+        entryViewController.delegate = self;
+        entryViewController.todo = todo;
+    }
 }
 
 #pragma mark -
@@ -40,7 +42,7 @@
     self.selectedTodo = todo;
     NSString *completionActionName = todo.status == TodoStatusNormal ? @"Mark completed" : @"Unmark completed";
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:completionActionName, @"Take action", nil];
-    [actionSheet showInView:self.view];
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 - (void)showEditTodoView:(Todo *)todo {

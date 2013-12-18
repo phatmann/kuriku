@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *titleField;
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 
 @end
 
@@ -25,12 +26,14 @@
     [super viewDidLoad];
 	
     if (self.todo) {
-        self.titleField.text        = self.todo.title;
-        self.urgencySlider.value    = self.todo.urgency;
-        self.importanceSlider.value = self.todo.importance;
+        self.titleField.text         = self.todo.title;
+        self.urgencySlider.value     = self.todo.urgency;
+        self.importanceSlider.value  = self.todo.importance;
+        self.navigationBarItem.title = @"Edit Todo";
     } else {
-        self.urgencySlider.value    = TodoUrgencyDefaultValue;
-        self.importanceSlider.value = TodoImportanceDefaultValue;
+        self.urgencySlider.value     = TodoUrgencyDefaultValue;
+        self.importanceSlider.value  = TodoImportanceDefaultValue;
+        self.navigationBarItem.title = @"New Todo";
         [self.titleField becomeFirstResponder];
     }
 }
@@ -41,7 +44,7 @@
 }
     
 - (IBAction)cancelButtonWasTapped:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
     
 - (IBAction)saveButtonWasTapped:(UIBarButtonItem *)sender {
@@ -59,7 +62,7 @@
     
     [[IBCoreDataStore mainStore] save];
     [self.delegate todoWasEdited:self.todo];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)sliderValueChanged:(UISlider *)slider {
