@@ -10,6 +10,7 @@
 		BEDA4BF7CDB24C2E98718580 /* libPods-Kuriku.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F11D2E34FF94EF8A9986734 /* libPods-Kuriku.a */; };
 		EA048CAA1860832500990957 /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CA91860832500990957 /* Todo.m */; };
 		EA048CBF1860C93600990957 /* EntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CBE1860C93600990957 /* EntryCell.m */; };
+		EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = EA10F1261861B2FF0084F6C8 /* TODO.md */; };
 		EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* ListViewController.m */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
 		EA89E750185C136400643266 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA89E74F185C136400643266 /* CoreData.framework */; };
@@ -52,6 +53,7 @@
 		EA048CA91860832500990957 /* Todo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Todo.m; sourceTree = "<group>"; };
 		EA048CBD1860C92A00990957 /* EntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryCell.h; sourceTree = "<group>"; };
 		EA048CBE1860C93600990957 /* EntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryCell.m; sourceTree = "<group>"; };
+		EA10F1261861B2FF0084F6C8 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.md; sourceTree = "<group>"; };
 		EA35308B185F23C20024E7C9 /* ListViewController.h */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA35308C185F23C20024E7C9 /* ListViewController.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 		EAAC95431858F7D400E8BAB5 = {
 			isa = PBXGroup;
 			children = (
+				EA10F1261861B2FF0084F6C8 /* TODO.md */,
 				EAAC95551858F7D400E8BAB5 /* Kuriku */,
 				EAAC957A1858F7D400E8BAB5 /* KurikuTests */,
 				EAAC954E1858F7D400E8BAB5 /* Frameworks */,
@@ -323,6 +326,7 @@
 				EAAC956E1858F7D400E8BAB5 /* Images.xcassets in Resources */,
 				EAAC95631858F7D400E8BAB5 /* Main_iPhone.storyboard in Resources */,
 				EAAC955A1858F7D400E8BAB5 /* InfoPlist.strings in Resources */,
+				EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
