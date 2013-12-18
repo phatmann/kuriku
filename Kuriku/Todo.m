@@ -42,6 +42,14 @@
         static const int maxValue = 10;
         self.priority = (self.urgency + self.importance) / (maxValue * 2.0f);
     }
+    
+    
+}
+
+- (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
+    if ([inKey isEqualToString:@"entries"]) {
+        _actionEntriesByDate = nil;
+    }
 }
 
 - (NSArray *)actionEntriesByDate {

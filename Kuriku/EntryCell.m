@@ -24,19 +24,19 @@
     
     switch (entry.type) {
         case EntryTypeCreateTodo:
-            self.typeLabel.text = @"CREATE";
+            self.typeLabel.text = @"NEW";
             break;
             
         case EntryTypeTakeAction:
-            self.typeLabel.text = @"ACTION";
+            self.typeLabel.text = @"ACT";
             break;
             
         case EntryTypeCompleteTodo:
-            self.typeLabel.text = @"COMPLETE";
+            self.typeLabel.text = @"DONE";
             break;
             
         case EntryTypeContinueTodo:
-            self.typeLabel.text = @"CONTINUE";
+            self.typeLabel.text = @"CONT";
             break;
     }
 }

@@ -70,8 +70,8 @@
 #pragma mark - Action Sheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    int markCompletedButtonIndex = actionSheet.firstOtherButtonIndex;
-    int takeActionButtonIndex    = markCompletedButtonIndex + 1;
+    NSInteger markCompletedButtonIndex = actionSheet.firstOtherButtonIndex;
+    NSInteger takeActionButtonIndex    = markCompletedButtonIndex + 1;
     
     Todo *todo = (Todo *)self.selectedTodo;
     
@@ -92,6 +92,7 @@
     }
     
     [[IBCoreDataStore mainStore] save];
+    
 }
 
 #pragma mark - Fetched Results Controller Delegate
