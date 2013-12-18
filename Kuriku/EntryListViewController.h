@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <InnerBand/InnerBand.h>
 
-@interface EntryListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface EntryListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @end

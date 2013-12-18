@@ -16,6 +16,7 @@
 
 @interface EntryListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 @end
 
 @implementation EntryListViewController
@@ -54,7 +55,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Entry* entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    Entry *entry = [self entryAtIndexPath:indexPath];
     
     if ([entry isKindOfClass:[Todo class]]) {
         TodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell" forIndexPath:indexPath];
@@ -69,15 +70,37 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"edit entry" sender:cell];
+    self.selectedIndexPath = indexPath;
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mark complete", @"Take action", nil];
+    [actionSheet showInView:self.view];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Entry* entry = (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+        Entry *entry = [self entryAtIndexPath:indexPath];
         [entry destroy];
         [[IBCoreDataStore mainStore] save];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"edit entry" sender:cell];
+}
+
+#pragma mark - Action Sheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    int markCompletedButtonIndex = actionSheet.firstOtherButtonIndex;
+    int takeActionButtonIndex    = markCompletedButtonIndex + 1;
+    
+    Todo *todo = (Todo *)[self entryAtIndexPath:self.selectedIndexPath];
+    
+    if (buttonIndex == markCompletedButtonIndex) {
+        todo.status = TodoStatusCompleted;
+    } else if (buttonIndex == takeActionButtonIndex) {
+        // TODO
     }
 }
 
@@ -92,6 +115,12 @@
 - (void)performFetch
 {
     // Subclasses override
+}
+
+#pragma mark -
+
+- (Entry *)entryAtIndexPath:(NSIndexPath *)indexPath {
+    return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
 @end
