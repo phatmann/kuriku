@@ -9,10 +9,12 @@
 #import "EntryCell.h"
 #import "Entry.h"
 #import "Todo.h"
+#import <InnerBand/InnerBand.h>
 
 @interface EntryCell ()
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @end
 
 @implementation EntryCell
@@ -21,6 +23,7 @@
 {
     _entry = entry;
     self.titleLabel.text = entry.todo.title;
+    self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     
     switch (entry.type) {
         case EntryTypeCreateTodo:
@@ -28,15 +31,15 @@
             break;
             
         case EntryTypeTakeAction:
-            self.typeLabel.text = @"ACT";
+            self.typeLabel.text = @"ACTION";
             break;
             
         case EntryTypeCompleteTodo:
-            self.typeLabel.text = @"DONE";
+            self.typeLabel.text = @"COMPLETE";
             break;
             
         case EntryTypeContinueTodo:
-            self.typeLabel.text = @"CONT";
+            self.typeLabel.text = @"CONTINUE";
             break;
     }
 }
