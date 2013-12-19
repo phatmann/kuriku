@@ -28,6 +28,10 @@ Cosmetic
 * warmer looking journal
 * replace entry type text with icon
 
+Standards
+---------
+* Use preferred font size, no hard-coded text widths
+
 Not Baked
 ---------
 * replace tab bar?

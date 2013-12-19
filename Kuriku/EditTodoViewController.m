@@ -36,6 +36,8 @@
         self.navigationBarItem.title = @"New Todo";
         [self.titleField becomeFirstResponder];
     }
+    
+    [self titleDidChange];
 }
 
 - (IBAction)titleDidChange {
