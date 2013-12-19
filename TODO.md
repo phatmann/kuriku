@@ -1,3 +1,6 @@
+Bugs
+----
+
 Usable
 ------
 * Indicate importance

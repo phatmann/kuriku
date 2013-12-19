@@ -38,16 +38,15 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)titleDidChange {
+    self.navigationBarItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
 }
     
 - (IBAction)cancelButtonWasTapped:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
     
-- (IBAction)saveButtonWasTapped:(UIBarButtonItem *)sender {
+- (IBAction)saveButtonWasTapped {
     if (!self.todo) {
         self.todo = [Todo create];
         
@@ -67,6 +66,12 @@
 
 - (IBAction)sliderValueChanged:(UISlider *)slider {
     [slider setValue:roundf(slider.value) animated:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    [self saveButtonWasTapped];
+    return NO;
 }
 
 @end
