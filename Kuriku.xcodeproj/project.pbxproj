@@ -169,11 +169,11 @@
 		EAAC95431858F7D400E8BAB5 = {
 			isa = PBXGroup;
 			children = (
-				EA10F1261861B2FF0084F6C8 /* TODO.md */,
 				EAAC95551858F7D400E8BAB5 /* Kuriku */,
 				EAAC957A1858F7D400E8BAB5 /* KurikuTests */,
 				EAAC954E1858F7D400E8BAB5 /* Frameworks */,
 				EAAC954D1858F7D400E8BAB5 /* Products */,
+				EA10F1261861B2FF0084F6C8 /* TODO.md */,
 			);
 			sourceTree = "<group>";
 		};
