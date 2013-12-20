@@ -62,7 +62,8 @@
     
     return nil;
 }
-    
+
+#ifdef SHOW_INDEX
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     return [self.fetchedResultsController sectionIndexTitles];
 }
@@ -70,6 +71,7 @@
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
+#endif
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     Entry *entry = [self entryAtIndexPath:indexPath];
@@ -91,6 +93,7 @@
 
 #pragma mark - Fetched Results Controller Delegate
 
+#ifdef SHOW_INDEX
 - (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
     static NSDateFormatter *tinyDateFormatter;
     
@@ -102,6 +105,7 @@
     NSDate *date = [Entry journalDateFromString:sectionName];
     return [tinyDateFormatter stringFromDate:date];
 }
+#endif
 
 #pragma mark - Edit Todo Controller Delegate
 

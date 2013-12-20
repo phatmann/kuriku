@@ -5,14 +5,25 @@ Code
 ----
 * Todo object should create entries, not UI
 
-Usable
-------
-* Correct journal index behavior
+Usability
+---------
+
+Testing
+-------
+* Sample journal entries spread out over many days
+
+Cosmetic
+--------
+* get rid of nav bar or make it worth it
+* icons for tab bar
+* get rid of details accessory
+* warmer looking journal
+* replace entry type text with icon
 
 Before shipping
 ---------------
-* Remove sample data
-* Show help data
+* Remove test data
+* Show helpful sample data
 
 Basic Features
 --------------
@@ -25,24 +36,18 @@ Basic Features
 Advanced Features
 -----------------
 * Edit entry timestamp
-* Set entry title, show todo
-* action list for todos, can choose from actions when creating entry
-* projects
-
-Cosmetic
---------
-* get rid of nav bar or make it worth it
-* icons for tab bar
-* get rid of details accessory
-* warmer looking journal
-* replace entry type text with icon
+* Jump around journal
+* Set entry title, show todo with it
+* Action list for todos, can choose from actions when creating entry
+* Projects
 
 Standards
 ---------
-* Use preferred font size, no hard-coded text widths
+* Use preferred font size per iOS 7, no hard-coded text widths
+* Edit mode
 
-Not Baked
----------
+Thoughts
+--------
 * replace tab bar?
 * indicate stale actions
 * multi-dimensional display in Todos view, include stale todos
