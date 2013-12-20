@@ -34,6 +34,7 @@
 		EAAC958E1859327D00E8BAB5 /* Kuriku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAAC958C1859327D00E8BAB5 /* Kuriku.xcdatamodeld */; };
 		EAAC9591185936A300E8BAB5 /* Journal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9590185936A300E8BAB5 /* Journal.m */; };
 		EAAC9594185936A400E8BAB5 /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9593185936A400E8BAB5 /* Entry.m */; };
+		EADA6012186494BC006089AF /* Styles.m in Sources */ = {isa = PBXBuildFile; fileRef = EADA6011186494BC006089AF /* Styles.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,8 @@
 		EAAC9590185936A300E8BAB5 /* Journal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Journal.m; sourceTree = "<group>"; };
 		EAAC9592185936A400E8BAB5 /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
 		EAAC9593185936A400E8BAB5 /* Entry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entry.m; sourceTree = "<group>"; };
+		EADA6010186494BC006089AF /* Styles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Styles.h; sourceTree = "<group>"; };
+		EADA6011186494BC006089AF /* Styles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Styles.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,8 +136,8 @@
 		EA048CBC1860C91400990957 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				EA048CBD1860C92A00990957 /* EntryCell.h */,
 				EA048CBE1860C93600990957 /* EntryCell.m */,
+				EA048CBD1860C92A00990957 /* EntryCell.h */,
 				EA89E752185C15A300643266 /* TodoCell.m */,
 				EA89E751185C15A300643266 /* TodoCell.h */,
 			);
@@ -209,6 +212,8 @@
 				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
 				EAAC95561858F7D400E8BAB5 /* Supporting Files */,
 				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
+				EADA6010186494BC006089AF /* Styles.h */,
+				EADA6011186494BC006089AF /* Styles.m */,
 			);
 			path = Kuriku;
 			sourceTree = "<group>";
@@ -378,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EADA6012186494BC006089AF /* Styles.m in Sources */,
 				EAAC956C1858F7D400E8BAB5 /* TodoViewController.m in Sources */,
 				EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */,
 				EAAC9591185936A300E8BAB5 /* Journal.m in Sources */,

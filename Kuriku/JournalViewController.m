@@ -84,6 +84,11 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Entry *entry = [self entryAtIndexPath:indexPath];
+    return (entry.todo.importance * 1.5) + 36;
+}
+
 #pragma mark - Fetched Results Controller Delegate
 
 - (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {

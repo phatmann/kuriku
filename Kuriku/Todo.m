@@ -39,11 +39,9 @@
     [super didChangeValueForKey:key];
     
     if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"]) {
-        static const int maxValue = 10;
-        self.priority = (self.urgency + self.importance) / (maxValue * 2.0f);
+        CGFloat maxValue = TodoImportanceMaxValue + TodoUrgencyMaxValue;
+        self.priority = (self.urgency + self.importance) / maxValue;
     }
-    
-    
 }
 
 - (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {

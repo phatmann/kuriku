@@ -3,8 +3,7 @@ Bugs
 
 Usable
 ------
-* Indicate importance
-* Indicate urgency
+* Correct journal index behavior
 
 Basic Features
 --------------

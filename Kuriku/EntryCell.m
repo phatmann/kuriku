@@ -9,6 +9,7 @@
 #import "EntryCell.h"
 #import "Entry.h"
 #import "Todo.h"
+#import "Styles.h"
 #import <InnerBand/InnerBand.h>
 
 @interface EntryCell ()
@@ -22,32 +23,26 @@
 - (void)setEntry:(Entry *)entry
 {
     _entry = entry;
-    
-    NSDictionary *attributes;
-    
+  
     switch (entry.type) {
         case EntryTypeCreateTodo:
-            attributes = @{};
             self.typeLabel.text = @"NEW";
             break;
             
         case EntryTypeTakeAction:
-            attributes = @{NSFontAttributeName:[UIFont italicSystemFontOfSize:self.titleLabel.font.pointSize]};
             self.typeLabel.text = @"ACTION";
             break;
             
         case EntryTypeCompleteTodo:
-            attributes = @{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle)};
             self.typeLabel.text = @"COMPLETE";
             break;
             
         case EntryTypeContinueTodo:
-            attributes = @{};
             self.typeLabel.text = @"CONTINUE";
             break;
     }
     
-    self.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:entry.todo.title attributes:attributes];
+    self.titleLabel.attributedText = entryTitleString(entry);
     self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
 }
 

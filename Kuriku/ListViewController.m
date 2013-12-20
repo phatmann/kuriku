@@ -20,6 +20,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.estimatedRowHeight = 44;
+    
     [self createFetchedResultsController];
     self.fetchedResultsController.delegate = self;
     NSError *error;

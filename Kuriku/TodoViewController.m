@@ -55,6 +55,11 @@
     [self showEditTodoView:[self todoAtIndexPath:indexPath]];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Todo *todo = [self todoAtIndexPath:indexPath];
+    return (todo.importance * 1.5) + 36;
+}
+
 #pragma mark -
 
 - (Todo *)todoAtIndexPath:(NSIndexPath *)indexPath {

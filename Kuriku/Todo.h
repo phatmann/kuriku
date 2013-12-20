@@ -15,7 +15,10 @@ typedef enum {
     TodoStatusCanceled
 } TodoStatus;
 
-static const int TodoImportanceDefaultValue = 5;
+static const int TodoImportanceMaxValue = 4;
+static const int TodoUrgencyMaxValue    = 4;
+
+static const int TodoImportanceDefaultValue = 2;
 static const int TodoUrgencyDefaultValue    = 0;
 
 @interface Todo : NSManagedObject
