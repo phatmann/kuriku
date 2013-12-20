@@ -36,6 +36,8 @@ static const int TodoUrgencyDefaultValue    = 0;
 
 @property (nonatomic, readonly) NSDate *lastActionDate;
 
+- (void)createActionEntry;
+
 @end
 
 @interface Todo (CoreDataGeneratedAccessors)

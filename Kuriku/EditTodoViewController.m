@@ -51,10 +51,6 @@
 - (IBAction)saveButtonWasTapped {
     if (!self.todo) {
         self.todo = [Todo create];
-        
-        Entry *entry = [Entry create];
-        entry.todo = self.todo;
-        entry.type = EntryTypeCreateTodo;
     }
     
     self.todo.title      = self.titleField.text;

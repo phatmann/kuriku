@@ -33,6 +33,10 @@
 - (void)awakeFromInsert {
     [super awakeFromInsert];
     self.createDate = [NSDate date];
+    
+    Entry *entry = [Entry create];
+    entry.todo = self;
+    entry.type = EntryTypeCreateTodo;
 }
 
 - (void)didChangeValueForKey:(NSString *)key {
@@ -41,6 +45,10 @@
     if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"]) {
         CGFloat maxValue = TodoImportanceMaxValue + TodoUrgencyMaxValue;
         self.priority = (self.urgency + self.importance) / maxValue;
+    } else if ([key isEqualToString:@"status"]) {
+        Entry *entry = [Entry create];
+        entry.todo = self;
+        entry.type = (self.status == TodoStatusCompleted) ? EntryTypeCompleteTodo : EntryTypeContinueTodo;
     }
 }
 
@@ -49,6 +57,21 @@
         _actionEntriesByDate = nil;
     }
 }
+
+#pragma mark -
+
+- (void)createActionEntry {
+    Entry *entry = [Entry create];
+    entry.todo = self;
+    entry.type = EntryTypeTakeAction;
+}
+
+- (NSDate *)lastActionDate {
+    Entry *firstEntry = [self.actionEntriesByDate firstObject];
+    return firstEntry.timestamp;
+}
+
+#pragma mark -
 
 - (NSArray *)actionEntriesByDate {
     if (!_actionEntriesByDate) {
@@ -59,11 +82,6 @@
     }
     
     return _actionEntriesByDate;
-}
-
-- (NSDate *)lastActionDate {
-    Entry *firstEntry = [self.actionEntriesByDate firstObject];
-    return firstEntry.timestamp;
 }
 
 @end

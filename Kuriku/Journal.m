@@ -23,10 +23,6 @@
             todo.importance = importance;
             todo.urgency    = urgency;
             todo.title      = [NSString stringWithFormat:@"Importance %d, Urgency %d", importance, urgency];
-            
-            Entry *entry = [Entry create];
-            entry.todo = todo;
-            entry.type = EntryTypeCreateTodo;
         }
     }
     
@@ -35,10 +31,6 @@
     todo.importance = TodoImportanceDefaultValue;
     todo.urgency    = TodoUrgencyDefaultValue;
     todo.status     = TodoStatusCompleted;
-    
-    Entry *entry = [Entry create];
-    entry.todo = todo;
-    entry.type = EntryTypeCompleteTodo;
     
     [[IBCoreDataStore mainStore] save];
 }

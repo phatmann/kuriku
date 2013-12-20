@@ -84,15 +84,8 @@
             todo.status = TodoStatusCompleted;
         else
             todo.status = TodoStatusNormal;
-        
-        Entry *entry = [Entry create];
-        entry.todo = todo;
-        entry.type = EntryTypeCompleteTodo;
-        
     } else if (buttonIndex == takeActionButtonIndex) {
-        Entry *entry = [Entry create];
-        entry.todo = todo;
-        entry.type = EntryTypeTakeAction;
+        [todo createActionEntry];
     }
     
     [[IBCoreDataStore mainStore] save];

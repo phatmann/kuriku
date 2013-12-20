@@ -3,7 +3,6 @@ Bugs
 
 Code
 ----
-* Todo object should create entries, not UI
 
 Usability
 ---------
