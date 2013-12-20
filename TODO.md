@@ -1,9 +1,18 @@
 Bugs
 ----
 
+Code
+----
+* Todo object should create entries, not UI
+
 Usable
 ------
 * Correct journal index behavior
+
+Before shipping
+---------------
+* Remove sample data
+* Show help data
 
 Basic Features
 --------------
@@ -11,6 +20,7 @@ Basic Features
 * starred view
 * multi journals
 * task timer with duration in action entries
+* Show time in latest action date in Todo view
 
 Advanced Features
 -----------------

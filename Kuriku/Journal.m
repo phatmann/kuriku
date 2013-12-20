@@ -7,10 +7,40 @@
 //
 
 #import "Journal.h"
+#import "Entry.h"
+#import "Todo.h"
+#import <InnerBand/InnerBand.h>
 
 @implementation Journal
 
 @dynamic name;
 @dynamic entries;
+
+- (void)createSampleItems {
+    for (int importance = 0; importance <= TodoImportanceMaxValue; ++importance) {
+        for (int urgency = 0; urgency <= TodoUrgencyMaxValue; ++urgency) {
+            Todo *todo      = [Todo create];
+            todo.importance = importance;
+            todo.urgency    = urgency;
+            todo.title      = [NSString stringWithFormat:@"Importance %d, Urgency %d", importance, urgency];
+            
+            Entry *entry = [Entry create];
+            entry.todo = todo;
+            entry.type = EntryTypeCreateTodo;
+        }
+    }
+    
+    Todo *todo      = [Todo create];
+    todo.title      = @"Completed";
+    todo.importance = TodoImportanceDefaultValue;
+    todo.urgency    = TodoUrgencyDefaultValue;
+    todo.status     = TodoStatusCompleted;
+    
+    Entry *entry = [Entry create];
+    entry.todo = todo;
+    entry.type = EntryTypeCompleteTodo;
+    
+    [[IBCoreDataStore mainStore] save];
+}
 
 @end

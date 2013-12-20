@@ -10,14 +10,22 @@
 #import "Entry.h"
 #import "Todo.h"
 
-static NSString *baseFontName = @"HelveticaNeue";
-
-NSString *todoFontName(Todo *todo) {
-    return todo.urgency > 0 ? [baseFontName stringByAppendingString:@"-Bold"] : baseFontName;
-}
+static NSString *baseFontName = @"Helvetica Neue";
 
 CGFloat todoFontSize(Todo *todo) {
     return (todo.importance * 1.5) + 13;
+}
+
+UIFont *todoFont(Todo *todo) {
+    UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] init];
+    fontDescriptor = [fontDescriptor fontDescriptorWithFamily:baseFontName];
+    UIFontDescriptorSymbolicTraits fontTraits = 0;
+    
+    if (todo.urgency > 0)
+        fontTraits |= UIFontDescriptorTraitBold;
+    
+    fontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:fontTraits];
+    return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(todo)];
 }
 
 UIColor *todoTextColor(Todo *todo) {
@@ -25,17 +33,19 @@ UIColor *todoTextColor(Todo *todo) {
     return (todo.urgency > 0) ? [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0] : [UIColor blackColor];
 }
 
-NSString *entryFontName(Entry *entry) {
-    if (entry.type == EntryTypeCompleteTodo && entry.todo.urgency > 0)
-        return [baseFontName stringByAppendingString:@"-BoldItalic"];
-    
-    if (entry.todo.urgency > 0)
-        return [baseFontName stringByAppendingString:@"-Bold"];
+UIFont *entryFont(Entry *entry) {
+    UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] init];
+    fontDescriptor = [fontDescriptor fontDescriptorWithFamily:baseFontName];
+    UIFontDescriptorSymbolicTraits fontTraits = 0;
     
     if (entry.type == EntryTypeCompleteTodo)
-        return [baseFontName stringByAppendingString:@"-Italic"];
+        fontTraits |= UIFontDescriptorTraitItalic;
     
-    return baseFontName;
+    if (entry.todo.urgency > 0)
+        fontTraits |= UIFontDescriptorTraitBold;
+    
+    fontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:fontTraits];
+    return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(entry.todo)];
 }
 
 NSDictionary *addCompletedAttribute(NSDictionary* attributes) {
@@ -45,9 +55,7 @@ NSDictionary *addCompletedAttribute(NSDictionary* attributes) {
 }
 
 NSAttributedString *todoTitleString(Todo *todo) {
-    UIFont *font = [UIFont fontWithName:todoFontName(todo) size:todoFontSize(todo)];
-    
-    NSDictionary *attributes = @{NSFontAttributeName:font, NSForegroundColorAttributeName:todoTextColor(todo)};
+    NSDictionary *attributes = @{NSFontAttributeName:todoFont(todo), NSForegroundColorAttributeName:todoTextColor(todo)};
     
     if (todo.status == TodoStatusCompleted) {
         attributes = addCompletedAttribute(attributes);
@@ -57,9 +65,7 @@ NSAttributedString *todoTitleString(Todo *todo) {
 }
 
 NSAttributedString *entryTitleString(Entry *entry) {
-    UIFont *font = [UIFont fontWithName:entryFontName(entry) size:todoFontSize(entry.todo)];
-    
-    NSDictionary *attributes = @{NSFontAttributeName:font, NSForegroundColorAttributeName:todoTextColor(entry.todo)};
+    NSDictionary *attributes = @{NSFontAttributeName:entryFont(entry), NSForegroundColorAttributeName:todoTextColor(entry.todo)};
     
     if (entry.type == EntryTypeCompleteTodo) {
         attributes = addCompletedAttribute(attributes);

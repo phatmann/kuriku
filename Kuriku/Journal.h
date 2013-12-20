@@ -14,6 +14,9 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *entries;
+
+- (void)createSampleItems;
+
 @end
 
 @interface Journal (CoreDataGeneratedAccessors)
