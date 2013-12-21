@@ -1,10 +1,13 @@
 PODS:
   - InnerBand (1.0.6)
+  - TPKeyboardAvoiding (1.2.1)
 
 DEPENDENCIES:
   - InnerBand
+  - TPKeyboardAvoiding
 
 SPEC CHECKSUMS:
   InnerBand: 35a7b4f965322f75449a5d5d9329d07725a77abb
+  TPKeyboardAvoiding: 0536c563e6c8b8e95a7c4bf87fca9c0991f5e826
 
 COCOAPODS: 0.28.0
