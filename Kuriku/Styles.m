@@ -13,7 +13,7 @@
 static NSString *baseFontName = @"Helvetica Neue";
 
 CGFloat todoFontSize(Todo *todo) {
-    return (todo.importance * 1.6) + 13;
+    return (todo.importance * 2) + 15;
 }
 
 UIFontDescriptorSymbolicTraits todoFontTraits(Todo *todo) {
