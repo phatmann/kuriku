@@ -4,6 +4,7 @@ Bugs
 
 Code
 ----
+* Fix constraints in EditViewController
 
 Usability
 ---------
