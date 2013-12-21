@@ -28,6 +28,8 @@ Before shipping
 
 Basic Features
 --------------
+* indicate when notes
+* view notes
 * start date
 * due date
 * starred view
@@ -46,6 +48,7 @@ Advanced Features
 * Settings
 * Tags
 * Color labels
+* Action outline
 
 Standards
 ---------
