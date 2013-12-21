@@ -10,6 +10,7 @@
 #import "Todo.h"
 #import "TodoCell.h"
 #import "EditTodoViewController.h"
+#import "Styles.h"
 
 @interface TodoViewController ()
 
@@ -57,7 +58,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Todo *todo = [self todoAtIndexPath:indexPath];
-    return (todo.importance * 1.5) + 36;
+    return todoFontSize(todo) + 25;
 }
 
 #pragma mark -

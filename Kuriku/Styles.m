@@ -13,19 +13,31 @@
 static NSString *baseFontName = @"Helvetica Neue";
 
 CGFloat todoFontSize(Todo *todo) {
-    return (todo.importance * 1.5) + 13;
+    return (todo.importance * 1.6) + 13;
 }
 
-UIFont *todoFont(Todo *todo) {
-    UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] init];
-    fontDescriptor = [fontDescriptor fontDescriptorWithFamily:baseFontName];
+UIFontDescriptorSymbolicTraits todoFontTraits(Todo *todo) {
     UIFontDescriptorSymbolicTraits fontTraits = 0;
     
-    if (todo.urgency > 0)
-        fontTraits |= UIFontDescriptorTraitBold;
+    //if (todo.urgency > 0)
+        //fontTraits |= UIFontDescriptorTraitBold;
     
-    fontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:fontTraits];
-    return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(todo)];
+    return fontTraits;
+}
+
+UIFontDescriptorSymbolicTraits entryFontTraits(Entry *entry) {
+    UIFontDescriptorSymbolicTraits fontTraits = todoFontTraits(entry.todo);
+    
+    if (entry.type == EntryTypeTakeAction)
+        fontTraits |= UIFontDescriptorTraitItalic;
+    
+    return fontTraits;
+}
+
+UIFontDescriptor *fontDescriptorFromTraits(UIFontDescriptorSymbolicTraits fontTraits) {
+    UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] init];
+    fontDescriptor = [fontDescriptor fontDescriptorWithFamily:baseFontName];
+    return [fontDescriptor fontDescriptorWithSymbolicTraits:fontTraits];
 }
 
 UIColor *todoTextColor(Todo *todo) {
@@ -33,18 +45,13 @@ UIColor *todoTextColor(Todo *todo) {
     return (todo.urgency > 0) ? [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0] : [UIColor blackColor];
 }
 
+UIFont *todoFont(Todo *todo) {
+    UIFontDescriptor *fontDescriptor = fontDescriptorFromTraits(todoFontTraits(todo));
+    return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(todo)];
+}
+
 UIFont *entryFont(Entry *entry) {
-    UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] init];
-    fontDescriptor = [fontDescriptor fontDescriptorWithFamily:baseFontName];
-    UIFontDescriptorSymbolicTraits fontTraits = 0;
-    
-    if (entry.type == EntryTypeCompleteTodo)
-        fontTraits |= UIFontDescriptorTraitItalic;
-    
-    if (entry.todo.urgency > 0)
-        fontTraits |= UIFontDescriptorTraitBold;
-    
-    fontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:fontTraits];
+    UIFontDescriptor *fontDescriptor = fontDescriptorFromTraits(entryFontTraits(entry));
     return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(entry.todo)];
 }
 

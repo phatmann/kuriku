@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 @class Entry, Todo;
 
+CGFloat todoFontSize(Todo *todo);
 NSAttributedString *todoTitleString(Todo *todo);
 NSAttributedString *entryTitleString(Entry *entry);

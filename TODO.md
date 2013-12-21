@@ -1,5 +1,6 @@
 Bugs
 ----
+* Can hit accessory while deleting
 
 Code
 ----
@@ -9,13 +10,13 @@ Usability
 
 Testing
 -------
-* Sample journal entries spread out over many days
+* Sample journal entries spread out over many days. Include action entries.
 
 Cosmetic
 --------
 * get rid of nav bar or make it worth it
 * icons for tab bar
-* get rid of details accessory
+* use custom details accessory
 * warmer looking journal
 * replace entry type text with icon
 

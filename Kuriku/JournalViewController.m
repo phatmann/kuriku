@@ -10,6 +10,7 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "EntryCell.h"
+#import "Styles.h"
 
 @implementation JournalViewController
 
@@ -88,7 +89,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Entry *entry = [self entryAtIndexPath:indexPath];
-    return (entry.todo.importance * 1.5) + 36;
+    return todoFontSize(entry.todo) + 25;
 }
 
 #pragma mark - Fetched Results Controller Delegate
