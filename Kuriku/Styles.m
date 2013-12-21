@@ -28,8 +28,8 @@ UIFontDescriptorSymbolicTraits todoFontTraits(Todo *todo) {
 UIFontDescriptorSymbolicTraits entryFontTraits(Entry *entry) {
     UIFontDescriptorSymbolicTraits fontTraits = todoFontTraits(entry.todo);
     
-    if (entry.type == EntryTypeTakeAction)
-        fontTraits |= UIFontDescriptorTraitItalic;
+    if (entry.type == EntryTypeCreateTodo)
+        fontTraits |= UIFontDescriptorTraitBold;
     
     return fontTraits;
 }
