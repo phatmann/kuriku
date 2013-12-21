@@ -43,10 +43,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    Entry *entry = [self entryAtIndexPath:indexPath];
-    [self showEditTodoView:entry.todo];
+    if (!tableView.isEditing) {
+        Entry *entry = [self entryAtIndexPath:indexPath];
+        [self showEditTodoView:entry.todo];
+    }
 }
-    
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([[self.fetchedResultsController sections] count] > 0) {
         static NSDateFormatter *longDateFormatter;

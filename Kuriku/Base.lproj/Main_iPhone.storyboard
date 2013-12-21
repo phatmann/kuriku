@@ -13,7 +13,7 @@
                         <viewControllerLayoutGuide type="bottom" id="bcP-VR-DSe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="2VE-Yg-loa">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xn6-C0-d19">
@@ -99,6 +99,7 @@
                             <constraint firstItem="aKD-IV-7AV" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" id="sJp-bZ-rTL"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Journal" image="journal" id="u1e-5L-l1D"/>
                     <connections>
                         <outlet property="tableView" destination="aKD-IV-7AV" id="NrM-gl-Iga"/>
@@ -118,7 +119,7 @@
                         <viewControllerLayoutGuide type="bottom" id="bMD-Ff-oau"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="gMD-aP-Fq6">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x2p-4Y-y7Q">
@@ -194,6 +195,7 @@
                             <constraint firstItem="xfL-Hz-Rmj" firstAttribute="top" secondItem="x2p-4Y-y7Q" secondAttribute="bottom" id="uIP-Kc-hZI"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Todo" image="todo" id="Z7h-1E-pvt"/>
                     <connections>
                         <outlet property="tableView" destination="xfL-Hz-Rmj" id="Lj3-pa-4is"/>
@@ -430,6 +432,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="WrS-yK-nna"/>
+        <segue reference="UH7-zd-Ftj"/>
     </inferredMetricsTieBreakers>
 </document>

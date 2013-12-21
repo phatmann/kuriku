@@ -53,7 +53,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    [self showEditTodoView:[self todoAtIndexPath:indexPath]];
+    if (!tableView.isEditing) {
+        [self showEditTodoView:[self todoAtIndexPath:indexPath]];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

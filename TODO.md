@@ -1,6 +1,6 @@
 Bugs
 ----
-* Can hit accessory while deleting
+
 
 Code
 ----
@@ -27,7 +27,8 @@ Before shipping
 
 Basic Features
 --------------
-* notes field for todo
+* start date
+* due date
 * starred view
 * multi journals
 * task timer with duration in action entries
@@ -35,12 +36,15 @@ Basic Features
 
 Advanced Features
 -----------------
+* Recurring
 * Edit entry timestamp
 * Jump around journal
 * Set entry title, show todo with it
 * Action list for todos, can choose from actions when creating entry
 * Projects
 * Settings
+* Tags
+* Color labels
 
 Standards
 ---------
