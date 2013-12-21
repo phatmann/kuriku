@@ -28,6 +28,7 @@
 @dynamic priority;
 @dynamic star;
 @dynamic status;
+@dynamic notes;
 @dynamic entries;
 
 - (void)awakeFromInsert {

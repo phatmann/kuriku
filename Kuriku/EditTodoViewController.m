@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
+@property (weak, nonatomic) IBOutlet UITextView *notesField;
 
 @end
 
@@ -29,6 +30,7 @@
         self.titleField.text         = self.todo.title;
         self.urgencySlider.value     = self.todo.urgency;
         self.importanceSlider.value  = self.todo.importance;
+        self.notesField.text         = self.todo.notes;
         self.navigationBarItem.title = @"Edit Todo";
     } else {
         self.urgencySlider.value     = TodoUrgencyDefaultValue;
@@ -56,6 +58,7 @@
     self.todo.title      = self.titleField.text;
     self.todo.urgency    = self.urgencySlider.value;
     self.todo.importance = self.importanceSlider.value;
+    self.todo.notes      = self.notesField.text;
     
     [[IBCoreDataStore mainStore] save];
     [self.delegate todoWasEdited:self.todo];

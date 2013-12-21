@@ -40,15 +40,17 @@ Advanced Features
 * Set entry title, show todo with it
 * Action list for todos, can choose from actions when creating entry
 * Projects
+* Settings
 
 Standards
 ---------
 * Use preferred font size per iOS 7, no hard-coded text widths
 * Edit mode
 
-Thoughts
---------
+In Box
+------
 * replace tab bar?
 * indicate stale actions
 * multi-dimensional display in Todos view, include stale todos
 * Autofocus: move pending todos to end of journal
+* Archive/hide old journal pages

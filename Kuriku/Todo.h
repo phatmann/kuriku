@@ -32,6 +32,7 @@ static const int TodoUrgencyDefaultValue    = 0;
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) BOOL star;
 @property (nonatomic) int16_t status;
+@property (nonatomic, strong) NSString *notes;
 @property (nonatomic, strong) NSSet *entries;
 
 @property (nonatomic, readonly) NSDate *lastActionDate;
