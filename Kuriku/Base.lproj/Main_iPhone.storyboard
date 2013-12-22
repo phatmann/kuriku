@@ -293,7 +293,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Very urgent" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9I-VW-88c" userLabel="Very Urgent">
-                                        <rect key="frame" x="212" y="70" width="87" height="21"/>
+                                        <rect key="frame" x="213" y="70" width="87" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.98594826459884644" green="0.0" blue="0.026950567960739136" alpha="1" colorSpace="calibratedRGB"/>
@@ -307,64 +307,64 @@
                                         </connections>
                                     </slider>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Not important" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSj-rt-em4" userLabel="Not Important">
-                                        <rect key="frame" x="20" y="141" width="95" height="18"/>
+                                        <rect key="frame" x="20" y="146" width="95" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="500" text="Very important" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K00-Jd-Qy4" userLabel="Very Important">
-                                        <rect key="frame" x="145" y="132" width="154" height="29"/>
+                                        <rect key="frame" x="146" y="137" width="154" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="Emk-OC-OLg" userLabel="Importance Slider">
-                                        <rect key="frame" x="18" y="162" width="284" height="34"/>
+                                        <rect key="frame" x="18" y="167" width="284" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="sliderValueChanged:" destination="XCd-pD-Vz0" eventType="valueChanged" id="PI5-ez-Nts"/>
                                         </connections>
                                     </slider>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4c-rr-kvI" userLabel="Notes Label">
-                                        <rect key="frame" x="20" y="242" width="46" height="21"/>
+                                        <rect key="frame" x="20" y="254" width="46" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UMO-C7-6AO" userLabel="Notes Box">
-                                        <rect key="frame" x="20" y="268" width="280" height="122"/>
+                                        <rect key="frame" x="20" y="283" width="280" height="115"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gad-pi-SMD" userLabel="Notes Field">
-                                        <rect key="frame" x="20" y="268" width="280" height="122"/>
+                                        <rect key="frame" x="20" y="283" width="280" height="115"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="122" id="jGO-9Y-gyo"/>
+                                            <constraint firstAttribute="height" constant="115" id="jGO-9Y-gyo"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                     </textView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Committed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EI4-Qz-TTI" userLabel="Committed">
-                                        <rect key="frame" x="20" y="208" width="86" height="21"/>
+                                        <rect key="frame" x="20" y="220" width="86" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHg-mG-QwN" userLabel="Committed Switch">
-                                        <rect key="frame" x="114" y="203" width="51" height="31"/>
+                                        <rect key="frame" x="114" y="215" width="51" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </switch>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="UMO-C7-6AO" firstAttribute="top" secondItem="J4c-rr-kvI" secondAttribute="bottom" constant="5" id="1gd-Zn-naZ"/>
+                                    <constraint firstItem="UMO-C7-6AO" firstAttribute="top" secondItem="J4c-rr-kvI" secondAttribute="bottom" constant="8" id="1gd-Zn-naZ"/>
                                     <constraint firstItem="UMO-C7-6AO" firstAttribute="bottom" secondItem="Gad-pi-SMD" secondAttribute="bottom" id="3CU-Gm-SS5"/>
                                     <constraint firstItem="cxo-hU-YKH" firstAttribute="trailing" secondItem="Emk-OC-OLg" secondAttribute="trailing" id="9ly-N2-UrA"/>
                                     <constraint firstItem="rSj-rt-em4" firstAttribute="leading" secondItem="EI4-Qz-TTI" secondAttribute="leading" id="ETW-6b-0LD"/>
@@ -372,19 +372,20 @@
                                     <constraint firstItem="J4c-rr-kvI" firstAttribute="leading" secondItem="UMO-C7-6AO" secondAttribute="leading" id="IFa-iX-iQz"/>
                                     <constraint firstItem="Gad-pi-SMD" firstAttribute="leading" secondItem="UMO-C7-6AO" secondAttribute="leading" id="Jbm-Fc-Cm1"/>
                                     <constraint firstItem="K00-Jd-Qy4" firstAttribute="trailing" secondItem="m9I-VW-88c" secondAttribute="trailing" id="LvI-z4-Ozj"/>
-                                    <constraint firstItem="mHg-mG-QwN" firstAttribute="top" secondItem="Emk-OC-OLg" secondAttribute="bottom" constant="8" id="LxB-KF-4zN"/>
                                     <constraint firstItem="cxo-hU-YKH" firstAttribute="top" secondItem="K1f-3Y-uvK" secondAttribute="bottom" constant="2" id="NIn-OH-dzG"/>
                                     <constraint firstItem="d5U-JJ-elM" firstAttribute="leading" secondItem="nFz-BH-HYP" secondAttribute="leading" constant="20" symbolic="YES" id="OyR-SI-aCj"/>
                                     <constraint firstItem="K1f-3Y-uvK" firstAttribute="top" secondItem="d5U-JJ-elM" secondAttribute="bottom" constant="20" id="Pgv-2z-HqU"/>
                                     <constraint firstItem="d5U-JJ-elM" firstAttribute="trailing" secondItem="cxo-hU-YKH" secondAttribute="trailing" id="R2a-wa-bEm"/>
                                     <constraint firstItem="rSj-rt-em4" firstAttribute="leading" secondItem="Emk-OC-OLg" secondAttribute="leading" id="T0x-k4-GE2"/>
                                     <constraint firstItem="cxo-hU-YKH" firstAttribute="leading" secondItem="rSj-rt-em4" secondAttribute="leading" id="TTV-oO-Dxo"/>
+                                    <constraint firstItem="d5U-JJ-elM" firstAttribute="trailing" secondItem="m9I-VW-88c" secondAttribute="trailing" id="VJf-9N-Q1D"/>
+                                    <constraint firstItem="mHg-mG-QwN" firstAttribute="centerY" secondItem="EI4-Qz-TTI" secondAttribute="centerY" id="WS1-10-wW4"/>
                                     <constraint firstItem="cxo-hU-YKH" firstAttribute="leading" secondItem="K1f-3Y-uvK" secondAttribute="leading" id="Y3G-GL-myk"/>
-                                    <constraint firstItem="EI4-Qz-TTI" firstAttribute="top" secondItem="Emk-OC-OLg" secondAttribute="bottom" constant="13" id="YKO-jY-xTO"/>
+                                    <constraint firstItem="EI4-Qz-TTI" firstAttribute="top" secondItem="Emk-OC-OLg" secondAttribute="bottom" constant="20" id="YKO-jY-xTO"/>
                                     <constraint firstAttribute="bottom" secondItem="UMO-C7-6AO" secondAttribute="bottom" constant="20" symbolic="YES" id="bNW-5v-Zg2"/>
                                     <constraint firstItem="K1f-3Y-uvK" firstAttribute="baseline" secondItem="m9I-VW-88c" secondAttribute="baseline" id="csC-2f-cpQ"/>
                                     <constraint firstItem="Gad-pi-SMD" firstAttribute="trailing" secondItem="Emk-OC-OLg" secondAttribute="trailing" id="dTb-C2-l9q"/>
-                                    <constraint firstItem="rSj-rt-em4" firstAttribute="top" secondItem="cxo-hU-YKH" secondAttribute="bottom" constant="15" id="fZa-k4-fpn"/>
+                                    <constraint firstItem="rSj-rt-em4" firstAttribute="top" secondItem="cxo-hU-YKH" secondAttribute="bottom" constant="20" id="fZa-k4-fpn"/>
                                     <constraint firstItem="mHg-mG-QwN" firstAttribute="leading" secondItem="EI4-Qz-TTI" secondAttribute="trailing" constant="8" id="gGY-2A-t2Q"/>
                                     <constraint firstItem="d5U-JJ-elM" firstAttribute="leading" secondItem="K1f-3Y-uvK" secondAttribute="leading" id="gcI-iC-APf"/>
                                     <constraint firstItem="Gad-pi-SMD" firstAttribute="trailing" secondItem="UMO-C7-6AO" secondAttribute="trailing" id="hqn-fG-eh6"/>
@@ -393,7 +394,6 @@
                                     <constraint firstItem="J4c-rr-kvI" firstAttribute="top" secondItem="mHg-mG-QwN" secondAttribute="bottom" constant="8" id="q1n-3n-LpL"/>
                                     <constraint firstItem="d5U-JJ-elM" firstAttribute="top" secondItem="nFz-BH-HYP" secondAttribute="top" constant="20" symbolic="YES" id="wie-04-Pej"/>
                                     <constraint firstItem="Emk-OC-OLg" firstAttribute="top" secondItem="K00-Jd-Qy4" secondAttribute="bottom" constant="1" id="z7L-3J-Itk"/>
-                                    <constraint firstAttribute="trailing" secondItem="m9I-VW-88c" secondAttribute="trailing" constant="21" id="zOw-iq-USW"/>
                                     <constraint firstAttribute="trailing" secondItem="d5U-JJ-elM" secondAttribute="trailing" constant="20" symbolic="YES" id="zkb-sU-skO"/>
                                     <constraint firstItem="Gad-pi-SMD" firstAttribute="centerX" secondItem="nFz-BH-HYP" secondAttribute="centerX" id="zyd-wT-g8Y"/>
                                 </constraints>

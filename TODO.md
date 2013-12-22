@@ -3,7 +3,6 @@ Bugs
 
 Code
 ----
-* Fix constraints in EditViewController
 * completed property in Todo object
 
 Usability
@@ -19,6 +18,7 @@ Cosmetic
 * icons for tab bar
 * warmer looking journal
 * replace entry type text with icon
+* Edit title field should use correct font based on settings
 
 Before shipping
 ---------------
