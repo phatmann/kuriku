@@ -28,7 +28,8 @@ Before shipping
 
 Basic Features
 --------------
-* indicate when notes
+* record completed date
+* indicate when todo has notes
 * view notes
 * start date
 * due date
@@ -39,7 +40,7 @@ Basic Features
 * Set journal date and time for entry
 * Show create date in Todo list
 * Archive/hide completed entries
-* Order completed items by date at bottom of Todo list
+* Order completed items by completion date
 
 Advanced Features
 -----------------

@@ -77,14 +77,15 @@
 #endif
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Entry *entry = [self entryAtIndexPath:indexPath];
-    return entry.type == EntryTypeCreateTodo ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+    return UITableViewCellEditingStyleDelete;
+    //Entry *entry = [self entryAtIndexPath:indexPath];
+    //return entry.type == EntryTypeCreateTodo ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Entry *entry = [self entryAtIndexPath:indexPath];
-        [entry.todo destroy];
+        [entry destroy];
         [[IBCoreDataStore mainStore] save];
     }
 }
