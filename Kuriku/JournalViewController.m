@@ -123,4 +123,8 @@
     return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
+- (Todo *)todoAtIndexPath:(NSIndexPath *)indexPath {
+    return [[self entryAtIndexPath:indexPath] todo];
+}
+
 @end

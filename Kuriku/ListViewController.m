@@ -38,19 +38,6 @@
     }
 }
 
-#pragma mark -
-
-- (void)showTodoActionSheet:(Todo *)todo {
-    self.selectedTodo = todo;
-    NSString *completionActionName = todo.status == TodoStatusNormal ? @"Mark completed" : @"Unmark completed";
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:completionActionName, @"Take action", nil];
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
-}
-
-- (void)showEditTodoView:(Todo *)todo {
-    [self performSegueWithIdentifier:@"Edit todo" sender:todo];
-}
-
 #pragma mark - Table View Delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -76,6 +63,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSInteger markCompletedButtonIndex = actionSheet.firstOtherButtonIndex;
     NSInteger takeActionButtonIndex    = markCompletedButtonIndex + 1;
+    NSInteger editButtonIndex          = takeActionButtonIndex + 1;
     
     Todo *todo = (Todo *)self.selectedTodo;
     
@@ -84,12 +72,14 @@
             todo.status = TodoStatusCompleted;
         else
             todo.status = TodoStatusNormal;
+        
+        [[IBCoreDataStore mainStore] save];
     } else if (buttonIndex == takeActionButtonIndex) {
         [todo createActionEntry];
+        [[IBCoreDataStore mainStore] save];
+    } else if (buttonIndex == editButtonIndex) {
+        [self showEditTodoView:todo];
     }
-    
-    [[IBCoreDataStore mainStore] save];
-    
 }
 
 #pragma mark - Fetched Results Controller Delegate
@@ -109,6 +99,45 @@
 - (void)createFetchedResultsController
 {
     // Subclasses override
+}
+
+- (Todo *)todoAtIndexPath:(NSIndexPath *)indexPath {
+    // Subclasses override
+    return nil;
+}
+
+#pragma mark - Private
+
+- (IBAction)cellWasLongPressed:(UILongPressGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint point = [gestureRecognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+        
+        if (indexPath != nil) {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            
+            if (cell.isHighlighted) {
+                [self showEditTodoView:[self todoAtIndexPath:indexPath]];
+            }
+        }
+    }
+}
+
+- (void)showTodoActionSheet:(Todo *)todo {
+    self.selectedTodo = todo;
+    NSString *completionActionName = todo.status == TodoStatusNormal ? @"Mark completed" : @"Unmark completed";
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:nil
+                                       delegate:self
+                              cancelButtonTitle:@"Cancel"
+                         destructiveButtonTitle:nil
+                              otherButtonTitles:completionActionName, @"Take action", @"Edit", nil];
+    
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+}
+
+- (void)showEditTodoView:(Todo *)todo {
+    [self performSegueWithIdentifier:@"Edit todo" sender:todo];
 }
 
 @end

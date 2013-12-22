@@ -17,7 +17,6 @@ Cosmetic
 --------
 * get rid of nav bar or make it worth it
 * icons for tab bar
-* use custom details accessory
 * warmer looking journal
 * replace entry type text with icon
 
@@ -70,3 +69,4 @@ In Box
 * multi-dimensional display in Todos view, include stale todos
 * Autofocus: move pending todos to end of journal
 * Archive/hide old journal pages
+* journal reference entries (italic)
