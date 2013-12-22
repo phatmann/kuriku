@@ -17,8 +17,8 @@
 @dynamic entries;
 
 - (void)createSampleItems {
-    for (int importance = 0; importance <= TodoImportanceMaxValue; ++importance) {
-        for (int urgency = 0; urgency <= TodoUrgencyMaxValue; ++urgency) {
+    for (int importance = 0; importance <= TodoRangeMaxValue; ++importance) {
+        for (int urgency = 0; urgency <= TodoRangeMaxValue; ++urgency) {
             Todo *todo      = [Todo create];
             todo.importance = importance;
             todo.urgency    = urgency;

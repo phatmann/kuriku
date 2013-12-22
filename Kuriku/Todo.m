@@ -11,7 +11,7 @@
 #import <InnerBand/InnerBand.h>
 
 @interface Todo ()
-
+@property (nonatomic) int16_t commitment;
 @end
 
 @implementation Todo
@@ -30,6 +30,7 @@
 @dynamic status;
 @dynamic notes;
 @dynamic entries;
+@dynamic commitment;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
@@ -43,9 +44,8 @@
 - (void)didChangeValueForKey:(NSString *)key {
     [super didChangeValueForKey:key];
     
-    if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"]) {
-        CGFloat maxValue = TodoImportanceMaxValue + TodoUrgencyMaxValue;
-        self.priority = (self.urgency + self.importance) / maxValue;
+    if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"] || [key isEqualToString:@"commitment"]) {
+        [self updatePriority];
     } else if ([key isEqualToString:@"status"]) {
         Entry *entry = [Entry create];
         entry.todo = self;
@@ -59,12 +59,20 @@
     }
 }
 
+- (BOOL)committed {
+    return self.commitment > 0;
+}
+
+- (void)setCommitted:(BOOL)committed {
+    self.commitment = committed ? TodoRangeMaxValue : 0;
+}
+
 #pragma mark -
 
-- (void)createActionEntry {
-    Entry *entry = [Entry create];
-    entry.todo = self;
-    entry.type = EntryTypeTakeAction;
++ (void)updateAllPriorities {
+    for (Todo *todo in [Todo all]) {
+        [todo updatePriority];
+    }
 }
 
 - (NSDate *)lastActionDate {
@@ -73,6 +81,22 @@
 }
 
 #pragma mark -
+
+- (void)createActionEntry {
+    Entry *entry = [Entry create];
+    entry.todo = self;
+    entry.type = EntryTypeTakeAction;
+}
+
+#pragma mark -
+
+- (void)updatePriority {
+    CGFloat maxValue = TodoRangeMaxValue * 2;
+    self.priority = (self.urgency + self.importance) / maxValue;
+    
+    if (self.committed)
+        self.priority += maxValue + 1;
+}
 
 - (NSArray *)actionEntriesByDate {
     if (!_actionEntriesByDate) {

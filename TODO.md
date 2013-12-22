@@ -55,6 +55,10 @@ Standards
 * Use preferred font size per iOS 7, no hard-coded text widths
 * Edit mode
 
+Migration
+---------
+* Recalc priority whenever db version changes
+
 In Box
 ------
 * replace tab bar?

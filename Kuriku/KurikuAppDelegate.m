@@ -9,17 +9,19 @@
 #import "KurikuAppDelegate.h"
 #import <InnerBand/InnerBand.h>
 #import "Journal.h"
+#import "Todo.h"
 
 @implementation KurikuAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self updateTodoPriorityIfNeeded];
     Journal *journal = [Journal first];
-    
+
     if (!journal) {
         journal = [Journal create];
         [[IBCoreDataStore mainStore] save];
-        //[journal createSampleItems];
+        [journal createSampleItems];
     }
     
     return YES;
@@ -50,6 +52,22 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark -
+
+- (void)updateTodoPriorityIfNeeded
+{
+    NSPersistentStore *store = [IBCoreDataStore mainStore].context.persistentStoreCoordinator.persistentStores.firstObject;
+    int priorityVersion = [store.metadata[@"PriorityVersion"] intValue];
+    
+    if (priorityVersion < TodoPriorityVersion) {
+        NSMutableDictionary *storeMetadata = [store.metadata mutableCopy];
+        [Todo updateAllPriorities];
+        storeMetadata[@"PriorityVersion"] = @(TodoPriorityVersion);
+        store.metadata = storeMetadata;
+        [[IBCoreDataStore mainStore] save];
+    }
 }
 
 @end

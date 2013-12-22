@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
+@property (weak, nonatomic) IBOutlet UISwitch *committedSwitch;
 
 @end
 
@@ -30,11 +31,13 @@
         self.titleField.text         = self.todo.title;
         self.urgencySlider.value     = self.todo.urgency;
         self.importanceSlider.value  = self.todo.importance;
+        self.committedSwitch.on      = self.todo.committed;
         self.notesField.text         = self.todo.notes;
         self.navigationBarItem.title = @"Edit Todo";
     } else {
         self.urgencySlider.value     = TodoUrgencyDefaultValue;
         self.importanceSlider.value  = TodoImportanceDefaultValue;
+        self.committedSwitch.on      = TodoCommittedDefaultValue;
         self.navigationBarItem.title = @"New Todo";
         [self.titleField becomeFirstResponder];
     }
@@ -58,6 +61,7 @@
     self.todo.title      = self.titleField.text;
     self.todo.urgency    = self.urgencySlider.value;
     self.todo.importance = self.importanceSlider.value;
+    self.todo.committed  = self.committedSwitch.on;
     self.todo.notes      = self.notesField.text;
     
     [[IBCoreDataStore mainStore] save];

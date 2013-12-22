@@ -325,39 +325,56 @@
                                         </connections>
                                     </slider>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4c-rr-kvI" userLabel="Notes Label">
-                                        <rect key="frame" x="20" y="214" width="46" height="21"/>
+                                        <rect key="frame" x="20" y="245" width="46" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UMO-C7-6AO" userLabel="Notes Box">
-                                        <rect key="frame" x="20" y="240" width="280" height="112"/>
+                                        <rect key="frame" x="20" y="271" width="280" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gad-pi-SMD" userLabel="Notes Field">
-                                        <rect key="frame" x="20" y="240" width="280" height="112"/>
+                                        <rect key="frame" x="20" y="271" width="280" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="112" id="jGO-9Y-gyo"/>
+                                            <constraint firstAttribute="height" constant="90" id="jGO-9Y-gyo"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                     </textView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Committed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EI4-Qz-TTI" userLabel="Committed">
+                                        <rect key="frame" x="20" y="211" width="82" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="82" id="AKC-Yk-SMc"/>
+                                            <constraint firstAttribute="height" constant="21" id="RDp-7o-ZgV"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHg-mG-QwN" userLabel="Committed Switch">
+                                        <rect key="frame" x="110" y="206" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </switch>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="UMO-C7-6AO" firstAttribute="top" secondItem="J4c-rr-kvI" secondAttribute="bottom" constant="5" id="1gd-Zn-naZ"/>
                                     <constraint firstItem="UMO-C7-6AO" firstAttribute="bottom" secondItem="Gad-pi-SMD" secondAttribute="bottom" id="3CU-Gm-SS5"/>
                                     <constraint firstItem="K00-Jd-Qy4" firstAttribute="leading" secondItem="rSj-rt-em4" secondAttribute="trailing" constant="45" id="3sj-K5-cqV"/>
                                     <constraint firstItem="cxo-hU-YKH" firstAttribute="trailing" secondItem="Emk-OC-OLg" secondAttribute="trailing" id="9ly-N2-UrA"/>
+                                    <constraint firstItem="rSj-rt-em4" firstAttribute="leading" secondItem="EI4-Qz-TTI" secondAttribute="leading" id="ETW-6b-0LD"/>
                                     <constraint firstItem="J4c-rr-kvI" firstAttribute="leading" secondItem="Emk-OC-OLg" secondAttribute="leading" id="FZp-c6-X5T"/>
                                     <constraint firstItem="J4c-rr-kvI" firstAttribute="leading" secondItem="UMO-C7-6AO" secondAttribute="leading" id="IFa-iX-iQz"/>
                                     <constraint firstItem="Gad-pi-SMD" firstAttribute="leading" secondItem="UMO-C7-6AO" secondAttribute="leading" id="Jbm-Fc-Cm1"/>
                                     <constraint firstItem="K00-Jd-Qy4" firstAttribute="trailing" secondItem="m9I-VW-88c" secondAttribute="trailing" id="LvI-z4-Ozj"/>
+                                    <constraint firstItem="mHg-mG-QwN" firstAttribute="top" secondItem="Emk-OC-OLg" secondAttribute="bottom" constant="8" id="LxB-KF-4zN"/>
                                     <constraint firstItem="cxo-hU-YKH" firstAttribute="top" secondItem="K1f-3Y-uvK" secondAttribute="bottom" constant="2" id="NIn-OH-dzG"/>
                                     <constraint firstItem="d5U-JJ-elM" firstAttribute="leading" secondItem="nFz-BH-HYP" secondAttribute="leading" constant="20" symbolic="YES" id="OyR-SI-aCj"/>
                                     <constraint firstItem="K1f-3Y-uvK" firstAttribute="top" secondItem="d5U-JJ-elM" secondAttribute="bottom" constant="21" id="Pgv-2z-HqU"/>
@@ -367,20 +384,22 @@
                                     <constraint firstItem="rSj-rt-em4" firstAttribute="leading" secondItem="Emk-OC-OLg" secondAttribute="leading" id="T0x-k4-GE2"/>
                                     <constraint firstItem="cxo-hU-YKH" firstAttribute="leading" secondItem="rSj-rt-em4" secondAttribute="leading" id="TTV-oO-Dxo"/>
                                     <constraint firstItem="cxo-hU-YKH" firstAttribute="leading" secondItem="K1f-3Y-uvK" secondAttribute="leading" id="Y3G-GL-myk"/>
+                                    <constraint firstItem="EI4-Qz-TTI" firstAttribute="top" secondItem="Emk-OC-OLg" secondAttribute="bottom" constant="13" id="YKO-jY-xTO"/>
                                     <constraint firstAttribute="bottom" secondItem="UMO-C7-6AO" secondAttribute="bottom" constant="20" symbolic="YES" id="bNW-5v-Zg2"/>
                                     <constraint firstItem="K1f-3Y-uvK" firstAttribute="baseline" secondItem="m9I-VW-88c" secondAttribute="baseline" id="csC-2f-cpQ"/>
                                     <constraint firstItem="Gad-pi-SMD" firstAttribute="trailing" secondItem="Emk-OC-OLg" secondAttribute="trailing" id="dTb-C2-l9q"/>
                                     <constraint firstItem="rSj-rt-em4" firstAttribute="top" secondItem="cxo-hU-YKH" secondAttribute="bottom" constant="15" id="fZa-k4-fpn"/>
+                                    <constraint firstItem="mHg-mG-QwN" firstAttribute="leading" secondItem="EI4-Qz-TTI" secondAttribute="trailing" constant="8" id="gGY-2A-t2Q"/>
                                     <constraint firstItem="d5U-JJ-elM" firstAttribute="leading" secondItem="K1f-3Y-uvK" secondAttribute="leading" id="gcI-iC-APf"/>
                                     <constraint firstItem="Gad-pi-SMD" firstAttribute="trailing" secondItem="UMO-C7-6AO" secondAttribute="trailing" id="hqn-fG-eh6"/>
                                     <constraint firstItem="rSj-rt-em4" firstAttribute="baseline" secondItem="K00-Jd-Qy4" secondAttribute="baseline" id="jc8-AJ-vhe"/>
                                     <constraint firstItem="UMO-C7-6AO" firstAttribute="top" secondItem="Gad-pi-SMD" secondAttribute="top" id="pug-HI-nkg"/>
+                                    <constraint firstItem="J4c-rr-kvI" firstAttribute="top" secondItem="mHg-mG-QwN" secondAttribute="bottom" constant="8" id="q1n-3n-LpL"/>
                                     <constraint firstItem="d5U-JJ-elM" firstAttribute="top" secondItem="nFz-BH-HYP" secondAttribute="top" constant="20" symbolic="YES" id="wie-04-Pej"/>
                                     <constraint firstItem="Emk-OC-OLg" firstAttribute="top" secondItem="K00-Jd-Qy4" secondAttribute="bottom" constant="1" id="z7L-3J-Itk"/>
                                     <constraint firstAttribute="trailing" secondItem="m9I-VW-88c" secondAttribute="trailing" constant="21" id="zOw-iq-USW"/>
                                     <constraint firstAttribute="trailing" secondItem="d5U-JJ-elM" secondAttribute="trailing" constant="20" symbolic="YES" id="zkb-sU-skO"/>
                                     <constraint firstItem="Gad-pi-SMD" firstAttribute="centerX" secondItem="nFz-BH-HYP" secondAttribute="centerX" id="zyd-wT-g8Y"/>
-                                    <constraint firstItem="J4c-rr-kvI" firstAttribute="top" secondItem="Emk-OC-OLg" secondAttribute="bottom" constant="16" id="zzF-96-eXe"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -410,6 +429,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="committedSwitch" destination="mHg-mG-QwN" id="j3v-7N-BkI"/>
                         <outlet property="importanceSlider" destination="Emk-OC-OLg" id="tEy-MX-Ffz"/>
                         <outlet property="navigationBarItem" destination="ov9-ou-bec" id="3fV-Rx-CKH"/>
                         <outlet property="notesField" destination="Gad-pi-SMD" id="Xux-U9-pFV"/>

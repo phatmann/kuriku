@@ -15,11 +15,14 @@ typedef enum {
     TodoStatusCanceled
 } TodoStatus;
 
-static const int TodoImportanceMaxValue = 4;
-static const int TodoUrgencyMaxValue    = 4;
+static const int TodoRangeMaxValue = 4;
 
-static const int TodoImportanceDefaultValue = 2;
-static const int TodoUrgencyDefaultValue    = 0;
+static const int  TodoCommitmentDefaultValue = 4;
+static const int  TodoImportanceDefaultValue = 2;
+static const int  TodoUrgencyDefaultValue    = 0;
+static const BOOL TodoCommittedDefaultValue  = YES;
+
+static const int TodoPriorityVersion = 2;
 
 @interface Todo : NSManagedObject
 
@@ -35,9 +38,12 @@ static const int TodoUrgencyDefaultValue    = 0;
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic, strong) NSSet *entries;
 
+@property (nonatomic) BOOL committed;
 @property (nonatomic, readonly) NSDate *lastActionDate;
 
 - (void)createActionEntry;
+
++ (void)updateAllPriorities;
 
 @end
 
