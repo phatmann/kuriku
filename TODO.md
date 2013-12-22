@@ -1,10 +1,10 @@
 Bugs
 ----
 
-
 Code
 ----
 * Fix constraints in EditViewController
+* completed property in Todo object
 
 Usability
 ---------
@@ -36,13 +36,16 @@ Basic Features
 * multi journals
 * task timer with duration in action entries
 * Show time in latest action date in Todo view
+* Set journal date and time for entry
+* Show create date in Todo list
+* Archive/hide completed entries
+* Order completed items by date at bottom of Todo list
 
 Advanced Features
 -----------------
 * Recurring
-* Edit entry timestamp
 * Jump around journal
-* Set entry title, show todo with it
+* Set action entry title and show todo title with it
 * Action list for todos, can choose from actions when creating entry
 * Projects
 * Settings

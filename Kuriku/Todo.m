@@ -47,6 +47,7 @@
     if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"] || [key isEqualToString:@"commitment"]) {
         [self updatePriority];
     } else if ([key isEqualToString:@"status"]) {
+        [self updatePriority];
         Entry *entry = [Entry create];
         entry.todo = self;
         entry.type = (self.status == TodoStatusCompleted) ? EntryTypeCompleteTodo : EntryTypeContinueTodo;
@@ -96,6 +97,9 @@
     
     if (self.committed)
         self.priority += maxValue + 1;
+    
+    if (self.status != TodoStatusNormal)
+        self.priority -= 100;
 }
 
 - (NSArray *)actionEntriesByDate {
