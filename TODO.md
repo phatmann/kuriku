@@ -7,6 +7,7 @@ Code
 
 Usability
 ---------
+* longer notes field
 
 Testing
 -------
@@ -24,6 +25,7 @@ Before shipping
 ---------------
 * Remove test data
 * Show helpful sample data
+* Graphics
 
 Basic Features
 --------------
@@ -40,6 +42,7 @@ Basic Features
 * Show create date in Todo list
 * Archive/hide completed entries
 * Order completed items by completion date
+* Remember active tab
 
 Advanced Features
 -----------------
@@ -52,6 +55,7 @@ Advanced Features
 * Tags
 * Color labels
 * Action outline
+* Filter by context (e.g. when home)
 
 Standards
 ---------
