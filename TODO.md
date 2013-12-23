@@ -28,7 +28,6 @@ Before shipping
 
 Basic Features
 --------------
-* record completed date
 * indicate when todo has notes
 * view notes
 * start date
@@ -67,7 +66,8 @@ Migration
 
 In Box
 ------
-* replace tab bar?
+* show completed date
+* replace tab bar
 * indicate stale actions
 * multi-dimensional display in Todos view, include stale todos
 * Autofocus: move pending todos to end of journal
