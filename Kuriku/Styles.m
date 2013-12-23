@@ -69,7 +69,7 @@ NSDictionary *addCompletedAttribute(NSDictionary* attributes) {
 NSAttributedString *todoTitleString(Todo *todo) {
     NSDictionary *attributes = @{NSFontAttributeName:todoFont(todo), NSForegroundColorAttributeName:todoTextColor(todo)};
     
-    if (todo.status == TodoStatusCompleted) {
+    if (todo.completed) {
         attributes = addCompletedAttribute(attributes);
     }
     

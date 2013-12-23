@@ -68,6 +68,14 @@
     self.commitment = committed ? TodoRangeMaxValue : 0;
 }
 
+- (BOOL)completed {
+    return self.status != TodoStatusNormal;
+}
+
+- (void)setCompleted:(BOOL)completed {
+    self.status = completed ? TodoStatusCompleted : TodoStatusNormal;
+}
+
 #pragma mark -
 
 + (void)updateAllPriorities {

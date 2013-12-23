@@ -3,7 +3,6 @@ Bugs
 
 Code
 ----
-* completed property in Todo object
 
 Usability
 ---------

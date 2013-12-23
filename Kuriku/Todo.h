@@ -38,6 +38,7 @@ static const int TodoPriorityVersion = 4;
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic, strong) NSSet *entries;
 
+@property (nonatomic) BOOL completed;
 @property (nonatomic) BOOL committed;
 @property (nonatomic, readonly) NSDate *lastActionDate;
 
