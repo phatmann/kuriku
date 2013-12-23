@@ -33,8 +33,8 @@ static const int TodoPriorityVersion = 4;
 @property (nonatomic) NSDate *createDate;
 @property (nonatomic) NSDate *dueDate;
 @property (nonatomic) NSDate *startDate;
+@property (nonatomic) NSDate *completionDate;
 @property (nonatomic) BOOL star;
-@property (nonatomic) int16_t status;
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic, strong) NSSet *entries;
 

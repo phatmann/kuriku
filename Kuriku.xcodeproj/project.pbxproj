@@ -12,7 +12,6 @@
 		EA048CBF1860C93600990957 /* EntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CBE1860C93600990957 /* EntryCell.m */; };
 		EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = EA10F1261861B2FF0084F6C8 /* TODO.md */; };
 		EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* ListViewController.m */; };
-		EA802EF31866E7D100CF1D11 /* Kuriku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA802EF01866E7D100CF1D11 /* Kuriku.xcdatamodeld */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
 		EA89E750185C136400643266 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA89E74F185C136400643266 /* CoreData.framework */; };
 		EA89E753185C15A300643266 /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E752185C15A300643266 /* TodoCell.m */; };
@@ -34,6 +33,7 @@
 		EAAC95811858F7D400E8BAB5 /* KurikuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC95801858F7D400E8BAB5 /* KurikuTests.m */; };
 		EAAC9591185936A300E8BAB5 /* Journal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9590185936A300E8BAB5 /* Journal.m */; };
 		EAAC9594185936A400E8BAB5 /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9593185936A400E8BAB5 /* Entry.m */; };
+		EABAAC8B1868B26700F2FBE6 /* Kuriku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EABAAC881868B26700F2FBE6 /* Kuriku.xcdatamodeld */; };
 		EADA6012186494BC006089AF /* Styles.m in Sources */ = {isa = PBXBuildFile; fileRef = EADA6011186494BC006089AF /* Styles.m */; };
 /* End PBXBuildFile section */
 
@@ -57,8 +57,6 @@
 		EA10F1261861B2FF0084F6C8 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.md; sourceTree = "<group>"; };
 		EA35308B185F23C20024E7C9 /* ListViewController.h */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA35308C185F23C20024E7C9 /* ListViewController.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
-		EA802EF11866E7D100CF1D11 /* Kuriku1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku1.xcdatamodel; sourceTree = "<group>"; };
-		EA802EF21866E7D100CF1D11 /* Kuriku2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku2.xcdatamodel; sourceTree = "<group>"; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 		EA89E74F185C136400643266 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -90,6 +88,9 @@
 		EAAC9590185936A300E8BAB5 /* Journal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Journal.m; sourceTree = "<group>"; };
 		EAAC9592185936A400E8BAB5 /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
 		EAAC9593185936A400E8BAB5 /* Entry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entry.m; sourceTree = "<group>"; };
+		EABAAC891868B26700F2FBE6 /* Kuriku1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku1.xcdatamodel; sourceTree = "<group>"; };
+		EABAAC8A1868B26700F2FBE6 /* Kuriku2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku2.xcdatamodel; sourceTree = "<group>"; };
+		EABAAC8C1868B27200F2FBE6 /* Kuriku3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku3.xcdatamodel; sourceTree = "<group>"; };
 		EADA6010186494BC006089AF /* Styles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Styles.h; sourceTree = "<group>"; };
 		EADA6011186494BC006089AF /* Styles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Styles.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,7 +124,7 @@
 		EA048CAB186083FF00990957 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				EA802EF01866E7D100CF1D11 /* Kuriku.xcdatamodeld */,
+				EABAAC881868B26700F2FBE6 /* Kuriku.xcdatamodeld */,
 				EAAC958F185936A300E8BAB5 /* Journal.h */,
 				EAAC9590185936A300E8BAB5 /* Journal.m */,
 				EAAC9592185936A400E8BAB5 /* Entry.h */,
@@ -386,6 +387,7 @@
 			files = (
 				EADA6012186494BC006089AF /* Styles.m in Sources */,
 				EAAC956C1858F7D400E8BAB5 /* TodoViewController.m in Sources */,
+				EABAAC8B1868B26700F2FBE6 /* Kuriku.xcdatamodeld in Sources */,
 				EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */,
 				EAAC9591185936A300E8BAB5 /* Journal.m in Sources */,
 				EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */,
@@ -394,7 +396,6 @@
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
 				EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */,
 				EA048CBF1860C93600990957 /* EntryCell.m in Sources */,
-				EA802EF31866E7D100CF1D11 /* Kuriku.xcdatamodeld in Sources */,
 				EAAC955C1858F7D400E8BAB5 /* main.m in Sources */,
 				EA048CAA1860832500990957 /* Todo.m in Sources */,
 			);
@@ -631,13 +632,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		EA802EF01866E7D100CF1D11 /* Kuriku.xcdatamodeld */ = {
+		EABAAC881868B26700F2FBE6 /* Kuriku.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				EA802EF11866E7D100CF1D11 /* Kuriku1.xcdatamodel */,
-				EA802EF21866E7D100CF1D11 /* Kuriku2.xcdatamodel */,
+				EABAAC891868B26700F2FBE6 /* Kuriku1.xcdatamodel */,
+				EABAAC8A1868B26700F2FBE6 /* Kuriku2.xcdatamodel */,
+				EABAAC8C1868B27200F2FBE6 /* Kuriku3.xcdatamodel */,
 			);
-			currentVersion = EA802EF21866E7D100CF1D11 /* Kuriku2.xcdatamodel */;
+			currentVersion = EABAAC8C1868B27200F2FBE6 /* Kuriku3.xcdatamodel */;
 			path = Kuriku.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

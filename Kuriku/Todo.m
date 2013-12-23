@@ -12,6 +12,7 @@
 
 @interface Todo ()
 @property (nonatomic) int16_t commitment;
+@property (nonatomic) int16_t status;
 @end
 
 @implementation Todo
@@ -25,6 +26,7 @@
 @dynamic createDate;
 @dynamic dueDate;
 @dynamic startDate;
+@dynamic completionDate;
 @dynamic priority;
 @dynamic star;
 @dynamic status;
@@ -73,7 +75,13 @@
 }
 
 - (void)setCompleted:(BOOL)completed {
-    self.status = completed ? TodoStatusCompleted : TodoStatusNormal;
+    if (completed) {
+        self.status = TodoStatusCompleted;
+        self.completionDate = [NSDate date];
+    } else {
+        self.status = TodoStatusNormal;
+        self.completionDate = nil;
+    }
 }
 
 #pragma mark -
