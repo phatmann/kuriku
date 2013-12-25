@@ -16,7 +16,7 @@
 
 @end
 
-@interface EditTodoViewController : UIViewController
+@interface EditTodoViewController : UITableViewController
 
 @property (strong, nonatomic) Todo *todo;
 @property (weak, nonatomic) id<EditTodoViewControllerDelegate> delegate;

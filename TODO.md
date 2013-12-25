@@ -28,10 +28,10 @@ Before shipping
 
 Basic Features
 --------------
+* due date that auto-adjusts urgency
+* start date with prioritization
 * indicate when todo has notes
 * view notes
-* start date
-* due date
 * starred view
 * multi journals
 * task timer with duration in action entries

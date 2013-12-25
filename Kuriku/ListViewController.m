@@ -32,7 +32,8 @@
 {
     if ([segue.identifier isEqualToString:@"Edit todo"]) {
         Todo *todo = sender;
-        EditTodoViewController *entryViewController = segue.destinationViewController;
+        UINavigationController *navigationController = segue.destinationViewController;
+        EditTodoViewController *entryViewController = [navigationController.viewControllers firstObject];
         entryViewController.delegate = self;
         entryViewController.todo = todo;
     }

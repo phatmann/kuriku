@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *titleField;
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
 @property (weak, nonatomic) IBOutlet UISwitch *committedSwitch;
 
@@ -33,12 +32,12 @@
         self.importanceSlider.value  = self.todo.importance;
         self.committedSwitch.on      = self.todo.committed;
         self.notesField.text         = self.todo.notes;
-        self.navigationBarItem.title = @"Edit Todo";
+        self.navigationItem.title = @"Edit Todo";
     } else {
         self.urgencySlider.value     = TodoUrgencyDefaultValue;
         self.importanceSlider.value  = TodoImportanceDefaultValue;
         self.committedSwitch.on      = TodoCommittedDefaultValue;
-        self.navigationBarItem.title = @"New Todo";
+        self.navigationItem.title = @"New Todo";
         [self.titleField becomeFirstResponder];
     }
     
@@ -46,7 +45,7 @@
 }
 
 - (IBAction)titleDidChange {
-    self.navigationBarItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
+    self.navigationItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
 }
     
 - (IBAction)cancelButtonWasTapped:(UIBarButtonItem *)sender {
