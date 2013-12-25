@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DatePickerViewController.h"
 
 @class Todo;
 
@@ -16,7 +17,7 @@
 
 @end
 
-@interface EditTodoViewController : UITableViewController
+@interface EditTodoViewController : UITableViewController<DatePickerViewControllerDelegate>
 
 @property (strong, nonatomic) Todo *todo;
 @property (weak, nonatomic) id<EditTodoViewControllerDelegate> delegate;

@@ -34,6 +34,7 @@
 		EAAC9591185936A300E8BAB5 /* Journal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9590185936A300E8BAB5 /* Journal.m */; };
 		EAAC9594185936A400E8BAB5 /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9593185936A400E8BAB5 /* Entry.m */; };
 		EABAAC8B1868B26700F2FBE6 /* Kuriku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EABAAC881868B26700F2FBE6 /* Kuriku.xcdatamodeld */; };
+		EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */; };
 		EADA6012186494BC006089AF /* Styles.m in Sources */ = {isa = PBXBuildFile; fileRef = EADA6011186494BC006089AF /* Styles.m */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,8 @@
 		EABAAC891868B26700F2FBE6 /* Kuriku1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku1.xcdatamodel; sourceTree = "<group>"; };
 		EABAAC8A1868B26700F2FBE6 /* Kuriku2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku2.xcdatamodel; sourceTree = "<group>"; };
 		EABAAC8C1868B27200F2FBE6 /* Kuriku3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku3.xcdatamodel; sourceTree = "<group>"; };
+		EABAAC92186B702D00F2FBE6 /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
+		EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
 		EADA6010186494BC006089AF /* Styles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Styles.h; sourceTree = "<group>"; };
 		EADA6011186494BC006089AF /* Styles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Styles.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,6 +170,8 @@
 				EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */,
 				EA89E74C185C074600643266 /* EditTodoViewController.h */,
 				EA89E74D185C074600643266 /* EditTodoViewController.m */,
+				EABAAC92186B702D00F2FBE6 /* DatePickerViewController.h */,
+				EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */,
 				EA89E753185C15A300643266 /* TodoCell.m in Sources */,
 				EAAC9594185936A400E8BAB5 /* Entry.m in Sources */,
+				EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */,
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
 				EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */,
 				EA048CBF1860C93600990957 /* EntryCell.m in Sources */,

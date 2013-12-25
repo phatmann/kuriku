@@ -10,24 +10,6 @@
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
-@interface NSDate (Entry)
-- (NSDate *) dateAtStartOfDay;
-@end
-
-@implementation NSDate (Entry)
-
-- (NSDate *) dateAtStartOfDay
-{
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-	NSDateComponents *components = [calendar components:(NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit) fromDate:self];
-	components.hour = 0;
-	components.minute = 0;
-	components.second = 0;
-	return [calendar dateFromComponents:components];
-}
-
-@end
-
 @interface Entry ()
 
 @end

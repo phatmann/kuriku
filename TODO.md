@@ -54,6 +54,7 @@ Advanced Features
 * Color labels
 * Action outline
 * Filter by context (e.g. when home)
+* Shared lists
 
 Standards
 ---------
