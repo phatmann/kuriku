@@ -46,14 +46,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     entry.type = EntryTypeCreateTodo;
 }
 
-- (void)awakeFromFetch {
-    [super awakeFromFetch];
-    
-    if (self.dueDate) {
-        [self updateUrgencyFromDueDate];
-    }
-}
-
 - (void)didChangeValueForKey:(NSString *)key {
     [super didChangeValueForKey:key];
     
@@ -109,12 +101,42 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
++ (void)updateAllUrgenciesFromDueDateIfNeeded {
+    // TODO
+    [self updateAllUrgenciesFromDueDate];
+}
+
++ (void)updateAllUrgenciesFromDueDate {
+    NSDate *dateUrgentDaysFromNow = [NSDate dateWithTimeIntervalSinceNow:kSecondsInDay * kUrgentDaysBeforeDueDate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@ AND status = %d", dateUrgentDaysFromNow, TodoStatusNormal];
+    NSArray *todos = [Todo allForPredicate:predicate];
+    
+    for (Todo *todo in todos) {
+        [todo updateUrgencyFromDueDate];
+    }
+    
+    [IBCoreDataStore save];
+}
+
++ (int)urgencyFromDueDate:(NSDate *)dueDate {
+    if (!dueDate)
+        return 0;
+    
+    int daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
+    
+    if (daysUntilDue <= 0) {
+        return TodoRangeMaxValue;
+    } else if (daysUntilDue >= kUrgentDaysBeforeDueDate) {
+        return 0;
+    } else {
+        return ((kUrgentDaysBeforeDueDate - daysUntilDue) *  TodoRangeMaxValue) / kUrgentDaysBeforeDueDate;
+    }
+}
+
 - (NSDate *)lastActionDate {
     Entry *firstEntry = [self.actionEntriesByDate firstObject];
     return firstEntry.timestamp;
 }
-
-#pragma mark -
 
 - (void)createActionEntry {
     Entry *entry = [Entry create];
@@ -122,7 +144,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     entry.type = EntryTypeTakeAction;
 }
 
-#pragma mark -
+#pragma mark - Private
 
 - (void)updatePriority {
     CGFloat maxValue = TodoRangeMaxValue * 2;
@@ -148,21 +170,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (void)updateUrgencyFromDueDate {
     self.urgency = [Todo urgencyFromDueDate:self.dueDate];
-}
-
-+ (int)urgencyFromDueDate:(NSDate *)dueDate {
-    if (!dueDate)
-        return 0;
-    
-    int daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
-    
-    if (daysUntilDue <= 0) {
-        return TodoRangeMaxValue;
-    } else if (daysUntilDue >= kUrgentDaysBeforeDueDate) {
-        return 0;
-    } else {
-        return ((kUrgentDaysBeforeDueDate - daysUntilDue) *  TodoRangeMaxValue) / kUrgentDaysBeforeDueDate;
-    }
 }
 
 @end

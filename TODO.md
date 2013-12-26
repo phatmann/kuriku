@@ -1,6 +1,5 @@
 Bugs
 ----
-* Urgency needs to be updated from due date in a batch for Todo view to sort correctly
 
 Code
 ----
@@ -8,6 +7,11 @@ Code
 
 Usability
 ---------
+
+Performance
+-----------
+* Only update urgencies when 24hrs has passed
+* Use cache file for both NSFetchedResultControllers
 
 Testing
 -------
