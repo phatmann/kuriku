@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *committedSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *urgencyLabel;
 
 @property (weak, nonatomic) UILabel *selectedDateLabel;
 
@@ -48,10 +49,11 @@ static NSString* kNoDateString = @"None";
         self.navigationItem.title    = @"New Todo";
         self.dueDateLabel.text       = kNoDateString;
         self.startDateLabel.text     = kNoDateString;
+        
         [self.titleField becomeFirstResponder];
     }
     
-    [self titleDidChange];
+    [self updateControls];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -66,7 +68,7 @@ static NSString* kNoDateString = @"None";
 }
 
 - (IBAction)titleDidChange {
-    self.navigationItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
+    [self updateControls];
 }
     
 - (IBAction)cancelButtonWasTapped:(UIBarButtonItem *)sender {
@@ -104,7 +106,17 @@ static NSString* kNoDateString = @"None";
 #pragma mark - Date Picker View Controller Delegate
 
 - (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController {
-    self.selectedDateLabel.text = dateViewController.date ? [dateViewController.date formattedDateStyle:NSDateFormatterShortStyle]: @"None";
+    self.selectedDateLabel.text = dateToString(dateViewController.date);
+    [self updateControls];
+}
+
+#pragma mark -
+
+- (void)updateControls {
+    self.urgencySlider.enabled = [self.dueDateLabel.text isEqualToString:kNoDateString];
+    self.urgencyLabel.enabled  = self.urgencySlider.enabled;
+    
+    self.navigationItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
 }
 
 #pragma mark -
