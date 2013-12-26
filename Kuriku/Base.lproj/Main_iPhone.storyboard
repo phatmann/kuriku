@@ -141,8 +141,19 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GSA-am-mGh">
+                                <rect key="frame" x="8" y="72" width="304" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="All" width="28"/>
+                                    <segment title="Urgent" width="50"/>
+                                    <segment title="Important" width="70"/>
+                                    <segment title="Scheduled" width="73"/>
+                                    <segment title="Completed" width="77"/>
+                                </segments>
+                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xfL-Hz-Rmj">
-                                <rect key="frame" x="0.0" y="64" width="320" height="447"/>
+                                <rect key="frame" x="0.0" y="108" width="320" height="403"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -199,8 +210,11 @@
                             <constraint firstAttribute="trailing" secondItem="xfL-Hz-Rmj" secondAttribute="trailing" id="Aif-3i-yu9"/>
                             <constraint firstItem="xfL-Hz-Rmj" firstAttribute="leading" secondItem="gMD-aP-Fq6" secondAttribute="leading" id="NuK-6k-3BG"/>
                             <constraint firstItem="x2p-4Y-y7Q" firstAttribute="top" secondItem="MxC-nJ-dFe" secondAttribute="bottom" id="PEO-P5-Oaf"/>
+                            <constraint firstAttribute="trailing" secondItem="GSA-am-mGh" secondAttribute="trailing" constant="8" id="Pca-NC-jcg"/>
+                            <constraint firstItem="xfL-Hz-Rmj" firstAttribute="top" secondItem="GSA-am-mGh" secondAttribute="bottom" constant="8" id="ZeV-S8-3Mz"/>
+                            <constraint firstItem="GSA-am-mGh" firstAttribute="leading" secondItem="gMD-aP-Fq6" secondAttribute="leading" constant="8" id="fpw-EM-Jqr"/>
+                            <constraint firstItem="GSA-am-mGh" firstAttribute="top" secondItem="x2p-4Y-y7Q" secondAttribute="bottom" constant="8" id="i91-lr-CUS"/>
                             <constraint firstItem="bMD-Ff-oau" firstAttribute="top" secondItem="xfL-Hz-Rmj" secondAttribute="bottom" constant="20" symbolic="YES" id="rVq-aU-di4"/>
-                            <constraint firstItem="xfL-Hz-Rmj" firstAttribute="top" secondItem="x2p-4Y-y7Q" secondAttribute="bottom" id="uIP-Kc-hZI"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

@@ -1,12 +1,13 @@
 Bugs
 ----
+* Urgency needs to be updated from due date in a batch for Todo view to sort correctly
 
 Code
 ----
+* Don't factor completion into priority
 
 Usability
 ---------
-* longer notes field
 
 Testing
 -------
@@ -22,29 +23,45 @@ Cosmetic
 
 Before shipping
 ---------------
+* Automated tests
 * Remove test data
 * Show helpful sample data
 * Graphics
 
 Basic Features
 --------------
-* due date that auto-adjusts urgency
-* start date with prioritization
-* indicate when todo has notes
-* view notes
-* starred view
-* multi journals
-* task timer with duration in action entries
+* Start date (hide from Todo until then)
+* Recurring todos
+* Show due date in Todo and Journal views
+* Completed items prioritize by completed date
+* Sort/filter Todo view
+    - All (by priority)
+    - Urgent
+    - Important
+    - Scheduled (by start date)
+    - Completed (by completed date)
+
+Tweaks
+------
 * Show time in latest action date in Todo view
-* Set journal date and time for entry
 * Show create date in Todo list
-* Archive/hide completed entries
-* Order completed items by completion date
-* Remember active tab
-* Recurring
+* Tomorrow and Next Week buttons in Date picker
 
 Advanced Features
 -----------------
+* Archive completed entries
+* Factor stalled into priority
+* Stalled filter in Todo view
+* Remember active tab
+* Search
+* Filter journal by entry type
+* Set journal date and time for entry
+* Starred view
+* Todo estimated size
+* Task timer with duration in action entries
+* indicate when todo has notes
+* view notes
+* multi journals
 * Choose urgency window for due dates
 * Jump around journal
 * Set action entry title and show todo title with it
@@ -56,6 +73,7 @@ Advanced Features
 * Action outline
 * Filter by context (e.g. when home)
 * Shared lists
+* Shake to shuffle
 
 Standards
 ---------
@@ -64,14 +82,15 @@ Standards
 
 Migration
 ---------
-* Recalc priority whenever db version changes
 
 In Box
 ------
 * show completed date
 * replace tab bar
 * indicate stale actions
-* multi-dimensional display in Todos view, include stale todos
 * Autofocus: move pending todos to end of journal
 * Archive/hide old journal pages
 * journal reference entries (italic)
+* Longer notes field
+* Urgency window based on size of todo
+* Due reminders in journal
