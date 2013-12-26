@@ -15,6 +15,9 @@
 @property (nonatomic) int16_t status;
 @end
 
+static const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
+static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
+
 @implementation Todo
 {
     NSArray *_actionEntriesByDate;
@@ -43,6 +46,14 @@
     entry.type = EntryTypeCreateTodo;
 }
 
+- (void)awakeFromFetch {
+    [super awakeFromFetch];
+    
+    if (self.dueDate) {
+        [self updateUrgencyFromDueDate];
+    }
+}
+
 - (void)didChangeValueForKey:(NSString *)key {
     [super didChangeValueForKey:key];
     
@@ -53,6 +64,12 @@
         Entry *entry = [Entry create];
         entry.todo = self;
         entry.type = (self.status == TodoStatusCompleted) ? EntryTypeCompleteTodo : EntryTypeContinueTodo;
+    } else if ([key isEqualToString:@"dueDate"]) {
+        if (self.dueDate) {
+            [self updateUrgencyFromDueDate];
+        } else {
+            self.urgency = 0;
+        }
     }
 }
 
@@ -127,6 +144,25 @@
     }
     
     return _actionEntriesByDate;
+}
+
+- (void)updateUrgencyFromDueDate {
+    self.urgency = [Todo urgencyFromDueDate:self.dueDate];
+}
+
++ (int)urgencyFromDueDate:(NSDate *)dueDate {
+    if (!dueDate)
+        return 0;
+    
+    int daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
+    
+    if (daysUntilDue <= 0) {
+        return TodoRangeMaxValue;
+    } else if (daysUntilDue >= kUrgentDaysBeforeDueDate) {
+        return 0;
+    } else {
+        return ((kUrgentDaysBeforeDueDate - daysUntilDue) *  TodoRangeMaxValue) / kUrgentDaysBeforeDueDate;
+    }
 }
 
 @end

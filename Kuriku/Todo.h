@@ -45,6 +45,7 @@ static const int TodoPriorityVersion = 4;
 - (void)createActionEntry;
 
 + (void)updateAllPriorities;
++ (int)urgencyFromDueDate:(NSDate *)dueDate;
 
 @end
 

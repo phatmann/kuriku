@@ -41,10 +41,11 @@ Basic Features
 * Archive/hide completed entries
 * Order completed items by completion date
 * Remember active tab
+* Recurring
 
 Advanced Features
 -----------------
-* Recurring
+* Choose urgency window for due dates
 * Jump around journal
 * Set action entry title and show todo title with it
 * Action list for todos, can choose from actions when creating entry

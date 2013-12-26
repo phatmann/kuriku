@@ -106,8 +106,13 @@ static NSString* kNoDateString = @"None";
 #pragma mark - Date Picker View Controller Delegate
 
 - (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController {
-    self.selectedDateLabel.text = dateToString(dateViewController.date);
-    [self updateControls];
+    NSString *dateString = dateToString(dateViewController.date);
+    
+    if (![dateString isEqualToString:self.selectedDateLabel.text]) {
+        self.selectedDateLabel.text = dateString;
+        self.urgencySlider.value = [Todo urgencyFromDueDate:dateViewController.date];
+        [self updateControls];
+    }
 }
 
 #pragma mark -
@@ -115,7 +120,6 @@ static NSString* kNoDateString = @"None";
 - (void)updateControls {
     self.urgencySlider.enabled = [self.dueDateLabel.text isEqualToString:kNoDateString];
     self.urgencyLabel.enabled  = self.urgencySlider.enabled;
-    
     self.navigationItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
 }
 
