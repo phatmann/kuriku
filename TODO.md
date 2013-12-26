@@ -39,7 +39,6 @@ Basic Features
 * Start date (hide from Todo until then)
 * Recurring todos
 * Show due date in Todo and Journal views
-* Completed items prioritize by completed date
 * Sort/filter Todo view
     - All (by priority)
     - Urgent
@@ -52,12 +51,15 @@ Tweaks
 * Show time in latest action date in Todo view
 * Show create date in Todo list
 * Tomorrow and Next Week buttons in Date picker
+* Colors for edit todo view values (e.g. gray Never)
 
 Advanced Features
 -----------------
-* Archive completed entries
 * Factor stalled into priority
 * Stalled filter in Todo view
+* Archive completed entries
+* Inline editing
+* Landscape mode
 * Remember active tab
 * Search
 * Filter journal by entry type
@@ -100,3 +102,4 @@ In Box
 * Longer notes field
 * Urgency window based on size of todo
 * Due reminders in journal
+* Decide if all entries for completed todod should be crossed out

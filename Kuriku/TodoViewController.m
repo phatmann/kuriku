@@ -16,6 +16,7 @@ typedef enum {
     FilterAll,
     FilterUrgent,
     FilterImportant,
+    FilterMustDo,
     FilterScheduled,
     FilterComplete
 } Filter;
@@ -48,6 +49,10 @@ typedef enum {
         case FilterImportant:
             sortKey = @"importance";
             filter  = @"completionDate = NULL";
+            break;
+        case FilterMustDo:
+            sortKey = @"priority";
+            filter  = @"commitment > 0 && completionDate = NULL";
             break;
         case FilterScheduled:
             sortKey = @"startDate";

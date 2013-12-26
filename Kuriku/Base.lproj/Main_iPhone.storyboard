@@ -145,11 +145,12 @@
                                 <rect key="frame" x="8" y="72" width="304" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="All" width="28"/>
-                                    <segment title="Urgent" width="50"/>
-                                    <segment title="Important" width="70"/>
-                                    <segment title="Scheduled" width="73"/>
-                                    <segment title="Completed" width="77"/>
+                                    <segment title="All"/>
+                                    <segment title="Urg"/>
+                                    <segment title="Imp"/>
+                                    <segment title="Must"/>
+                                    <segment title="Sched"/>
+                                    <segment title="Comp"/>
                                 </segments>
                                 <connections>
                                     <action selector="filterButtonsChanged" destination="QUy-BD-bpt" eventType="valueChanged" id="bGN-wb-i2V"/>
@@ -284,6 +285,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <action selector="titleDidChange" destination="mcN-ys-bQG" eventType="editingChanged" id="DK0-Ux-zb2"/>
+                                                        <outlet property="delegate" destination="mcN-ys-bQG" id="Qwm-oh-ZEr"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -306,17 +308,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuK-OT-bID">
-                                                    <rect key="frame" x="126" y="17" width="24" height="14"/>
+                                                    <rect key="frame" x="146" y="17" width="24" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="xqf-QQ-XLX" userLabel="Importance Slider">
-                                                    <rect key="frame" x="156" y="5" width="109" height="34"/>
+                                                    <rect key="frame" x="176" y="5" width="89" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="105" id="qFe-7s-OsT"/>
+                                                        <constraint firstAttribute="width" constant="85" id="qFe-7s-OsT"/>
                                                     </constraints>
                                                     <connections>
                                                         <action selector="sliderValueChanged:" destination="mcN-ys-bQG" eventType="valueChanged" id="mSd-Kf-Nhy"/>
@@ -394,17 +396,17 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kqf-9K-yiI">
-                                                    <rect key="frame" x="126" y="17" width="24" height="14"/>
+                                                    <rect key="frame" x="146" y="17" width="24" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="TRa-yE-wfk" userLabel="Urgency Slider">
-                                                    <rect key="frame" x="156" y="5" width="109" height="34"/>
+                                                    <rect key="frame" x="176" y="5" width="89" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="105" id="NhE-cA-eVg"/>
+                                                        <constraint firstAttribute="width" constant="85" id="NhE-cA-eVg"/>
                                                     </constraints>
                                                     <connections>
                                                         <action selector="sliderValueChanged:" destination="mcN-ys-bQG" eventType="valueChanged" id="pV1-vv-Lu1"/>
