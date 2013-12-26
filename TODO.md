@@ -1,5 +1,6 @@
 Bugs
 ----
+* Cannot clear due date or start date
 
 Code
 ----
