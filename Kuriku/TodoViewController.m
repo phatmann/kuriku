@@ -34,40 +34,63 @@ typedef enum {
 #pragma mark -
 
 - (void)createFetchedResultsController {
+    // TODO: move logic to Todo class
+    
     NSString *filter = nil;
     NSString *sortKey;
+    BOOL includeCompleted = NO;
+    BOOL includeScheduled = NO;
     
     switch (self.filterButtons.selectedSegmentIndex) {
         case FilterAll:
             sortKey = @"priority";
-            filter  = @"completionDate = NULL";
             break;
         case FilterUrgent:
             sortKey = @"urgency";
-            filter  = @"urgency > 0 && completionDate = NULL";
+            filter  = @"urgency > 0";
             break;
         case FilterImportant:
             sortKey = @"importance";
-            filter  = @"completionDate = NULL";
             break;
         case FilterMustDo:
             sortKey = @"priority";
-            filter  = @"commitment > 0 && completionDate = NULL";
+            filter  = @"commitment > 0";
             break;
         case FilterScheduled:
             sortKey = @"startDate";
-            filter  = @"startDate != NULL && completionDate = NULL";
+            filter  = @"startDate != NULL";
+            includeScheduled = YES;
             break;
         case FilterComplete:
             sortKey = @"completionDate";
             filter  = @"completionDate != NULL";
+            includeCompleted = YES;
             break;
+    }
+    
+    NSPredicate *predicate = filter ? [NSPredicate predicateWithFormat:filter] : nil;
+    
+    if (!includeCompleted) {
+        NSPredicate *hideCompleted = [NSPredicate predicateWithFormat:@"completionDate = NULL"];
+        
+        if (predicate)
+            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, hideCompleted]];
+        else
+            predicate = hideCompleted;
+    }
+    
+    if (!includeScheduled) {
+        NSPredicate *hideScheduled = [NSPredicate predicateWithFormat:@"startDate = NULL OR startDate < %@", [NSDate today]];
+        
+        if (predicate)
+            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, hideScheduled]];
+        else
+            predicate = hideScheduled;
     }
 
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Todo"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:NO];
-    NSPredicate *predicate = filter ? [NSPredicate predicateWithFormat:filter] : nil;
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]

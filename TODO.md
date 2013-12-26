@@ -36,15 +36,11 @@ Before shipping
 
 Basic Features
 --------------
-* Start date (hide from Todo until then)
-* Recurring todos
+* Do slider, filter includes all in order
+* Show start date in Todo and Journal views
 * Show due date in Todo and Journal views
-* Sort/filter Todo view
-    - All (by priority)
-    - Urgent
-    - Important
-    - Scheduled (by start date)
-    - Completed (by completed date)
+* Recurring todos
+* Show START action in journal
 
 Tweaks
 ------
@@ -61,6 +57,7 @@ Advanced Features
 * Inline editing
 * Landscape mode
 * Remember active tab
+* Todos with dates on calendar
 * Search
 * Filter journal by entry type
 * Set journal date and time for entry
