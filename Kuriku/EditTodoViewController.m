@@ -25,6 +25,8 @@
 
 @end
 
+static NSString* kNoDateString = @"None";
+
 @implementation EditTodoViewController
 
 - (void)viewDidLoad {
@@ -36,16 +38,16 @@
         self.importanceSlider.value  = self.todo.importance;
         self.committedSwitch.on      = self.todo.committed;
         self.notesField.text         = self.todo.notes;
-        self.dueDateLabel.text       = [self.todo.dueDate formattedDateStyle:NSDateFormatterShortStyle];
-        self.startDateLabel.text     = [self.todo.startDate formattedDateStyle:NSDateFormatterShortStyle];
+        self.dueDateLabel.text       = dateToString(self.todo.dueDate);
+        self.startDateLabel.text     = dateToString(self.todo.startDate);
         self.navigationItem.title    = @"Edit Todo";
     } else {
         self.urgencySlider.value     = TodoUrgencyDefaultValue;
         self.importanceSlider.value  = TodoImportanceDefaultValue;
         self.committedSwitch.on      = TodoCommittedDefaultValue;
         self.navigationItem.title    = @"New Todo";
-        self.dueDateLabel.text       = @"None";
-        self.startDateLabel.text     = @"None";
+        self.dueDateLabel.text       = kNoDateString;
+        self.startDateLabel.text     = kNoDateString;
         [self.titleField becomeFirstResponder];
     }
     
@@ -81,8 +83,8 @@
     self.todo.importance = self.importanceSlider.value;
     self.todo.committed  = self.committedSwitch.on;
     self.todo.notes      = self.notesField.text;
-    self.todo.dueDate    = [NSDate dateFromString:self.dueDateLabel.text withFormat:NSDateFormatterShortStyle];
-    self.todo.startDate  = [NSDate dateFromString:self.startDateLabel.text withFormat:NSDateFormatterShortStyle];
+    self.todo.dueDate    = stringToDate(self.dueDateLabel.text);
+    self.todo.startDate  = stringToDate(self.startDateLabel.text);
     
     [[IBCoreDataStore mainStore] save];
     [self.delegate todoWasEdited:self.todo];
@@ -100,9 +102,25 @@
 }
 
 #pragma mark - Date Picker View Controller Delegate
+
 - (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController {
-    self.selectedDateLabel.text = [dateViewController.date formattedDateStyle:NSDateFormatterShortStyle];
+    self.selectedDateLabel.text = dateViewController.date ? [dateViewController.date formattedDateStyle:NSDateFormatterShortStyle]: @"None";
 }
 
+#pragma mark -
+
+NSDate *stringToDate(NSString *string) {
+    if ([string isEqualToString:kNoDateString])
+        return nil;
+    
+    return [NSDate dateFromString:string withFormat:NSDateFormatterShortStyle];
+}
+
+NSString *dateToString(NSDate *date) {
+    if (!date)
+        return kNoDateString;
+    
+    return [date formattedDateStyle:NSDateFormatterShortStyle];
+}
 
 @end

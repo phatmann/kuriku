@@ -600,14 +600,14 @@
                         <sections>
                             <tableViewSection id="yhX-BK-Wet">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="MdD-Qb-J73">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="MdD-Qb-J73">
                                         <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MdD-Qb-J73" id="pJf-s2-Zex">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ytj-GU-4fw" userLabel="Date Label">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ytj-GU-4fw" userLabel="Date Label">
                                                     <rect key="frame" x="20" y="11" width="280" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -615,20 +615,50 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Ytj-GU-4fw" firstAttribute="leading" secondItem="pJf-s2-Zex" secondAttribute="leading" constant="20" symbolic="YES" id="EDt-gH-Ard"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ytj-GU-4fw" secondAttribute="trailing" constant="20" symbolic="YES" id="URX-oC-CwK"/>
+                                                <constraint firstAttribute="centerY" secondItem="Ytj-GU-4fw" secondAttribute="centerY" id="gtB-KH-Kav"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="T1c-eH-ylx">
                                 <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="AGm-fA-Lmf">
+                                        <rect key="frame" x="0.0" y="163" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AGm-fA-Lmf" id="C0L-Wk-6x2">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zqe-vY-1yQ">
+                                                    <rect key="frame" x="110" y="7" width="101" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <segments>
+                                                        <segment title="None"/>
+                                                        <segment title="Today"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="dateButtonsChanged" destination="khI-gR-KO2" eventType="valueChanged" id="NeY-AL-dp9"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="zqe-vY-1yQ" secondAttribute="centerY" id="b6r-AI-zcd"/>
+                                                <constraint firstAttribute="centerX" secondItem="zqe-vY-1yQ" secondAttribute="centerX" id="vQ2-kN-RP9"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="220" id="42Z-K2-aGw">
-                                        <rect key="frame" x="0.0" y="163" width="320" height="220"/>
+                                        <rect key="frame" x="0.0" y="207" width="320" height="220"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="42Z-K2-aGw" id="Fic-B6-HBX">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="219"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="pzC-qT-JFN">
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="pzC-qT-JFN">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="409694480.95860201">
@@ -660,6 +690,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     </connections>
                                                 </datePicker>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="pzC-qT-JFN" firstAttribute="top" secondItem="Fic-B6-HBX" secondAttribute="top" id="67T-UY-8zc"/>
+                                                <constraint firstItem="pzC-qT-JFN" firstAttribute="leading" secondItem="Fic-B6-HBX" secondAttribute="leading" id="qpo-8W-OTE"/>
+                                                <constraint firstAttribute="trailing" secondItem="pzC-qT-JFN" secondAttribute="trailing" id="rhr-qp-MYi"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -672,6 +707,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </tableView>
                     <navigationItem key="navigationItem" id="V0V-sB-Hbv"/>
                     <connections>
+                        <outlet property="dateButtons" destination="zqe-vY-1yQ" id="EQG-o1-1ui"/>
                         <outlet property="dateLabel" destination="Ytj-GU-4fw" id="vkx-HZ-Scd"/>
                         <outlet property="datePicker" destination="pzC-qT-JFN" id="tkm-kW-AG2"/>
                     </connections>

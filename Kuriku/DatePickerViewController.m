@@ -12,6 +12,7 @@
 @interface DatePickerViewController ()
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *dateButtons;
 @end
 
 @implementation DatePickerViewController
@@ -26,10 +27,32 @@
     [self datePickerValueWasChanged];
 }
 
+- (void)setDate:(NSDate *)date {
+    _date = date;
+    [self.delegate datePickerViewControllerDateChanged:self];
+}
+
 - (IBAction)datePickerValueWasChanged {
     self.date = [self.datePicker.date dateAtStartOfDay];
+    BOOL isToday = [self.date isEqualToDate:[[NSDate date] dateAtStartOfDay]];
+    self.dateButtons.selectedSegmentIndex = isToday ? 1 : -1;
     self.dateLabel.text = [self.date formattedDateStyle:NSDateFormatterLongStyle];
-    [self.delegate datePickerViewControllerDateChanged:self];
+}
+
+- (IBAction)dateButtonsChanged {
+    switch (self.dateButtons.selectedSegmentIndex) {
+        case 0:
+            self.datePicker.hidden = YES;
+            self.date = nil;
+            self.dateLabel.text = @"None";
+            break;
+            
+        case 1:
+            self.datePicker.hidden = NO;
+            self.datePicker.date = [NSDate date];
+            [self datePickerValueWasChanged];
+            break;
+    }
 }
 
 @end
