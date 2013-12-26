@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
+- (void)reloadData;
 - (void)showTodoActionSheet:(Todo *)todo;
 - (void)showEditTodoView:(Todo *)todo;
 

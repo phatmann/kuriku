@@ -12,19 +12,59 @@
 #import "EditTodoViewController.h"
 #import "Styles.h"
 
-@interface TodoViewController ()
+typedef enum {
+    FilterAll,
+    FilterUrgent,
+    FilterImportant,
+    FilterScheduled,
+    FilterComplete
+} Filter;
 
+@interface TodoViewController ()
+@property (weak, nonatomic) IBOutlet UISegmentedControl *filterButtons;
 @end
 
 @implementation TodoViewController
 
+- (IBAction)filterButtonsChanged {
+    [self reloadData];
+}
+
 #pragma mark -
 
 - (void)createFetchedResultsController {
+    NSString *filter = nil;
+    NSString *sortKey;
+    
+    switch (self.filterButtons.selectedSegmentIndex) {
+        case FilterAll:
+            sortKey = @"priority";
+            filter  = @"completionDate = NULL";
+            break;
+        case FilterUrgent:
+            sortKey = @"urgency";
+            filter  = @"urgency > 0 && completionDate = NULL";
+            break;
+        case FilterImportant:
+            sortKey = @"importance";
+            filter  = @"completionDate = NULL";
+            break;
+        case FilterScheduled:
+            sortKey = @"startDate";
+            filter  = @"startDate != NULL && completionDate = NULL";
+            break;
+        case FilterComplete:
+            sortKey = @"completionDate";
+            filter  = @"completionDate != NULL";
+            break;
+    }
+
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Todo"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"priority" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:NO];
+    NSPredicate *predicate = filter ? [NSPredicate predicateWithFormat:filter] : nil;
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
                                      managedObjectContext:context

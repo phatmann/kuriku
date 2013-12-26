@@ -4,9 +4,11 @@ Bugs
 Code
 ----
 * Don't factor completion into priority
+* Enhance InnerBand to return fetch requests and/or fetch results controller
 
 Usability
 ---------
+* Remember Todos filter setting
 
 Performance
 -----------

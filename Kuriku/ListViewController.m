@@ -19,13 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.tableView.estimatedRowHeight = 44;
-    
-    [self createFetchedResultsController];
-    self.fetchedResultsController.delegate = self;
-    NSError *error;
-    [self.fetchedResultsController performFetch:&error];
+    [self reloadData];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -37,6 +32,15 @@
         entryViewController.delegate = self;
         entryViewController.todo = todo;
     }
+}
+#pragma mark -
+
+- (void)reloadData {
+    [self createFetchedResultsController];
+    self.fetchedResultsController.delegate = self;
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table View Delegate

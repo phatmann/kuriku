@@ -151,6 +151,9 @@
                                     <segment title="Scheduled" width="73"/>
                                     <segment title="Completed" width="77"/>
                                 </segments>
+                                <connections>
+                                    <action selector="filterButtonsChanged" destination="QUy-BD-bpt" eventType="valueChanged" id="bGN-wb-i2V"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xfL-Hz-Rmj">
                                 <rect key="frame" x="0.0" y="108" width="320" height="403"/>
@@ -220,6 +223,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Todo" image="todo" id="Z7h-1E-pvt"/>
                     <connections>
+                        <outlet property="filterButtons" destination="GSA-am-mGh" id="XbU-Lv-kb2"/>
                         <outlet property="tableView" destination="xfL-Hz-Rmj" id="Lj3-pa-4is"/>
                         <segue destination="lbM-R3-zXO" kind="modal" identifier="Edit todo" id="sYx-iO-qXj"/>
                     </connections>
