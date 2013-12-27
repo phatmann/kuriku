@@ -14,7 +14,6 @@ Performance
 -----------
 * Only update urgencies when 24hrs has passed
 * Use cache file for both NSFetchedResultControllers
-* Cache last entry date in Todo object
 
 Testing
 -------

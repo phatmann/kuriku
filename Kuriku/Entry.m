@@ -7,6 +7,7 @@
 //
 
 #import "Entry.h"
+#import "Todo.h"
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
@@ -36,6 +37,13 @@
 
 - (NSDate *)journalDate {
     return [Entry journalDateFromString:self.journalDateString];
+}
+
+- (void)didChangeValueForKey:(NSString *)key {
+    [super didChangeValueForKey:key];
+    
+    if ([key isEqualToString:@"todo"])
+        self.todo.lastEntryDate = self.timestamp;
 }
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString {

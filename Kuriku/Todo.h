@@ -30,17 +30,20 @@ static const int TodoPriorityVersion = 4;
 @property (nonatomic) int16_t importance;
 @property (nonatomic) int16_t urgency;
 @property (nonatomic) float_t priority;
-@property (nonatomic) NSDate *createDate;
-@property (nonatomic) NSDate *dueDate;
-@property (nonatomic) NSDate *startDate;
-@property (nonatomic) NSDate *completionDate;
+@property (nonatomic, strong) NSDate *createDate;
+@property (nonatomic, strong) NSDate *dueDate;
+@property (nonatomic, strong) NSDate *startDate;
+@property (nonatomic, strong) NSDate *completionDate;
+@property (nonatomic, strong) NSDate *lastEntryDate;
 @property (nonatomic) BOOL star;
 @property (nonatomic, strong) NSString *notes;
+@property (nonatomic) int16_t repeatDays;
 @property (nonatomic, strong) NSSet *entries;
+
+@property (nonatomic, strong) NSDate *primitiveLastEntryDate;
 
 @property (nonatomic) BOOL completed;
 @property (nonatomic) BOOL committed;
-@property (nonatomic, readonly) NSDate *lastEntryDate;
 
 - (void)createActionEntry;
 

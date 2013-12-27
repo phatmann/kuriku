@@ -19,9 +19,6 @@ static const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
 static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 @implementation Todo
-{
-    NSArray *_entriesByDate;
-}
 
 @dynamic title;
 @dynamic importance;
@@ -30,6 +27,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic dueDate;
 @dynamic startDate;
 @dynamic completionDate;
+@dynamic lastEntryDate, primitiveLastEntryDate;
+@dynamic repeatDays;
 @dynamic priority;
 @dynamic star;
 @dynamic status;
@@ -62,12 +61,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         } else {
             self.urgency = 0;
         }
-    }
-}
-
-- (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
-    if ([inKey isEqualToString:@"entries"]) {
-        _entriesByDate = nil;
     }
 }
 
@@ -133,11 +126,13 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
+// TODO: remove migration code below
+
 - (NSDate *)lastEntryDate {
-    Entry *lastEntry = [self.entriesByDate lastObject];
+    NSDate *lastEntryDate = [self primitiveLastEntryDate];
     
-    if (lastEntry)
-        return lastEntry.timestamp;
+    if (lastEntryDate)
+        return lastEntryDate;
     
     if (self.completionDate)
         return self.completionDate;
@@ -162,15 +157,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     if (self.status != TodoStatusNormal)
         self.priority -= 100;
-}
-
-- (NSArray *)entriesByDate {
-    if (!_entriesByDate) {
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
-        _entriesByDate = [self.entries sortedArrayUsingDescriptors:@[sortDescriptor]];
-    }
-    
-    return _entriesByDate;
 }
 
 - (void)updateUrgencyFromDueDate {

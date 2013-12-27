@@ -56,9 +56,10 @@
 		EA048CBD1860C92A00990957 /* EntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryCell.h; sourceTree = "<group>"; };
 		EA048CBE1860C93600990957 /* EntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryCell.m; sourceTree = "<group>"; };
 		EA10F1261861B2FF0084F6C8 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.md; sourceTree = "<group>"; };
-		EA317D5F186C41E300CA90EE /* Kuriku4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku4.xcdatamodel; sourceTree = "<group>"; };
+		EA317D5F186C41E300CA90EE /* Kuriku4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku4.xcdatamodel; sourceTree = "<group>"; };
 		EA35308B185F23C20024E7C9 /* ListViewController.h */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA35308C185F23C20024E7C9 /* ListViewController.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
+		EA612111186D0ED500205579 /* Kuriku5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku5.xcdatamodel; sourceTree = "<group>"; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 		EA89E74F185C136400643266 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -646,8 +647,9 @@
 				EABAAC8A1868B26700F2FBE6 /* Kuriku2.xcdatamodel */,
 				EABAAC8C1868B27200F2FBE6 /* Kuriku3.xcdatamodel */,
 				EA317D5F186C41E300CA90EE /* Kuriku4.xcdatamodel */,
+				EA612111186D0ED500205579 /* Kuriku5.xcdatamodel */,
 			);
-			currentVersion = EA317D5F186C41E300CA90EE /* Kuriku4.xcdatamodel */;
+			currentVersion = EA612111186D0ED500205579 /* Kuriku5.xcdatamodel */;
 			path = Kuriku.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
