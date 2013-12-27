@@ -12,7 +12,7 @@
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="journal" inverseEntity="Entry" syncable="YES"/>
     </entity>
     <entity name="Todo" representedClassName="Todo" syncable="YES">
-        <attribute name="commitment" attributeType="Integer 16" defaultValueString="4" syncable="YES"/>
+        <attribute name="commitment" attributeType="Integer 16" defaultValueString="2" syncable="YES"/>
         <attribute name="completionDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="createDate" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>

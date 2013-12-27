@@ -16,7 +16,7 @@ typedef enum {
     FilterAll,
     FilterUrgent,
     FilterImportant,
-    FilterMustDo,
+    FilterToday,
     FilterScheduled,
     FilterComplete
 } Filter;
@@ -52,9 +52,9 @@ typedef enum {
         case FilterImportant:
             sortKey = @"importance";
             break;
-        case FilterMustDo:
+        case FilterToday:
             sortKey = @"priority";
-            filter  = @"commitment > 0";
+            filter  = @"commitment = 4";
             break;
         case FilterScheduled:
             sortKey = @"startDate";

@@ -11,7 +11,6 @@
 #import <InnerBand/InnerBand.h>
 
 @interface Todo ()
-@property (nonatomic) int16_t commitment;
 @property (nonatomic) int16_t status;
 @end
 
@@ -62,14 +61,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
             self.urgency = 0;
         }
     }
-}
-
-- (BOOL)committed {
-    return self.commitment > 0;
-}
-
-- (void)setCommitted:(BOOL)committed {
-    self.commitment = committed ? TodoRangeMaxValue : 0;
 }
 
 - (BOOL)completed {
@@ -152,7 +143,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     CGFloat maxValue = TodoRangeMaxValue * 2;
     self.priority = (self.urgency + self.importance) / maxValue;
     
-    if (self.committed)
+    if (self.commitment == TodoCommitmentToday)
         self.priority += maxValue + 1;
     
     if (self.status != TodoStatusNormal)

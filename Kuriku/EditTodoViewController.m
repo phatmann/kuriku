@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
-@property (weak, nonatomic) IBOutlet UISwitch *committedSwitch;
+@property (weak, nonatomic) IBOutlet UISlider *commitmentSlider;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *urgencyLabel;
@@ -37,7 +37,7 @@ static NSString* kNoDateString = @"None";
         self.titleField.text         = self.todo.title;
         self.urgencySlider.value     = self.todo.urgency;
         self.importanceSlider.value  = self.todo.importance;
-        self.committedSwitch.on      = self.todo.committed;
+        self.commitmentSlider.value  = commitmentToSliderValue(self.todo.commitment);
         self.notesField.text         = self.todo.notes;
         self.dueDateLabel.text       = dateToString(self.todo.dueDate);
         self.startDateLabel.text     = dateToString(self.todo.startDate);
@@ -45,7 +45,7 @@ static NSString* kNoDateString = @"None";
     } else {
         self.urgencySlider.value     = TodoUrgencyDefaultValue;
         self.importanceSlider.value  = TodoImportanceDefaultValue;
-        self.committedSwitch.on      = TodoCommittedDefaultValue;
+        self.commitmentSlider.value  = commitmentToSliderValue(TodoCommitmentDefaultValue);
         self.navigationItem.title    = @"New Todo";
         self.dueDateLabel.text       = kNoDateString;
         self.startDateLabel.text     = kNoDateString;
@@ -83,10 +83,18 @@ static NSString* kNoDateString = @"None";
     self.todo.title      = self.titleField.text;
     self.todo.urgency    = self.urgencySlider.value;
     self.todo.importance = self.importanceSlider.value;
-    self.todo.committed  = self.committedSwitch.on;
+    self.todo.commitment = sliderValueToCommitment(self.commitmentSlider.value);
     self.todo.notes      = self.notesField.text;
-    self.todo.dueDate    = stringToDate(self.dueDateLabel.text);
-    self.todo.startDate  = stringToDate(self.startDateLabel.text);
+    
+    NSDate *dueDate = stringToDate(self.dueDateLabel.text);
+    
+    if (!datesEqual(self.todo.dueDate, dueDate))
+        self.todo.dueDate = dueDate;
+    
+    NSDate *startDate = stringToDate(self.startDateLabel.text);
+    
+    if (!datesEqual(self.todo.startDate, startDate))
+        self.todo.startDate = startDate;
     
     [[IBCoreDataStore mainStore] save];
     [self.delegate todoWasEdited:self.todo];
@@ -137,6 +145,38 @@ NSString *dateToString(NSDate *date) {
         return kNoDateString;
     
     return [date formattedDateStyle:NSDateFormatterShortStyle];
+}
+
+BOOL datesEqual(NSDate *date1, NSDate *date2) {
+    if (!date1 && !date2)
+        return true;
+    
+    if (!date1 || !date2)
+        return false;
+    
+    return [date1 isEqualToDate:date2];
+}
+
+int commitmentToSliderValue(TodoCommitment commitment) {
+    switch (commitment) {
+        case TodoCommitmentMaybe:
+            return 0;
+        case TodoCommitmentNormal:
+            return 1;
+        case TodoCommitmentToday:
+            return 2;
+    }
+}
+
+TodoCommitment sliderValueToCommitment(int value) {
+    switch (value) {
+        case 0:
+            return TodoCommitmentMaybe;
+        case 2:
+            return TodoCommitmentToday;
+        default:
+            return TodoCommitmentNormal;
+    }
 }
 
 @end

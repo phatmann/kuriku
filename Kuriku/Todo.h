@@ -15,12 +15,17 @@ typedef enum {
     TodoStatusCanceled
 } TodoStatus;
 
+typedef enum {
+    TodoCommitmentMaybe = 0,
+    TodoCommitmentNormal = 2,
+    TodoCommitmentToday = 4
+} TodoCommitment;
+
 static const int TodoRangeMaxValue = 4;
 
-static const int  TodoCommitmentDefaultValue = 4;
+static const int  TodoCommitmentDefaultValue = 2;
 static const int  TodoImportanceDefaultValue = 2;
 static const int  TodoUrgencyDefaultValue    = 0;
-static const BOOL TodoCommittedDefaultValue  = YES;
 
 static const int TodoPriorityVersion = 4;
 
@@ -39,11 +44,11 @@ static const int TodoPriorityVersion = 4;
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic) int16_t repeatDays;
 @property (nonatomic, strong) NSSet *entries;
+@property (nonatomic) int16_t commitment;
 
 @property (nonatomic, strong) NSDate *primitiveLastEntryDate;
 
 @property (nonatomic) BOOL completed;
-@property (nonatomic) BOOL committed;
 
 - (void)createActionEntry;
 

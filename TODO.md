@@ -5,6 +5,7 @@ Code
 ----
 * Don't factor completion into priority
 * Enhance InnerBand to return fetch requests and/or fetch results controller
+* Clean up urgency/due-date mess
 
 Usability
 ---------

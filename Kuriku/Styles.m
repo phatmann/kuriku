@@ -20,8 +20,8 @@ CGFloat todoFontSize(Todo *todo) {
 UIFontDescriptorSymbolicTraits todoFontTraits(Todo *todo) {
     UIFontDescriptorSymbolicTraits fontTraits = 0;
     
-    //if (!todo.committed)
-        //fontTraits |= UIFontDescriptorTraitItalic;
+    if (todo.commitment == TodoCommitmentToday)
+        fontTraits |= UIFontDescriptorTraitBold;
     
     return fontTraits;
 }
@@ -44,7 +44,7 @@ UIFontDescriptor *fontDescriptorFromTraits(UIFontDescriptorSymbolicTraits fontTr
 UIColor *todoTextColor(Todo *todo) {
     CGFloat hue = (50 - (todo.urgency * 50 / TodoRangeMaxValue))/360.0;
     
-    if (!todo.committed)
+    if (todo.commitment == TodoCommitmentMaybe)
         return [UIColor colorWithWhite:0.5 alpha:1.0];
     
     return (todo.urgency > 0) ? [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0] : [UIColor blackColor];
