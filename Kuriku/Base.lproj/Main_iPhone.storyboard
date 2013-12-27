@@ -141,23 +141,59 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GSA-am-mGh">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GSA-am-mGh" userLabel="Filter Chooser">
                                 <rect key="frame" x="8" y="72" width="304" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="All"/>
-                                    <segment title="Urg"/>
-                                    <segment title="Imp"/>
                                     <segment title="Today"/>
-                                    <segment title="Sched"/>
-                                    <segment title="Comp"/>
+                                    <segment title="Scheduled"/>
+                                    <segment title="Completed"/>
                                 </segments>
                                 <connections>
-                                    <action selector="filterButtonsChanged" destination="QUy-BD-bpt" eventType="valueChanged" id="bGN-wb-i2V"/>
+                                    <action selector="chooserChanged" destination="QUy-BD-bpt" eventType="valueChanged" id="HtQ-bt-QK6"/>
                                 </connections>
                             </segmentedControl>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vhk-IX-HaE" userLabel="Sort Box">
+                                <rect key="frame" x="8" y="108" width="304" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Sort" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POH-cK-pYC" userLabel="Sort">
+                                        <rect key="frame" x="0.0" y="6" width="27" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uml-kH-hfi" userLabel="Sort Chooser">
+                                        <rect key="frame" x="35" y="0.0" width="269" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="29" id="8pQ-vd-CIe"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="Priority"/>
+                                            <segment title="Urgent"/>
+                                            <segment title="Important"/>
+                                            <segment title="Activity"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="chooserChanged" destination="QUy-BD-bpt" eventType="valueChanged" id="rYX-3I-5zk"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="POH-cK-pYC" firstAttribute="leading" secondItem="Vhk-IX-HaE" secondAttribute="leading" id="2hX-ls-Zkh"/>
+                                    <constraint firstItem="uml-kH-hfi" firstAttribute="leading" secondItem="POH-cK-pYC" secondAttribute="trailing" constant="8" id="Aac-dM-1yM"/>
+                                    <constraint firstItem="uml-kH-hfi" firstAttribute="centerY" secondItem="POH-cK-pYC" secondAttribute="centerY" id="aHg-O6-ZTy"/>
+                                    <constraint firstAttribute="height" constant="30" id="cVu-ki-Ov0" userLabel="Sort Box Height"/>
+                                    <constraint firstItem="uml-kH-hfi" firstAttribute="top" secondItem="Vhk-IX-HaE" secondAttribute="top" id="hsZ-1G-IjB"/>
+                                    <constraint firstAttribute="trailing" secondItem="uml-kH-hfi" secondAttribute="trailing" id="nTh-iu-SRl"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xfL-Hz-Rmj">
-                                <rect key="frame" x="0.0" y="108" width="320" height="403"/>
+                                <rect key="frame" x="0.0" y="146" width="320" height="365"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -209,22 +245,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Vhk-IX-HaE" firstAttribute="top" secondItem="GSA-am-mGh" secondAttribute="bottom" constant="8" id="2Ys-yS-M3q"/>
                             <constraint firstItem="x2p-4Y-y7Q" firstAttribute="leading" secondItem="gMD-aP-Fq6" secondAttribute="leading" id="4x3-vG-ZU3"/>
                             <constraint firstAttribute="trailing" secondItem="x2p-4Y-y7Q" secondAttribute="trailing" id="8Nn-Nb-TWD"/>
                             <constraint firstAttribute="trailing" secondItem="xfL-Hz-Rmj" secondAttribute="trailing" id="Aif-3i-yu9"/>
+                            <constraint firstItem="xfL-Hz-Rmj" firstAttribute="top" secondItem="Vhk-IX-HaE" secondAttribute="bottom" constant="8" id="D5F-dv-Zc5"/>
                             <constraint firstItem="xfL-Hz-Rmj" firstAttribute="leading" secondItem="gMD-aP-Fq6" secondAttribute="leading" id="NuK-6k-3BG"/>
                             <constraint firstItem="x2p-4Y-y7Q" firstAttribute="top" secondItem="MxC-nJ-dFe" secondAttribute="bottom" id="PEO-P5-Oaf"/>
                             <constraint firstAttribute="trailing" secondItem="GSA-am-mGh" secondAttribute="trailing" constant="8" id="Pca-NC-jcg"/>
-                            <constraint firstItem="xfL-Hz-Rmj" firstAttribute="top" secondItem="GSA-am-mGh" secondAttribute="bottom" constant="8" id="ZeV-S8-3Mz"/>
+                            <constraint firstItem="GSA-am-mGh" firstAttribute="leading" secondItem="Vhk-IX-HaE" secondAttribute="leading" id="dUb-0w-GTb"/>
                             <constraint firstItem="GSA-am-mGh" firstAttribute="leading" secondItem="gMD-aP-Fq6" secondAttribute="leading" constant="8" id="fpw-EM-Jqr"/>
                             <constraint firstItem="GSA-am-mGh" firstAttribute="top" secondItem="x2p-4Y-y7Q" secondAttribute="bottom" constant="8" id="i91-lr-CUS"/>
+                            <constraint firstItem="GSA-am-mGh" firstAttribute="trailing" secondItem="Vhk-IX-HaE" secondAttribute="trailing" id="oh7-cr-XMu"/>
                             <constraint firstItem="bMD-Ff-oau" firstAttribute="top" secondItem="xfL-Hz-Rmj" secondAttribute="bottom" constant="20" symbolic="YES" id="rVq-aU-di4"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Todo" image="todo" id="Z7h-1E-pvt"/>
                     <connections>
-                        <outlet property="filterButtons" destination="GSA-am-mGh" id="XbU-Lv-kb2"/>
+                        <outlet property="filterChooser" destination="GSA-am-mGh" id="Ubq-e3-eZx"/>
+                        <outlet property="sortBoxHeightConstraint" destination="cVu-ki-Ov0" id="l8D-x2-LOM"/>
+                        <outlet property="sortChooser" destination="uml-kH-hfi" id="d6R-Fz-N8r"/>
                         <outlet property="tableView" destination="xfL-Hz-Rmj" id="Lj3-pa-4is"/>
                         <segue destination="lbM-R3-zXO" kind="modal" identifier="Edit todo" id="sYx-iO-qXj"/>
                     </connections>

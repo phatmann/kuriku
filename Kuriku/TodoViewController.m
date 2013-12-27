@@ -14,46 +14,54 @@
 
 typedef enum {
     FilterAll,
-    FilterUrgent,
-    FilterImportant,
     FilterToday,
     FilterScheduled,
     FilterComplete
 } Filter;
 
+typedef enum {
+    SortPriority,
+    SortUrgent,
+    SortImportant,
+    SortActivity
+} Sort;
+
 @interface TodoViewController ()
-@property (weak, nonatomic) IBOutlet UISegmentedControl *filterButtons;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *filterChooser;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sortChooser;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sortBoxHeightConstraint;
 @end
 
 @implementation TodoViewController
 
-- (IBAction)filterButtonsChanged {
+- (IBAction)chooserChanged {
+    BOOL canSort = (self.filterChooser.selectedSegmentIndex != FilterScheduled &&
+                    self.filterChooser.selectedSegmentIndex != FilterComplete);
+    
+    if (canSort) {
+        self.sortBoxHeightConstraint.constant = self.sortChooser.frame.size.height + 1;
+    } else {
+        self.sortBoxHeightConstraint.constant = 0;
+    }
+    
     [self reloadData];
 }
 
 #pragma mark -
 
 - (void)createFetchedResultsController {
-    // TODO: move logic to Todo class
+    // TODO: move filter and sort logic to Todo class
     
-    NSString *filter = nil;
-    NSString *sortKey;
+    NSString *filter;
+    NSString *sortKey = nil;
     BOOL includeCompleted = NO;
     BOOL includeScheduled = NO;
     
-    switch (self.filterButtons.selectedSegmentIndex) {
+    switch (self.filterChooser.selectedSegmentIndex) {
         case FilterAll:
-            sortKey = @"priority";
-            break;
-        case FilterUrgent:
-            sortKey = @"urgency";
-            filter  = @"urgency > 0";
-            break;
-        case FilterImportant:
-            sortKey = @"importance";
+            filter = nil;
             break;
         case FilterToday:
-            sortKey = @"priority";
             filter  = @"commitment = 4";
             break;
         case FilterScheduled:
@@ -66,6 +74,23 @@ typedef enum {
             filter  = @"completionDate != NULL";
             includeCompleted = YES;
             break;
+    }
+    
+    if (!sortKey) {
+        switch (self.sortChooser.selectedSegmentIndex) {
+            case SortPriority:
+                sortKey = @"priority";
+                break;
+            case SortImportant:
+                sortKey = @"importance";
+                break;
+            case SortUrgent:
+                sortKey = @"urgency";
+                break;
+            case SortActivity:
+                sortKey = @"lastEntryDate";
+                break;
+        }
     }
     
     NSPredicate *predicate = filter ? [NSPredicate predicateWithFormat:filter] : nil;

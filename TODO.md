@@ -48,6 +48,7 @@ Tweaks
 * Show time in latest action date in Todo view
 * Tomorrow and Next Week buttons in Date picker
 * Colors for edit todo view values (e.g. gray Never)
+* Multi-line todos and entries, avoid ellipsis
 
 Advanced Features
 -----------------
