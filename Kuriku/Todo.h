@@ -40,7 +40,7 @@ static const int TodoPriorityVersion = 4;
 
 @property (nonatomic) BOOL completed;
 @property (nonatomic) BOOL committed;
-@property (nonatomic, readonly) NSDate *lastActionDate;
+@property (nonatomic, readonly) NSDate *lastEntryDate;
 
 - (void)createActionEntry;
 

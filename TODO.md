@@ -36,22 +36,22 @@ Before shipping
 
 Basic Features
 --------------
-* Do slider, filter includes all in order
+* "Do" slider, "Do" filter includes all in order
 * Show start date in Todo and Journal views
 * Show due date in Todo and Journal views
 * Recurring todos
-* Show START action in journal
+* Show "Ready" action in journal when todo hits start date (might need on-hold status)
 
 Tweaks
 ------
 * Show time in latest action date in Todo view
-* Show create date in Todo list
 * Tomorrow and Next Week buttons in Date picker
 * Colors for edit todo view values (e.g. gray Never)
 
 Advanced Features
 -----------------
-* Factor stalled into priority
+* Priority looks at lastActionDate
+* Customize UI: hide unused features, set value ranges, etc. Optimize real-time usage.
 * Stalled filter in Todo view
 * Archive completed entries
 * Inline editing

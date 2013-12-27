@@ -22,7 +22,7 @@
 {
     _todo = todo;
     self.titleLabel.attributedText = todoTitleString(todo);
-    self.lastActionDateLabel.text = todo.lastActionDate ? [todo.lastActionDate formattedDatePattern:@"M/d"] : @"NOT STARTED";
+    self.lastActionDateLabel.text = [todo.lastEntryDate formattedDatePattern:@"M/d"];
 }
 
 @end

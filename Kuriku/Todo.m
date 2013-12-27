@@ -20,7 +20,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 @implementation Todo
 {
-    NSArray *_actionEntriesByDate;
+    NSArray *_entriesByDate;
 }
 
 @dynamic title;
@@ -67,7 +67,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
     if ([inKey isEqualToString:@"entries"]) {
-        _actionEntriesByDate = nil;
+        _entriesByDate = nil;
     }
 }
 
@@ -133,9 +133,16 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
-- (NSDate *)lastActionDate {
-    Entry *firstEntry = [self.actionEntriesByDate firstObject];
-    return firstEntry.timestamp;
+- (NSDate *)lastEntryDate {
+    Entry *lastEntry = [self.entriesByDate lastObject];
+    
+    if (lastEntry)
+        return lastEntry.timestamp;
+    
+    if (self.completionDate)
+        return self.completionDate;
+    
+    return self.createDate;
 }
 
 - (void)createActionEntry {
@@ -157,15 +164,13 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         self.priority -= 100;
 }
 
-- (NSArray *)actionEntriesByDate {
-    if (!_actionEntriesByDate) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type=%d", EntryTypeTakeAction];
-        NSSet *actionEntries = [self.entries filteredSetUsingPredicate:predicate];
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-        _actionEntriesByDate = [actionEntries sortedArrayUsingDescriptors:@[sortDescriptor]];
+- (NSArray *)entriesByDate {
+    if (!_entriesByDate) {
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+        _entriesByDate = [self.entries sortedArrayUsingDescriptors:@[sortDescriptor]];
     }
     
-    return _actionEntriesByDate;
+    return _entriesByDate;
 }
 
 - (void)updateUrgencyFromDueDate {
