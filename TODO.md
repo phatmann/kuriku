@@ -1,3 +1,12 @@
+Implement
+---------
+* Commitment sort
+* Priority should honor Maybe commitment
+* Show start date in Todo and Journal views
+* Show due date in Todo and Journal views
+* Recurring todos
+* Show "Ready" action in journal when todo hits start date (might need on-hold status)
+
 Bugs
 ----
 
@@ -6,10 +15,6 @@ Code
 * Don't factor completion into priority
 * Enhance InnerBand to return fetch requests and/or fetch results controller
 * Clean up urgency/due-date mess
-
-Usability
----------
-* Remember Todos filter setting
 
 Performance
 -----------
@@ -35,13 +40,6 @@ Before shipping
 * Show helpful sample data
 * Graphics
 
-Basic Features
---------------
-* "Do" slider, "Do" filter includes all in order
-* Show start date in Todo and Journal views
-* Show due date in Todo and Journal views
-* Recurring todos
-* Show "Ready" action in journal when todo hits start date (might need on-hold status)
 
 Tweaks
 ------
@@ -49,6 +47,7 @@ Tweaks
 * Tomorrow and Next Week buttons in Date picker
 * Colors for edit todo view values (e.g. gray Never)
 * Multi-line todos and entries, avoid ellipsis
+* Secondary sorts
 
 Advanced Features
 -----------------
@@ -81,24 +80,18 @@ Advanced Features
 * Filter by context (e.g. when home)
 * Shared lists
 * Shake to shuffle
-
-Standards
----------
+* Reminders
 * Use preferred font size per iOS 7, no hard-coded text widths
 * Edit mode
-
-Migration
----------
+* Archive/hide old journal pages
+* Journal reference entries (italic)
+* Urgency window based on size of todo
 
 In Box
 ------
-* show completed date
 * replace tab bar
 * indicate stale actions
 * Autofocus: move pending todos to end of journal
-* Archive/hide old journal pages
-* journal reference entries (italic)
-* Longer notes field
-* Urgency window based on size of todo
-* Due reminders in journal
 * Decide if all entries for completed todod should be crossed out
+* Sort up/down
+* Remember Todos filter setting
