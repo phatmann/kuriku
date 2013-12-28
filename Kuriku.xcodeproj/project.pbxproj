@@ -60,6 +60,7 @@
 		EA35308B185F23C20024E7C9 /* ListViewController.h */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA35308C185F23C20024E7C9 /* ListViewController.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA3C0C04186F246100EF1DAC /* Kuriku6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku6.xcdatamodel; sourceTree = "<group>"; };
+		EA3C0C05186F426A00EF1DAC /* Kuriku7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku7.xcdatamodel; sourceTree = "<group>"; };
 		EA612111186D0ED500205579 /* Kuriku5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku5.xcdatamodel; sourceTree = "<group>"; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
@@ -644,6 +645,7 @@
 		EABAAC881868B26700F2FBE6 /* Kuriku.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EA3C0C05186F426A00EF1DAC /* Kuriku7.xcdatamodel */,
 				EA3C0C04186F246100EF1DAC /* Kuriku6.xcdatamodel */,
 				EABAAC891868B26700F2FBE6 /* Kuriku1.xcdatamodel */,
 				EABAAC8A1868B26700F2FBE6 /* Kuriku2.xcdatamodel */,
@@ -651,7 +653,7 @@
 				EA317D5F186C41E300CA90EE /* Kuriku4.xcdatamodel */,
 				EA612111186D0ED500205579 /* Kuriku5.xcdatamodel */,
 			);
-			currentVersion = EA3C0C04186F246100EF1DAC /* Kuriku6.xcdatamodel */;
+			currentVersion = EA3C0C05186F426A00EF1DAC /* Kuriku7.xcdatamodel */;
 			path = Kuriku.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

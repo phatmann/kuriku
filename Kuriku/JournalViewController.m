@@ -12,20 +12,51 @@
 #import "EntryCell.h"
 #import "Styles.h"
 
+typedef enum {
+    FilterAll,
+    FilterActive,
+    FilterInactive
+} Filter;
+
+@interface JournalViewController ()
+@property (nonatomic) Filter filter;
+@end
+
 @implementation JournalViewController
 
 #pragma mark -
     
 - (void)createFetchedResultsController {
+    NSString *filter;
+    
+    switch (self.filter) {
+        case FilterAll:
+            filter = nil;
+            break;
+        case FilterActive:
+            filter = @"status = 0";
+            break;
+        case FilterInactive:
+            filter = @"status = 1";
+            break;
+    }
+
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    NSPredicate *predicate = filter ? [NSPredicate predicateWithFormat:filter] : nil;
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
                                      managedObjectContext:context
                                      sectionNameKeyPath:@"journalDateString"
                                      cacheName:nil];
+}
+
+- (IBAction)filterChooserValueChanged:(UISegmentedControl *)filterChooser {
+    self.filter = filterChooser.selectedSegmentIndex;
+    [self reloadData];
 }
     
 #pragma mark - Table View Delegate
