@@ -76,7 +76,7 @@
         todo.completed = !todo.completed;
         [[IBCoreDataStore mainStore] save];
     } else if (buttonIndex == takeActionButtonIndex) {
-        [todo createActionEntry];
+        [todo createEntry:EntryTypeTakeAction];
         [[IBCoreDataStore mainStore] save];
     } else if (buttonIndex == editButtonIndex) {
         [self showEditTodoView:todo];

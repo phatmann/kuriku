@@ -22,6 +22,7 @@
 @dynamic todo;
 @dynamic journal;
 @dynamic type;
+@dynamic status;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];

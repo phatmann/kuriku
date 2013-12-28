@@ -7,7 +7,6 @@
 //
 
 #import "Todo.h"
-#import "Entry.h"
 #import <InnerBand/InnerBand.h>
 
 @interface Todo ()
@@ -32,16 +31,14 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic star;
 @dynamic status;
 @dynamic notes;
-@dynamic entries;
 @dynamic commitment;
+@dynamic entries;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
     self.createDate = [NSDate date];
     
-    Entry *entry = [Entry create];
-    entry.todo = self;
-    entry.type = EntryTypeCreateTodo;
+    [self createEntry:EntryTypeCreateTodo];
 }
 
 - (void)didChangeValueForKey:(NSString *)key {
@@ -51,9 +48,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         [self updatePriority];
     } else if ([key isEqualToString:@"status"]) {
         [self updatePriority];
-        Entry *entry = [Entry create];
-        entry.todo = self;
-        entry.type = (self.status == TodoStatusCompleted) ? EntryTypeCompleteTodo : EntryTypeContinueTodo;
+        [self createEntry:(self.status == TodoStatusCompleted) ? EntryTypeCompleteTodo : EntryTypeContinueTodo];
     } else if ([key isEqualToString:@"dueDate"]) {
         if (self.dueDate) {
             [self updateUrgencyFromDueDate];
@@ -75,6 +70,11 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         self.status = TodoStatusNormal;
         self.completionDate = nil;
     }
+}
+
+- (NSArray *)entriesByDate {
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+    return [self.entries sortedArrayUsingDescriptors:@[sortDescriptor]];
 }
 
 #pragma mark -
@@ -117,10 +117,10 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
-// TODO: remove migration code below
-
 - (NSDate *)lastEntryDate {
     NSDate *lastEntryDate = [self primitiveLastEntryDate];
+    
+    // TODO: remove migration code
     
     if (lastEntryDate)
         return lastEntryDate;
@@ -131,10 +131,19 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     return self.createDate;
 }
 
-- (void)createActionEntry {
+- (void)createEntry:(EntryType)type {
+    if (type != EntryTypeCreateTodo) {
+        Entry *lastEntry = [self.entriesByDate lastObject];
+        lastEntry.status = EntryStatusInactive;
+    }
+    
     Entry *entry = [Entry create];
     entry.todo = self;
-    entry.type = EntryTypeTakeAction;
+    entry.type = type;
+    
+    if  (type == EntryTypeCompleteTodo) {
+        entry.status = EntryStatusInactive;
+    }
 }
 
 #pragma mark - Private

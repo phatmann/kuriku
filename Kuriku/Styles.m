@@ -60,7 +60,7 @@ UIFont *entryFont(Entry *entry) {
     return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(entry.todo)];
 }
 
-NSDictionary *addCompletedAttribute(NSDictionary* attributes) {
+NSDictionary *addStrikethroughAttribute(NSDictionary* attributes) {
     NSMutableDictionary *completedAttributes = [NSMutableDictionary dictionaryWithDictionary:attributes];
     completedAttributes[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
     return completedAttributes;
@@ -70,7 +70,7 @@ NSAttributedString *todoTitleString(Todo *todo) {
     NSDictionary *attributes = @{NSFontAttributeName:todoFont(todo), NSForegroundColorAttributeName:todoTextColor(todo)};
     
     if (todo.completed) {
-        attributes = addCompletedAttribute(attributes);
+        attributes = addStrikethroughAttribute(attributes);
     }
     
     return [[NSAttributedString alloc] initWithString:todo.title attributes:attributes];
@@ -79,8 +79,8 @@ NSAttributedString *todoTitleString(Todo *todo) {
 NSAttributedString *entryTitleString(Entry *entry) {
     NSDictionary *attributes = @{NSFontAttributeName:entryFont(entry), NSForegroundColorAttributeName:todoTextColor(entry.todo)};
     
-    if (entry.type == EntryTypeCompleteTodo) {
-        attributes = addCompletedAttribute(attributes);
+    if (entry.status == EntryStatusInactive) {
+        attributes = addStrikethroughAttribute(attributes);
     }
     
     return [[NSAttributedString alloc] initWithString:entry.todo.title attributes:attributes];

@@ -18,9 +18,15 @@ typedef enum {
     EntryTypeContinueTodo
 } EntryType;
 
+typedef enum {
+    EntryStatusActive,
+    EntryStatusInactive
+} EntryStatus;
+
 @interface Entry : NSManagedObject
 
 @property (nonatomic) int16_t type;
+@property (nonatomic) int16_t status;
 @property (nonatomic, retain) Todo *todo;
 
 @property (nonatomic) NSString *journalDateString;

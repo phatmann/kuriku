@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "Entry.h"
 
 typedef enum {
     TodoStatusNormal,
@@ -43,14 +44,13 @@ static const int TodoPriorityVersion = 4;
 @property (nonatomic) BOOL star;
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic) int16_t repeatDays;
-@property (nonatomic, strong) NSSet *entries;
 @property (nonatomic) int16_t commitment;
-
+@property (nonatomic, strong) NSSet *entries;
 @property (nonatomic, strong) NSDate *primitiveLastEntryDate;
-
+@property (nonatomic, strong, readonly) NSArray *entriesByDate;
 @property (nonatomic) BOOL completed;
 
-- (void)createActionEntry;
+- (void)createEntry:(EntryType)type;
 
 + (void)updateAllPriorities;
 + (int)urgencyFromDueDate:(NSDate *)dueDate;
