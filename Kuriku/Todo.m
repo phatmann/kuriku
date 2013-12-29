@@ -63,8 +63,16 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (void)setCompleted:(BOOL)completed {
     if (completed) {
-        self.status = TodoStatusCompleted;
-        self.completionDate = [NSDate date];
+        if (self.repeatDays == 0) {
+            [self createEntry:EntryTypeCompleteTodo];
+        } else {
+            self.status = TodoStatusCompleted;
+            self.completionDate = [NSDate date];
+            
+            if (self.repeatDays > 0) {
+                self.startDate = [[[NSDate date] dateByAddingDays:self.repeatDays] dateAtStartOfDay];
+            }
+        }
     } else {
         self.status = TodoStatusNormal;
         self.completionDate = nil;

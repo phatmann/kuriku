@@ -68,11 +68,13 @@ typedef enum {
             sortKey = @"startDate";
             filter  = @"startDate != NULL";
             includeScheduled = YES;
+            includeCompleted = YES;
             break;
         case FilterComplete:
             sortKey = @"completionDate";
             filter  = @"completionDate != NULL";
             includeCompleted = YES;
+            includeScheduled = YES;
             break;
     }
     
