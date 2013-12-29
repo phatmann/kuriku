@@ -47,7 +47,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"] || [key isEqualToString:@"commitment"]) {
         [self updatePriority];
     } else if ([key isEqualToString:@"status"]) {
-        [self updatePriority];
         [self createEntry:(self.status == TodoStatusCompleted) ? EntryTypeCompleteTodo : EntryTypeContinueTodo];
     } else if ([key isEqualToString:@"dueDate"]) {
         if (self.dueDate) {
@@ -117,18 +116,20 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
+// TODO: remove this method when all data is migrated
 - (NSDate *)lastEntryDate {
     NSDate *lastEntryDate = [self primitiveLastEntryDate];
     
-    // TODO: remove migration code
+    if (!lastEntryDate) {
+        if (self.completionDate)
+            lastEntryDate = self.completionDate;
+        else
+            lastEntryDate = self.createDate;
+        
+        self.lastEntryDate = lastEntryDate;
+    }
     
-    if (lastEntryDate)
-        return lastEntryDate;
-    
-    if (self.completionDate)
-        return self.completionDate;
-    
-    return self.createDate;
+    return lastEntryDate;
 }
 
 - (void)createEntry:(EntryType)type {
@@ -154,9 +155,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     if (self.commitment == TodoCommitmentToday)
         self.priority += maxValue + 1;
-    
-    if (self.status != TodoStatusNormal)
-        self.priority -= 100;
+    else if (self.commitment == TodoCommitmentMaybe)
+        self.priority -= maxValue + 1;
 }
 
 - (void)updateUrgencyFromDueDate {

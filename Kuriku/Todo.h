@@ -28,7 +28,7 @@ static const int  TodoCommitmentDefaultValue = 2;
 static const int  TodoImportanceDefaultValue = 2;
 static const int  TodoUrgencyDefaultValue    = 0;
 
-static const int TodoPriorityVersion = 4;
+static const int TodoPriorityVersion = 5;
 
 @interface Todo : NSManagedObject
 

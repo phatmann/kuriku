@@ -1,7 +1,6 @@
 Implement
 ---------
 * Commitment sort
-* Priority should honor Maybe commitment
 * Show start date in Todo and Journal views
 * Show due date in Todo and Journal views
 * Recurring todos
@@ -16,7 +15,7 @@ Code
 * Don't factor completion into priority
 * Enhance InnerBand to return fetch requests and/or fetch results controller
 * Clean up urgency/due-date mess
-* Replace entry timestamp with journalTime
+* Replace entry timestamp with journalTimeString
 
 Performance
 -----------
@@ -98,3 +97,7 @@ In Box
 * Decide if all entries for completed todod should be crossed out
 * Sort up/down
 * Remember Todos filter setting
+* Consider star for Today items instead of bold
+* Consider segemented controls to replace sliders
+* Consider more randomness in priority
+* Better term than Priority?
