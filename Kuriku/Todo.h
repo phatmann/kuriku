@@ -52,9 +52,9 @@ static const int TodoPriorityVersion = 5;
 
 - (void)createEntry:(EntryType)type;
 
-+ (void)updateAllPriorities;
 + (int)urgencyFromDueDate:(NSDate *)dueDate;
-+ (void)updateAllUrgenciesFromDueDateIfNeeded;
++ (void)updateAllPrioritiesIfNeeded;
++ (void)dailyUpdate;
 
 @end
 

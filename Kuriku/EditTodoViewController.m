@@ -21,12 +21,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *urgencyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
 
 @property (weak, nonatomic) UILabel *selectedDateLabel;
 
 @end
 
 static NSString* kNoDateString = @"None";
+static NSString* kNoDaysString = @"Never";
 
 @implementation EditTodoViewController
 
@@ -41,6 +43,8 @@ static NSString* kNoDateString = @"None";
         self.notesField.text         = self.todo.notes;
         self.dueDateLabel.text       = dateToString(self.todo.dueDate);
         self.startDateLabel.text     = dateToString(self.todo.startDate);
+        self.repeatLabel.text        = daysToString(self.todo.repeatDays);
+        
         self.navigationItem.title    = @"Edit Todo";
     } else {
         self.urgencySlider.value     = TodoUrgencyDefaultValue;
@@ -49,6 +53,7 @@ static NSString* kNoDateString = @"None";
         self.navigationItem.title    = @"New Todo";
         self.dueDateLabel.text       = kNoDateString;
         self.startDateLabel.text     = kNoDateString;
+        self.repeatLabel.text        = kNoDaysString;
         
         [self.titleField becomeFirstResponder];
     }
@@ -57,14 +62,18 @@ static NSString* kNoDateString = @"None";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    DatePickerViewController *datePickerViewController = segue.destinationViewController;
     UITableViewCell *cell = sender;
     
-    self.selectedDateLabel = (UILabel *)[cell viewWithTag:1];
-    NSString *dateString   = self.selectedDateLabel.text;
-    
-    datePickerViewController.date     = [NSDate dateFromString:dateString withFormat:NSDateFormatterShortStyle];
-    datePickerViewController.delegate = self;
+    if ([segue.identifier isEqualToString:@"Choose date"]) {
+        DatePickerViewController *datePickerViewController = segue.destinationViewController;
+        self.selectedDateLabel = (UILabel *)[cell viewWithTag:1];
+        datePickerViewController.date = stringToDate(self.selectedDateLabel.text);
+        datePickerViewController.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"Choose repeat"]) {
+        RepeatViewController *repeatViewController = segue.destinationViewController;
+        repeatViewController.days = stringToDays(self.repeatLabel.text);
+        repeatViewController.delegate = self;
+    }
 }
 
 - (IBAction)titleDidChange {
@@ -85,7 +94,9 @@ static NSString* kNoDateString = @"None";
     self.todo.importance = self.importanceSlider.value;
     self.todo.commitment = sliderValueToCommitment(self.commitmentSlider.value);
     self.todo.notes      = self.notesField.text;
+    self.todo.repeatDays = stringToDays(self.repeatLabel.text);
     
+    // TODO: make Todo model smarter so the checks are not needed
     NSDate *dueDate = stringToDate(self.dueDateLabel.text);
     
     if (!datesEqual(self.todo.dueDate, dueDate))
@@ -123,6 +134,12 @@ static NSString* kNoDateString = @"None";
     }
 }
 
+#pragma mark - Repeat View Controller Delegate
+
+- (void)repeatViewControllerDaysChanged:(RepeatViewController *)repeatViewController {
+    self.repeatLabel.text = daysToString(repeatViewController.days);
+}
+
 #pragma mark -
 
 - (void)updateControls {
@@ -145,6 +162,20 @@ NSString *dateToString(NSDate *date) {
         return kNoDateString;
     
     return [date formattedDateStyle:NSDateFormatterShortStyle];
+}
+
+int stringToDays(NSString *string) {
+    if ([string isEqualToString:kNoDaysString])
+        return -1;
+    
+    return [string intValue];
+}
+
+NSString *daysToString(int days) {
+    if (days == -1)
+        return kNoDaysString;
+    
+    return [@(days) stringValue];
 }
 
 BOOL datesEqual(NSDate *date1, NSDate *date2) {

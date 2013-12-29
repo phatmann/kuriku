@@ -84,11 +84,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
-+ (void)updateAllUrgenciesFromDueDateIfNeeded {
-    // TODO
-    [self updateAllUrgenciesFromDueDate];
-}
-
 + (void)updateAllUrgenciesFromDueDate {
     NSDate *dateUrgentDaysFromNow = [NSDate dateWithTimeIntervalSinceNow:kSecondsInDay * kUrgentDaysBeforeDueDate];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@ AND status = %d", dateUrgentDaysFromNow, TodoStatusNormal];
@@ -144,6 +139,32 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     if  (type == EntryTypeCompleteTodo) {
         entry.status = EntryStatusInactive;
+    }
+}
+
++ (void)updateAllPrioritiesIfNeeded {
+    static NSString *priorityVersionKey = @"PriorityVersion";
+    
+    int priorityVersion = [[[IBCoreDataStore mainStore] metadataObjectForKey:priorityVersionKey] intValue];
+    
+    if (priorityVersion < TodoPriorityVersion) {
+        [self updateAllPriorities];
+        
+        [[IBCoreDataStore mainStore] setMetadataObject:@(TodoPriorityVersion) forKey:priorityVersionKey];
+        [[IBCoreDataStore mainStore] save];
+    }
+}
+
++ (void)dailyUpdate {
+    static NSString *dailyUpdateKey = @"DailyUpdate";
+    
+    NSDate *updateDate = [[IBCoreDataStore mainStore] metadataObjectForKey:dailyUpdateKey];
+
+    if (!updateDate || abs([updateDate timeIntervalSinceNow]) > kSecondsInDay) {
+        [self updateAllUrgenciesFromDueDate];
+        
+        [[IBCoreDataStore mainStore] setMetadataObject:[NSDate date] forKey:dailyUpdateKey];
+        [[IBCoreDataStore mainStore] save];
     }
 }
 
