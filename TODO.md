@@ -1,6 +1,5 @@
 Implement
 ---------
-* Commitment sort
 * Show start date in Todo and Journal views
 * Show due date in Todo and Journal views
 * Recurring todos
@@ -101,3 +100,4 @@ In Box
 * Consider segemented controls to replace sliders
 * Consider more randomness in priority
 * Better term than Priority?
+* Commitment sort
