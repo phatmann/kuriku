@@ -117,7 +117,7 @@ typedef enum {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Entry *entry = [self entryAtIndexPath:indexPath];
         [entry destroy];
-        [[IBCoreDataStore mainStore] save];
+        [IBCoreDataStore save];
     }
 }
 

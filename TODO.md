@@ -1,7 +1,6 @@
 Implement
 ---------
-* Show start date in Todo and Journal views
-* Show due date in Todo and Journal views
+* Show hold date and due date in Todo and Journal views
 * Decide about semantics of journal entry deletion or disallow
 
 Bugs
@@ -97,3 +96,4 @@ In Box
 * Consider more randomness in priority
 * Better term than Priority?
 * Commitment sort
+* Intl dates
