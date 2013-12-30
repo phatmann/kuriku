@@ -37,7 +37,7 @@ typedef enum {
             filter = @"status = 0";
             break;
         case FilterInactive:
-            filter = @"status = 1";
+            filter = @"status != 0";
             break;
     }
 

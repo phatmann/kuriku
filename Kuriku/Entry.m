@@ -43,8 +43,13 @@
 - (void)didChangeValueForKey:(NSString *)key {
     [super didChangeValueForKey:key];
     
-    if ([key isEqualToString:@"todo"])
+    if ([key isEqualToString:@"todo"]) {
         self.todo.lastEntryDate = self.timestamp;
+    } else if ([key isEqualToString:@"type"]) {
+        if  (self.type == EntryTypeComplete || self.type == EntryTypeHold) {
+            self.status = EntryStatusInactive;
+        }
+    }
 }
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString {

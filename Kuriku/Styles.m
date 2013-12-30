@@ -60,27 +60,34 @@ UIFont *entryFont(Entry *entry) {
     return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(entry.todo)];
 }
 
-NSDictionary *addStrikethroughAttribute(NSDictionary* attributes) {
-    NSMutableDictionary *completedAttributes = [NSMutableDictionary dictionaryWithDictionary:attributes];
-    completedAttributes[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
-    return completedAttributes;
-}
-
 NSAttributedString *todoTitleString(Todo *todo) {
-    NSDictionary *attributes = @{NSFontAttributeName:todoFont(todo), NSForegroundColorAttributeName:todoTextColor(todo)};
+    NSMutableDictionary *attributes = [@{NSFontAttributeName:todoFont(todo), NSForegroundColorAttributeName:todoTextColor(todo)} mutableCopy];
     
-    if (todo.completed) {
-        attributes = addStrikethroughAttribute(attributes);
+    switch (todo.status) {
+        case TodoStatusCompleted:
+            attributes[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
+            break;
+            
+        case TodoStatusOnHold:
+            attributes[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle | NSUnderlinePatternDot);
+            break;
     }
     
     return [[NSAttributedString alloc] initWithString:todo.title attributes:attributes];
 }
 
 NSAttributedString *entryTitleString(Entry *entry) {
-    NSDictionary *attributes = @{NSFontAttributeName:entryFont(entry), NSForegroundColorAttributeName:todoTextColor(entry.todo)};
+    NSMutableDictionary *attributes = [@{NSFontAttributeName:entryFont(entry), NSForegroundColorAttributeName:todoTextColor(entry.todo)} mutableCopy];
     
-    if (entry.status == EntryStatusInactive) {
-        attributes = addStrikethroughAttribute(attributes);
+    if (entry.type == EntryTypeHold) {
+        attributes[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle | NSUnderlinePatternDot);
+    } else {
+        if (entry.status == EntryStatusInactive)
+            attributes[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
+    }
+    
+    if (entry.status == EntryStatusInactive && entry.type != EntryTypeHold) {
+        
     }
     
     return [[NSAttributedString alloc] initWithString:entry.todo.title attributes:attributes];

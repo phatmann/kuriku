@@ -12,10 +12,11 @@
 @class Journal, Todo;
 
 typedef enum {
-    EntryTypeCreateTodo,
+    EntryTypeCreate,
     EntryTypeTakeAction,
-    EntryTypeCompleteTodo,
-    EntryTypeContinueTodo
+    EntryTypeComplete,
+    EntryTypeReady,
+    EntryTypeHold
 } EntryType;
 
 typedef enum {
@@ -27,8 +28,7 @@ typedef enum {
 
 @property (nonatomic) int16_t type;
 @property (nonatomic) int16_t status;
-@property (nonatomic, retain) Todo *todo;
-
+@property (nonatomic, strong) Todo *todo;
 @property (nonatomic) NSString *journalDateString;
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic, strong) Journal *journal;

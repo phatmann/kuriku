@@ -73,7 +73,7 @@
     Todo *todo = (Todo *)self.selectedTodo;
     
     if (buttonIndex == markCompletedButtonIndex) {
-        todo.completed = !todo.completed;
+        todo.status = (todo.status == TodoStatusCompleted) ? TodoStatusNormal : TodoStatusCompleted;
         [[IBCoreDataStore mainStore] save];
     } else if (buttonIndex == takeActionButtonIndex) {
         [todo createEntry:EntryTypeTakeAction];
@@ -126,7 +126,7 @@
 
 - (void)showTodoActionSheet:(Todo *)todo {
     self.selectedTodo = todo;
-    NSString *completionActionName = todo.completed ?  @"Unmark completed" : @"Mark completed";
+    NSString *completionActionName = (todo.status == TodoStatusCompleted) ?  @"Unmark completed" : @"Mark completed";
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:nil
                                        delegate:self

@@ -13,7 +13,7 @@
 typedef enum {
     TodoStatusNormal,
     TodoStatusCompleted,
-    TodoStatusCanceled
+    TodoStatusOnHold
 } TodoStatus;
 
 typedef enum {
@@ -35,10 +35,11 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic) int16_t importance;
 @property (nonatomic) int16_t urgency;
+@property (nonatomic) int16_t status;
 @property (nonatomic) float_t priority;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *dueDate;
-@property (nonatomic, strong) NSDate *startDate;
+@property (nonatomic, strong) NSDate *holdDate;
 @property (nonatomic, strong) NSDate *completionDate;
 @property (nonatomic, strong) NSDate *lastEntryDate;
 @property (nonatomic) BOOL star;
@@ -46,9 +47,11 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic) int16_t repeatDays;
 @property (nonatomic) int16_t commitment;
 @property (nonatomic, strong) NSSet *entries;
+
 @property (nonatomic, strong) NSDate *primitiveLastEntryDate;
+@property (nonatomic, strong) NSDate *primitiveHoldDate;
+
 @property (nonatomic, strong, readonly) NSArray *entriesByDate;
-@property (nonatomic) BOOL completed;
 
 - (void)createEntry:(EntryType)type;
 

@@ -25,7 +25,7 @@
     _entry = entry;
   
     switch (entry.type) {
-        case EntryTypeCreateTodo:
+        case EntryTypeCreate:
             self.typeLabel.text = @"NEW";
             break;
             
@@ -33,12 +33,16 @@
             self.typeLabel.text = @"ACTION";
             break;
             
-        case EntryTypeCompleteTodo:
+        case EntryTypeComplete:
             self.typeLabel.text = @"COMPLETE";
             break;
             
-        case EntryTypeContinueTodo:
-            self.typeLabel.text = @"CONTINUE";
+        case EntryTypeReady:
+            self.typeLabel.text = @"READY";
+            break;
+            
+        case EntryTypeHold:
+            self.typeLabel.text = @"HOLD";
             break;
     }
     

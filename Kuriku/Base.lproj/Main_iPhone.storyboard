@@ -160,9 +160,9 @@
                                 <rect key="frame" x="8" y="72" width="304" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="All"/>
+                                    <segment title="Active"/>
                                     <segment title="Today"/>
-                                    <segment title="Scheduled"/>
+                                    <segment title="On Hold"/>
                                     <segment title="Completed"/>
                                 </segments>
                                 <connections>
@@ -547,22 +547,22 @@
                             </tableViewSection>
                             <tableViewSection id="pXU-Lu-iuU" userLabel="Schedule Section">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="QRZ-fZ-JLE" userLabel="Start Date Cell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="QRZ-fZ-JLE" userLabel="Hold Date Cell">
                                         <rect key="frame" x="0.0" y="379" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QRZ-fZ-JLE" id="n0c-OY-ddy">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mu-by-zII">
-                                                    <rect key="frame" x="20" y="12" width="74" height="20"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold Until" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mu-by-zII">
+                                                    <rect key="frame" x="20" y="12" width="72" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oo-fx-j6Q" userLabel="Start Date">
-                                                    <rect key="frame" x="248" y="12" width="39" height="20"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oo-fx-j6Q" userLabel="Hold Date">
+                                                    <rect key="frame" x="253" y="12" width="34" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -675,10 +675,10 @@
                     <connections>
                         <outlet property="commitmentSlider" destination="YXP-le-CtZ" id="CRg-lf-7ph"/>
                         <outlet property="dueDateLabel" destination="jsp-N7-hPg" id="JgU-cI-bdj"/>
+                        <outlet property="holdDateLabel" destination="4oo-fx-j6Q" id="Ale-RV-pmh"/>
                         <outlet property="importanceSlider" destination="xqf-QQ-XLX" id="ONL-sg-Kzo"/>
                         <outlet property="notesField" destination="c0S-lQ-ReJ" id="IH5-5J-IOS"/>
                         <outlet property="repeatLabel" destination="Slr-Ta-Goj" id="oyh-uu-jVs"/>
-                        <outlet property="startDateLabel" destination="4oo-fx-j6Q" id="utW-0t-aKl"/>
                         <outlet property="titleField" destination="PnK-It-80A" id="rtP-5d-bLq"/>
                         <outlet property="urgencyLabel" destination="WUe-Kk-FGj" id="Qnd-Bb-RQb"/>
                         <outlet property="urgencySlider" destination="TRa-yE-wfk" id="Z3w-pL-qK8"/>
@@ -921,7 +921,7 @@
                                                     <rect key="frame" x="110" y="7" width="101" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <segments>
-                                                        <segment title="None"/>
+                                                        <segment title="Never"/>
                                                         <segment title="Today"/>
                                                     </segments>
                                                     <connections>
@@ -1011,7 +1011,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="bAK-oQ-oIW"/>
+        <segue reference="sYx-iO-qXj"/>
         <segue reference="gRM-kr-JnK"/>
     </inferredMetricsTieBreakers>
 </document>

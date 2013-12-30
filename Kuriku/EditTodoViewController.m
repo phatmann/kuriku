@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
 @property (weak, nonatomic) IBOutlet UISlider *commitmentSlider;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *holdDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *urgencyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
 
@@ -27,7 +27,7 @@
 
 @end
 
-static NSString* kNoDateString = @"None";
+static NSString* kNoDateString = @"Never";
 static NSString* kNoDaysString = @"Never";
 
 @implementation EditTodoViewController
@@ -42,7 +42,7 @@ static NSString* kNoDaysString = @"Never";
         self.commitmentSlider.value  = commitmentToSliderValue(self.todo.commitment);
         self.notesField.text         = self.todo.notes;
         self.dueDateLabel.text       = dateToString(self.todo.dueDate);
-        self.startDateLabel.text     = dateToString(self.todo.startDate);
+        self.holdDateLabel.text      = dateToString(self.todo.holdDate);
         self.repeatLabel.text        = daysToString(self.todo.repeatDays);
         
         self.navigationItem.title    = @"Edit Todo";
@@ -52,7 +52,7 @@ static NSString* kNoDaysString = @"Never";
         self.commitmentSlider.value  = commitmentToSliderValue(TodoCommitmentDefaultValue);
         self.navigationItem.title    = @"New Todo";
         self.dueDateLabel.text       = kNoDateString;
-        self.startDateLabel.text     = kNoDateString;
+        self.holdDateLabel.text      = kNoDateString;
         self.repeatLabel.text        = kNoDaysString;
         
         [self.titleField becomeFirstResponder];
@@ -102,10 +102,10 @@ static NSString* kNoDaysString = @"Never";
     if (!datesEqual(self.todo.dueDate, dueDate))
         self.todo.dueDate = dueDate;
     
-    NSDate *startDate = stringToDate(self.startDateLabel.text);
+    NSDate *holdDate = stringToDate(self.holdDateLabel.text);
     
-    if (!datesEqual(self.todo.startDate, startDate))
-        self.todo.startDate = startDate;
+    if (!datesEqual(self.todo.holdDate, holdDate))
+        self.todo.holdDate = holdDate;
     
     [[IBCoreDataStore mainStore] save];
     [self.delegate todoWasEdited:self.todo];

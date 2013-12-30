@@ -2,7 +2,6 @@ Implement
 ---------
 * Show start date in Todo and Journal views
 * Show due date in Todo and Journal views
-* Recurring todos
 * Show "Ready" action in journal when todo hits start date (might need on-hold status)
 * Decide about semantics of journal entry deletion or disallow
 * Show "yearly, monthly, weekly, daily" instead of days
@@ -12,16 +11,14 @@ Bugs
 
 Code
 ----
-* Don't factor completion into priority
 * Enhance InnerBand to return fetch requests and/or fetch results controller
 * Clean up urgency/due-date mess
 * Replace entry timestamp with journalTimeString
 
 Performance
 -----------
-* Only update urgencies when 24hrs has passed
 * Use cache file for both NSFetchedResultControllers
-* Cache sorted todo entries
+* Cache Todo's entriesByDate
 
 Testing
 -------

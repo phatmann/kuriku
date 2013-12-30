@@ -10,7 +10,7 @@
 #import <InnerBand/InnerBand.h>
 
 @interface Todo ()
-@property (nonatomic) int16_t status;
+
 @end
 
 static const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
@@ -23,7 +23,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic urgency;
 @dynamic createDate;
 @dynamic dueDate;
-@dynamic startDate;
+@dynamic holdDate, primitiveHoldDate;
 @dynamic completionDate;
 @dynamic lastEntryDate, primitiveLastEntryDate;
 @dynamic repeatDays;
@@ -37,8 +37,15 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 - (void)awakeFromInsert {
     [super awakeFromInsert];
     self.createDate = [NSDate date];
+}
+
+- (void)willSave {
+    if ([self isDeleted])
+        return;
     
-    [self createEntry:EntryTypeCreateTodo];
+    if (self.entries.count == 0) {
+        [self createEntry:self.isInserted ? EntryTypeCreate : EntryTypeReady];
+    }
 }
 
 - (void)didChangeValueForKey:(NSString *)key {
@@ -47,35 +54,45 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"] || [key isEqualToString:@"commitment"]) {
         [self updatePriority];
     } else if ([key isEqualToString:@"status"]) {
-        [self createEntry:(self.status == TodoStatusCompleted) ? EntryTypeCompleteTodo : EntryTypeContinueTodo];
+        switch (self.status) {
+            case TodoStatusNormal:
+                [self createEntry:EntryTypeReady];
+                break;
+            case TodoStatusCompleted:
+                [self createEntry:EntryTypeComplete];
+                
+                if (self.repeatDays == 0) {
+                    self.status = TodoStatusNormal;
+                } else {
+                    self.completionDate = [NSDate date];
+                    
+                    if (self.repeatDays > 0) {
+                        self.holdDate = [[[NSDate date] dateByAddingDays:self.repeatDays] dateAtStartOfDay];
+                    }
+                }
+
+                break;
+            case TodoStatusOnHold:
+                [self createEntry:EntryTypeHold];
+                break;
+        }
+        
+        if (self.status != TodoStatusOnHold && self.holdDate) {
+            self.primitiveHoldDate = nil;
+        }
+        
+        if (self.status != TodoStatusCompleted && self.completionDate) {
+            self.completionDate = nil;
+        }
+        
     } else if ([key isEqualToString:@"dueDate"]) {
         if (self.dueDate) {
             [self updateUrgencyFromDueDate];
         } else {
             self.urgency = 0;
         }
-    }
-}
-
-- (BOOL)completed {
-    return self.status != TodoStatusNormal;
-}
-
-- (void)setCompleted:(BOOL)completed {
-    if (completed) {
-        if (self.repeatDays == 0) {
-            [self createEntry:EntryTypeCompleteTodo];
-        } else {
-            self.status = TodoStatusCompleted;
-            self.completionDate = [NSDate date];
-            
-            if (self.repeatDays > 0) {
-                self.startDate = [[[NSDate date] dateByAddingDays:self.repeatDays] dateAtStartOfDay];
-            }
-        }
-    } else {
-        self.status = TodoStatusNormal;
-        self.completionDate = nil;
+    } else if ([key isEqualToString:@"holdDate"]) {
+        self.status = self.holdDate ? TodoStatusOnHold : TodoStatusNormal;
     }
 }
 
@@ -99,6 +116,17 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     for (Todo *todo in todos) {
         [todo updateUrgencyFromDueDate];
+    }
+    
+    [IBCoreDataStore save];
+}
+
++ (void)updateAllStatusesFromHoldDate {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"holdDate != NULL AND holdDate <= %@", [NSDate today]];
+    NSArray *todos = [Todo allForPredicate:predicate];
+    
+    for (Todo *todo in todos) {
+        [todo updateStatusFromHoldDate];
     }
     
     [IBCoreDataStore save];
@@ -136,7 +164,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 
 - (void)createEntry:(EntryType)type {
-    if (type != EntryTypeCreateTodo) {
+    if (type != EntryTypeCreate) {
         Entry *lastEntry = [self.entriesByDate lastObject];
         lastEntry.status = EntryStatusInactive;
     }
@@ -144,10 +172,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     Entry *entry = [Entry create];
     entry.todo = self;
     entry.type = type;
-    
-    if  (type == EntryTypeCompleteTodo) {
-        entry.status = EntryStatusInactive;
-    }
 }
 
 + (void)updateAllPrioritiesIfNeeded {
@@ -170,6 +194,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
     if (!updateDate || abs([updateDate timeIntervalSinceNow]) > kSecondsInDay) {
         [self updateAllUrgenciesFromDueDate];
+        [self updateAllStatusesFromHoldDate];
         
         [[IBCoreDataStore mainStore] setMetadataObject:[NSDate date] forKey:dailyUpdateKey];
         [[IBCoreDataStore mainStore] save];
@@ -190,6 +215,10 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (void)updateUrgencyFromDueDate {
     self.urgency = [Todo urgencyFromDueDate:self.dueDate];
+}
+
+- (void)updateStatusFromHoldDate {
+    self.holdDate = nil;
 }
 
 @end
