@@ -27,8 +27,23 @@
 
 @end
 
-static NSString* kNoDateString = @"Never";
-static NSString* kNoDaysString = @"Never";
+static NSString* NoDateString       = @"Never";
+
+static NSString* NoDaysString       = @"Never";
+static NSString* ImmediatelyString  = @"Immedately";
+static NSString* DailyString        = @"Daily";
+static NSString* WeeklyString       = @"Weekly";
+static NSString* MonthlyString      = @"Monthly";
+static NSString* YearlyString       = @"Yearly";
+
+enum {
+    NoDaysValue       = -1,
+    ImmediatelyValue  = 0,
+    DailyValue        = 1,
+    WeeklyValue       = 7,
+    MonthlyValue      = 30,
+    YearlyValue       = 365
+};
 
 @implementation EditTodoViewController
 
@@ -51,9 +66,9 @@ static NSString* kNoDaysString = @"Never";
         self.importanceSlider.value  = TodoImportanceDefaultValue;
         self.commitmentSlider.value  = commitmentToSliderValue(TodoCommitmentDefaultValue);
         self.navigationItem.title    = @"New Todo";
-        self.dueDateLabel.text       = kNoDateString;
-        self.holdDateLabel.text      = kNoDateString;
-        self.repeatLabel.text        = kNoDaysString;
+        self.dueDateLabel.text       = NoDateString;
+        self.holdDateLabel.text      = NoDateString;
+        self.repeatLabel.text        = NoDaysString;
         
         [self.titleField becomeFirstResponder];
     }
@@ -146,7 +161,7 @@ static NSString* kNoDaysString = @"Never";
 #pragma mark -
 
 - (void)updateControls {
-    self.urgencySlider.enabled = [self.dueDateLabel.text isEqualToString:kNoDateString];
+    self.urgencySlider.enabled = [self.dueDateLabel.text isEqualToString:NoDateString];
     self.urgencyLabel.enabled  = self.urgencySlider.enabled;
     self.navigationItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
 }
@@ -154,7 +169,7 @@ static NSString* kNoDaysString = @"Never";
 #pragma mark -
 
 NSDate *stringToDate(NSString *string) {
-    if ([string isEqualToString:kNoDateString])
+    if ([string isEqualToString:NoDateString])
         return nil;
     
     return [NSDate dateFromString:string withFormat:NSDateFormatterShortStyle];
@@ -162,23 +177,44 @@ NSDate *stringToDate(NSString *string) {
 
 NSString *dateToString(NSDate *date) {
     if (!date)
-        return kNoDateString;
+        return NoDateString;
     
     return [date formattedDateStyle:NSDateFormatterShortStyle];
 }
 
 int stringToDays(NSString *string) {
-    if ([string isEqualToString:kNoDaysString])
-        return -1;
+    if ([string isEqualToString:NoDaysString])
+        return NoDaysValue;
+    
+    if ([string isEqualToString:ImmediatelyString])
+        return ImmediatelyValue;
+    
+    if ([string isEqualToString:DailyString])
+        return DailyValue;
+    
+    if ([string isEqualToString:WeeklyString])
+        return WeeklyValue;
+    
+    if ([string isEqualToString:MonthlyString])
+        return MonthlyValue;
+    
+    if ([string isEqualToString:YearlyString])
+        return YearlyValue;
     
     return [string intValue];
 }
 
 NSString *daysToString(int days) {
-    if (days == -1)
-        return kNoDaysString;
+    switch (days) {
+        case NoDaysValue:       return NoDaysString;
+        case ImmediatelyValue:  return ImmediatelyString;
+        case DailyValue:        return DailyString;
+        case WeeklyValue:       return WeeklyString;
+        case MonthlyValue:      return MonthlyString;
+        case YearlyValue:       return YearlyString;
+    }
     
-    return [@(days) stringValue];
+    return [NSString stringWithFormat:@"Every %d days", days];
 }
 
 BOOL datesEqual(NSDate *date1, NSDate *date2) {

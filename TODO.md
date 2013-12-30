@@ -2,9 +2,7 @@ Implement
 ---------
 * Show start date in Todo and Journal views
 * Show due date in Todo and Journal views
-* Show "Ready" action in journal when todo hits start date (might need on-hold status)
 * Decide about semantics of journal entry deletion or disallow
-* Show "yearly, monthly, weekly, daily" instead of days
 
 Bugs
 ----
