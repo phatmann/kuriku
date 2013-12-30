@@ -1,5 +1,5 @@
 //
-//  KAppDelegate.h
+//  KurikuAppDelegate.h
 //  Kuriku
 //
 //  Created by Tony Mann on 12/11/13.

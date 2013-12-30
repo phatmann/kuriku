@@ -129,8 +129,11 @@ static NSString* kNoDaysString = @"Never";
     
     if (![dateString isEqualToString:self.selectedDateLabel.text]) {
         self.selectedDateLabel.text = dateString;
-        self.urgencySlider.value = [Todo urgencyFromDueDate:dateViewController.date];
-        [self updateControls];
+        
+        if (self.selectedDateLabel == self.dueDateLabel) {
+            self.urgencySlider.value = [Todo urgencyFromDueDate:dateViewController.date];
+            [self updateControls];
+        }
     }
 }
 

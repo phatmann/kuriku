@@ -1,5 +1,5 @@
 //
-//  KAppDelegate.m
+//  KurikuAppDelegate.m
 //  Kuriku
 //
 //  Created by Tony Mann on 12/11/13.
@@ -21,7 +21,7 @@
     if (!journal) {
         journal = [Journal create];
         [[IBCoreDataStore mainStore] save];
-        [journal createSampleItems];
+        //[journal createSampleItems];
     }
     
     return YES;
