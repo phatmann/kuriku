@@ -13,6 +13,9 @@
 
 static NSString *baseFontName = @"Helvetica Neue";
 
+UIFontDescriptor *fontDescriptorFromTraits(UIFontDescriptorSymbolicTraits fontTraits);
+void appendDueDate(Todo *todo, NSMutableAttributedString *title);
+
 CGFloat todoFontSize(Todo *todo) {
     return (todo.importance * 2) + 15;
 }
@@ -33,12 +36,6 @@ UIFontDescriptorSymbolicTraits entryFontTraits(Entry *entry) {
         //fontTraits |= UIFontDescriptorTraitBold;
     
     return fontTraits;
-}
-
-UIFontDescriptor *fontDescriptorFromTraits(UIFontDescriptorSymbolicTraits fontTraits) {
-    UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] init];
-    fontDescriptor = [fontDescriptor fontDescriptorWithFamily:baseFontName];
-    return [fontDescriptor fontDescriptorWithSymbolicTraits:fontTraits];
 }
 
 UIColor *todoTextColor(Todo *todo) {
@@ -73,7 +70,10 @@ NSAttributedString *todoTitleString(Todo *todo) {
             break;
     }
     
-    return [[NSAttributedString alloc] initWithString:todo.title attributes:attributes];
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:todo.title attributes:attributes];
+    appendDueDate(todo, title);
+    
+    return title;
 }
 
 NSAttributedString *entryTitleString(Entry *entry) {
@@ -86,9 +86,27 @@ NSAttributedString *entryTitleString(Entry *entry) {
             attributes[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
     }
     
-    if (entry.status == EntryStatusInactive && entry.type != EntryTypeHold) {
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:entry.todo.title attributes:attributes];
+    appendDueDate(entry.todo, title);
+    return title;
+}
+
+void appendDueDate(Todo *todo, NSMutableAttributedString *title) {
+    if (todo.dueDate) {
+        UIFontDescriptor *fontDescriptor = fontDescriptorFromTraits(UIFontDescriptorTraitItalic);
+        UIFont *font = [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(todo) - 6];
         
+        NSAttributedString* dateString = [[NSAttributedString alloc]
+                                          initWithString:[todo.dueDate formattedDatePattern:@"  M/d"]
+                                              attributes:@{NSFontAttributeName:font, NSForegroundColorAttributeName:todoTextColor(todo)}];
+        [title appendAttributedString:dateString];
     }
-    
-    return [[NSAttributedString alloc] initWithString:entry.todo.title attributes:attributes];
+}
+
+#pragma mark -
+
+UIFontDescriptor *fontDescriptorFromTraits(UIFontDescriptorSymbolicTraits fontTraits) {
+    UIFontDescriptor *fontDescriptor = [[UIFontDescriptor alloc] init];
+    fontDescriptor = [fontDescriptor fontDescriptorWithFamily:baseFontName];
+    return [fontDescriptor fontDescriptorWithSymbolicTraits:fontTraits];
 }
