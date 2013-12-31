@@ -17,7 +17,12 @@ UIFontDescriptor *fontDescriptorFromTraits(UIFontDescriptorSymbolicTraits fontTr
 void appendDueDate(Todo *todo, NSMutableAttributedString *title);
 
 CGFloat todoFontSize(Todo *todo) {
-    return (todo.importance * 2) + 15;
+    return (todo.importance * 2) + 13;
+}
+
+CGFloat entryFontSize(Entry *entry) {
+    return (entry.status == EntryStatusActive) ?
+        todoFontSize(entry.todo) : 17;
 }
 
 UIFontDescriptorSymbolicTraits todoFontTraits(Todo *todo) {
@@ -30,10 +35,8 @@ UIFontDescriptorSymbolicTraits todoFontTraits(Todo *todo) {
 }
 
 UIFontDescriptorSymbolicTraits entryFontTraits(Entry *entry) {
-    UIFontDescriptorSymbolicTraits fontTraits = todoFontTraits(entry.todo);
-    
-    //if (entry.type == EntryTypeCreateTodo)
-        //fontTraits |= UIFontDescriptorTraitBold;
+    UIFontDescriptorSymbolicTraits fontTraits = (entry.status == EntryStatusActive) ?
+        todoFontTraits(entry.todo) : 0;
     
     return fontTraits;
 }
@@ -47,6 +50,10 @@ UIColor *todoTextColor(Todo *todo) {
     return (todo.urgency > 0) ? [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0] : [UIColor blackColor];
 }
 
+UIColor *entryTextColor(Entry *entry) {
+    return (entry.status == EntryStatusActive) ? todoTextColor(entry.todo) : [UIColor blackColor];
+}
+
 UIFont *todoFont(Todo *todo) {
     UIFontDescriptor *fontDescriptor = fontDescriptorFromTraits(todoFontTraits(todo));
     return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(todo)];
@@ -54,7 +61,7 @@ UIFont *todoFont(Todo *todo) {
 
 UIFont *entryFont(Entry *entry) {
     UIFontDescriptor *fontDescriptor = fontDescriptorFromTraits(entryFontTraits(entry));
-    return [UIFont fontWithDescriptor:fontDescriptor size:todoFontSize(entry.todo)];
+    return [UIFont fontWithDescriptor:fontDescriptor size:entryFontSize(entry)];
 }
 
 NSAttributedString *todoTitleString(Todo *todo) {
@@ -77,7 +84,7 @@ NSAttributedString *todoTitleString(Todo *todo) {
 }
 
 NSAttributedString *entryTitleString(Entry *entry) {
-    NSMutableDictionary *attributes = [@{NSFontAttributeName:entryFont(entry), NSForegroundColorAttributeName:todoTextColor(entry.todo)} mutableCopy];
+    NSMutableDictionary *attributes = [@{NSFontAttributeName:entryFont(entry), NSForegroundColorAttributeName:entryTextColor(entry)} mutableCopy];
     
     if (entry.type == EntryTypeHold) {
         attributes[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle | NSUnderlinePatternDot);

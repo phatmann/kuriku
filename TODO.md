@@ -4,6 +4,8 @@ Implement
 
 Bugs
 ----
+* Clearing due date sets urgency to zero even after manually setting it
+* Clearing hold does not work correctly
 
 Code
 ----
