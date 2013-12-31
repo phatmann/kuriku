@@ -1,6 +1,5 @@
 Implement
 ---------
-* Show hold date in Todo and Journal views
 * Decide about semantics of journal entry deletion or disallow
 
 Bugs

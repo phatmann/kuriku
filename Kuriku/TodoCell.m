@@ -13,7 +13,7 @@
 
 @interface TodoCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *lastActionDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @end
 
 @implementation TodoCell
@@ -22,7 +22,27 @@
 {
     _todo = todo;
     self.titleLabel.attributedText = todoTitleString(todo);
-    self.lastActionDateLabel.text = [todo.lastEntryDate formattedDatePattern:@"M/d"];
+    
+    NSDate *date;
+    NSString *datePrefix;
+    
+    switch (todo.status) {
+        case TodoStatusNormal:
+            date = todo.lastEntryDate;
+            datePrefix = @"LAST ACTION";
+            break;
+        case TodoStatusCompleted:
+            date = todo.lastEntryDate;
+            datePrefix = @"COMPLETED";
+            break;
+        case TodoStatusOnHold:
+            date = todo.holdDate;
+            datePrefix = @"ON HOLD UNTIL";
+            break;
+    }
+    
+    NSString *dateString = [date formattedDatePattern:@"M/d"];
+    self.dateLabel.text = [NSString stringWithFormat:@"%@ %@", datePrefix, dateString];
 }
 
 @end

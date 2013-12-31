@@ -227,7 +227,7 @@
                                                     <color key="textColor" red="0.99750840663909912" green="0.86976110935211182" blue="0.038649212568998337" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9H-oY-9v5" userLabel="Last Action Date">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9H-oY-9v5" userLabel="Date">
                                                     <rect key="frame" x="20" y="27" width="30" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -245,7 +245,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="lastActionDateLabel" destination="E9H-oY-9v5" id="HbV-uA-XQb"/>
+                                            <outlet property="dateLabel" destination="E9H-oY-9v5" id="cBP-WZ-mbE"/>
                                             <outlet property="titleLabel" destination="0va-am-PJi" id="sbD-zn-boU"/>
                                         </connections>
                                     </tableViewCell>
