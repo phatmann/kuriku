@@ -1,11 +1,13 @@
 Implement
 ---------
 * Decide about semantics of journal entry deletion or disallow
+* Complete should look different than making inactive
 
 Bugs
 ----
 * Clearing due date sets urgency to zero even after manually setting it
 * Clearing hold does not work correctly
+* Due date should be struck out when inactive
 
 Code
 ----
@@ -28,7 +30,7 @@ Cosmetic
 * icons for tab bar
 * warmer looking journal
 * replace entry type text with icon
-* Edit title field should use correct font based on settings
+
 
 Before shipping
 ---------------
@@ -97,4 +99,5 @@ In Box
 * Consider more randomness in priority
 * Better term than Priority?
 * Commitment sort
-* Intl dates
+* Intl date format
+* Edit title field should use correct font based on settings
