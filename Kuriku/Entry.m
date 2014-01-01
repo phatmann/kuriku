@@ -46,8 +46,17 @@
     if ([key isEqualToString:@"todo"]) {
         self.todo.lastEntryDate = self.timestamp;
     } else if ([key isEqualToString:@"type"]) {
-        if  (self.type == EntryTypeComplete || self.type == EntryTypeHold) {
-            self.status = EntryStatusInactive;
+        switch (self.type) {
+            case EntryTypeComplete:
+                self.status = EntryStatusClosed;
+                break;
+                
+            case EntryTypeHold:
+                self.status = EntryStatusHold;
+                break;
+                
+            default:
+                self.status = EntryStatusOpen;
         }
     }
 }

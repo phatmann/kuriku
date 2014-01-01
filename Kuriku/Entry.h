@@ -20,8 +20,9 @@ typedef enum {
 } EntryType;
 
 typedef enum {
-    EntryStatusActive,
-    EntryStatusInactive
+    EntryStatusOpen,
+    EntryStatusClosed,
+    EntryStatusHold
 } EntryStatus;
 
 @interface Entry : NSManagedObject

@@ -21,8 +21,8 @@ CGFloat todoFontSize(Todo *todo) {
 }
 
 CGFloat entryFontSize(Entry *entry) {
-    return (entry.status == EntryStatusActive) ?
-        todoFontSize(entry.todo) : 17;
+    return (entry.status == EntryStatusClosed) ?
+        17 : todoFontSize(entry.todo);
 }
 
 UIFontDescriptorSymbolicTraits todoFontTraits(Todo *todo) {
@@ -35,8 +35,8 @@ UIFontDescriptorSymbolicTraits todoFontTraits(Todo *todo) {
 }
 
 UIFontDescriptorSymbolicTraits entryFontTraits(Entry *entry) {
-    UIFontDescriptorSymbolicTraits fontTraits = (entry.status == EntryStatusActive) ?
-        todoFontTraits(entry.todo) : 0;
+    UIFontDescriptorSymbolicTraits fontTraits = (entry.status == EntryStatusClosed) ?
+        0 : todoFontTraits(entry.todo);
     
     return fontTraits;
 }
@@ -51,7 +51,7 @@ UIColor *todoTextColor(Todo *todo) {
 }
 
 UIColor *entryTextColor(Entry *entry) {
-    return (entry.status == EntryStatusActive) ? todoTextColor(entry.todo) : [UIColor blackColor];
+    return (entry.status == EntryStatusClosed) ? [UIColor blackColor] : todoTextColor(entry.todo);
 }
 
 UIFont *todoFont(Todo *todo) {
@@ -86,11 +86,17 @@ NSAttributedString *todoTitleString(Todo *todo) {
 NSAttributedString *entryTitleString(Entry *entry) {
     NSMutableDictionary *attributes = [@{NSFontAttributeName:entryFont(entry), NSForegroundColorAttributeName:entryTextColor(entry)} mutableCopy];
     
-    if (entry.type == EntryTypeHold) {
-        attributes[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle | NSUnderlinePatternDot);
-    } else {
-        if (entry.status == EntryStatusInactive)
+    switch (entry.status) {
+        case EntryStatusClosed:
             attributes[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
+            break;
+            
+        case EntryStatusHold:
+            attributes[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle | NSUnderlinePatternDot);
+            break;
+            
+        default:
+            break;
     }
     
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:entry.todo.title attributes:attributes];

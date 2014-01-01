@@ -5,7 +5,6 @@ Implement
 
 Bugs
 ----
-* Clearing hold date does not work correctly
 * Due date should be struck out when inactive
 
 Code

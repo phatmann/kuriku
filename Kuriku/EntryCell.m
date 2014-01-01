@@ -42,11 +42,13 @@
             break;
             
         case EntryTypeHold:
-        {
-            NSString *dateString = [entry.todo.holdDate formattedDatePattern:@"M/d"];
-            self.typeLabel.text = [NSString stringWithFormat:@"HOLD UNTIL %@", dateString];
+            if (entry.status != EntryStatusClosed) {
+                NSString *dateString = [entry.todo.holdDate formattedDatePattern:@"M/d"];
+                self.typeLabel.text = [NSString stringWithFormat:@"HOLD UNTIL %@", dateString];
+            } else {
+                self.typeLabel.text = @"HOLD";
+            }
             break;
-        }
     }
     
     self.titleLabel.attributedText = entryTitleString(entry);

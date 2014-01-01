@@ -166,7 +166,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 - (void)createEntry:(EntryType)type {
     if (type != EntryTypeCreate) {
         Entry *lastEntry = [self.entriesByDate lastObject];
-        lastEntry.status = EntryStatusInactive;
+        lastEntry.status = EntryStatusClosed;
     }
     
     Entry *entry = [Entry create];
