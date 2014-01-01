@@ -13,6 +13,7 @@
 		EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = EA10F1261861B2FF0084F6C8 /* TODO.md */; };
 		EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* ListViewController.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
+		EA40F7A61873F8FD005DC6AA /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = EA40F7A51873F8FD005DC6AA /* default.css */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
 		EA89E750185C136400643266 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA89E74F185C136400643266 /* CoreData.framework */; };
 		EA89E753185C15A300643266 /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E752185C15A300643266 /* TodoCell.m */; };
@@ -61,6 +62,9 @@
 		EA35308C185F23C20024E7C9 /* ListViewController.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA3C0C09187029BF00EF1DAC /* RepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatViewController.h; sourceTree = "<group>"; };
 		EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatViewController.m; sourceTree = "<group>"; };
+		EA40F7A11873F7E9005DC6AA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		EA40F7A31873F7EF005DC6AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EA40F7A51873F8FD005DC6AA /* default.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = default.css; sourceTree = "<group>"; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 		EA89E74F185C136400643266 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -210,6 +214,8 @@
 		EAAC954E1858F7D400E8BAB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA40F7A31873F7EF005DC6AA /* QuartzCore.framework */,
+				EA40F7A11873F7E9005DC6AA /* CoreText.framework */,
 				EA89E74F185C136400643266 /* CoreData.framework */,
 				EAAC954F1858F7D400E8BAB5 /* Foundation.framework */,
 				EAAC95511858F7D400E8BAB5 /* CoreGraphics.framework */,
@@ -232,6 +238,7 @@
 				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
 				EADA6010186494BC006089AF /* Styles.h */,
 				EADA6011186494BC006089AF /* Styles.m */,
+				EA40F7A51873F8FD005DC6AA /* default.css */,
 			);
 			path = Kuriku;
 			sourceTree = "<group>";
@@ -350,6 +357,7 @@
 				EAAC95631858F7D400E8BAB5 /* Main_iPhone.storyboard in Resources */,
 				EAAC955A1858F7D400E8BAB5 /* InfoPlist.strings in Resources */,
 				EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */,
+				EA40F7A61873F8FD005DC6AA /* default.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
