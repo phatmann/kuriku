@@ -28,12 +28,7 @@
                 return @"READY";
             
             case EntryTypeHold:
-//                if (entry.status != EntryStatusClosed) {
-//                    NSString *dateString = [entry.todo.holdDate formattedDatePattern:@"M/d"];
-//                    return [NSString stringWithFormat:@"HOLD UNTIL %@", dateString];
-//                } else {
-                    return @"HOLD";
-                //}
+                return @"HOLD";
     }
     
     return nil;
@@ -41,6 +36,10 @@
 
 - (NSString *)dueDateString:(NSDate *)dueDate {
     return dueDate ? [NSString stringWithFormat:@"DUE %@", [dueDate formattedDatePattern:@"M/d"]] : @"";
+}
+
+- (NSString *)holdDateString:(NSDate *)holdDate {
+    return holdDate ? [NSString stringWithFormat:@"%@", [holdDate formattedDatePattern:@"M/d"]] : @"";
 }
 
 @end

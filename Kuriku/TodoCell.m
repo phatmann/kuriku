@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastEntryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *holdDateLabel;
 @end
 
 @implementation TodoCell
@@ -46,6 +47,7 @@
     NSString *entryTypeString = [self entryTypeString:todo.lastEntryType];
     self.lastEntryLabel.text = [NSString stringWithFormat:@"%@ %@", dateString, entryTypeString];
     self.dueDateLabel.text = [self dueDateString:todo.dueDate];
+    self.holdDateLabel.text = [self holdDateString:todo.holdDate];
 }
 
 @end

@@ -73,6 +73,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="due-date"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GgI-2J-7Mc" userLabel="Title">
                                                     <rect key="frame" x="20" y="18" width="280" height="23"/>
@@ -81,14 +84,26 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8b-SE-R1L" userLabel="Hold Date">
+                                                    <rect key="frame" x="233" y="4" width="30" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="hold-date"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="naT-or-Sdq" firstAttribute="leading" secondItem="i8b-SE-R1L" secondAttribute="trailing" constant="8" symbolic="YES" id="0hh-8I-X5o"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="20" symbolic="YES" id="1E1-Pl-A4c"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="4" id="7s6-Nw-AXW"/>
                                                 <constraint firstAttribute="trailing" secondItem="GgI-2J-7Mc" secondAttribute="trailing" constant="20" symbolic="YES" id="9R2-zH-vrn"/>
                                                 <constraint firstItem="DaY-QM-H8E" firstAttribute="centerX" secondItem="GgI-2J-7Mc" secondAttribute="centerX" id="OQ2-T3-4lg"/>
                                                 <constraint firstItem="GgI-2J-7Mc" firstAttribute="trailing" secondItem="naT-or-Sdq" secondAttribute="trailing" id="SNc-He-lnm"/>
                                                 <constraint firstAttribute="bottom" secondItem="GgI-2J-7Mc" secondAttribute="bottom" constant="2" id="ScR-v5-Vy4"/>
+                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="baseline" secondItem="naT-or-Sdq" secondAttribute="baseline" id="YMT-kw-gRx"/>
                                                 <constraint firstItem="GgI-2J-7Mc" firstAttribute="leading" secondItem="Kf5-IE-ktF" secondAttribute="leading" id="dAQ-4u-bGg"/>
                                                 <constraint firstItem="GgI-2J-7Mc" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="hrf-Kc-c6H"/>
                                                 <constraint firstItem="DaY-QM-H8E" firstAttribute="baseline" secondItem="Kf5-IE-ktF" secondAttribute="baseline" id="mtS-az-c3T"/>
@@ -97,6 +112,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dueDateLabel" destination="DaY-QM-H8E" id="6sr-Ls-fqh"/>
+                                            <outlet property="holdDateLabel" destination="i8b-SE-R1L" id="WrO-LJ-tEu"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
                                             <outlet property="titleLabel" destination="GgI-2J-7Mc" id="ieM-Oq-QyS"/>
                                             <outlet property="typeLabel" destination="naT-or-Sdq" id="zea-a3-RMM"/>
@@ -251,9 +267,21 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYP-nJ-MbG" userLabel="Hold Date">
+                                                    <rect key="frame" x="103" y="27" width="30" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="hold-date"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="E9H-oY-9v5" firstAttribute="top" secondItem="0va-am-PJi" secondAttribute="bottom" constant="2" id="3DY-sZ-uMA"/>
+                                                <constraint firstItem="uYP-nJ-MbG" firstAttribute="baseline" secondItem="E9H-oY-9v5" secondAttribute="baseline" id="MkE-r5-Urf"/>
+                                                <constraint firstItem="uYP-nJ-MbG" firstAttribute="leading" secondItem="E9H-oY-9v5" secondAttribute="trailing" constant="8" symbolic="YES" id="a92-hT-BfJ"/>
                                                 <constraint firstItem="0nv-db-3mH" firstAttribute="baseline" secondItem="E9H-oY-9v5" secondAttribute="baseline" id="neL-o5-wQg"/>
                                                 <constraint firstAttribute="trailing" secondItem="0va-am-PJi" secondAttribute="trailing" constant="20" symbolic="YES" id="pFN-JW-i7q"/>
                                                 <constraint firstAttribute="bottom" secondItem="E9H-oY-9v5" secondAttribute="bottom" constant="2" id="rgg-Qp-RaK"/>
@@ -265,6 +293,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dueDateLabel" destination="0nv-db-3mH" id="oWc-fR-8f1"/>
+                                            <outlet property="holdDateLabel" destination="uYP-nJ-MbG" id="RfY-vR-Uw6"/>
                                             <outlet property="lastEntryLabel" destination="E9H-oY-9v5" id="6ra-w5-Aqr"/>
                                             <outlet property="titleLabel" destination="0va-am-PJi" id="sbD-zn-boU"/>
                                         </connections>
@@ -1031,7 +1060,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="bAK-oQ-oIW"/>
+        <segue reference="sYx-iO-qXj"/>
         <segue reference="gRM-kr-JnK"/>
     </inferredMetricsTieBreakers>
 </document>

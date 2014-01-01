@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *holdDateLabel;
 @end
 
 @implementation EntryCell
@@ -31,8 +31,8 @@
     self.typeLabel.text = [self entryTypeString:entry.type];
     self.titleLabel.attributedText = entryTitleString(entry);
     self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
-
     self.dueDateLabel.text = [self dueDateString:entry.todo.dueDate];
+    self.holdDateLabel.text = (entry.status == EntryStatusHold) ? [self holdDateString:entry.todo.holdDate] : nil;
 }
 
 @end

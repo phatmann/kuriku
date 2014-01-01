@@ -14,5 +14,6 @@
 
 - (NSString *)entryTypeString:(EntryType)type;
 - (NSString *)dueDateString:(NSDate *)dueDate;
+- (NSString *)holdDateString:(NSDate *)holdDate;
 
 @end
