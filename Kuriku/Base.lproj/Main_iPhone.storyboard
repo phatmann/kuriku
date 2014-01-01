@@ -54,14 +54,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TYPE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naT-or-Sdq" userLabel="Type">
-                                                    <rect key="frame" x="271" y="4" width="29" height="14"/>
+                                                    <rect key="frame" x="20" y="4" width="29" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kf5-IE-ktF" userLabel="Time">
-                                                    <rect key="frame" x="20" y="4" width="29" height="14"/>
+                                                    <rect key="frame" x="271" y="4" width="29" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -85,7 +85,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8b-SE-R1L" userLabel="Hold Date">
-                                                    <rect key="frame" x="233" y="4" width="30" height="14"/>
+                                                    <rect key="frame" x="57" y="4" width="30" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -96,18 +96,18 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="naT-or-Sdq" firstAttribute="leading" secondItem="i8b-SE-R1L" secondAttribute="trailing" constant="8" symbolic="YES" id="0hh-8I-X5o"/>
-                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="20" symbolic="YES" id="1E1-Pl-A4c"/>
-                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="4" id="7s6-Nw-AXW"/>
+                                                <constraint firstItem="naT-or-Sdq" firstAttribute="leading" secondItem="GgI-2J-7Mc" secondAttribute="leading" id="3uo-6C-IhR"/>
                                                 <constraint firstAttribute="trailing" secondItem="GgI-2J-7Mc" secondAttribute="trailing" constant="20" symbolic="YES" id="9R2-zH-vrn"/>
                                                 <constraint firstItem="DaY-QM-H8E" firstAttribute="centerX" secondItem="GgI-2J-7Mc" secondAttribute="centerX" id="OQ2-T3-4lg"/>
-                                                <constraint firstItem="GgI-2J-7Mc" firstAttribute="trailing" secondItem="naT-or-Sdq" secondAttribute="trailing" id="SNc-He-lnm"/>
+                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="leading" secondItem="naT-or-Sdq" secondAttribute="trailing" constant="8" symbolic="YES" id="Omj-kj-zda"/>
                                                 <constraint firstAttribute="bottom" secondItem="GgI-2J-7Mc" secondAttribute="bottom" constant="2" id="ScR-v5-Vy4"/>
-                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="baseline" secondItem="naT-or-Sdq" secondAttribute="baseline" id="YMT-kw-gRx"/>
-                                                <constraint firstItem="GgI-2J-7Mc" firstAttribute="leading" secondItem="Kf5-IE-ktF" secondAttribute="leading" id="dAQ-4u-bGg"/>
-                                                <constraint firstItem="GgI-2J-7Mc" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="hrf-Kc-c6H"/>
-                                                <constraint firstItem="DaY-QM-H8E" firstAttribute="baseline" secondItem="Kf5-IE-ktF" secondAttribute="baseline" id="mtS-az-c3T"/>
-                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="baseline" secondItem="naT-or-Sdq" secondAttribute="baseline" id="qQW-3B-Y2J"/>
+                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="baseline" secondItem="naT-or-Sdq" secondAttribute="baseline" id="aTf-Q8-Wxi"/>
+                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="baseline" secondItem="DaY-QM-H8E" secondAttribute="baseline" id="b9F-fP-zq2"/>
+                                                <constraint firstItem="naT-or-Sdq" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="20" symbolic="YES" id="gGB-Sn-ZOl"/>
+                                                <constraint firstItem="naT-or-Sdq" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="4" id="gLm-t2-YAE"/>
+                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="baseline" secondItem="DaY-QM-H8E" secondAttribute="baseline" id="qdE-pT-pPi"/>
+                                                <constraint firstItem="GgI-2J-7Mc" firstAttribute="top" secondItem="i8b-SE-R1L" secondAttribute="bottom" id="tGs-5X-MVJ"/>
+                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="trailing" secondItem="GgI-2J-7Mc" secondAttribute="trailing" id="wVD-No-WqR"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -253,22 +253,29 @@
                                                     <color key="textColor" red="0.99750840663909912" green="0.86976110935211182" blue="0.038649212568998337" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00 ACTION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9H-oY-9v5" userLabel="Last Entry">
-                                                    <rect key="frame" x="20" y="27" width="75" height="14"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACTION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9H-oY-9v5" userLabel="Last Entry Type">
+                                                    <rect key="frame" x="20" y="27" width="42" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQH-rB-vbk" userLabel="Last Entry Date">
+                                                    <rect key="frame" x="270" y="27" width="30" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DUE 00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nv-db-3mH" userLabel="Due Date">
-                                                    <rect key="frame" x="244" y="27" width="56" height="14"/>
+                                                    <rect key="frame" x="132" y="27" width="56" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYP-nJ-MbG" userLabel="Hold Date">
-                                                    <rect key="frame" x="103" y="27" width="30" height="14"/>
+                                                    <rect key="frame" x="70" y="27" width="30" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -279,22 +286,25 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="E9H-oY-9v5" firstAttribute="top" secondItem="0va-am-PJi" secondAttribute="bottom" constant="2" id="3DY-sZ-uMA"/>
-                                                <constraint firstItem="uYP-nJ-MbG" firstAttribute="baseline" secondItem="E9H-oY-9v5" secondAttribute="baseline" id="MkE-r5-Urf"/>
-                                                <constraint firstItem="uYP-nJ-MbG" firstAttribute="leading" secondItem="E9H-oY-9v5" secondAttribute="trailing" constant="8" symbolic="YES" id="a92-hT-BfJ"/>
-                                                <constraint firstItem="0nv-db-3mH" firstAttribute="baseline" secondItem="E9H-oY-9v5" secondAttribute="baseline" id="neL-o5-wQg"/>
+                                                <constraint firstAttribute="bottom" secondItem="E9H-oY-9v5" secondAttribute="bottom" constant="2" id="EXX-zI-xsz"/>
+                                                <constraint firstItem="uYP-nJ-MbG" firstAttribute="leading" secondItem="E9H-oY-9v5" secondAttribute="trailing" constant="8" symbolic="YES" id="YUv-Ih-VyW"/>
+                                                <constraint firstItem="hQH-rB-vbk" firstAttribute="trailing" secondItem="0va-am-PJi" secondAttribute="trailing" id="bw0-fF-peB"/>
+                                                <constraint firstItem="E9H-oY-9v5" firstAttribute="top" secondItem="0va-am-PJi" secondAttribute="bottom" constant="2" id="cNp-lW-NTW"/>
+                                                <constraint firstItem="0nv-db-3mH" firstAttribute="centerX" secondItem="0va-am-PJi" secondAttribute="centerX" id="djd-bF-LWK"/>
+                                                <constraint firstItem="E9H-oY-9v5" firstAttribute="leading" secondItem="0va-am-PJi" secondAttribute="leading" id="fSQ-O8-zoW"/>
+                                                <constraint firstItem="0nv-db-3mH" firstAttribute="baseline" secondItem="hQH-rB-vbk" secondAttribute="baseline" id="gRN-43-FBK"/>
                                                 <constraint firstAttribute="trailing" secondItem="0va-am-PJi" secondAttribute="trailing" constant="20" symbolic="YES" id="pFN-JW-i7q"/>
-                                                <constraint firstAttribute="bottom" secondItem="E9H-oY-9v5" secondAttribute="bottom" constant="2" id="rgg-Qp-RaK"/>
                                                 <constraint firstItem="0va-am-PJi" firstAttribute="leading" secondItem="Jm0-Yg-Mzw" secondAttribute="leading" constant="20" symbolic="YES" id="tLG-zK-Evl"/>
+                                                <constraint firstItem="0nv-db-3mH" firstAttribute="baseline" secondItem="uYP-nJ-MbG" secondAttribute="baseline" id="tvW-8l-sD2"/>
                                                 <constraint firstItem="0va-am-PJi" firstAttribute="top" secondItem="Jm0-Yg-Mzw" secondAttribute="top" constant="2" id="wBj-eF-h06"/>
-                                                <constraint firstItem="0nv-db-3mH" firstAttribute="trailing" secondItem="0va-am-PJi" secondAttribute="trailing" id="weJ-sl-9Z5"/>
-                                                <constraint firstItem="0va-am-PJi" firstAttribute="leading" secondItem="E9H-oY-9v5" secondAttribute="leading" id="zLB-sh-qeB"/>
+                                                <constraint firstItem="E9H-oY-9v5" firstAttribute="baseline" secondItem="uYP-nJ-MbG" secondAttribute="baseline" id="xsj-WZ-Gqw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dueDateLabel" destination="0nv-db-3mH" id="oWc-fR-8f1"/>
                                             <outlet property="holdDateLabel" destination="uYP-nJ-MbG" id="RfY-vR-Uw6"/>
-                                            <outlet property="lastEntryLabel" destination="E9H-oY-9v5" id="6ra-w5-Aqr"/>
+                                            <outlet property="lastEntryDateLabel" destination="hQH-rB-vbk" id="o8i-fc-Bbw"/>
+                                            <outlet property="lastEntryTypeLabel" destination="E9H-oY-9v5" id="cgh-ih-YjJ"/>
                                             <outlet property="titleLabel" destination="0va-am-PJi" id="sbD-zn-boU"/>
                                         </connections>
                                     </tableViewCell>
