@@ -40,7 +40,7 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *dueDate;
 @property (nonatomic, strong) NSDate *holdDate;
-@property (nonatomic, strong) NSDate *completionDate;
+@property (nonatomic) EntryType lastEntryType;
 @property (nonatomic, strong) NSDate *lastEntryDate;
 @property (nonatomic) BOOL star;
 @property (nonatomic, strong) NSString *notes;
@@ -49,6 +49,7 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSSet *entries;
 
 @property (nonatomic, strong) NSDate *primitiveLastEntryDate;
+@property (nonatomic) NSNumber *primitiveLastEntryType;
 @property (nonatomic, strong) NSDate *primitiveHoldDate;
 
 @property (nonatomic, strong, readonly) NSArray *entriesByDate;

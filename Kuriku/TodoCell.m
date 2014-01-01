@@ -13,7 +13,8 @@
 
 @interface TodoCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastEntryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @end
 
 @implementation TodoCell
@@ -41,8 +42,10 @@
             break;
     }
     
-    NSString *dateString = [date formattedDatePattern:@"M/d"];
-    self.dateLabel.text = [NSString stringWithFormat:@"%@ %@", datePrefix, dateString];
+    NSString *dateString = [todo.lastEntryDate formattedDatePattern:@"M/d"];
+    NSString *entryTypeString = [self entryTypeString:todo.lastEntryType];
+    self.lastEntryLabel.text = [NSString stringWithFormat:@"%@ %@", dateString, entryTypeString];
+    self.dueDateLabel.text = [self dueDateString:todo.dueDate];
 }
 
 @end

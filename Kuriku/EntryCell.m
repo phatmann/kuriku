@@ -13,46 +13,26 @@
 #import <InnerBand/InnerBand.h>
 
 @interface EntryCell ()
+
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
+
 @end
 
 @implementation EntryCell
+
 
 - (void)setEntry:(Entry *)entry
 {
     _entry = entry;
   
-    switch (entry.type) {
-        case EntryTypeCreate:
-            self.typeLabel.text = @"NEW";
-            break;
-            
-        case EntryTypeTakeAction:
-            self.typeLabel.text = @"ACTION";
-            break;
-            
-        case EntryTypeComplete:
-            self.typeLabel.text = @"COMPLETE";
-            break;
-            
-        case EntryTypeReady:
-            self.typeLabel.text = @"READY";
-            break;
-            
-        case EntryTypeHold:
-            if (entry.status != EntryStatusClosed) {
-                NSString *dateString = [entry.todo.holdDate formattedDatePattern:@"M/d"];
-                self.typeLabel.text = [NSString stringWithFormat:@"HOLD UNTIL %@", dateString];
-            } else {
-                self.typeLabel.text = @"HOLD";
-            }
-            break;
-    }
-    
+    self.typeLabel.text = [self entryTypeString:entry.type];
     self.titleLabel.attributedText = entryTitleString(entry);
     self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
+
+    self.dueDateLabel.text = [self dueDateString:entry.todo.dueDate];
 }
 
 @end

@@ -45,6 +45,7 @@
     
     if ([key isEqualToString:@"todo"]) {
         self.todo.lastEntryDate = self.timestamp;
+        self.todo.lastEntryType = self.type;
     } else if ([key isEqualToString:@"type"]) {
         switch (self.type) {
             case EntryTypeComplete:

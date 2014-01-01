@@ -14,7 +14,7 @@
 static NSString *baseFontName = @"Helvetica Neue";
 
 UIFontDescriptor *fontDescriptorFromTraits(UIFontDescriptorSymbolicTraits fontTraits);
-void appendDueDate(NSDate *dueDate, CGFloat fontSize, UIColor *color, NSMutableAttributedString *title);
+//void appendDueDate(NSDate *dueDate, CGFloat fontSize, UIColor *color, NSMutableAttributedString *title);
 
 CGFloat todoFontSize(Todo *todo) {
     return (todo.importance * 2) + 13;
@@ -78,7 +78,7 @@ NSAttributedString *todoTitleString(Todo *todo) {
     }
     
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:todo.title attributes:attributes];
-    appendDueDate(todo.dueDate, todoFontSize(todo), todoTextColor(todo), title);
+    //appendDueDate(todo.dueDate, todoFontSize(todo), todoTextColor(todo), title);
     
     return title;
 }
@@ -100,21 +100,21 @@ NSAttributedString *entryTitleString(Entry *entry) {
     }
     
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:entry.todo.title attributes:attributes];
-    appendDueDate(entry.todo.dueDate, entryFontSize(entry), entryTextColor(entry), title);
+    //appendDueDate(entry.todo.dueDate, entryFontSize(entry), entryTextColor(entry), title);
     return title;
 }
 
-void appendDueDate(NSDate *dueDate, CGFloat baseFontSize, UIColor *color, NSMutableAttributedString *title) {
-    if (dueDate) {
-        UIFontDescriptor *fontDescriptor = fontDescriptorFromTraits(UIFontDescriptorTraitItalic);
-        UIFont *font = [UIFont fontWithDescriptor:fontDescriptor size:baseFontSize - 6];
-        
-        NSAttributedString* dateString = [[NSAttributedString alloc]
-                                          initWithString:[dueDate formattedDatePattern:@"  M/d"]
-                                              attributes:@{NSFontAttributeName:font, NSForegroundColorAttributeName:color}];
-        [title appendAttributedString:dateString];
-    }
-}
+//void appendDueDate(NSDate *dueDate, CGFloat baseFontSize, UIColor *color, NSMutableAttributedString *title) {
+//    if (dueDate) {
+//        UIFontDescriptor *fontDescriptor = fontDescriptorFromTraits(UIFontDescriptorTraitItalic);
+//        UIFont *font = [UIFont fontWithDescriptor:fontDescriptor size:baseFontSize - 6];
+//        
+//        NSAttributedString* dateString = [[NSAttributedString alloc]
+//                                          initWithString:[dueDate formattedDatePattern:@"  M/d"]
+//                                              attributes:@{NSFontAttributeName:font, NSForegroundColorAttributeName:color}];
+//        [title appendAttributedString:dateString];
+//    }
+//}
 
 #pragma mark -
 

@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 7Actions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ListCell.h"
 
 @class Entry;
 
-@interface EntryCell : UITableViewCell
+@interface EntryCell : ListCell
 
 @property (strong, nonatomic) Entry *entry;
 

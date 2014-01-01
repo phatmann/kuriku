@@ -24,7 +24,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic createDate;
 @dynamic dueDate;
 @dynamic holdDate, primitiveHoldDate;
-@dynamic completionDate;
+@dynamic lastEntryType, primitiveLastEntryType;
 @dynamic lastEntryDate, primitiveLastEntryDate;
 @dynamic repeatDays;
 @dynamic priority;
@@ -64,8 +64,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
                 if (self.repeatDays == 0) {
                     self.status = TodoStatusNormal;
                 } else {
-                    self.completionDate = [NSDate date];
-                    
                     if (self.repeatDays > 0) {
                         self.holdDate = [[[NSDate date] dateByAddingDays:self.repeatDays] dateAtStartOfDay];
                     }
@@ -80,11 +78,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         if (self.status != TodoStatusOnHold && self.holdDate) {
             self.primitiveHoldDate = nil;
         }
-        
-        if (self.status != TodoStatusCompleted && self.completionDate) {
-            self.completionDate = nil;
-        }
-        
     } else if ([key isEqualToString:@"dueDate"]) {
         if (self.dueDate) {
             [self updateUrgencyFromDueDate];
@@ -99,6 +92,10 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 - (NSArray *)entriesByDate {
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
     return [self.entries sortedArrayUsingDescriptors:@[sortDescriptor]];
+}
+
+- (Entry *)lastEntry {
+    return [[self entriesByDate] lastObject];
 }
 
 #pragma mark -
@@ -147,21 +144,38 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
-// TODO: remove this method when all data is migrated
+// TODO: remove migration code
+
 - (NSDate *)lastEntryDate {
     NSDate *lastEntryDate = [self primitiveLastEntryDate];
     
     if (!lastEntryDate) {
-        if (self.completionDate)
-            lastEntryDate = self.completionDate;
-        else
-            lastEntryDate = self.createDate;
-        
+        lastEntryDate = self.lastEntry.timestamp;
         self.lastEntryDate = lastEntryDate;
     }
     
     return lastEntryDate;
 }
+
+- (EntryType)lastEntryType {
+    NSNumber *lastEntryTypeNumber = [self primitiveLastEntryType];
+    int lastEntryType;
+    
+    if (lastEntryTypeNumber) {
+        lastEntryType = [lastEntryTypeNumber intValue];
+    } else {
+        lastEntryType = self.lastEntry.type;
+        self.lastEntryType = lastEntryType;
+    }
+    
+    return lastEntryType;
+}
+
+- (void)setLastEntryType:(EntryType)lastEntryType {
+    self.primitiveLastEntryType = @(lastEntryType);
+}
+
+//////////////
 
 - (void)createEntry:(EntryType)type {
     if (type != EntryTypeCreate) {
@@ -170,8 +184,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
     
     Entry *entry = [Entry create];
-    entry.todo = self;
     entry.type = type;
+    entry.todo = self;
 }
 
 + (void)updateAllPrioritiesIfNeeded {

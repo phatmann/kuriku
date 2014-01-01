@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 7Actions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ListCell.h"
 
 @class Todo;
 
-@interface TodoCell : UITableViewCell
+@interface TodoCell : ListCell
 
 @property (strong, nonatomic) Todo *todo;
 
