@@ -1,12 +1,11 @@
 Implement
 ---------
 * Decide about semantics of journal entry deletion or disallow
-* Complete should look different than making inactive
+* Complete entries should look different than inactive
 
 Bugs
 ----
-* Clearing due date sets urgency to zero even after manually setting it
-* Clearing hold does not work correctly
+* Clearing hold date does not work correctly
 * Due date should be struck out when inactive
 
 Code
@@ -101,3 +100,4 @@ In Box
 * Commitment sort
 * Intl date format
 * Edit title field should use correct font based on settings
+* Hide urgency slider if due date is set

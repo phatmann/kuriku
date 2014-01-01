@@ -104,14 +104,8 @@ enum {
         self.todo = [Todo create];
     }
     
-    self.todo.title      = self.titleField.text;
-    self.todo.urgency    = self.urgencySlider.value;
-    self.todo.importance = self.importanceSlider.value;
-    self.todo.commitment = sliderValueToCommitment(self.commitmentSlider.value);
-    self.todo.notes      = self.notesField.text;
-    self.todo.repeatDays = stringToDays(self.repeatLabel.text);
+    // TODO: make Todo model smarter so messing with due date does not mess up urgency
     
-    // TODO: make Todo model smarter so the checks are not needed
     NSDate *dueDate = stringToDate(self.dueDateLabel.text);
     
     if (!datesEqual(self.todo.dueDate, dueDate))
@@ -119,8 +113,18 @@ enum {
     
     NSDate *holdDate = stringToDate(self.holdDateLabel.text);
     
-    if (!datesEqual(self.todo.holdDate, holdDate))
+    if (!datesEqual(self.todo.holdDate, holdDate)) {
         self.todo.holdDate = holdDate;
+    }
+    
+    if (!self.todo.dueDate)
+        self.todo.urgency = self.urgencySlider.value;
+    
+    self.todo.title      = self.titleField.text;
+    self.todo.importance = self.importanceSlider.value;
+    self.todo.commitment = sliderValueToCommitment(self.commitmentSlider.value);
+    self.todo.notes      = self.notesField.text;
+    self.todo.repeatDays = stringToDays(self.repeatLabel.text);
     
     [[IBCoreDataStore mainStore] save];
     [self.delegate todoWasEdited:self.todo];
