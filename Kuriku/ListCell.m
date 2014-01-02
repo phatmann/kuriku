@@ -64,8 +64,8 @@
             commitmentClass = @"maybe";
             break;
             
-        case TodoCommitmentSoon:
-            commitmentClass = @"soon";
+        case TodoCommitmentMust:
+            commitmentClass = @"must";
             break;
             
         case TodoCommitmentToday:

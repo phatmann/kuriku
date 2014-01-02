@@ -1,11 +1,9 @@
 Implement
 ---------
 * Decide about semantics of journal entry deletion or disallow
-* Complete entries should look different than inactive
 
 Bugs
 ----
-* Due date should be struck out when inactive
 
 Code
 ----
@@ -29,7 +27,7 @@ Cosmetic
 * icons for tab bar
 * warmer looking journal
 * replace entry type text with icon
-
+* complete entries should look different than closed
 
 Before shipping
 ---------------
@@ -37,7 +35,6 @@ Before shipping
 * Remove test data
 * Show helpful sample data
 * Graphics
-
 
 Tweaks
 ------
@@ -101,3 +98,4 @@ In Box
 * Intl date format
 * Edit title field should use correct font based on settings
 * Hide urgency slider if due date is set
+* Show urgent maybe todos properly (or disallow)

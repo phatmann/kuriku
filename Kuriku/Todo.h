@@ -18,7 +18,7 @@ typedef enum {
 
 typedef enum {
     TodoCommitmentMaybe = 0,
-    TodoCommitmentSoon = 2,
+    TodoCommitmentMust = 2,
     TodoCommitmentToday = 4
 } TodoCommitment;
 

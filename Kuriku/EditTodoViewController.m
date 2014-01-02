@@ -235,7 +235,7 @@ int commitmentToSliderValue(TodoCommitment commitment) {
     switch (commitment) {
         case TodoCommitmentMaybe:
             return 0;
-        case TodoCommitmentSoon:
+        case TodoCommitmentMust:
             return 1;
         case TodoCommitmentToday:
             return 2;
@@ -249,7 +249,7 @@ TodoCommitment sliderValueToCommitment(int value) {
         case 2:
             return TodoCommitmentToday;
         default:
-            return TodoCommitmentSoon;
+            return TodoCommitmentMust;
     }
 }
 

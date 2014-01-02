@@ -45,7 +45,7 @@ $importance-font-size-multiplier:   1;
 }
 
 .entry-status-closed {
-    color: black;
+    color: $gray-light;
 }
 
 .todo-status-completed {
@@ -53,11 +53,15 @@ $importance-font-size-multiplier:   1;
 }
 
 .todo-status-hold {
-    color:green;
+    font-style: italic;
+}
+
+.todo-commitment-must {
+    color: black;
 }
 
 .todo-commitment-maybe {
-    color: gray;
+    color: $blue;
 }
 
 .todo-commitment-soon {
