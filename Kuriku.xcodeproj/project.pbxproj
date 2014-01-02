@@ -13,8 +13,16 @@
 		EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = EA10F1261861B2FF0084F6C8 /* TODO.md */; };
 		EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* ListViewController.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
-		EA40F7A61873F8FD005DC6AA /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = EA40F7A51873F8FD005DC6AA /* default.css */; };
 		EA43563618745EEA00200630 /* ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43563518745EEA00200630 /* ListCell.m */; };
+		EA43566A1874E11D00200630 /* base.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA43564F1874E11D00200630 /* base.scss */; };
+		EA43566B1874E11D00200630 /* buttons.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356501874E11D00200630 /* buttons.scss */; };
+		EA43566C1874E11D00200630 /* collections.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356511874E11D00200630 /* collections.scss */; };
+		EA43566D1874E11D00200630 /* default.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356521874E11D00200630 /* default.scss */; };
+		EA43566E1874E11D00200630 /* forms.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356531874E11D00200630 /* forms.scss */; };
+		EA43566F1874E11D00200630 /* icons.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356541874E11D00200630 /* icons.scss */; };
+		EA4356701874E11D00200630 /* tables.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356551874E11D00200630 /* tables.scss */; };
+		EA4356711874E11D00200630 /* type.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356561874E11D00200630 /* type.scss */; };
+		EA4356721874E11D00200630 /* variables.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356571874E11D00200630 /* variables.scss */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
 		EA89E750185C136400643266 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA89E74F185C136400643266 /* CoreData.framework */; };
 		EA89E753185C15A300643266 /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E752185C15A300643266 /* TodoCell.m */; };
@@ -65,10 +73,18 @@
 		EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatViewController.m; sourceTree = "<group>"; };
 		EA40F7A11873F7E9005DC6AA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		EA40F7A31873F7EF005DC6AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		EA40F7A51873F8FD005DC6AA /* default.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = default.css; sourceTree = "<group>"; };
 		EA43563418745EEA00200630 /* ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListCell.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA43563518745EEA00200630 /* ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListCell.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA4356371874641700200630 /* Kuriku10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku10.xcdatamodel; sourceTree = "<group>"; };
+		EA43564F1874E11D00200630 /* base.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = base.scss; sourceTree = "<group>"; };
+		EA4356501874E11D00200630 /* buttons.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = buttons.scss; sourceTree = "<group>"; };
+		EA4356511874E11D00200630 /* collections.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = collections.scss; sourceTree = "<group>"; };
+		EA4356521874E11D00200630 /* default.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = default.scss; sourceTree = "<group>"; };
+		EA4356531874E11D00200630 /* forms.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = forms.scss; sourceTree = "<group>"; };
+		EA4356541874E11D00200630 /* icons.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = icons.scss; sourceTree = "<group>"; };
+		EA4356551874E11D00200630 /* tables.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tables.scss; sourceTree = "<group>"; };
+		EA4356561874E11D00200630 /* type.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = type.scss; sourceTree = "<group>"; };
+		EA4356571874E11D00200630 /* variables.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = variables.scss; sourceTree = "<group>"; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 		EA89E74F185C136400643266 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -197,6 +213,22 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		EA4356391874E11D00200630 /* scss */ = {
+			isa = PBXGroup;
+			children = (
+				EA43564F1874E11D00200630 /* base.scss */,
+				EA4356501874E11D00200630 /* buttons.scss */,
+				EA4356511874E11D00200630 /* collections.scss */,
+				EA4356521874E11D00200630 /* default.scss */,
+				EA4356531874E11D00200630 /* forms.scss */,
+				EA4356541874E11D00200630 /* icons.scss */,
+				EA4356551874E11D00200630 /* tables.scss */,
+				EA4356561874E11D00200630 /* type.scss */,
+				EA4356571874E11D00200630 /* variables.scss */,
+			);
+			path = scss;
+			sourceTree = "<group>";
+		};
 		EAAC95431858F7D400E8BAB5 = {
 			isa = PBXGroup;
 			children = (
@@ -242,9 +274,9 @@
 				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
 				EAAC95561858F7D400E8BAB5 /* Supporting Files */,
 				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
+				EA4356391874E11D00200630 /* scss */,
 				EADA6010186494BC006089AF /* Styles.h */,
 				EADA6011186494BC006089AF /* Styles.m */,
-				EA40F7A51873F8FD005DC6AA /* default.css */,
 			);
 			path = Kuriku;
 			sourceTree = "<group>";
@@ -291,6 +323,7 @@
 				EAAC95491858F7D400E8BAB5 /* Frameworks */,
 				EAAC954A1858F7D400E8BAB5 /* Resources */,
 				EE0BFDFB17AB46F6826FCE76 /* Copy Pods Resources */,
+				EA4356731874E19300200630 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -358,12 +391,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA4356721874E11D00200630 /* variables.scss in Resources */,
 				EAAC95661858F7D400E8BAB5 /* Main_iPad.storyboard in Resources */,
+				EA43566C1874E11D00200630 /* collections.scss in Resources */,
+				EA43566A1874E11D00200630 /* base.scss in Resources */,
 				EAAC956E1858F7D400E8BAB5 /* Images.xcassets in Resources */,
+				EA43566D1874E11D00200630 /* default.scss in Resources */,
 				EAAC95631858F7D400E8BAB5 /* Main_iPhone.storyboard in Resources */,
+				EA4356701874E11D00200630 /* tables.scss in Resources */,
+				EA4356711874E11D00200630 /* type.scss in Resources */,
 				EAAC955A1858F7D400E8BAB5 /* InfoPlist.strings in Resources */,
+				EA43566F1874E11D00200630 /* icons.scss in Resources */,
 				EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */,
-				EA40F7A61873F8FD005DC6AA /* default.css in Resources */,
+				EA43566B1874E11D00200630 /* buttons.scss in Resources */,
+				EA43566E1874E11D00200630 /* forms.scss in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +433,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		EA4356731874E19300200630 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". ~/.bashrc\nsass ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/default.scss ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/default.css";
 		};
 		EE0BFDFB17AB46F6826FCE76 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
