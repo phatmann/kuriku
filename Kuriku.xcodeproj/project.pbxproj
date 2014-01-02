@@ -46,7 +46,6 @@
 		EAAC9591185936A300E8BAB5 /* Journal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9590185936A300E8BAB5 /* Journal.m */; };
 		EAAC9594185936A400E8BAB5 /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9593185936A400E8BAB5 /* Entry.m */; };
 		EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */; };
-		EADA6012186494BC006089AF /* Styles.m in Sources */ = {isa = PBXBuildFile; fileRef = EADA6011186494BC006089AF /* Styles.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +74,7 @@
 		EA40F7A31873F7EF005DC6AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EA43563418745EEA00200630 /* ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListCell.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA43563518745EEA00200630 /* ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListCell.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
-		EA4356371874641700200630 /* Kuriku10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku10.xcdatamodel; sourceTree = "<group>"; };
+		EA4356371874641700200630 /* Kuriku10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku10.xcdatamodel; sourceTree = "<group>"; };
 		EA43564F1874E11D00200630 /* base.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = base.scss; sourceTree = "<group>"; };
 		EA4356501874E11D00200630 /* buttons.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = buttons.scss; sourceTree = "<group>"; };
 		EA4356511874E11D00200630 /* collections.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = collections.scss; sourceTree = "<group>"; };
@@ -127,8 +126,6 @@
 		EAAC9593185936A400E8BAB5 /* Entry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entry.m; sourceTree = "<group>"; };
 		EABAAC92186B702D00F2FBE6 /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
 		EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
-		EADA6010186494BC006089AF /* Styles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Styles.h; sourceTree = "<group>"; };
-		EADA6011186494BC006089AF /* Styles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Styles.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,7 +210,7 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		EA4356391874E11D00200630 /* scss */ = {
+		EA4356391874E11D00200630 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
 				EA43564F1874E11D00200630 /* base.scss */,
@@ -226,6 +223,7 @@
 				EA4356561874E11D00200630 /* type.scss */,
 				EA4356571874E11D00200630 /* variables.scss */,
 			);
+			name = Styles;
 			path = scss;
 			sourceTree = "<group>";
 		};
@@ -271,12 +269,10 @@
 				EA048CBC1860C91400990957 /* Cells */,
 				EA10F1251860EDFF0084F6C8 /* View Controllers */,
 				EA048CAB186083FF00990957 /* Data */,
+				EA4356391874E11D00200630 /* Styles */,
 				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
 				EAAC95561858F7D400E8BAB5 /* Supporting Files */,
 				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
-				EA4356391874E11D00200630 /* scss */,
-				EADA6010186494BC006089AF /* Styles.h */,
-				EADA6011186494BC006089AF /* Styles.m */,
 			);
 			path = Kuriku;
 			sourceTree = "<group>";
@@ -469,7 +465,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EADA6012186494BC006089AF /* Styles.m in Sources */,
 				EA43563618745EEA00200630 /* ListCell.m in Sources */,
 				EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */,
 				EAAC956C1858F7D400E8BAB5 /* TodoViewController.m in Sources */,

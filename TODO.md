@@ -9,10 +9,10 @@ Bugs
 
 Code
 ----
+* Size table view row height
 * Enhance InnerBand to return fetch requests and/or fetch results controller
 * Clean up urgency/due-date mess
 * Replace entry timestamp with journalTimeString
-* Remove completion date, use lastEntryDate instead
 
 Performance
 -----------

@@ -10,7 +10,6 @@
 #import "Todo.h"
 #import "TodoCell.h"
 #import "EditTodoViewController.h"
-#import "Styles.h"
 
 typedef enum {
     FilterActive,
@@ -136,7 +135,7 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Todo *todo = [self todoAtIndexPath:indexPath];
-    return todoFontSize(todo) + 25;
+    return todo.importance + 40;
 }
 
 #pragma mark -

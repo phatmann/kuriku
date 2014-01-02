@@ -10,7 +10,6 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "EntryCell.h"
-#import "Styles.h"
 
 typedef enum {
     FilterAll,
@@ -123,7 +122,7 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Entry *entry = [self entryAtIndexPath:indexPath];
-    return todoFontSize(entry.todo) + 25;
+    return entry.todo.importance + 40;
 }
 
 #pragma mark - Fetched Results Controller Delegate
