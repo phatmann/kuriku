@@ -8,8 +8,8 @@
 
 #import "TodoCell.h"
 #import "Todo.h"
-#import "Styles.h"
 #import <InnerBand/InnerBand.h>
+#import <Pixate/Pixate.h>
 
 @interface TodoCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -24,7 +24,9 @@
 - (void)setTodo:(Todo *)todo
 {
     _todo = todo;
-    self.titleLabel.attributedText = todoTitleString(todo);
+    
+    self.titleLabel.text = todo.title;
+    self.titleLabel.styleClass = [self styleClassForTodo:todo];
     
     NSDate *date;
     NSString *datePrefix;

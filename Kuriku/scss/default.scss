@@ -22,3 +22,18 @@
 @import 'forms';
 @import 'icons';
 @import 'tables';
+
+$todoRangeMaxValue: 4;
+$todoUrgentBaseHue: 50;
+
+.urgency-0 {
+   /* default */
+}
+
+@for $urgency from 1 through $todoRangeMaxValue {
+    .urgency-#{$urgency} {
+        $hue: $todoUrgentBaseHue - ($urgency * $todoUrgentBaseHue / $todoRangeMaxValue);
+        color: hsb($hue, 100%, 100%)
+    }
+}
+

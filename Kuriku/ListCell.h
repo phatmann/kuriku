@@ -15,5 +15,6 @@
 - (NSString *)entryTypeString:(EntryType)type;
 - (NSString *)dueDateString:(NSDate *)dueDate;
 - (NSString *)holdDateString:(NSDate *)holdDate;
+- (NSString *)styleClassForTodo:(Todo *)todo;
 
 @end

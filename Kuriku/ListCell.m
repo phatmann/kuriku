@@ -42,4 +42,8 @@
     return holdDate ? [NSString stringWithFormat:@"%@", [holdDate formattedDatePattern:@"M/d"]] : @"";
 }
 
+- (NSString *)styleClassForTodo:(Todo *)todo {
+    return [NSString stringWithFormat:@"urgency-%d", todo.urgency];
+}
+
 @end
