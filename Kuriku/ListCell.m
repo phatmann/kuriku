@@ -43,7 +43,7 @@
 }
 
 - (NSString *)styleClassForTodo:(Todo *)todo {
-    return [NSString stringWithFormat:@"urgency-%d", todo.urgency];
+    return [NSString stringWithFormat:@"urgency-%d importance-%d", todo.urgency, todo.importance];
 }
 
 @end
