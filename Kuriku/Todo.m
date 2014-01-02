@@ -70,12 +70,12 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
                 }
 
                 break;
-            case TodoStatusOnHold:
+            case TodoStatusHold:
                 [self createEntry:EntryTypeHold];
                 break;
         }
         
-        if (self.status != TodoStatusOnHold && self.holdDate) {
+        if (self.status != TodoStatusHold && self.holdDate) {
             self.primitiveHoldDate = nil;
         }
     } else if ([key isEqualToString:@"dueDate"]) {
@@ -85,7 +85,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
             self.urgency = 0;
         }
     } else if ([key isEqualToString:@"holdDate"]) {
-        self.status = self.holdDate ? TodoStatusOnHold : TodoStatusNormal;
+        self.status = self.holdDate ? TodoStatusHold : TodoStatusNormal;
     }
 }
 

@@ -43,11 +43,57 @@
 }
 
 - (NSString *)styleClassForTodo:(Todo *)todo {
-    return [NSString stringWithFormat:@"urgency-%d importance-%d", todo.urgency, todo.importance];
+    NSString *statusClass, *commitmentClass;
+    
+    switch (todo.status) {
+        case TodoStatusNormal:
+            statusClass = @"normal";
+            break;
+            
+        case TodoStatusCompleted:
+            statusClass = @"completed";
+            break;
+            
+        case TodoStatusHold:
+            statusClass = @"hold";
+            break;
+    }
+    
+    switch (todo.commitment) {
+        case TodoCommitmentMaybe:
+            commitmentClass = @"maybe";
+            break;
+            
+        case TodoCommitmentSoon:
+            commitmentClass = @"soon";
+            break;
+            
+        case TodoCommitmentToday:
+            commitmentClass =  @"today";
+            break;
+    }
+    
+    return [NSString stringWithFormat:@"todo-urgency-%d todo-importance-%d todo-status-%@ todo-commitment-%@", todo.urgency, todo.importance, statusClass, commitmentClass];
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
-    return (entry.status == EntryStatusClosed) ? @"entry-closed" : [self styleClassForTodo:entry.todo];
+    NSString *statusClass;
+    
+    switch (entry.status) {
+        case EntryStatusOpen:
+            statusClass = @"open";
+            break;
+            
+        case EntryStatusClosed:
+            statusClass = @"closed";
+            break;
+            
+        case EntryStatusHold:
+            statusClass =  @"hold";
+            break;
+    }
+    
+    return [NSString stringWithFormat:@"%@ entry-status-%@", [self styleClassForTodo:entry.todo], statusClass];
 }
 
 - (NSMutableAttributedString *)titleForTodo:(Todo *)todo {

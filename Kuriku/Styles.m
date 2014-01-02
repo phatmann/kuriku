@@ -71,7 +71,7 @@ NSAttributedString *todoTitleString(Todo *todo) {
             attributes[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
             break;
             
-        case TodoStatusOnHold:
+        case TodoStatusHold:
             attributes[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle | NSUnderlinePatternDot);
             break;
     }

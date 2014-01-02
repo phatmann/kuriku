@@ -26,9 +26,7 @@
     _todo = todo;
     
     self.titleLabel.attributedText = [self titleForTodo:todo];
-    self.titleLabel.styleClass = [self styleClassForTodo:todo];
-    
-
+    self.titleLabel.styleClass = [NSString stringWithFormat:@"todo %@", [self styleClassForTodo:todo]];
     self.lastEntryDateLabel.text = [todo.lastEntryDate formattedDatePattern:@"M/d"];
     self.lastEntryTypeLabel.text = [self entryTypeString:todo.lastEntryType];
     self.dueDateLabel.text = [self dueDateString:todo.dueDate];

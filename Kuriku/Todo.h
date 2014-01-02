@@ -13,12 +13,12 @@
 typedef enum {
     TodoStatusNormal,
     TodoStatusCompleted,
-    TodoStatusOnHold
+    TodoStatusHold
 } TodoStatus;
 
 typedef enum {
     TodoCommitmentMaybe = 0,
-    TodoCommitmentNormal = 2,
+    TodoCommitmentSoon = 2,
     TodoCommitmentToday = 4
 } TodoCommitment;
 
