@@ -67,7 +67,7 @@ typedef enum {
             status = 2;
             break;
         case FilterComplete:
-            sortKey = @"completionDate";
+            sortKey = @"lastEntryDate";
             status = 1;
             break;
     }

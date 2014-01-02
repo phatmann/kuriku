@@ -29,8 +29,8 @@
     _entry = entry;
   
     self.typeLabel.text = [self entryTypeString:entry.type];
-    self.titleLabel.text = entry.todo.title;
-    self.titleLabel.styleClass = [self styleClassForTodo:entry.todo];
+    self.titleLabel.attributedText = [self titleForEntry:entry];
+    self.titleLabel.styleClass = [self styleClassForEntry:entry];
     self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dueDateLabel.text = [self dueDateString:entry.todo.dueDate];
     self.holdDateLabel.text = (entry.status == EntryStatusHold) ? [self holdDateString:entry.todo.holdDate] : nil;

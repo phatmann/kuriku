@@ -44,3 +44,8 @@ $importance-font-size-multiplier:   1;
     }
 }
 
+.entry-closed {
+    font-size: $font-size-base;
+    /* text-decoration: line-through */;
+}
+

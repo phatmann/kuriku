@@ -25,27 +25,10 @@
 {
     _todo = todo;
     
-    self.titleLabel.text = todo.title;
+    self.titleLabel.attributedText = [self titleForTodo:todo];
     self.titleLabel.styleClass = [self styleClassForTodo:todo];
     
-    NSDate *date;
-    NSString *datePrefix;
-    
-    switch (todo.status) {
-        case TodoStatusNormal:
-            date = todo.lastEntryDate;
-            datePrefix = @"LAST ACTION";
-            break;
-        case TodoStatusCompleted:
-            date = todo.lastEntryDate;
-            datePrefix = @"COMPLETED";
-            break;
-        case TodoStatusOnHold:
-            date = todo.holdDate;
-            datePrefix = @"ON HOLD UNTIL";
-            break;
-    }
-    
+
     self.lastEntryDateLabel.text = [todo.lastEntryDate formattedDatePattern:@"M/d"];
     self.lastEntryTypeLabel.text = [self entryTypeString:todo.lastEntryType];
     self.dueDateLabel.text = [self dueDateString:todo.dueDate];

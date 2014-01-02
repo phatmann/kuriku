@@ -46,4 +46,29 @@
     return [NSString stringWithFormat:@"urgency-%d importance-%d", todo.urgency, todo.importance];
 }
 
+- (NSString *)styleClassForEntry:(Entry *)entry {
+    return (entry.status == EntryStatusClosed) ? @"entry-closed" : [self styleClassForTodo:entry.todo];
+}
+
+- (NSMutableAttributedString *)titleForTodo:(Todo *)todo {
+    NSDictionary *attributes = @{};
+    
+    if (todo.status == TodoStatusCompleted) {
+        attributes = @{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternSolid)};
+    }
+    
+    return [[NSMutableAttributedString alloc] initWithString:todo.title attributes:attributes];
+
+}
+
+- (NSMutableAttributedString *)titleForEntry:(Entry *)entry {
+    NSMutableAttributedString *title = [self titleForTodo:entry.todo];
+    
+    if (entry.todo.status != TodoStatusCompleted && entry.status == EntryStatusClosed) {
+        [title addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle | NSUnderlinePatternSolid) range:NSMakeRange(0, title.length)];
+    }
+    
+    return title;
+}
+
 @end
