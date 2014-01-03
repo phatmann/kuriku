@@ -1,6 +1,8 @@
 Implement
 ---------
 * Decide about semantics of journal entry deletion or disallow
+* Way to view whole todo
+* Way to view entire note
 
 Bugs
 ----

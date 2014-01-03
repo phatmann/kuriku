@@ -1,19 +1,22 @@
 PODS:
   - InnerBand (1.0.7)
+  - OCHamcrest (3.0.1)
   - Pixate (2.0.1)
   - TPKeyboardAvoiding (1.2.1)
 
 DEPENDENCIES:
-  - InnerBand (from `/Users/tony/Documents/src/phatmann/InnerBand`)
+  - InnerBand (from `git@github.com:phatmann/InnerBand.git`)
+  - OCHamcrest
   - Pixate
   - TPKeyboardAvoiding
 
 EXTERNAL SOURCES:
   InnerBand:
-    :path: /Users/tony/Documents/src/phatmann/InnerBand
+    :git: git@github.com:phatmann/InnerBand.git
 
 SPEC CHECKSUMS:
   InnerBand: a1dce796b91d7e89035a03fbe0437f025ff0c9d1
+  OCHamcrest: 782c52ae8c673e5d6060a65005cfd26d20d519ba
   Pixate: b9d2c6301a0026de411772c5eb327a698d109c02
   TPKeyboardAvoiding: 0536c563e6c8b8e95a7c4bf87fca9c0991f5e826
 

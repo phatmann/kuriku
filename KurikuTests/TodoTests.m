@@ -7,15 +7,26 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <InnerBand/InnerBand.h>
+#import "Journal.h"
+#import "Todo.h"
+#import "Entry.h"
+
+#define HC_SHORTHAND
+#import <OCHamcrest/OCHamcrest.h>
 
 @interface TodoTests : XCTestCase
-
+@property (nonatomic) Todo *todo;
 @end
 
 @implementation TodoTests
 
 - (void)setUp {
     [super setUp];
+    [IBCoreDataStore clearAllData];
+    [Journal create];
+    [self createTodo];
+    [IBCoreDataStore save];
 }
 
 - (void)tearDown {
@@ -23,23 +34,43 @@
 }
 
 - (void)test_insert_create_entry {
-    
+    NSSet *entries = self.todo.entries;
+    assertThatInteger(entries.count, equalToInteger(1));
+    Entry *entry = [entries anyObject];
+    assertThatInteger(entry.type, equalToInteger(EntryTypeCreate));
 }
 
 - (void)test_insert_ready_entry_if_no_entries {
-    
+    [self.todo removeEntries:self.todo.entries];
+    self.todo.title = @"new title";
+    [IBCoreDataStore save];
+    NSSet *entries = self.todo.entries;
+    assertThatInteger(entries.count, equalToInteger(1));
+    Entry *entry = [entries anyObject];
+    assertThatInteger(entry.type, equalToInteger(EntryTypeReady));
 }
 
-- (void)test_insert_ready_entry_when_status_changes_to_normal {
-    
+- (void)test_insert_ready_entry_when_status_changes_from_hold_to_normal {
+    self.todo.status = TodoStatusHold;
+    self.todo.status = TodoStatusNormal;
+    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeReady));
 }
+
+- (void)test_insert_ready_entry_when_status_changes_from_completed_to_normal {
+    self.todo.status = TodoStatusCompleted;
+    self.todo.status = TodoStatusNormal;
+    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeReady));
+}
+
 
 - (void)test_insert_complete_entry_when_status_changes_to_completed {
-    
+    self.todo.status = TodoStatusCompleted;
+    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeComplete));
 }
 
 - (void)test_insert_hold_entry_when_status_changes_to_hold {
-    
+    self.todo.status = TodoStatusHold;
+    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeHold));
 }
 
 - (void)test_calculate_priority {
@@ -47,15 +78,21 @@
 }
 
 - (void)test_update_priority_when_importance_changes {
-    
+    float oldPriority = self.todo.priority;
+    self.todo.importance = 0;
+    assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
 }
 
 - (void)test_update_priority_when_urgency_changes {
-    
+    float oldPriority = self.todo.priority;
+    self.todo.urgency = 1;
+    assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
 }
 
 - (void)test_update_priority_when_commitment_changes {
-    
+    float oldPriority = self.todo.priority;
+    self.todo.commitment = 0;
+    assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
 }
 
 - (void)test_update_all_priorities {
@@ -98,10 +135,6 @@
     
 }
 
-- (void)test_get_last_entry {
-    
-}
-
 - (void)test_get_last_entry_date {
     
 }
@@ -128,6 +161,17 @@
 
 - (void)test_calculate_urgency_if_no_due_date {
     
+}
+
+#pragma mark -
+
+- (void)createTodo {
+    self.todo = [Todo create];
+
+    self.todo.title      = @"title";
+    self.todo.importance = TodoImportanceDefaultValue;
+    self.todo.urgency    = TodoUrgencyDefaultValue;
+    self.todo.commitment = TodoCommitmentDefaultValue;
 }
 
 @end

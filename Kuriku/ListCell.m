@@ -97,6 +97,9 @@
 }
 
 - (NSMutableAttributedString *)titleForTodo:(Todo *)todo {
+    if (!todo)
+        return nil;
+    
     NSDictionary *attributes = @{};
     
     if (todo.status == TodoStatusCompleted) {
