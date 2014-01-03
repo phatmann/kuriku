@@ -11,21 +11,25 @@
 @import 'variables';
 
 /* Base styles */
-/*@import 'base';*/
+@import 'base';
 
 /* Typography */
-/*@import 'type';*/
+@import 'type';
 
 /* Views and controls */
-/*@import 'buttons';
+@import 'buttons';
 @import 'collections';
 @import 'forms';
 @import 'icons';
-@import 'tables';*/
+@import 'tables';
 
 $todo-range-max:                    4;
 $todo-urgent-base-hue:              50;
 $importance-font-size-multiplier:   1;
+
+date-picker table-view {
+    background-color: transparent;
+}
 
 .todo-urgency-0 {
    /* default */

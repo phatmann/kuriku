@@ -1,7 +1,6 @@
 Implement
 ---------
 * Decide about semantics of journal entry deletion or disallow
-* Remove Pixate and use NUI or GRFancyText
 
 Bugs
 ----
@@ -12,6 +11,7 @@ Code
 * Enhance InnerBand to return fetch requests and/or fetch results controller
 * Clean up urgency/due-date mess
 * Replace entry timestamp with journalTimeString
+* Remove Pixate and use NUI or GRFancyText
 
 Performance
 -----------
