@@ -25,7 +25,7 @@
     [super setUp];
     [IBCoreDataStore clearAllData];
     [Journal create];
-    [self createTodo];
+    self.todo = [self createTodo];
     [IBCoreDataStore save];
 }
 
@@ -140,12 +140,19 @@
     assertThatFloat(self.todo.priority, equalToFloat(1.0));
 }
 
-- (void)test_update_all_priorities {
-    
-}
-
 - (void)test_update_all_priorities_when_priority_version_changes {
+    Todo *todo1 = self.todo;
+    Todo *todo2 = [self createTodo];
+    float oldPriority1 = todo1.priority;
+    float oldPriority2 = todo2.priority;
+    todo1.priority = 0;
+    todo2.priority = 0;
     
+    [[IBCoreDataStore mainStore] setMetadataObject:@(0) forKey:@"PriorityVersion"];
+    [Todo updateAllPrioritiesIfNeeded];
+    
+    assertThatFloat(todo1.priority, equalToFloat(oldPriority1));
+    assertThatFloat(todo2.priority, equalToFloat(oldPriority2));
 }
 
 - (void)test_set_status_to_normal_after_status_changes_to_completed_with_immediate_repeat {
@@ -210,13 +217,15 @@
 
 #pragma mark -
 
-- (void)createTodo {
-    self.todo = [Todo create];
+- (Todo *)createTodo {
+    Todo *todo = [Todo create];
 
-    self.todo.title      = @"title";
-    self.todo.importance = TodoImportanceDefaultValue;
-    self.todo.urgency    = TodoUrgencyDefaultValue;
-    self.todo.commitment = TodoCommitmentDefaultValue;
+    todo.title      = @"title";
+    todo.importance = TodoImportanceDefaultValue;
+    todo.urgency    = TodoUrgencyDefaultValue;
+    todo.commitment = TodoCommitmentDefaultValue;
+    
+    return todo;
 }
 
 @end
