@@ -73,8 +73,7 @@ NSDateFormatter* journalDateFormatter() {
     
     if (!dateFormatter) {
         dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateStyle = NSDateFormatterShortStyle;
-        dateFormatter.timeStyle = NSDateFormatterNoStyle;
+        dateFormatter.dateFormat = @"yyyy-mm-dd";
     }
     
     return dateFormatter;
