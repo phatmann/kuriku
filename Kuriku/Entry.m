@@ -66,6 +66,14 @@
     return [journalDateFormatter() dateFromString:journalDateString];
 }
 
++ (void)migrate {
+    for (Entry *entry in [Entry all]) {
+        
+    }
+    
+    [IBCoreDataStore save];
+}
+
 #pragma mark -
 
 NSDateFormatter* journalDateFormatter() {
@@ -73,7 +81,7 @@ NSDateFormatter* journalDateFormatter() {
     
     if (!dateFormatter) {
         dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"yyyy-mm-dd";
+        dateFormatter.dateFormat = @"yyyy-MM-dd";
     }
     
     return dateFormatter;

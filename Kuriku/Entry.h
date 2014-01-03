@@ -37,5 +37,6 @@ typedef enum {
 @property (nonatomic) NSDate *journalDate;
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString;
++ (void)migrate;
 
 @end

@@ -89,7 +89,7 @@ typedef enum {
         }
         
         id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-        NSDate *date = [Entry journalDateFromString:[sectionInfo name]];
+        NSDate *date = [Entry journalDateFromString:sectionInfo.name];
         return [longDateFormatter stringFromDate:date];
     }
     
