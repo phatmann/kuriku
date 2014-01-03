@@ -421,46 +421,20 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOL-Tk-fHl">
-                                                    <rect key="frame" x="20" y="12" width="21" height="20"/>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="A4F-gL-aaT" userLabel="Commitment Chooser">
+                                                    <rect key="frame" x="20" y="8" width="280" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAYBE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQ4-yn-G95">
-                                                    <rect key="frame" x="133" y="17" width="39" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="YXP-le-CtZ" userLabel="Commitment Slider">
-                                                    <rect key="frame" x="178" y="5" width="89" height="34"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="85" id="fBE-ws-6bX"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="sliderValueChanged:" destination="mcN-ys-bQG" eventType="valueChanged" id="cTK-Wj-BoQ"/>
-                                                    </connections>
-                                                </slider>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQH-7h-nPb">
-                                                    <rect key="frame" x="273" y="17" width="38" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <segments>
+                                                        <segment title="Maybe"/>
+                                                        <segment title="Must Do"/>
+                                                        <segment title="Today"/>
+                                                    </segments>
+                                                </segmentedControl>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="kOL-Tk-fHl" firstAttribute="baseline" secondItem="oQ4-yn-G95" secondAttribute="baseline" id="71U-vS-igx"/>
-                                                <constraint firstItem="qQH-7h-nPb" firstAttribute="baseline" secondItem="oQ4-yn-G95" secondAttribute="baseline" id="AlE-EU-pqT"/>
-                                                <constraint firstItem="qQH-7h-nPb" firstAttribute="leading" secondItem="YXP-le-CtZ" secondAttribute="trailing" constant="8" symbolic="YES" id="CP3-Wu-F98"/>
-                                                <constraint firstAttribute="centerY" secondItem="YXP-le-CtZ" secondAttribute="centerY" id="EJQ-Kl-ruI"/>
-                                                <constraint firstAttribute="centerY" secondItem="kOL-Tk-fHl" secondAttribute="centerY" id="HGs-01-FeX"/>
-                                                <constraint firstItem="kOL-Tk-fHl" firstAttribute="leading" secondItem="qH5-jX-eKa" secondAttribute="leading" constant="20" symbolic="YES" id="gzU-39-XkH"/>
-                                                <constraint firstItem="YXP-le-CtZ" firstAttribute="leading" secondItem="oQ4-yn-G95" secondAttribute="trailing" constant="8" symbolic="YES" id="oF9-Nc-aCF"/>
-                                                <constraint firstAttribute="trailing" secondItem="qQH-7h-nPb" secondAttribute="trailing" constant="9" id="oTb-1W-DU1"/>
+                                                <constraint firstAttribute="centerY" secondItem="A4F-gL-aaT" secondAttribute="centerY" id="1cs-Nc-1ZM"/>
+                                                <constraint firstAttribute="trailing" secondItem="A4F-gL-aaT" secondAttribute="trailing" constant="20" symbolic="YES" id="8De-bx-Lfg"/>
+                                                <constraint firstItem="A4F-gL-aaT" firstAttribute="leading" secondItem="qH5-jX-eKa" secondAttribute="leading" constant="20" symbolic="YES" id="nfV-3D-5xZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -472,26 +446,26 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuK-OT-bID">
-                                                    <rect key="frame" x="146" y="17" width="24" height="14"/>
+                                                    <rect key="frame" x="131" y="17" width="24" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="xqf-QQ-XLX" userLabel="Importance Slider">
-                                                    <rect key="frame" x="176" y="5" width="89" height="34"/>
+                                                    <rect key="frame" x="161" y="5" width="104" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="85" id="qFe-7s-OsT"/>
+                                                        <constraint firstAttribute="width" constant="100" id="qFe-7s-OsT"/>
                                                     </constraints>
                                                     <connections>
                                                         <action selector="sliderValueChanged:" destination="mcN-ys-bQG" eventType="valueChanged" id="mSd-Kf-Nhy"/>
                                                     </connections>
                                                 </slider>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Important" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Tk-T5-C7J">
-                                                    <rect key="frame" x="20" y="12" width="71" height="20"/>
+                                                    <rect key="frame" x="20" y="11" width="75" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -526,24 +500,24 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Urgent" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WUe-Kk-FGj" userLabel="Urgency Label">
-                                                    <rect key="frame" x="20" y="12" width="49" height="20"/>
+                                                    <rect key="frame" x="20" y="11" width="52" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kqf-9K-yiI">
-                                                    <rect key="frame" x="146" y="17" width="24" height="14"/>
+                                                    <rect key="frame" x="131" y="17" width="24" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="TRa-yE-wfk" userLabel="Urgency Slider">
-                                                    <rect key="frame" x="176" y="5" width="89" height="34"/>
+                                                    <rect key="frame" x="161" y="5" width="104" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="85" id="NhE-cA-eVg"/>
+                                                        <constraint firstAttribute="width" constant="100" id="NhE-cA-eVg"/>
                                                     </constraints>
                                                     <connections>
                                                         <action selector="sliderValueChanged:" destination="mcN-ys-bQG" eventType="valueChanged" id="pV1-vv-Lu1"/>
@@ -576,9 +550,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AD5-zi-RTu">
-                                                    <rect key="frame" x="20" y="12" width="68" height="20"/>
+                                                    <rect key="frame" x="20" y="11" width="72" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -613,9 +587,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold Until" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mu-by-zII">
-                                                    <rect key="frame" x="20" y="12" width="72" height="20"/>
+                                                    <rect key="frame" x="20" y="11" width="76" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -646,9 +620,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repeat" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzj-Y1-Wde">
-                                                    <rect key="frame" x="20" y="12" width="52" height="20"/>
+                                                    <rect key="frame" x="20" y="11" width="55" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -683,14 +657,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1az-FH-UHd">
-                                                    <rect key="frame" x="20" y="10" width="43" height="20"/>
+                                                    <rect key="frame" x="20" y="10" width="46" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c0S-lQ-ReJ" userLabel="Notes Field">
-                                                    <rect key="frame" x="16" y="38" width="284" height="55"/>
+                                                    <rect key="frame" x="16" y="39" width="284" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -731,7 +705,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="commitmentSlider" destination="YXP-le-CtZ" id="CRg-lf-7ph"/>
+                        <outlet property="commitmentChooser" destination="A4F-gL-aaT" id="I84-6I-T6e"/>
                         <outlet property="dueDateLabel" destination="jsp-N7-hPg" id="JgU-cI-bdj"/>
                         <outlet property="holdDateLabel" destination="4oo-fx-j6Q" id="Ale-RV-pmh"/>
                         <outlet property="importanceSlider" destination="xqf-QQ-XLX" id="ONL-sg-Kzo"/>

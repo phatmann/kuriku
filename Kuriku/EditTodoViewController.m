@@ -14,10 +14,10 @@
 @interface EditTodoViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *titleField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *commitmentChooser;
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
-@property (weak, nonatomic) IBOutlet UISlider *commitmentSlider;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *holdDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *urgencyLabel;
@@ -51,24 +51,25 @@ enum {
     [super viewDidLoad];
 	
     if (self.todo) {
-        self.titleField.text         = self.todo.title;
-        self.urgencySlider.value     = self.todo.urgency;
-        self.importanceSlider.value  = self.todo.importance;
-        self.commitmentSlider.value  = commitmentToSliderValue(self.todo.commitment);
-        self.notesField.text         = self.todo.notes;
-        self.dueDateLabel.text       = dateToString(self.todo.dueDate);
-        self.holdDateLabel.text      = dateToString(self.todo.holdDate);
-        self.repeatLabel.text        = daysToString(self.todo.repeatDays);
+        self.navigationItem.title = @"Edit Todo";
         
-        self.navigationItem.title    = @"Edit Todo";
+        self.titleField.text                        = self.todo.title;
+        self.urgencySlider.value                    = self.todo.urgency;
+        self.importanceSlider.value                 = self.todo.importance;
+        self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(self.todo.commitment);
+        self.dueDateLabel.text                      = dateToString(self.todo.dueDate);
+        self.holdDateLabel.text                     = dateToString(self.todo.holdDate);
+        self.repeatLabel.text                       = daysToString(self.todo.repeatDays);
+        self.notesField.text                        = self.todo.notes;
     } else {
-        self.urgencySlider.value     = TodoUrgencyDefaultValue;
-        self.importanceSlider.value  = TodoImportanceDefaultValue;
-        self.commitmentSlider.value  = commitmentToSliderValue(TodoCommitmentDefaultValue);
-        self.navigationItem.title    = @"New Todo";
-        self.dueDateLabel.text       = NoDateString;
-        self.holdDateLabel.text      = NoDateString;
-        self.repeatLabel.text        = NoDaysString;
+        self.navigationItem.title = @"New Todo";
+        
+        self.urgencySlider.value                    = TodoUrgencyDefaultValue;
+        self.importanceSlider.value                 = TodoImportanceDefaultValue;
+        self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(TodoCommitmentDefaultValue);
+        self.dueDateLabel.text                      = NoDateString;
+        self.holdDateLabel.text                     = NoDateString;
+        self.repeatLabel.text                       = NoDaysString;
         
         [self.titleField becomeFirstResponder];
     }
@@ -122,7 +123,7 @@ enum {
     
     self.todo.title      = self.titleField.text;
     self.todo.importance = self.importanceSlider.value;
-    self.todo.commitment = sliderValueToCommitment(self.commitmentSlider.value);
+    self.todo.commitment = chooserValueToCommitment(self.commitmentChooser.selectedSegmentIndex);
     self.todo.notes      = self.notesField.text;
     self.todo.repeatDays = stringToDays(self.repeatLabel.text);
     
@@ -231,7 +232,7 @@ BOOL datesEqual(NSDate *date1, NSDate *date2) {
     return [date1 isEqualToDate:date2];
 }
 
-int commitmentToSliderValue(TodoCommitment commitment) {
+int commitmentToChooserValue(TodoCommitment commitment) {
     switch (commitment) {
         case TodoCommitmentMaybe:
             return 0;
@@ -242,7 +243,7 @@ int commitmentToSliderValue(TodoCommitment commitment) {
     }
 }
 
-TodoCommitment sliderValueToCommitment(int value) {
+TodoCommitment chooserValueToCommitment(int value) {
     switch (value) {
         case 0:
             return TodoCommitmentMaybe;
