@@ -204,12 +204,13 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     static NSString *dailyUpdateKey = @"DailyUpdate";
     
     NSDate *updateDate = [[IBCoreDataStore mainStore] metadataObjectForKey:dailyUpdateKey];
-
-    if (!updateDate || abs([updateDate timeIntervalSinceNow]) > kSecondsInDay) {
+    NSDate *today = [NSDate today];
+    
+    if (!updateDate || ![updateDate isSameDay:today]) {
         [self updateAllUrgenciesFromDueDate];
         [self updateAllStatusesFromHoldDate];
         
-        [[IBCoreDataStore mainStore] setMetadataObject:[NSDate date] forKey:dailyUpdateKey];
+        [[IBCoreDataStore mainStore] setMetadataObject:today forKey:dailyUpdateKey];
         [[IBCoreDataStore mainStore] save];
     }
 }
