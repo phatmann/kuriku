@@ -1,6 +1,9 @@
 Implement
 ---------
 * Decide about semantics of journal entry deletion or disallow
+* Remove Pixate and use NUI or GRFancyText
+* Journal not showing new sections
+* Urgent tasks not showing red
 
 Bugs
 ----
