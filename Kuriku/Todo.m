@@ -123,7 +123,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     NSArray *todos = [Todo allForPredicate:predicate];
     
     for (Todo *todo in todos) {
-        [todo updateStatusFromHoldDate];
+        todo.holdDate = nil;
     }
     
     [IBCoreDataStore save];
@@ -144,8 +144,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
-// TODO: remove migration code
-
+////////////////////////
+// TODO: remove these methods once tests are in place
 - (NSDate *)lastEntryDate {
     NSDate *lastEntryDate = [self primitiveLastEntryDate];
     
@@ -174,8 +174,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 - (void)setLastEntryType:(EntryType)lastEntryType {
     self.primitiveLastEntryType = @(lastEntryType);
 }
-
-//////////////
+////////////////////////
 
 - (void)createEntry:(EntryType)type {
     if (type != EntryTypeCreate) {
@@ -229,10 +228,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (void)updateUrgencyFromDueDate {
     self.urgency = [Todo urgencyFromDueDate:self.dueDate];
-}
-
-- (void)updateStatusFromHoldDate {
-    self.holdDate = nil;
 }
 
 @end

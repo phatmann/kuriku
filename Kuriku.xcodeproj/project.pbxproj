@@ -23,6 +23,8 @@
 		EA4356701874E11D00200630 /* tables.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356551874E11D00200630 /* tables.scss */; };
 		EA4356711874E11D00200630 /* type.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356561874E11D00200630 /* type.scss */; };
 		EA4356721874E11D00200630 /* variables.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356571874E11D00200630 /* variables.scss */; };
+		EA737BD8187676B6003A1BBE /* EntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD7187676B6003A1BBE /* EntryTests.m */; };
+		EA737BDA187676FD003A1BBE /* JournalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD9187676FD003A1BBE /* JournalTests.m */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
 		EA89E750185C136400643266 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA89E74F185C136400643266 /* CoreData.framework */; };
 		EA89E753185C15A300643266 /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E752185C15A300643266 /* TodoCell.m */; };
@@ -42,7 +44,7 @@
 		EAAC95761858F7D400E8BAB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC954F1858F7D400E8BAB5 /* Foundation.framework */; };
 		EAAC95771858F7D400E8BAB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC95531858F7D400E8BAB5 /* UIKit.framework */; };
 		EAAC957F1858F7D400E8BAB5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAAC957D1858F7D400E8BAB5 /* InfoPlist.strings */; };
-		EAAC95811858F7D400E8BAB5 /* KurikuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC95801858F7D400E8BAB5 /* KurikuTests.m */; };
+		EAAC95811858F7D400E8BAB5 /* TodoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC95801858F7D400E8BAB5 /* TodoTests.m */; };
 		EAAC9591185936A300E8BAB5 /* Journal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9590185936A300E8BAB5 /* Journal.m */; };
 		EAAC9594185936A400E8BAB5 /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC9593185936A400E8BAB5 /* Entry.m */; };
 		EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */; };
@@ -84,6 +86,8 @@
 		EA4356551874E11D00200630 /* tables.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tables.scss; sourceTree = "<group>"; };
 		EA4356561874E11D00200630 /* type.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = type.scss; sourceTree = "<group>"; };
 		EA4356571874E11D00200630 /* variables.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = variables.scss; sourceTree = "<group>"; };
+		EA737BD7187676B6003A1BBE /* EntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryTests.m; sourceTree = "<group>"; };
+		EA737BD9187676FD003A1BBE /* JournalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalTests.m; sourceTree = "<group>"; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 		EA89E74F185C136400643266 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -119,7 +123,7 @@
 		EAAC95741858F7D400E8BAB5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		EAAC957C1858F7D400E8BAB5 /* KurikuTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KurikuTests-Info.plist"; sourceTree = "<group>"; };
 		EAAC957E1858F7D400E8BAB5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		EAAC95801858F7D400E8BAB5 /* KurikuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KurikuTests.m; sourceTree = "<group>"; };
+		EAAC95801858F7D400E8BAB5 /* TodoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoTests.m; sourceTree = "<group>"; };
 		EAAC958F185936A300E8BAB5 /* Journal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Journal.h; sourceTree = "<group>"; };
 		EAAC9590185936A300E8BAB5 /* Journal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Journal.m; sourceTree = "<group>"; };
 		EAAC9592185936A400E8BAB5 /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
@@ -292,7 +296,9 @@
 		EAAC957A1858F7D400E8BAB5 /* KurikuTests */ = {
 			isa = PBXGroup;
 			children = (
-				EAAC95801858F7D400E8BAB5 /* KurikuTests.m */,
+				EAAC95801858F7D400E8BAB5 /* TodoTests.m */,
+				EA737BD7187676B6003A1BBE /* EntryTests.m */,
+				EA737BD9187676FD003A1BBE /* JournalTests.m */,
 				EAAC957B1858F7D400E8BAB5 /* Supporting Files */,
 			);
 			path = KurikuTests;
@@ -487,7 +493,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAAC95811858F7D400E8BAB5 /* KurikuTests.m in Sources */,
+				EA737BD8187676B6003A1BBE /* EntryTests.m in Sources */,
+				EAAC95811858F7D400E8BAB5 /* TodoTests.m in Sources */,
+				EA737BDA187676FD003A1BBE /* JournalTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
