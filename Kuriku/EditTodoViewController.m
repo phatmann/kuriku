@@ -206,7 +206,8 @@ int stringToDays(NSString *string) {
     if ([string isEqualToString:YearlyString])
         return YearlyValue;
     
-    return [string intValue];
+    NSArray *components = [string componentsSeparatedByString: @" "];
+    return [components[1] intValue];
 }
 
 NSString *daysToString(int days) {
