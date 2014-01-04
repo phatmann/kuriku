@@ -54,7 +54,7 @@ static const int TodoPriorityVersion = 5;
 
 @property (nonatomic, strong, readonly) NSArray *entriesByDate;
 
-- (void)createEntry:(EntryType)type;
+- (Entry *)createEntry:(EntryType)type;
 
 + (int)urgencyFromDueDate:(NSDate *)dueDate;
 + (void)updateAllPrioritiesIfNeeded;

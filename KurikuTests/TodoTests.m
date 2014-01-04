@@ -156,34 +156,66 @@
 }
 
 - (void)test_set_status_to_normal_after_status_changes_to_completed_with_immediate_repeat {
-    
+    self.todo.repeatDays = 0;
+    self.todo.status = TodoStatusCompleted;
+    assertThatInteger(self.todo.status, equalToInteger(TodoStatusNormal));
+}
+
+- (void)test_does_not_set_status_to_normal_after_status_changes_to_completed_with_no_repeat {
+    self.todo.repeatDays = -1;
+    self.todo.status = TodoStatusCompleted;
+    assertThatInteger(self.todo.status, equalToInteger(TodoStatusCompleted));
 }
 
 - (void)test_set_hold_date_when_status_changes_to_completed_with_repeat {
-    
+    self.todo.repeatDays = 1;
+    self.todo.status = TodoStatusCompleted;
+    NSDate *oneDayFromToday = [[NSDate today] dateByAddingDays:1];
+    assertThat(self.todo.holdDate, is(oneDayFromToday));
 }
 
 - (void)test_clear_hold_date_when_status_changes_to_not_hold {
-    
+    self.todo.holdDate = [[NSDate today] dateByAddingDays:1];
+    self.todo.status = TodoStatusNormal;
+    assertThat(self.todo.holdDate, is(nilValue()));
 }
 
 - (void)test_update_urgency_when_due_date_changes {
-    
+    self.todo.dueDate = [NSDate today];
+    assertThatInteger(self.todo.urgency, equalToInteger(TodoRangeMaxValue));
 }
 
 - (void)test_clear_urgency_when_due_date_cleared {
-    
+    self.todo.dueDate = [NSDate today];
+    self.todo.dueDate = nil;
+    assertThatInteger(self.todo.urgency, equalToInteger(0));
 }
 
 - (void)test_set_status_to_hold_when_hold_date_set {
-    
+    self.todo.holdDate = [[NSDate today] dateByAddingDays:1];
+    assertThatInteger(self.todo.status, equalToInteger(TodoStatusHold));
 }
 
 - (void)test_set_status_to_normal_when_hold_date_cleared {
-    
+    self.todo.holdDate = [[NSDate today] dateByAddingDays:1];
+    self.todo.holdDate = nil;
+    assertThatInteger(self.todo.status, equalToInteger(TodoStatusNormal));
 }
 
 - (void)test_get_entries_by_date {
+    Entry *entry1 = [self.todo.entries anyObject];
+    [NSThread sleepForTimeInterval:0.1];
+    Entry *entry2 = [self.todo createEntry:EntryTypeTakeAction];
+    [NSThread sleepForTimeInterval:0.1];
+    Entry *entry3 = [self.todo createEntry:EntryTypeTakeAction];
+    NSArray *entries = [self.todo entriesByDate];
+    
+    assertThat(entries[0], is(entry1));
+    assertThat(entries[1], is(entry2));
+    assertThat(entries[2], is(entry3));
+}
+
+- (void)test_get_entries_by_date_after_changes {
     
 }
 

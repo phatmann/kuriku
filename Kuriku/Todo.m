@@ -176,7 +176,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 ////////////////////////
 
-- (void)createEntry:(EntryType)type {
+- (Entry *)createEntry:(EntryType)type {
     if (type != EntryTypeCreate) {
         Entry *lastEntry = [self.entriesByDate lastObject];
         lastEntry.status = EntryStatusClosed;
@@ -185,6 +185,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     Entry *entry = [Entry create];
     entry.type = type;
     entry.todo = self;
+    
+    return entry;
 }
 
 + (void)updateAllPrioritiesIfNeeded {
