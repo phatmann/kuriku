@@ -649,11 +649,11 @@
                             </tableViewSection>
                             <tableViewSection id="pWe-gC-4Gp" userLabel="Notes Section">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="116" id="OHr-kk-VQ1" userLabel="Notes Cell">
-                                        <rect key="frame" x="0.0" y="487" width="320" height="116"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="200" id="OHr-kk-VQ1" userLabel="Notes Cell">
+                                        <rect key="frame" x="0.0" y="487" width="320" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OHr-kk-VQ1" id="nNG-Wm-jWb">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="115"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1az-FH-UHd">
@@ -663,23 +663,23 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c0S-lQ-ReJ" userLabel="Notes Field">
-                                                    <rect key="frame" x="16" y="39" width="284" height="55"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="284" placeholderIntrinsicHeight="24" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0S-lQ-ReJ" userLabel="Notes Field" customClass="TMGrowingTextView">
+                                                    <rect key="frame" x="16" y="31" width="284" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="55" id="o1X-B9-Bov"/>
-                                                    </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="mcN-ys-bQG" id="657-5Z-gaW"/>
+                                                    </connections>
                                                 </textView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="c0S-lQ-ReJ" secondAttribute="trailing" constant="20" symbolic="YES" id="5Qk-Qu-DDm"/>
                                                 <constraint firstItem="c0S-lQ-ReJ" firstAttribute="leading" secondItem="1az-FH-UHd" secondAttribute="leading" constant="-4" id="LDM-cb-R9C"/>
                                                 <constraint firstItem="1az-FH-UHd" firstAttribute="leading" secondItem="nNG-Wm-jWb" secondAttribute="leading" constant="20" symbolic="YES" id="MBp-h5-1A0"/>
-                                                <constraint firstItem="c0S-lQ-ReJ" firstAttribute="top" secondItem="1az-FH-UHd" secondAttribute="bottom" constant="8" symbolic="YES" id="QEb-U3-bH2"/>
+                                                <constraint firstItem="c0S-lQ-ReJ" firstAttribute="top" secondItem="1az-FH-UHd" secondAttribute="bottom" id="QEb-U3-bH2"/>
                                                 <constraint firstItem="1az-FH-UHd" firstAttribute="top" secondItem="nNG-Wm-jWb" secondAttribute="top" constant="10" id="etW-kO-ODL"/>
                                             </constraints>
                                         </tableViewCellContentView>

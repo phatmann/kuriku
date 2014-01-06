@@ -163,7 +163,29 @@ enum {
     self.repeatLabel.text = daysToString(repeatViewController.days);
 }
 
-#pragma mark -
+#pragma mark - Table View Delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 4) {
+        return self.notesField.intrinsicContentSize.height + 24;
+    } else {
+        return tableView.rowHeight;
+    }
+}
+
+#pragma mark - Text View Delegate
+
+- (void)textViewDidChange:(UITextView *)textView {
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    
+    CGRect caretRect = [textView caretRectForPosition:textView.selectedTextRange.start];
+    caretRect = [self.tableView convertRect:caretRect fromView:textView];
+    caretRect.size.height += 8;
+    [self.tableView scrollRectToVisible:caretRect animated:YES];
+}
+
+#pragma mark - Private
 
 - (void)updateControls {
     self.urgencySlider.enabled = [self.dueDateLabel.text isEqualToString:NoDateString];
@@ -171,7 +193,7 @@ enum {
     self.navigationItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
 }
 
-#pragma mark -
+#pragma mark - Conversion functions
 
 NSDate *stringToDate(NSString *string) {
     if ([string isEqualToString:NoDateString])

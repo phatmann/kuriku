@@ -12,6 +12,7 @@
 		EA048CAA1860832500990957 /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CA91860832500990957 /* Todo.m */; };
 		EA048CBF1860C93600990957 /* EntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CBE1860C93600990957 /* EntryCell.m */; };
 		EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = EA10F1261861B2FF0084F6C8 /* TODO.md */; };
+		EA20528A187AE04F00B8330B /* TMGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA205289187AE04F00B8330B /* TMGrowingTextView.m */; };
 		EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* ListViewController.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
 		EA43563618745EEA00200630 /* ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43563518745EEA00200630 /* ListCell.m */; };
@@ -71,6 +72,8 @@
 		EA048CBD1860C92A00990957 /* EntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryCell.h; sourceTree = "<group>"; };
 		EA048CBE1860C93600990957 /* EntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryCell.m; sourceTree = "<group>"; };
 		EA10F1261861B2FF0084F6C8 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.md; sourceTree = "<group>"; };
+		EA205288187AE04F00B8330B /* TMGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMGrowingTextView.h; sourceTree = "<group>"; };
+		EA205289187AE04F00B8330B /* TMGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMGrowingTextView.m; sourceTree = "<group>"; };
 		EA35308B185F23C20024E7C9 /* ListViewController.h */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA35308C185F23C20024E7C9 /* ListViewController.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA3C0C09187029BF00EF1DAC /* RepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatViewController.h; sourceTree = "<group>"; };
@@ -218,6 +221,15 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		EA20528B187AEBD700B8330B /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				EA205288187AE04F00B8330B /* TMGrowingTextView.h */,
+				EA205289187AE04F00B8330B /* TMGrowingTextView.m */,
+			);
+			name = Custom;
+			sourceTree = "<group>";
+		};
 		EA4356391874E11D00200630 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +291,7 @@
 				EA10F1241860EDF40084F6C8 /* App */,
 				EA048CBC1860C91400990957 /* Cells */,
 				EA10F1251860EDFF0084F6C8 /* View Controllers */,
+				EA20528B187AEBD700B8330B /* Custom */,
 				EA048CAB186083FF00990957 /* Data */,
 				EA4356391874E11D00200630 /* Styles */,
 				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
@@ -368,7 +381,7 @@
 		EAAC95441858F7D400E8BAB5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = K;
+				CLASSPREFIX = "";
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = 7Actions;
 				TargetAttributes = {
@@ -521,6 +534,7 @@
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
 				EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */,
 				EAA9D8EF1871B81E00A2C9E6 /* Kuriku.xcdatamodeld in Sources */,
+				EA20528A187AE04F00B8330B /* TMGrowingTextView.m in Sources */,
 				EA048CBF1860C93600990957 /* EntryCell.m in Sources */,
 				EAAC955C1858F7D400E8BAB5 /* main.m in Sources */,
 				EA048CAA1860832500990957 /* Todo.m in Sources */,
