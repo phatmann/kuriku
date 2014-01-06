@@ -4,6 +4,7 @@ target "Kuriku" do
     pod "InnerBand", :git => 'git@github.com:phatmann/InnerBand.git' # :path => '/Users/tony/Documents/src/phatmann/InnerBand'
     pod "TPKeyboardAvoiding"
     pod "Pixate"
+    pod "SAMTextView"
 end
 
 target "KurikuTests" do

@@ -392,21 +392,24 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PnK-It-80A" userLabel="Title">
-                                                    <rect key="frame" x="20" y="12" width="280" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="WgV-aG-XgD" userLabel="Title Field" customClass="TMGrowingTextView">
+                                                    <rect key="frame" x="20" y="8" width="280" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Title"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="titleDidChange" destination="mcN-ys-bQG" eventType="editingChanged" id="DK0-Ux-zb2"/>
-                                                        <outlet property="delegate" destination="mcN-ys-bQG" id="Qwm-oh-ZEr"/>
+                                                        <outlet property="delegate" destination="mcN-ys-bQG" id="tyz-ik-dPc"/>
                                                     </connections>
-                                                </textField>
+                                                </textView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="PnK-It-80A" secondAttribute="centerY" id="Ng1-ic-ahW"/>
-                                                <constraint firstAttribute="trailing" secondItem="PnK-It-80A" secondAttribute="trailing" constant="20" symbolic="YES" id="ScQ-JI-GfP"/>
-                                                <constraint firstItem="PnK-It-80A" firstAttribute="leading" secondItem="8u3-i7-Goj" secondAttribute="leading" constant="20" symbolic="YES" id="SeD-Hp-9JR"/>
+                                                <constraint firstAttribute="trailing" secondItem="WgV-aG-XgD" secondAttribute="trailing" constant="20" symbolic="YES" id="TDV-Fe-Yy0"/>
+                                                <constraint firstItem="WgV-aG-XgD" firstAttribute="top" secondItem="8u3-i7-Goj" secondAttribute="top" constant="8" id="qDd-B5-ieE"/>
+                                                <constraint firstItem="WgV-aG-XgD" firstAttribute="leading" secondItem="8u3-i7-Goj" secondAttribute="leading" constant="20" symbolic="YES" id="sin-Q8-oCp"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -667,7 +670,7 @@
                                                     <rect key="frame" x="16" y="31" width="284" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                                     <connections>
@@ -711,7 +714,7 @@
                         <outlet property="importanceSlider" destination="xqf-QQ-XLX" id="ONL-sg-Kzo"/>
                         <outlet property="notesField" destination="c0S-lQ-ReJ" id="IH5-5J-IOS"/>
                         <outlet property="repeatLabel" destination="Slr-Ta-Goj" id="oyh-uu-jVs"/>
-                        <outlet property="titleField" destination="PnK-It-80A" id="rtP-5d-bLq"/>
+                        <outlet property="titleField" destination="WgV-aG-XgD" id="YXv-z7-f99"/>
                         <outlet property="urgencyLabel" destination="WUe-Kk-FGj" id="Qnd-Bb-RQb"/>
                         <outlet property="urgencySlider" destination="TRa-yE-wfk" id="Z3w-pL-qK8"/>
                     </connections>

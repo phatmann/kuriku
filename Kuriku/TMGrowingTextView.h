@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SAMTextView/SAMTextView.h>
 
-@interface TMGrowingTextView : UITextView
+@interface TMGrowingTextView : SAMTextView
 
 @end

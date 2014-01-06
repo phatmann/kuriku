@@ -13,7 +13,7 @@
 
 @interface EditTodoViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *titleField;
+@property (weak, nonatomic) IBOutlet UITextView *titleField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *commitmentChooser;
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
@@ -64,12 +64,14 @@ enum {
     } else {
         self.navigationItem.title = @"New Todo";
         
+        self.titleField.text                        = nil;
         self.urgencySlider.value                    = TodoUrgencyDefaultValue;
         self.importanceSlider.value                 = TodoImportanceDefaultValue;
         self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(TodoCommitmentDefaultValue);
         self.dueDateLabel.text                      = NoDateString;
         self.holdDateLabel.text                     = NoDateString;
         self.repeatLabel.text                       = NoDaysString;
+        self.notesField.text                        = nil;
         
         [self.titleField becomeFirstResponder];
     }
@@ -166,7 +168,9 @@ enum {
 #pragma mark - Table View Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 4) {
+    if (indexPath.section == 0) {
+        return self.titleField.intrinsicContentSize.height;
+    } else if (indexPath.section == 4) {
         return self.notesField.intrinsicContentSize.height + 24;
     } else {
         return tableView.rowHeight;
