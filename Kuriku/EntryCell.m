@@ -15,7 +15,7 @@
 @interface EntryCell ()
 
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *holdDateLabel;
@@ -27,10 +27,10 @@
 - (void)setEntry:(Entry *)entry
 {
     _entry = entry;
-  
+    
     self.typeLabel.text = [self entryTypeString:entry.type];
-    self.titleLabel.attributedText = [self titleForEntry:entry];
-    self.titleLabel.styleClass = [NSString stringWithFormat:@"entry %@", [self styleClassForEntry:entry]];
+    self.titleTextView.attributedText = [self titleForEntry:entry];
+    self.titleTextView.styleClass = [NSString stringWithFormat:@"entry %@", [self styleClassForEntry:entry]];
     self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dueDateLabel.text = [self dueDateString:entry.todo.dueDate];
     self.holdDateLabel.text = (entry.status == EntryStatusHold) ? [self holdDateString:entry.todo.holdDate] : nil;

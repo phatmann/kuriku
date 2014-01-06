@@ -165,9 +165,9 @@ enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return self.titleField.intrinsicContentSize.height;
+        return self.titleField.intrinsicContentSize.height + 16;
     } else if (indexPath.section == 4) {
-        return self.notesField.intrinsicContentSize.height + 24;
+        return self.notesField.intrinsicContentSize.height + 44;
     } else {
         return tableView.rowHeight;
     }

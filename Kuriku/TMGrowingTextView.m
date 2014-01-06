@@ -10,6 +10,34 @@
 
 @implementation TMGrowingTextView
 
+- (id)init {
+    self = [super init];
+    [self setup];
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    [self setup];
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    [self setup];
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
+    self = [super initWithFrame:frame textContainer:textContainer];
+    [self setup];
+    return self;
+}
+
+- (void)setup {
+    self.textContainerInset = UIEdgeInsetsMake(0, -4, 0, -4);
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
