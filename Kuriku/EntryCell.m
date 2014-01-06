@@ -24,8 +24,7 @@
 @implementation EntryCell
 
 
-- (void)setEntry:(Entry *)entry
-{
+- (void)setEntry:(Entry *)entry {
     _entry = entry;
     
     self.typeLabel.text = [self entryTypeString:entry.type];

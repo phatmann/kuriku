@@ -10,6 +10,7 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "EntryCell.h"
+#import "TMGrowingTextView.h"
 
 typedef enum {
     FilterAll,
@@ -121,26 +122,16 @@ typedef enum {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static UITextView *sizingTextView;
+    static TMGrowingTextView *sizingTextView;
     
     if (!sizingTextView) {
-        sizingTextView = [UITextView new];
+        sizingTextView = [TMGrowingTextView new];
         sizingTextView.font = [UIFont systemFontOfSize:14];
-//        sizingCell = NEW;
-//        sizingCell.autoresizingMask = UIViewAutoresizingFlexibleWidth; // this must be set for the cell heights to be calculated correctly in landscape
-//        sizingCell.hidden = YES;
-//        [self.tableView addSubview:sizingCell];
-//        sizingCell.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableView.bounds), 0);
     }
     
     sizingTextView.text = [[[self entryAtIndexPath:indexPath] todo] title];
-    
-    //[sizingCell setNeedsLayout];
-    //[sizingCell layoutIfNeeded];
-    //CGSize size = [sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    
     CGFloat width = self.tableView.bounds.size.width - 40;
-    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 20;
+    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 35;
 }
 
 #pragma mark - Fetched Results Controller Delegate
