@@ -93,10 +93,6 @@ enum {
         repeatViewController.delegate = self;
     }
 }
-
-- (IBAction)titleDidChange {
-    [self updateControls];
-}
     
 - (IBAction)cancelButtonWasTapped:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -138,11 +134,11 @@ enum {
     [slider setValue:roundf(slider.value) animated:YES];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    [self saveButtonWasTapped];
-    return NO;
-}
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+//    [textField resignFirstResponder];
+//    [self saveButtonWasTapped];
+//    return NO;
+//}
 
 #pragma mark - Date Picker View Controller Delegate
 
@@ -187,6 +183,8 @@ enum {
     caretRect = [self.tableView convertRect:caretRect fromView:textView];
     caretRect.size.height += 8;
     [self.tableView scrollRectToVisible:caretRect animated:YES];
+    
+    [self updateControls];
 }
 
 #pragma mark - Private
