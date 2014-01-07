@@ -81,8 +81,9 @@ Advanced Features
 * Use preferred font size per iOS 7, no hard-coded text widths
 * Edit mode
 * Archive/hide old journal pages
-* Journal reference entries (italic)
+* Journal reference entries
 * Urgency window based on size of todo
+* Show todo count
 
 In Box
 ------
