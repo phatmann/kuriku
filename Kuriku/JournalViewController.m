@@ -130,7 +130,7 @@ typedef enum {
     }
     
     sizingTextView.text = [[[self entryAtIndexPath:indexPath] todo] title];
-    CGFloat width = self.tableView.bounds.size.width - 40;
+    CGFloat width = self.tableView.bounds.size.width - 60;
     return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 35;
 }
 

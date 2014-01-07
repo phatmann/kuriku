@@ -6,19 +6,18 @@ Implement
 
 Bugs
 ----
+* Sometimes expanding text views makes table scroll bounce
 
 Code
 ----
-* Size table view row height
 * Enhance InnerBand to return fetch requests and/or fetch results controller
 * Clean up urgency/due-date mess
 * Replace entry timestamp with journalTimeString
-* Remove Pixate and use NUI or GRFancyText
 
 Performance
 -----------
 * Use cache file for both NSFetchedResultControllers
-* Cache Todo's entriesByDate
+* Cache Todo.entriesByDate
 
 Testing
 -------
@@ -44,7 +43,6 @@ Tweaks
 * Show time in latest action date in Todo view
 * Tomorrow and Next Week buttons in Date picker
 * Colors for edit todo view values (e.g. gray Never)
-* Multi-line todos and entries, avoid ellipsis
 * Secondary sorts
 
 Advanced Features
@@ -102,3 +100,4 @@ In Box
 * Edit title field should use correct font based on settings
 * Hide urgency slider if due date is set
 * Show urgent maybe todos properly (or disallow)
+* Remove Pixate and use NUI or GRFancyText

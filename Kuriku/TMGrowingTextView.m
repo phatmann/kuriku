@@ -35,6 +35,7 @@
 }
 
 - (void)setup {
+    self.scrollEnabled = NO;
     self.textContainerInset = UIEdgeInsetsMake(0, -4, 0, -4);
 }
 
@@ -46,17 +47,18 @@
         [self invalidateIntrinsicContentSize];
     }
 }
+    
+- (CGSize)sizeThatFits:(CGSize)size {
+    CGSize contentSize = [super sizeThatFits:size];
+    
+    contentSize.width  += self.textContainerInset.left + self.textContainerInset.right;
+    contentSize.height += self.textContainerInset.top + self.textContainerInset.bottom;
+    
+    return contentSize;
+}
 
-- (CGSize)intrinsicContentSize
-{
-    CGSize intrinsicContentSize =  [self sizeThatFits:self.bounds.size];
-    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
-        intrinsicContentSize.width  += self.textContainerInset.left + self.textContainerInset.right;
-        intrinsicContentSize.height += self.textContainerInset.top + self.textContainerInset.bottom;
-    }
-    
-    return intrinsicContentSize;
+- (CGSize)intrinsicContentSize {
+    return [self sizeThatFits:self.bounds.size];
 }
 
 @end
