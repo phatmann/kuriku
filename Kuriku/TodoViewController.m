@@ -10,7 +10,6 @@
 #import "Todo.h"
 #import "TodoCell.h"
 #import "EditTodoViewController.h"
-#import "TMGrowingTextView.h"
 
 typedef enum {
     FilterActive,
@@ -132,19 +131,6 @@ typedef enum {
     if (!tableView.isEditing) {
         [self showEditTodoView:[self todoAtIndexPath:indexPath]];
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static TMGrowingTextView *sizingTextView;
-    
-    if (!sizingTextView) {
-        sizingTextView = [TMGrowingTextView new];
-        sizingTextView.font = [UIFont systemFontOfSize:14];
-    }
-    
-    sizingTextView.text = [[self todoAtIndexPath:indexPath] title];
-    CGFloat width = self.tableView.bounds.size.width - 60;
-    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 30;
 }
 
 #pragma mark -

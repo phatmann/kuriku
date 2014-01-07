@@ -10,6 +10,7 @@
 #import "EditTodoViewController.h"
 #import "Todo.h"
 #import "Entry.h"
+#import "TMGrowingTextView.h"
 
 @interface ListViewController ()
 @property (strong, nonatomic) Todo *selectedTodo;
@@ -61,6 +62,19 @@
     }
     
     return 0;
+}
+    
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static TMGrowingTextView *sizingTextView;
+    
+    if (!sizingTextView) {
+        sizingTextView = [TMGrowingTextView new];
+        sizingTextView.font = [UIFont systemFontOfSize:14];
+    }
+    
+    sizingTextView.text = [[self todoAtIndexPath:indexPath ] title];
+    CGFloat width = self.tableView.bounds.size.width - 60;
+    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 35;
 }
 
 #pragma mark - Action Sheet Delegate

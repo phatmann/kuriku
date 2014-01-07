@@ -35,12 +35,12 @@
 }
 
 - (void)setup {
-    self.scrollEnabled = NO;
+    self.scrollEnabled      = NO;
+    self.bounces            = NO;
     self.textContainerInset = UIEdgeInsetsMake(0, -4, 0, -4);
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
     
     if (!CGSizeEqualToSize(self.bounds.size, [self intrinsicContentSize])) {

@@ -10,7 +10,6 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "EntryCell.h"
-#import "TMGrowingTextView.h"
 
 typedef enum {
     FilterAll,
@@ -119,19 +118,6 @@ typedef enum {
         [entry destroy];
         [IBCoreDataStore save];
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static TMGrowingTextView *sizingTextView;
-    
-    if (!sizingTextView) {
-        sizingTextView = [TMGrowingTextView new];
-        sizingTextView.font = [UIFont systemFontOfSize:14];
-    }
-    
-    sizingTextView.text = [[[self entryAtIndexPath:indexPath] todo] title];
-    CGFloat width = self.tableView.bounds.size.width - 60;
-    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 35;
 }
 
 #pragma mark - Fetched Results Controller Delegate

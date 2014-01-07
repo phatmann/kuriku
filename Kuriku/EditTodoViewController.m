@@ -134,12 +134,6 @@ enum {
     [slider setValue:roundf(slider.value) animated:YES];
 }
 
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-//    [textField resignFirstResponder];
-//    [self saveButtonWasTapped];
-//    return NO;
-//}
-
 #pragma mark - Date Picker View Controller Delegate
 
 - (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController {
