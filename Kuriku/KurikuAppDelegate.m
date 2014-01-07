@@ -14,7 +14,7 @@
 @implementation KurikuAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //[Entry migrate];
+    //[Todo migrate];
     [Todo updateAllPrioritiesIfNeeded];
     
     Journal *journal = [Journal first];

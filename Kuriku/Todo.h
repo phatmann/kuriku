@@ -10,6 +10,8 @@
 #import <CoreData/CoreData.h>
 #import "Entry.h"
 
+@class Journal;
+
 typedef enum {
     TodoStatusNormal,
     TodoStatusCompleted,
@@ -47,6 +49,7 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic) int16_t repeatDays;
 @property (nonatomic) int16_t commitment;
 @property (nonatomic, strong) NSSet *entries;
+@property (nonatomic, strong) Journal *journal;
 
 @property (nonatomic, strong) NSDate *primitiveLastEntryDate;
 @property (nonatomic) NSNumber *primitiveLastEntryType;
@@ -59,6 +62,7 @@ static const int TodoPriorityVersion = 5;
 + (int)urgencyFromDueDate:(NSDate *)dueDate;
 + (void)updateAllPrioritiesIfNeeded;
 + (void)dailyUpdate;
++ (void)migrate;
 
 @end
 

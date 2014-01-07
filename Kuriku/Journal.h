@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *entries;
+@property (nonatomic, retain) NSSet *todos;
 
 - (void)createSampleItems;
 
@@ -25,5 +26,10 @@
 - (void)removeEntriesObject:(NSManagedObject *)value;
 - (void)addEntries:(NSSet *)values;
 - (void)removeEntries:(NSSet *)values;
+
+- (void)addTodosObject:(NSManagedObject *)value;
+- (void)removeTodosObject:(NSManagedObject *)value;
+- (void)addTodos:(NSSet *)values;
+- (void)removeTodos:(NSSet *)values;
 
 @end

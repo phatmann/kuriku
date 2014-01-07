@@ -15,6 +15,7 @@
 
 @dynamic name;
 @dynamic entries;
+@dynamic todos;
 
 - (void)createSampleItems {
     for (int importance = 0; importance <= TodoRangeMaxValue; ++importance) {

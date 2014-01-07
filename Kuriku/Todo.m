@@ -7,6 +7,7 @@
 //
 
 #import "Todo.h"
+#import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
 @interface Todo ()
@@ -33,10 +34,12 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic notes;
 @dynamic commitment;
 @dynamic entries;
+@dynamic journal;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
     self.createDate = [NSDate date];
+    self.journal = [Journal first];
 }
 
 - (void)willSave {
@@ -215,6 +218,14 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         [[IBCoreDataStore mainStore] setMetadataObject:today forKey:dailyUpdateKey];
         [[IBCoreDataStore mainStore] save];
     }
+}
+
++ (void)migrate {
+    for (Todo *todo in [Todo all]) {
+        
+    }
+    
+    [IBCoreDataStore save];
 }
 
 #pragma mark - Private

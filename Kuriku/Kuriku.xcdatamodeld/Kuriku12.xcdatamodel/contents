@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="0.12" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Entry" representedClassName="Entry" syncable="YES">
+        <attribute name="journalDateString" attributeType="String" syncable="YES"/>
+        <attribute name="status" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="timestamp" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="journal" maxCount="1" deletionRule="Nullify" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
+        <relationship name="todo" maxCount="1" deletionRule="Nullify" destinationEntity="Todo" inverseName="entries" inverseEntity="Todo" syncable="YES"/>
+    </entity>
+    <entity name="Journal" representedClassName="Journal" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="journal" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Todo" inverseName="journal" inverseEntity="Todo" syncable="YES"/>
+    </entity>
+    <entity name="Todo" representedClassName="Todo" syncable="YES">
+        <attribute name="commitment" attributeType="Integer 16" defaultValueString="2" syncable="YES"/>
+        <attribute name="createDate" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="holdDate" optional="YES" attributeType="Date" indexed="YES" elementID="holdDate" syncable="YES"/>
+        <attribute name="importance" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="lastEntryDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastEntryType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="priority" attributeType="Float" defaultValueString="0.0" indexed="YES" syncable="YES"/>
+        <attribute name="repeatDays" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="star" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" attributeType="String" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="urgency" attributeType="Integer 16" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="todo" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="journal" maxCount="1" deletionRule="Nullify" destinationEntity="Journal" inverseName="todos" inverseEntity="Journal" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Entry" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Journal" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Todo" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>

@@ -1,8 +1,7 @@
 Implement
 ---------
-* Decide about semantics of journal entry deletion or disallow
-* Way to view whole todo
-* Way to view entire note
+* Inline creation of todo
+* Indicate when todo has notes
 
 Bugs
 ----
@@ -37,6 +36,7 @@ Before shipping
 * Remove test data
 * Show helpful sample data
 * Graphics
+* Decide about semantics of journal entry deletion or disallow
 
 Tweaks
 ------
@@ -44,6 +44,8 @@ Tweaks
 * Tomorrow and Next Week buttons in Date picker
 * Colors for edit todo view values (e.g. gray Never)
 * Secondary sorts
+* Max todo height with ellipsis
+* Dismiss keyboard when edit view scrolled up
 
 Advanced Features
 -----------------
@@ -61,7 +63,6 @@ Advanced Features
 * Starred view
 * Todo estimated size
 * Task timer with duration in action entries
-* indicate when todo has notes
 * view notes
 * multi journals
 * Choose urgency window for due dates
