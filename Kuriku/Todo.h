@@ -51,7 +51,6 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSSet *entries;
 @property (nonatomic, strong) Journal *journal;
 
-@property (nonatomic, strong) NSDate *primitiveLastEntryDate;
 @property (nonatomic) NSNumber *primitiveLastEntryType;
 @property (nonatomic, strong) NSDate *primitiveHoldDate;
 

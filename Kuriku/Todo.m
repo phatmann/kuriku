@@ -25,8 +25,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic createDate;
 @dynamic dueDate;
 @dynamic holdDate, primitiveHoldDate;
-@dynamic lastEntryType, primitiveLastEntryType;
-@dynamic lastEntryDate, primitiveLastEntryDate;
+@dynamic primitiveLastEntryType;
+@dynamic lastEntryDate;
 @dynamic repeatDays;
 @dynamic priority;
 @dynamic star;
@@ -39,16 +39,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 - (void)awakeFromInsert {
     [super awakeFromInsert];
     self.createDate = [NSDate date];
+    [self createEntry:EntryTypeCreate];
     self.journal = [Journal first];
-}
-
-- (void)willSave {
-    if ([self isDeleted])
-        return;
-    
-    if (self.entries.count == 0) {
-        [self createEntry:self.isInserted ? EntryTypeCreate : EntryTypeReady];
-    }
 }
 
 - (void)didChangeValueForKey:(NSString *)key {
@@ -89,6 +81,14 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         }
     } else if ([key isEqualToString:@"holdDate"]) {
         self.status = self.holdDate ? TodoStatusHold : TodoStatusNormal;
+    }
+}
+
+- (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
+    if ([inKey isEqualToString:@"entries"]) {
+        if (self.entries.count == 0) {
+            [self createEntry:EntryTypeReady];
+        }
     }
 }
 
@@ -147,37 +147,13 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
-////////////////////////
-// TODO: remove these methods once tests are in place
-- (NSDate *)lastEntryDate {
-    NSDate *lastEntryDate = [self primitiveLastEntryDate];
-    
-    if (!lastEntryDate) {
-        lastEntryDate = self.lastEntry.timestamp;
-        self.lastEntryDate = lastEntryDate;
-    }
-    
-    return lastEntryDate;
-}
-
 - (EntryType)lastEntryType {
-    NSNumber *lastEntryTypeNumber = [self primitiveLastEntryType];
-    int lastEntryType;
-    
-    if (lastEntryTypeNumber) {
-        lastEntryType = [lastEntryTypeNumber intValue];
-    } else {
-        lastEntryType = self.lastEntry.type;
-        self.lastEntryType = lastEntryType;
-    }
-    
-    return lastEntryType;
+    return [[self primitiveLastEntryType] intValue];
 }
 
 - (void)setLastEntryType:(EntryType)lastEntryType {
     self.primitiveLastEntryType = @(lastEntryType);
 }
-////////////////////////
 
 - (Entry *)createEntry:(EntryType)type {
     if (type != EntryTypeCreate) {
@@ -187,7 +163,10 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     Entry *entry = [Entry create];
     entry.type = type;
-    entry.todo = self;
+    [self addEntriesObject:entry];
+    
+    self.lastEntryType = type;
+    self.lastEntryDate = entry.timestamp;
     
     return entry;
 }

@@ -26,7 +26,6 @@
     [IBCoreDataStore clearAllData];
     [Journal create];
     self.todo = [self createTodo];
-    [IBCoreDataStore save];
 }
 
 - (void)tearDown {
@@ -42,8 +41,6 @@
 
 - (void)test_insert_ready_entry_if_no_entries {
     [self.todo removeEntries:self.todo.entries];
-    self.todo.title = @"new title";
-    [IBCoreDataStore save];
     NSSet *entries = self.todo.entries;
     assertThatInteger(entries.count, equalToInteger(1));
     Entry *entry = [entries anyObject];
@@ -216,15 +213,21 @@
 }
 
 - (void)test_get_entries_by_date_after_changes {
-    
+    Entry *createEntry = [self.todo.entries anyObject];
+    Entry *entry1 = [self.todo createEntry:EntryTypeTakeAction];
+    assertThat(self.todo.entriesByDate, is(@[createEntry, entry1]));
+    Entry *entry2 = [self.todo createEntry:EntryTypeTakeAction];
+    assertThat(self.todo.entriesByDate, is(@[createEntry, entry1, entry2]));
 }
 
 - (void)test_get_last_entry_date {
-    
+    [self.todo createEntry:EntryTypeTakeAction];
+    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeTakeAction));
 }
 
 - (void)test_get_last_entry_type {
-    
+    Entry *entry = [self.todo createEntry:EntryTypeTakeAction];
+    assertThat(self.todo.lastEntryDate, is(entry.timestamp));
 }
 
 - (void)test_update_urgency_from_due_date {
