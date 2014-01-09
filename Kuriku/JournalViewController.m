@@ -115,6 +115,7 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Entry *entry = [self entryAtIndexPath:indexPath];
+        [entry.todo removeEntriesObject:entry];
         [entry destroy];
         [IBCoreDataStore save];
     }
