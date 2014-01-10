@@ -74,6 +74,20 @@
     [self.todo destroy];
     assertThatInteger([[Entry all] count], equalToInteger(0));
 }
+    
+- (void)test_can_save_a_new_todo_with_title {
+    assertThatBool([IBCoreDataStore save], equalToBool(YES));
+}
+    
+- (void)test_cannot_save_a_new_todo_without_title {
+    self.todo.title = nil;
+    assertThatBool([IBCoreDataStore save], equalToBool(NO));
+}
+    
+- (void)test_cannot_save_a_new_todo_with_blank_title {
+    self.todo.title = @"";
+    assertThatBool([IBCoreDataStore save], equalToBool(NO));
+}
 
 - (void)test_update_priority_when_importance_changes {
     float oldPriority = self.todo.priority;
@@ -259,12 +273,7 @@
 
 - (Todo *)createTodo {
     Todo *todo = [Todo create];
-
-    todo.title      = @"title";
-    todo.importance = TodoImportanceDefaultValue;
-    todo.urgency    = TodoUrgencyDefaultValue;
-    todo.commitment = TodoCommitmentDefaultValue;
-    
+    todo.title = @"title";
     return todo;
 }
 
