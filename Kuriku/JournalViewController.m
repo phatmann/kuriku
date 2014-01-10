@@ -23,6 +23,8 @@ typedef enum {
 @property (nonatomic) BOOL isAdding;
 @property (nonatomic) EntryCell *activeCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
+@property (strong, nonatomic) UIBarButtonItem *addButton;
+@property (strong, nonatomic) UIBarButtonItem *doneButton;
 
 @end
 
@@ -70,8 +72,15 @@ typedef enum {
 
 - (void)doneButtonTapped {
     self.activeCell.isEditing = NO;
-    self.navigationBarItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped)];
-    [IBCoreDataStore save];
+    self.isAdding = NO;
+    self.navigationBarItem.rightBarButtonItem = self.addButton;
+    
+    Todo *todo = self.activeCell.entry.todo;
+    
+    if (todo.title.length > 0)
+        [IBCoreDataStore save];
+    else
+        [todo destroy];
 }
 
 #pragma mark - Table View Delegate
@@ -79,7 +88,7 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     EntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EntryCell" forIndexPath:indexPath];
     cell.entry = [self entryAtIndexPath:indexPath];
-    cell.tableView = self.tableView;
+    cell.journalViewController = self;
     return cell;
 }
 
@@ -160,7 +169,13 @@ typedef enum {
     if (self.isAdding) {
         self.activeCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         self.activeCell.isEditing = YES;
-        self.navigationBarItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped)];
+        
+        if (!self.doneButton) {
+            self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped)];
+            self.addButton = self.navigationBarItem.rightBarButtonItem;
+        }
+        
+        self.navigationBarItem.rightBarButtonItem = self.doneButton;
     }
 }
 
@@ -169,6 +184,19 @@ typedef enum {
 
 - (void)todoWasEdited:(Todo *)todo {
     [self.tableView reloadData];
+}
+    
+#pragma Text View Delegate
+    
+- (void)textViewDidChange:(UITextView *)textView {
+    // TODO: share common code with EditTodoViewController
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    
+    CGRect caretRect = [textView caretRectForPosition:textView.selectedTextRange.start];
+    caretRect = [self.tableView convertRect:caretRect fromView:textView];
+    caretRect.size.height += 8;
+    [self.tableView scrollRectToVisible:caretRect animated:YES];
 }
 
 #pragma mark -

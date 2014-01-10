@@ -11,4 +11,6 @@
 
 @interface JournalViewController : ListViewController
 
+- (void)textViewDidChange:(UITextView *)textView;
+    
 @end

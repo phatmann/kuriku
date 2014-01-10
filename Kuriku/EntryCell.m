@@ -47,20 +47,12 @@
         [self.titleTextView resignFirstResponder];
     }
 }
+    
+#pragma Text View Delegate
 
 - (void)textViewDidChange:(UITextView *)textView {
-    // TODO: Yuck!!! Should not know about table view.
-    
     self.entry.todo.title = textView.text;
-    
-    // TODO: share common code with EditTodoViewController
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
-    
-    CGRect caretRect = [textView caretRectForPosition:textView.selectedTextRange.start];
-    caretRect = [self.tableView convertRect:caretRect fromView:textView];
-    caretRect.size.height += 8;
-    [self.tableView scrollRectToVisible:caretRect animated:YES];
+    [self.journalViewController textViewDidChange:textView];
 }
 
 @end

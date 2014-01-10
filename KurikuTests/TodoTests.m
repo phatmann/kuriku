@@ -69,6 +69,11 @@
     self.todo.status = TodoStatusHold;
     assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeHold));
 }
+    
+- (void)test_delete_all_entries_when_deleting_todo {
+    [self.todo destroy];
+    assertThatInteger([[Entry all] count], equalToInteger(0));
+}
 
 - (void)test_update_priority_when_importance_changes {
     float oldPriority = self.todo.priority;

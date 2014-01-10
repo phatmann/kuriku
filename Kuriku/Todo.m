@@ -87,6 +87,9 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 - (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
     [super didChangeValueForKey:inKey withSetMutation:inMutationKind usingObjects:inObjects];
     
+    if (self.isDeleted)
+        return;
+    
     if ([inKey isEqualToString:@"entries"]) {
         if (self.entries.count == 0) {
             [self createEntry:EntryTypeReady];

@@ -14,6 +14,6 @@
 
 @property (strong, nonatomic) Entry *entry;
 @property (nonatomic) BOOL isEditing;
-@property (weak, nonatomic) UITableView *tableView;
+@property (weak, nonatomic) JournalViewController *journalViewController;
 
 @end
