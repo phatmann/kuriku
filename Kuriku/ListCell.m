@@ -97,7 +97,7 @@
 }
 
 - (NSMutableAttributedString *)titleForTodo:(Todo *)todo {
-    if (!todo)
+    if (!todo || !todo.title)
         return nil;
     
     NSDictionary *attributes = @{};

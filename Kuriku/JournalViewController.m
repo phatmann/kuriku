@@ -19,11 +19,12 @@ typedef enum {
 
 @interface JournalViewController ()
 @property (nonatomic) Filter filter;
+@property (nonatomic) BOOL isAdding;
 @end
 
-@implementation JournalViewController
-
 #pragma mark -
+
+@implementation JournalViewController
     
 - (void)createFetchedResultsController {
     NSString *filter;
@@ -57,7 +58,16 @@ typedef enum {
     self.filter = filterChooser.selectedSegmentIndex;
     [self reloadData];
 }
-    
+
+- (IBAction)addButtonTapped {
+    [Todo create];
+    self.isAdding = YES;
+}
+
+- (void)doneButtonTapped {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped)];
+}
+
 #pragma mark - Table View Delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -136,6 +146,17 @@ typedef enum {
     return [tinyDateFormatter stringFromDate:date];
 }
 #endif
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [super controllerDidChangeContent:controller];
+    
+    if (self.isAdding) {
+        EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        cell.isEditing = YES;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(doneButtonTapped)];
+    }
+}
+
 
 #pragma mark - Edit Todo Controller Delegate
 

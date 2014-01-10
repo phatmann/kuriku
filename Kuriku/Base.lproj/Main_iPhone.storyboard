@@ -23,7 +23,7 @@
                                     <navigationItem title="Kuriku" id="9d1-2n-bCY">
                                         <barButtonItem key="rightBarButtonItem" title="Item" systemItem="add" id="dgr-MH-TP9">
                                             <connections>
-                                                <segue destination="lbM-R3-zXO" kind="modal" id="CTq-Xv-raM"/>
+                                                <action selector="addButtonTapped" destination="CZ4-MO-1fc" id="7jn-XH-QDc"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -728,10 +728,10 @@
             </objects>
             <point key="canvasLocation" x="2037" y="555"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Edit Todo Navigation Controller-->
         <scene sceneID="Nfv-gK-9C0">
             <objects>
-                <navigationController definesPresentationContext="YES" id="lbM-R3-zXO" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="lbM-R3-zXO" userLabel="Edit Todo Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kWq-na-iaD">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1051,7 +1051,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="sYx-iO-qXj"/>
+        <segue reference="bAK-oQ-oIW"/>
         <segue reference="gRM-kr-JnK"/>
     </inferredMetricsTieBreakers>
 </document>

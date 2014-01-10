@@ -13,5 +13,6 @@
 @interface EntryCell : ListCell
 
 @property (strong, nonatomic) Entry *entry;
+@property (nonatomic) BOOL isEditing;
 
 @end

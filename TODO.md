@@ -103,3 +103,22 @@ In Box
 * Hide urgency slider if due date is set
 * Show urgent maybe todos properly (or disallow)
 * Remove Pixate and use NUI or GRFancyText
+
+New Thoughts
+------------
+* Pinch to set importance
+* "Todos" -> "Radar"
+* Slide to set urgency, start date on one side, due date on other side
+* Urgency driven by due date or start date, or manual override
+* No start date == no commitment
+* Commitment icons: none (maybe), hollow star (must), filled in star (today), jogger (habit)
+* "Do again..." action adds completed action and sets start date via dialog
+* "Completed" action -> "Did it"
+* Can make a todo a "habit". Separate them to reduce noise.
+* Multiple journals chosen from nav bar
+* Journals are hierarchical, can use for projects
+* Show "i" accessory when editing to add a note, edit properties
+* When there is a note, show below todo, tap to edit
+* In Edit dialog mention gestures for each property
+
+

@@ -35,4 +35,16 @@
     self.holdDateLabel.text = (entry.status == EntryStatusHold) ? [self holdDateString:entry.todo.holdDate] : nil;
 }
 
+- (void)setIsEditing:(BOOL)isEditing {
+    if (isEditing) {
+        self.titleTextView.userInteractionEnabled = YES;
+        self.titleTextView.editable = YES;
+        [self.titleTextView becomeFirstResponder];
+    } else {
+        self.titleTextView.userInteractionEnabled = NO;
+        self.titleTextView.editable = NO;
+        [self.titleTextView resignFirstResponder];
+    }
+}
+
 @end
