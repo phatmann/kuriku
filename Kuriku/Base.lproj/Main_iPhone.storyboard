@@ -146,6 +146,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Journal" image="journal" id="u1e-5L-l1D"/>
                     <connections>
+                        <outlet property="navigationBarItem" destination="9d1-2n-bCY" id="dB6-4C-pWa"/>
                         <outlet property="tableView" destination="aKD-IV-7AV" id="NrM-gl-Iga"/>
                         <segue destination="lbM-R3-zXO" kind="modal" identifier="Edit todo" id="bAK-oQ-oIW"/>
                     </connections>

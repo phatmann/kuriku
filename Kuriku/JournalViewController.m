@@ -18,8 +18,12 @@ typedef enum {
 } Filter;
 
 @interface JournalViewController ()
+
 @property (nonatomic) Filter filter;
 @property (nonatomic) BOOL isAdding;
+@property (nonatomic) EntryCell *activeCell;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
+
 @end
 
 #pragma mark -
@@ -65,7 +69,9 @@ typedef enum {
 }
 
 - (void)doneButtonTapped {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped)];
+    self.activeCell.isEditing = NO;
+    self.navigationBarItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped)];
+    [IBCoreDataStore save];
 }
 
 #pragma mark - Table View Delegate
@@ -152,9 +158,9 @@ typedef enum {
     [super controllerDidChangeContent:controller];
     
     if (self.isAdding) {
-        EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        cell.isEditing = YES;
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(doneButtonTapped)];
+        self.activeCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        self.activeCell.isEditing = YES;
+        self.navigationBarItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped)];
     }
 }
 
