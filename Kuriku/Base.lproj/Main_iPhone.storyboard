@@ -94,7 +94,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <connections>
-                                                        <outlet property="delegate" destination="CZ4-MO-1fc" id="3iN-iz-Gve"/>
+                                                        <outlet property="delegate" destination="17P-5o-DvO" id="bqg-1Q-VdT"/>
                                                     </connections>
                                                 </textView>
                                             </subviews>

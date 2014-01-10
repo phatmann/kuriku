@@ -9,6 +9,7 @@
 #import "EntryCell.h"
 #import "Entry.h"
 #import "Todo.h"
+#import "JournalViewController.h"
 #import <InnerBand/InnerBand.h>
 #import <Pixate/Pixate.h>
 
@@ -45,6 +46,21 @@
         self.titleTextView.editable = NO;
         [self.titleTextView resignFirstResponder];
     }
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    // TODO: Yuck!!! Should not know about table view.
+    
+    self.entry.todo.title = textView.text;
+    
+    // TODO: share common code with EditTodoViewController
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    
+    CGRect caretRect = [textView caretRectForPosition:textView.selectedTextRange.start];
+    caretRect = [self.tableView convertRect:caretRect fromView:textView];
+    caretRect.size.height += 8;
+    [self.tableView scrollRectToVisible:caretRect animated:YES];
 }
 
 @end

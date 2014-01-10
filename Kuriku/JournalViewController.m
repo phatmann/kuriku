@@ -73,6 +73,7 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     EntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EntryCell" forIndexPath:indexPath];
     cell.entry = [self entryAtIndexPath:indexPath];
+    cell.tableView = self.tableView;
     return cell;
 }
 

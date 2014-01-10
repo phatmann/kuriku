@@ -8,11 +8,12 @@
 
 #import "ListCell.h"
 
-@class Entry;
+@class Entry, JournalViewController;
 
 @interface EntryCell : ListCell
 
 @property (strong, nonatomic) Entry *entry;
 @property (nonatomic) BOOL isEditing;
+@property (weak, nonatomic) UITableView *tableView;
 
 @end
