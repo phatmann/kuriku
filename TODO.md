@@ -6,6 +6,7 @@ Implement
 Bugs
 ----
 * Sometimes expanding text views makes table scroll bounce
+* Adding a new todo sometimes uses wrong color and text attributes (e.g. gray strikeout)
 
 Code
 ----
