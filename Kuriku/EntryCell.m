@@ -11,7 +11,7 @@
 #import "Todo.h"
 #import "JournalViewController.h"
 #import <InnerBand/InnerBand.h>
-#import <Pixate/Pixate.h>
+#import <NUI/UITextView+NUI.h>
 
 @interface EntryCell ()
 
@@ -30,7 +30,7 @@
     
     self.typeLabel.text = [self entryTypeString:entry.type];
     self.titleTextView.attributedText = [self titleForEntry:entry];
-    self.titleTextView.styleClass = [NSString stringWithFormat:@"entry %@", [self styleClassForEntry:entry]];
+    self.titleTextView.nuiClass = [NSString stringWithFormat:@"entry %@", [self styleClassForEntry:entry]];
     self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dueDateLabel.text = [self dueDateString:entry.todo.dueDate];
     self.holdDateLabel.text = (entry.status == EntryStatusHold) ? [self holdDateString:entry.todo.holdDate] : nil;

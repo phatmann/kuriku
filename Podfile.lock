@@ -1,25 +1,34 @@
 PODS:
+  - CoreParse (1.1)
   - InnerBand (1.0.7)
+  - NUI (0.4.0):
+    - CoreParse
   - OCHamcrest (3.0.1)
-  - Pixate (2.0.1)
   - SAMTextView (0.2.0)
   - TPKeyboardAvoiding (1.2.1)
 
 DEPENDENCIES:
+  - CoreParse (from `git@github.com:phatmann/CoreParse.git`, branch `pod`)
   - InnerBand (from `git@github.com:phatmann/InnerBand.git`)
+  - NUI (from `git@github.com:phatmann/nui.git`)
   - OCHamcrest
-  - Pixate
   - SAMTextView
   - TPKeyboardAvoiding
 
 EXTERNAL SOURCES:
+  CoreParse:
+    :branch: pod
+    :git: git@github.com:phatmann/CoreParse.git
   InnerBand:
     :git: git@github.com:phatmann/InnerBand.git
+  NUI:
+    :git: git@github.com:phatmann/nui.git
 
 SPEC CHECKSUMS:
+  CoreParse: c8da33c94916683f2448e3cbc51ced058aa68c45
   InnerBand: a1dce796b91d7e89035a03fbe0437f025ff0c9d1
+  NUI: 0921dd7f98a09c82d08930dae3c0f66d34c31048
   OCHamcrest: 782c52ae8c673e5d6060a65005cfd26d20d519ba
-  Pixate: b9d2c6301a0026de411772c5eb327a698d109c02
   SAMTextView: 3a18c24b6bbfb856ac6e519536b3eec27a2f2fb8
   TPKeyboardAvoiding: 0536c563e6c8b8e95a7c4bf87fca9c0991f5e826
 
