@@ -3,7 +3,7 @@
 
 
 Entry, Todo {
-    font-name: Avenir;
+    font-name: Helvetica;
     font-size: 25;
 }
 
@@ -52,14 +52,14 @@ TodoCommitmentMaybe {
 }
 
 TodoCommitmentToday {
-    font-name: Avenir-Bold;
+    font-name: Helvetica-Bold;
 }
 
 TodoStatusHold {
-    font-name: Avenir-Italic;
+    font-color: green;
 }
 
 EntryStatusClosed {
-    font-name: Avenir;
+    font-name: Helvetica;
     font-color: @gray-light;
 }
