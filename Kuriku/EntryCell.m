@@ -24,13 +24,12 @@
 
 @implementation EntryCell
 
-
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
     
     self.typeLabel.text = [self entryTypeString:entry.type];
     self.titleTextView.attributedText = [self titleForEntry:entry];
-    self.titleTextView.nuiClass = [NSString stringWithFormat:@"entry %@", [self styleClassForEntry:entry]];
+    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:entry]];
     self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dueDateLabel.text = [self dueDateString:entry.todo.dueDate];
     self.holdDateLabel.text = (entry.status == EntryStatusHold) ? [self holdDateString:entry.todo.holdDate] : nil;

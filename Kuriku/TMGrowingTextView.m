@@ -12,25 +12,31 @@
 
 - (id)init {
     self = [super init];
-    [self setup];
+    
+    if (self)
+        [self setup];
+        
     return self;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    [self setup];
+    if (self)
+        [self setup];
     return self;
 }
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
-    [self setup];
+    if (self)
+        [self setup];
     return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
     self = [super initWithFrame:frame textContainer:textContainer];
-    [self setup];
+    if (self)
+        [self setup];
     return self;
 }
 

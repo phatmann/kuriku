@@ -16,15 +16,7 @@
 		EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* ListViewController.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
 		EA43563618745EEA00200630 /* ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43563518745EEA00200630 /* ListCell.m */; };
-		EA43566A1874E11D00200630 /* base.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA43564F1874E11D00200630 /* base.scss */; };
-		EA43566B1874E11D00200630 /* buttons.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356501874E11D00200630 /* buttons.scss */; };
-		EA43566C1874E11D00200630 /* collections.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356511874E11D00200630 /* collections.scss */; };
-		EA43566D1874E11D00200630 /* default.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356521874E11D00200630 /* default.scss */; };
-		EA43566E1874E11D00200630 /* forms.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356531874E11D00200630 /* forms.scss */; };
-		EA43566F1874E11D00200630 /* icons.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356541874E11D00200630 /* icons.scss */; };
-		EA4356701874E11D00200630 /* tables.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356551874E11D00200630 /* tables.scss */; };
-		EA4356711874E11D00200630 /* type.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356561874E11D00200630 /* type.scss */; };
-		EA4356721874E11D00200630 /* variables.scss in Resources */ = {isa = PBXBuildFile; fileRef = EA4356571874E11D00200630 /* variables.scss */; };
+		EA7307311889F0F5008C8F39 /* Kuriku.nss in Resources */ = {isa = PBXBuildFile; fileRef = EA7307301889F0F5008C8F39 /* Kuriku.nss */; };
 		EA737BD8187676B6003A1BBE /* EntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD7187676B6003A1BBE /* EntryTests.m */; };
 		EA737BDA187676FD003A1BBE /* JournalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD9187676FD003A1BBE /* JournalTests.m */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
@@ -82,18 +74,10 @@
 		EA40F7A31873F7EF005DC6AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EA43563418745EEA00200630 /* ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListCell.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA43563518745EEA00200630 /* ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListCell.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
-		EA43564F1874E11D00200630 /* base.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = base.scss; sourceTree = "<group>"; };
-		EA4356501874E11D00200630 /* buttons.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = buttons.scss; sourceTree = "<group>"; };
-		EA4356511874E11D00200630 /* collections.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = collections.scss; sourceTree = "<group>"; };
-		EA4356521874E11D00200630 /* default.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = default.scss; sourceTree = "<group>"; };
-		EA4356531874E11D00200630 /* forms.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = forms.scss; sourceTree = "<group>"; };
-		EA4356541874E11D00200630 /* icons.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = icons.scss; sourceTree = "<group>"; };
-		EA4356551874E11D00200630 /* tables.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tables.scss; sourceTree = "<group>"; };
-		EA4356561874E11D00200630 /* type.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = type.scss; sourceTree = "<group>"; };
-		EA4356571874E11D00200630 /* variables.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = variables.scss; sourceTree = "<group>"; };
+		EA7307301889F0F5008C8F39 /* Kuriku.nss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Kuriku.nss; sourceTree = "<group>"; };
 		EA737BD7187676B6003A1BBE /* EntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryTests.m; sourceTree = "<group>"; };
 		EA737BD9187676FD003A1BBE /* JournalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalTests.m; sourceTree = "<group>"; };
-		EA8267C11880886900CC6DE3 /* Kuriku14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuriku14.xcdatamodel; sourceTree = "<group>"; };
+		EA8267C11880886900CC6DE3 /* Kuriku14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku14.xcdatamodel; sourceTree = "<group>"; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 		EA89E74F185C136400643266 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -234,23 +218,6 @@
 			name = Custom;
 			sourceTree = "<group>";
 		};
-		EA4356391874E11D00200630 /* Styles */ = {
-			isa = PBXGroup;
-			children = (
-				EA43564F1874E11D00200630 /* base.scss */,
-				EA4356501874E11D00200630 /* buttons.scss */,
-				EA4356511874E11D00200630 /* collections.scss */,
-				EA4356521874E11D00200630 /* default.scss */,
-				EA4356531874E11D00200630 /* forms.scss */,
-				EA4356541874E11D00200630 /* icons.scss */,
-				EA4356551874E11D00200630 /* tables.scss */,
-				EA4356561874E11D00200630 /* type.scss */,
-				EA4356571874E11D00200630 /* variables.scss */,
-			);
-			name = Styles;
-			path = scss;
-			sourceTree = "<group>";
-		};
 		EAAC95431858F7D400E8BAB5 = {
 			isa = PBXGroup;
 			children = (
@@ -297,10 +264,9 @@
 				EA10F1251860EDFF0084F6C8 /* View Controllers */,
 				EA20528B187AEBD700B8330B /* Custom */,
 				EA048CAB186083FF00990957 /* Data */,
-				EA4356391874E11D00200630 /* Styles */,
 				EAAC956D1858F7D400E8BAB5 /* Images.xcassets */,
 				EAAC95561858F7D400E8BAB5 /* Supporting Files */,
-				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
+				EA7307301889F0F5008C8F39 /* Kuriku.nss */,
 			);
 			path = Kuriku;
 			sourceTree = "<group>";
@@ -308,6 +274,7 @@
 		EAAC95561858F7D400E8BAB5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */,
 				EAAC95571858F7D400E8BAB5 /* Kuriku-Info.plist */,
 				EAAC95581858F7D400E8BAB5 /* InfoPlist.strings */,
 				EAAC955B1858F7D400E8BAB5 /* main.m */,
@@ -348,7 +315,6 @@
 				EAAC95491858F7D400E8BAB5 /* Frameworks */,
 				EAAC954A1858F7D400E8BAB5 /* Resources */,
 				EE0BFDFB17AB46F6826FCE76 /* Copy Pods Resources */,
-				EA4356731874E19300200630 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -418,20 +384,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA4356721874E11D00200630 /* variables.scss in Resources */,
 				EAAC95661858F7D400E8BAB5 /* Main_iPad.storyboard in Resources */,
-				EA43566C1874E11D00200630 /* collections.scss in Resources */,
-				EA43566A1874E11D00200630 /* base.scss in Resources */,
+				EA7307311889F0F5008C8F39 /* Kuriku.nss in Resources */,
 				EAAC956E1858F7D400E8BAB5 /* Images.xcassets in Resources */,
-				EA43566D1874E11D00200630 /* default.scss in Resources */,
 				EAAC95631858F7D400E8BAB5 /* Main_iPhone.storyboard in Resources */,
-				EA4356701874E11D00200630 /* tables.scss in Resources */,
-				EA4356711874E11D00200630 /* type.scss in Resources */,
 				EAAC955A1858F7D400E8BAB5 /* InfoPlist.strings in Resources */,
-				EA43566F1874E11D00200630 /* icons.scss in Resources */,
 				EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */,
-				EA43566B1874E11D00200630 /* buttons.scss in Resources */,
-				EA43566E1874E11D00200630 /* forms.scss in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,19 +448,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		EA4356731874E19300200630 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = ". ~/.bashrc\nsass ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/default.scss ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/default.css";
 		};
 		EE0BFDFB17AB46F6826FCE76 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -27,7 +27,7 @@
     _todo = todo;
     
     self.titleTextView.attributedText = [self titleForTodo:todo];
-    self.titleTextView.nuiClass = [NSString stringWithFormat:@"todo %@", [self styleClassForTodo:todo]];
+    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Todo:%@", [self styleClassForTodo:todo]];
     self.lastEntryDateLabel.text = [todo.lastEntryDate formattedDatePattern:@"M/d"];
     self.lastEntryTypeLabel.text = [self entryTypeString:todo.lastEntryType];
     self.dueDateLabel.text = [self dueDateString:todo.dueDate];

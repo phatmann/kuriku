@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "KurikuAppDelegate.h"
+#import <NUI/NUISettings.h>
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
+        [NUISettings initWithStylesheet:@"Kuriku"];
+        //[NUISettings setAutoUpdatePath:@"/path/to/Style.nss"];
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([KurikuAppDelegate class]));
     }
 }

@@ -1,6 +1,5 @@
 Implement
 ---------
-* Inline creation of todo
 * Indicate when todo has notes
 
 Bugs

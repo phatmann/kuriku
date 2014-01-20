@@ -43,57 +43,57 @@
 }
 
 - (NSString *)styleClassForTodo:(Todo *)todo {
-    NSString *statusClass, *commitmentClass;
+    NSString *status, *commitment;
     
     switch (todo.status) {
         case TodoStatusNormal:
-            statusClass = @"normal";
+            status = @"Normal";
             break;
             
         case TodoStatusCompleted:
-            statusClass = @"completed";
+            status = @"Completed";
             break;
             
         case TodoStatusHold:
-            statusClass = @"hold";
+            status = @"Hold";
             break;
     }
     
     switch (todo.commitment) {
         case TodoCommitmentMaybe:
-            commitmentClass = @"maybe";
+            commitment = @"Maybe";
             break;
             
         case TodoCommitmentMust:
-            commitmentClass = @"must";
+            commitment = @"Must";
             break;
             
         case TodoCommitmentToday:
-            commitmentClass =  @"today";
+            commitment = @"Today";
             break;
     }
     
-    return [NSString stringWithFormat:@"todo-urgency-%d todo-importance-%d todo-status-%@ todo-commitment-%@", todo.urgency, todo.importance, statusClass, commitmentClass];
+    return [NSString stringWithFormat:@"TodoUrgency%d:TodoImportance%d:TodoCommitment%@:TodoStatus%@", todo.urgency, todo.importance, commitment, status];
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
-    NSString *statusClass;
+    NSString *status;
     
     switch (entry.status) {
         case EntryStatusOpen:
-            statusClass = @"open";
+            status = @"Open";
             break;
             
         case EntryStatusClosed:
-            statusClass = @"closed";
+            status = @"Closed";
             break;
             
         case EntryStatusHold:
-            statusClass =  @"hold";
+            status =  @"Hold";
             break;
     }
     
-    return [NSString stringWithFormat:@"%@ entry-status-%@", [self styleClassForTodo:entry.todo], statusClass];
+    return [NSString stringWithFormat:@"%@:EntryStatus%@", [self styleClassForTodo:entry.todo], status];
 }
 
 - (NSMutableAttributedString *)titleForTodo:(Todo *)todo {

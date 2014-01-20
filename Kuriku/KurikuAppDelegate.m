@@ -8,13 +8,15 @@
 
 #import "KurikuAppDelegate.h"
 #import <InnerBand/InnerBand.h>
+#import <Nui/NUIAppearance.h>
+
 #import "Journal.h"
 #import "Todo.h"
 
 @implementation KurikuAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //[Todo migrate];
+    [NUIAppearance init];
     [Todo updateAllPrioritiesIfNeeded];
     
     Journal *journal = [Journal first];
@@ -22,7 +24,7 @@
     if (!journal) {
         journal = [Journal create];
         [[IBCoreDataStore mainStore] save];
-        //[journal createSampleItems];
+        [journal createSampleItems];
     }
     
     return YES;
