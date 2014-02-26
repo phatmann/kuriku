@@ -10,10 +10,13 @@
 #import "EditTodoViewController.h"
 #import "Todo.h"
 #import "Entry.h"
+#import "ListCell.h"
 #import "TMGrowingTextView.h"
 
 @interface ListViewController ()
 @property (strong, nonatomic) Todo *selectedTodo;
+@property (strong, nonatomic) NSIndexPath *pinchIndexPath;
+@property (nonatomic) int pinchInitialImportance;
 @end
 
 @implementation ListViewController
@@ -21,6 +24,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.estimatedRowHeight = 44;
+    
+    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewWasPinched:)];
+	[self.tableView addGestureRecognizer:pinchRecognizer];
+    
     [self reloadData];
 }
 
@@ -75,6 +82,43 @@
     sizingTextView.text = [[self todoAtIndexPath:indexPath ] title];
     CGFloat width = self.tableView.bounds.size.width - 60;
     return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 35;
+}
+
+
+
+- (void)tableViewWasPinched:(UIPinchGestureRecognizer *)pinchRecognizer {
+    if (pinchRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint pinchLocation = [pinchRecognizer locationInView:self.tableView];
+        self.pinchIndexPath = [self.tableView indexPathForRowAtPoint:pinchLocation];
+        Todo* todo =  [self todoAtIndexPath:self.pinchIndexPath];
+        self.pinchInitialImportance = todo.importance;
+        
+        [self updateImportanceForPinchScale:pinchRecognizer.scale];
+    }
+    else {
+        if (pinchRecognizer.state == UIGestureRecognizerStateChanged) {
+            [self updateImportanceForPinchScale:pinchRecognizer.scale];
+        }
+        else if ((pinchRecognizer.state == UIGestureRecognizerStateCancelled) || (pinchRecognizer.state == UIGestureRecognizerStateEnded)) {
+            self.pinchIndexPath = nil;
+            [self updateRowHeights];
+        }
+    }
+}
+
+- (void)updateRowHeights {
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
+- (void)updateImportanceForPinchScale:(CGFloat)scale {
+    
+    if (self.pinchIndexPath && (self.pinchIndexPath.section != NSNotFound) && (self.pinchIndexPath.row != NSNotFound)) {
+        Todo* todo =  [self todoAtIndexPath:self.pinchIndexPath];
+		todo.importance = round(MAX(0, MIN(TodoRangeMaxValue, self.pinchInitialImportance * scale)));
+        ListCell *cell = (ListCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
+        [cell refresh];
+    }
 }
 
 #pragma mark - Action Sheet Delegate

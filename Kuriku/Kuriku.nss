@@ -28,11 +28,11 @@ TodoUrgency4 {
 }
 
 TodoImportance0 {
-    font-size: 14;
+    font-size: 12;
 }
 
 TodoImportance1 {
-    font-size: 15;
+    font-size: 14;
 }
 
 TodoImportance2 {
@@ -40,11 +40,11 @@ TodoImportance2 {
 }
 
 TodoImportance3 {
-    font-size: 17;
+    font-size: 18;
 }
 
 TodoImportance4 {
-    font-size: 18;
+    font-size: 20;
 }
 
 TodoCommitmentMaybe {

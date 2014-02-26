@@ -25,13 +25,18 @@
 
 - (void)setTodo:(Todo *)todo {
     _todo = todo;
-    
-    self.titleTextView.attributedText = [self titleForTodo:todo];
-    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Todo:%@", [self styleClassForTodo:todo]];
-    self.lastEntryDateLabel.text = [todo.lastEntryDate formattedDatePattern:@"M/d"];
-    self.lastEntryTypeLabel.text = [self entryTypeString:todo.lastEntryType];
-    self.dueDateLabel.text = [self dueDateString:todo.dueDate];
-    self.holdDateLabel.text = [self holdDateString:todo.holdDate];
+    [self refresh];
+}
+
+- (void)refresh
+{
+    self.titleTextView.attributedText = [self titleForTodo:self.todo];
+    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Todo:%@", [self styleClassForTodo:self.todo]];
+    [self.titleTextView applyNUI];
+    self.lastEntryDateLabel.text = [self.todo.lastEntryDate formattedDatePattern:@"M/d"];
+    self.lastEntryTypeLabel.text = [self entryTypeString:self.todo.lastEntryType];
+    self.dueDateLabel.text = [self dueDateString:self.todo.dueDate];
+    self.holdDateLabel.text = [self holdDateString:self.todo.holdDate];
 }
 
 @end

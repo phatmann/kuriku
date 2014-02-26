@@ -26,14 +26,8 @@
 
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
-    
-    self.typeLabel.text = [self entryTypeString:entry.type];
-    self.titleTextView.attributedText = [self titleForEntry:entry];
-    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:entry]];
-    self.timeLabel.text = [entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
-    self.dueDateLabel.text = [self dueDateString:entry.todo.dueDate];
-    self.holdDateLabel.text = (entry.status == EntryStatusHold) ? [self holdDateString:entry.todo.holdDate] : nil;
-}
+    [self refresh];
+ }
 
 - (void)setIsEditing:(BOOL)isEditing {
     if (isEditing) {
@@ -45,6 +39,17 @@
         self.titleTextView.editable = NO;
         [self.titleTextView resignFirstResponder];
     }
+}
+
+- (void)refresh
+{
+    self.typeLabel.text = [self entryTypeString:self.entry.type];
+    self.titleTextView.attributedText = [self titleForEntry:self.entry];
+    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:self.entry]];
+    [self.titleTextView applyNUI];
+    self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
+    self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
+    self.holdDateLabel.text = (self.entry.status == EntryStatusHold) ? [self holdDateString:self.entry.todo.holdDate] : nil;
 }
     
 #pragma Text View Delegate

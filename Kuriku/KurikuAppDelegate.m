@@ -16,7 +16,7 @@
 @implementation KurikuAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [NUIAppearance init];
+    [NUISettings initWithStylesheet:@"Kuriku"];
     [Todo updateAllPrioritiesIfNeeded];
     
     Journal *journal = [Journal first];

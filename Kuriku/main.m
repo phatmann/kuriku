@@ -13,8 +13,6 @@
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        [NUISettings initWithStylesheet:@"Kuriku"];
-        //[NUISettings setAutoUpdatePath:@"/path/to/Style.nss"];
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([KurikuAppDelegate class]));
     }
 }

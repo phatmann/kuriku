@@ -19,5 +19,6 @@
 - (NSString *)styleClassForEntry:(Entry *)entry;
 - (NSMutableAttributedString *)titleForTodo:(Todo *)todo;
 - (NSMutableAttributedString *)titleForEntry:(Entry *)entry;
+- (void)refresh;
 
 @end

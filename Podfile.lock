@@ -1,11 +1,11 @@
 PODS:
   - CoreParse (1.1)
   - InnerBand (1.0.7)
-  - NUI (0.4.0):
+  - NUI (0.5.2):
     - CoreParse
   - OCHamcrest (3.0.1)
-  - SAMTextView (0.2.0)
-  - TPKeyboardAvoiding (1.2.1)
+  - SAMTextView (0.2.1)
+  - TPKeyboardAvoiding (1.2.3)
 
 DEPENDENCIES:
   - CoreParse (from `git@github.com:phatmann/CoreParse.git`, branch `pod`)
@@ -27,9 +27,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CoreParse: c8da33c94916683f2448e3cbc51ced058aa68c45
   InnerBand: a1dce796b91d7e89035a03fbe0437f025ff0c9d1
-  NUI: 0921dd7f98a09c82d08930dae3c0f66d34c31048
+  NUI: 5603608a1491035a15c980532ee7ad0b4bb9f5e1
   OCHamcrest: 782c52ae8c673e5d6060a65005cfd26d20d519ba
-  SAMTextView: 3a18c24b6bbfb856ac6e519536b3eec27a2f2fb8
-  TPKeyboardAvoiding: 0536c563e6c8b8e95a7c4bf87fca9c0991f5e826
+  SAMTextView: f0dae9662a7cc45e890eb2b24aa1769148ea2933
+  TPKeyboardAvoiding: 17995aaa6db26ac2a9fa8714a86509c5888f0392
 
 COCOAPODS: 0.29.0

@@ -12,6 +12,11 @@
 
 @implementation ListCell
 
+- (void)refresh
+{
+    // Subclasses override
+}
+
 - (NSString *)entryTypeString:(EntryType)type
 {
     switch (type) {
