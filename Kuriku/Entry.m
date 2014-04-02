@@ -67,10 +67,6 @@
 }
 
 + (void)migrate {
-    for (Entry *entry in [Entry all]) {
-        
-    }
-    
     [IBCoreDataStore save];
 }
 

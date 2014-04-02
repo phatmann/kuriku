@@ -15,13 +15,11 @@
 		EA20528A187AE04F00B8330B /* TMGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA205289187AE04F00B8330B /* TMGrowingTextView.m */; };
 		EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA35308C185F23C20024E7C9 /* ListViewController.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
-		EA43563618745EEA00200630 /* ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43563518745EEA00200630 /* ListCell.m */; };
 		EA7307311889F0F5008C8F39 /* Kuriku.nss in Resources */ = {isa = PBXBuildFile; fileRef = EA7307301889F0F5008C8F39 /* Kuriku.nss */; };
 		EA737BD8187676B6003A1BBE /* EntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD7187676B6003A1BBE /* EntryTests.m */; };
 		EA737BDA187676FD003A1BBE /* JournalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD9187676FD003A1BBE /* JournalTests.m */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
 		EA89E750185C136400643266 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA89E74F185C136400643266 /* CoreData.framework */; };
-		EA89E753185C15A300643266 /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E752185C15A300643266 /* TodoCell.m */; };
 		EAAC95501858F7D400E8BAB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC954F1858F7D400E8BAB5 /* Foundation.framework */; };
 		EAAC95521858F7D400E8BAB5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC95511858F7D400E8BAB5 /* CoreGraphics.framework */; };
 		EAAC95541858F7D400E8BAB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC95531858F7D400E8BAB5 /* UIKit.framework */; };
@@ -31,7 +29,6 @@
 		EAAC95631858F7D400E8BAB5 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAC95611858F7D400E8BAB5 /* Main_iPhone.storyboard */; };
 		EAAC95661858F7D400E8BAB5 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAC95641858F7D400E8BAB5 /* Main_iPad.storyboard */; };
 		EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC95681858F7D400E8BAB5 /* JournalViewController.m */; };
-		EAAC956C1858F7D400E8BAB5 /* TodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */; };
 		EAAC956E1858F7D400E8BAB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAAC956D1858F7D400E8BAB5 /* Images.xcassets */; };
 		EAAC95751858F7D400E8BAB5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC95741858F7D400E8BAB5 /* XCTest.framework */; };
 		EAAC95761858F7D400E8BAB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC954F1858F7D400E8BAB5 /* Foundation.framework */; };
@@ -72,8 +69,6 @@
 		EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatViewController.m; sourceTree = "<group>"; };
 		EA40F7A11873F7E9005DC6AA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		EA40F7A31873F7EF005DC6AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		EA43563418745EEA00200630 /* ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ListCell.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
-		EA43563518745EEA00200630 /* ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ListCell.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		EA7307301889F0F5008C8F39 /* Kuriku.nss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Kuriku.nss; sourceTree = "<group>"; };
 		EA737BD7187676B6003A1BBE /* EntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryTests.m; sourceTree = "<group>"; };
 		EA737BD9187676FD003A1BBE /* JournalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalTests.m; sourceTree = "<group>"; };
@@ -81,8 +76,6 @@
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 		EA89E74F185C136400643266 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		EA89E751185C15A300643266 /* TodoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoCell.h; sourceTree = "<group>"; };
-		EA89E752185C15A300643266 /* TodoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoCell.m; sourceTree = "<group>"; };
 		EAAC954C1858F7D400E8BAB5 /* Kuriku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kuriku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAAC954F1858F7D400E8BAB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EAAC95511858F7D400E8BAB5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -97,8 +90,6 @@
 		EAAC95651858F7D400E8BAB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		EAAC95671858F7D400E8BAB5 /* JournalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JournalViewController.h; sourceTree = "<group>"; };
 		EAAC95681858F7D400E8BAB5 /* JournalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JournalViewController.m; sourceTree = "<group>"; };
-		EAAC956A1858F7D400E8BAB5 /* TodoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodoViewController.h; sourceTree = "<group>"; };
-		EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoViewController.m; sourceTree = "<group>"; };
 		EAAC956D1858F7D400E8BAB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EAAC95731858F7D400E8BAB5 /* KurikuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KurikuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAAC95741858F7D400E8BAB5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -172,10 +163,6 @@
 			children = (
 				EA048CBE1860C93600990957 /* EntryCell.m */,
 				EA048CBD1860C92A00990957 /* EntryCell.h */,
-				EA43563418745EEA00200630 /* ListCell.h */,
-				EA43563518745EEA00200630 /* ListCell.m */,
-				EA89E752185C15A300643266 /* TodoCell.m */,
-				EA89E751185C15A300643266 /* TodoCell.h */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -197,8 +184,6 @@
 				EAAC95681858F7D400E8BAB5 /* JournalViewController.m */,
 				EA35308B185F23C20024E7C9 /* ListViewController.h */,
 				EA35308C185F23C20024E7C9 /* ListViewController.m */,
-				EAAC956A1858F7D400E8BAB5 /* TodoViewController.h */,
-				EAAC956B1858F7D400E8BAB5 /* TodoViewController.m */,
 				EA89E74C185C074600643266 /* EditTodoViewController.h */,
 				EA89E74D185C074600643266 /* EditTodoViewController.m */,
 				EABAAC92186B702D00F2FBE6 /* DatePickerViewController.h */,
@@ -352,7 +337,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = "";
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = 7Actions;
 				TargetAttributes = {
 					EAAC95721858F7D400E8BAB5 = {
@@ -471,14 +456,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA43563618745EEA00200630 /* ListCell.m in Sources */,
 				EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */,
-				EAAC956C1858F7D400E8BAB5 /* TodoViewController.m in Sources */,
 				EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */,
 				EAAC9591185936A300E8BAB5 /* Journal.m in Sources */,
 				EA35308D185F23C20024E7C9 /* ListViewController.m in Sources */,
 				EAAEEB1B187E1EE80098C4F0 /* Kuriku.xcdatamodeld in Sources */,
-				EA89E753185C15A300643266 /* TodoCell.m in Sources */,
 				EAAC9594185936A400E8BAB5 /* Entry.m in Sources */,
 				EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */,
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
@@ -550,7 +532,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -590,7 +571,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -652,7 +632,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8472E83811B44911987F73B3 /* Pods-KurikuTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Kuriku.app/Kuriku";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -676,7 +655,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8472E83811B44911987F73B3 /* Pods-KurikuTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Kuriku.app/Kuriku";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

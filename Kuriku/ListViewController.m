@@ -10,7 +10,7 @@
 #import "EditTodoViewController.h"
 #import "Todo.h"
 #import "Entry.h"
-#import "ListCell.h"
+#import "EntryCell.h"
 #import "TMGrowingTextView.h"
 
 @interface ListViewController ()
@@ -116,7 +116,7 @@
     if (self.pinchIndexPath && (self.pinchIndexPath.section != NSNotFound) && (self.pinchIndexPath.row != NSNotFound)) {
         Todo* todo =  [self todoAtIndexPath:self.pinchIndexPath];
 		todo.importance = round(MAX(0, MIN(TodoRangeMaxValue, self.pinchInitialImportance * scale)));
-        ListCell *cell = (ListCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
+        EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
         [cell refresh];
     }
 }
@@ -192,7 +192,7 @@
                          destructiveButtonTitle:nil
                               otherButtonTitles:completionActionName, @"Take action", @"Edit", nil];
     
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    [actionSheet showInView:self.view];
 }
 
 - (void)showEditTodoView:(Todo *)todo {

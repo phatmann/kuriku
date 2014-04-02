@@ -6,14 +6,23 @@
 //  Copyright (c) 2013 7Actions. All rights reserved.
 //
 
-#import "ListCell.h"
+#import "Entry.h"
 
-@class Entry, JournalViewController;
+@class JournalViewController;
 
-@interface EntryCell : ListCell
+@interface EntryCell : UITableViewCell
 
 @property (strong, nonatomic) Entry *entry;
 @property (nonatomic) BOOL isEditing;
 @property (weak, nonatomic) JournalViewController *journalViewController;
+
+- (NSString *)entryTypeString:(EntryType)type;
+- (NSString *)dueDateString:(NSDate *)dueDate;
+- (NSString *)holdDateString:(NSDate *)holdDate;
+- (NSString *)styleClassForTodo:(Todo *)todo;
+- (NSString *)styleClassForEntry:(Entry *)entry;
+- (NSMutableAttributedString *)titleForTodo:(Todo *)todo;
+- (NSMutableAttributedString *)titleForEntry:(Entry *)entry;
+- (void)refresh;
 
 @end

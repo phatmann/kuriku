@@ -206,10 +206,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 
 + (void)migrate {
-    for (Todo *todo in [Todo all]) {
-        
-    }
-    
     [IBCoreDataStore save];
 }
 

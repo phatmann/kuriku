@@ -1,11 +1,26 @@
-Implement
----------
-* Indicate when todo has notes
 
 Bugs
 ----
 * Sometimes expanding text views makes table scroll bounce
 * Adding a new todo sometimes uses wrong color and text attributes (e.g. gray strikeout)
+* Deleting new journal entry should delete todo
+
+Missing Features
+----------------
+* Provide a way to delete the todo
+
+
+
+
+
+
+
+PRE-JOURNAL-ONLY
+
+Implement
+---------
+* Indicate when todo has notes
+
 
 Code
 ----
