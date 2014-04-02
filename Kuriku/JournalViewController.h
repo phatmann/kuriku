@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ListViewController.h"
+#import <InnerBand/InnerBand.h>
+#import "EditTodoViewController.h"
 
-@interface JournalViewController : ListViewController
+@interface JournalViewController : UIViewController  <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, EditTodoViewControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 - (void)textViewDidChange:(UITextView *)textView;
-    
+- (void)reloadData;
+- (void)showTodoActionSheet:(Todo *)todo;
+- (void)showEditTodoView:(Todo *)todo;
+
 @end
