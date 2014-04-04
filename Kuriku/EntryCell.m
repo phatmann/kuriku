@@ -27,10 +27,10 @@
 - (NSString *)entryTypeString:(EntryType)type
 {
     switch (type) {
-        case EntryTypeCreate:
+        case EntryTypeNew:
             return @"NEW";
             
-        case EntryTypeTakeAction:
+        case EntryTypeAction:
             return @"ACTION";
             
         case EntryTypeComplete:
@@ -54,10 +54,10 @@
     return holdDate ? [NSString stringWithFormat:@"%@", [holdDate formattedDatePattern:@"M/d"]] : @"";
 }
 
-- (NSString *)styleClassForTodo:(Todo *)todo {
-    NSString *status, *commitment;
+- (NSString *)styleClassForEntry:(Entry *)entry {
+    NSString *state, *status, *commitment;
     
-    switch (todo.status) {
+    switch (entry.todo.status) {
         case TodoStatusNormal:
             status = @"Normal";
             break;
@@ -71,7 +71,7 @@
             break;
     }
     
-    switch (todo.commitment) {
+    switch (entry.todo.commitment) {
         case TodoCommitmentMaybe:
             commitment = @"Maybe";
             break;
@@ -84,54 +84,20 @@
             commitment = @"Today";
             break;
     }
-    
-    return [NSString stringWithFormat:@"TodoUrgency%d:TodoImportance%d:TodoCommitment%@:TodoStatus%@", todo.urgency, todo.importance, commitment, status];
-}
 
-- (NSString *)styleClassForEntry:(Entry *)entry {
-    NSString *status;
     
-    switch (entry.status) {
-        case EntryStatusOpen:
-            status = @"Open";
+    switch (entry.state) {
+        case EntryStateActive:
+            state = @"Active";
             break;
             
-        case EntryStatusClosed:
-            status = @"Closed";
-            break;
-            
-        case EntryStatusHold:
-            status =  @"Hold";
+        case EntryStateInactive:
+            state = @"Inactive";
             break;
     }
     
-    return [NSString stringWithFormat:@"%@:EntryStatus%@", [self styleClassForTodo:entry.todo], status];
+    return [NSString stringWithFormat:@"Urgency%d:Importance%d:Commitment%@:Status%@:State%@", entry.todo.urgency, entry.todo.importance, commitment, status, state];
 }
-
-- (NSMutableAttributedString *)titleForTodo:(Todo *)todo {
-    if (!todo || !todo.title)
-        return nil;
-    
-    NSDictionary *attributes = @{};
-    
-    if (todo.status == TodoStatusCompleted) {
-        attributes = @{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternSolid)};
-    }
-    
-    return [[NSMutableAttributedString alloc] initWithString:todo.title attributes:attributes];
-    
-}
-
-- (NSMutableAttributedString *)titleForEntry:(Entry *)entry {
-    NSMutableAttributedString *title = [self titleForTodo:entry.todo];
-    
-    if (entry.todo.status != TodoStatusCompleted && entry.status == EntryStatusClosed) {
-        [title addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle | NSUnderlinePatternSolid) range:NSMakeRange(0, title.length)];
-    }
-    
-    return title;
-}
-
 
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
@@ -153,12 +119,12 @@
 - (void)refresh
 {
     self.typeLabel.text = [self entryTypeString:self.entry.type];
-    self.titleTextView.attributedText = [self titleForEntry:self.entry];
+    self.titleTextView.text = self.entry.todo.title;
     self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:self.entry]];
     [self.titleTextView applyNUI];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
-    self.holdDateLabel.text = (self.entry.status == EntryStatusHold) ? [self holdDateString:self.entry.todo.holdDate] : nil;
+    self.holdDateLabel.text = (self.entry.type == EntryTypeHold) ? [self holdDateString:self.entry.todo.holdDate] : nil;
 }
     
 #pragma Text View Delegate

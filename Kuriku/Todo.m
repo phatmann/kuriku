@@ -39,7 +39,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 - (void)awakeFromInsert {
     [super awakeFromInsert];
     self.createDate = [NSDate date];
-    [self createEntry:EntryTypeCreate];
+    [self createEntry:EntryTypeNew];
     self.journal = [Journal first];
 }
 
@@ -161,9 +161,9 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 
 - (Entry *)createEntry:(EntryType)type {
-    if (type != EntryTypeCreate) {
+    if (type != EntryTypeNew) {
         Entry *lastEntry = [self.entriesByDate lastObject];
-        lastEntry.status = EntryStatusClosed;
+        lastEntry.state = EntryStateInactive;
     }
     
     Entry *entry = [Entry create];

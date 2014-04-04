@@ -24,7 +24,7 @@
     if (!journal) {
         journal = [Journal create];
         [[IBCoreDataStore mainStore] save];
-        [journal createSampleItems];
+        //[journal createSampleItems];
     }
     
     return YES;

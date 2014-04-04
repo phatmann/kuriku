@@ -1,65 +1,61 @@
-@gray-light: #D8D9DC;
-@blue: #0096D7;
-
-
-Entry, Todo {
+Entry {
     font-name: Helvetica;
-    font-size: 25;
+    xfont-size: 25;
 }
 
-TodoUrgency0 {
+Urgency0 {
     font-color: black;
 }
 
-TodoUrgency1 {
+Urgency1 {
     font-color: hsl(37.5, 1.0, 1.0);
 }
 
-TodoUrgency2 {
+Urgency2 {
     font-color: hsl(25, 1.0, 1.0);
 }
 
-TodoUrgency3 {
+Urgency3 {
     font-color: hsl(12.5, 1.0, 1.0);
 }
 
-TodoUrgency4 {
+Urgency4 {
     font-color: hsl(0, 1.0, 1.0);
 }
 
-TodoImportance0 {
+Importance0 {
     font-size: 12;
 }
 
-TodoImportance1 {
+Importance1 {
     font-size: 14;
 }
 
-TodoImportance2 {
+Importance2 {
     font-size: 16;
 }
 
-TodoImportance3 {
+Importance3 {
     font-size: 18;
 }
 
-TodoImportance4 {
+Importance4 {
     font-size: 20;
 }
 
-TodoCommitmentMaybe {
-    font-color: @blue;
+CommitmentMaybe {
+    font-name: Helvetica-Light;
 }
 
-TodoCommitmentToday {
+CommitmentToday {
     font-name: Helvetica-Bold;
 }
 
-TodoStatusHold {
-    font-color: green;
+StatusHold {
+    font-name: Helvetica-Oblique;
 }
 
-EntryStatusClosed {
+StateInactive {
     font-name: Helvetica;
-    font-color: @gray-light;
+    font-color: #D8D9DC;
 }

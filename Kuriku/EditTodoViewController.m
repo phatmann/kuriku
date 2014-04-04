@@ -82,7 +82,7 @@ enum {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UITableViewCell *cell = sender;
     
-    if ([segue.identifier isEqualToString:@"Choose date"]) {
+    if ([segue.identifier isEqualToString:@"Choose due date"] || [segue.identifier isEqualToString:@"Choose hold date"]) {
         DatePickerViewController *datePickerViewController = segue.destinationViewController;
         self.selectedDateLabel = (UILabel *)[cell viewWithTag:1];
         datePickerViewController.date = stringToDate(self.selectedDateLabel.text);

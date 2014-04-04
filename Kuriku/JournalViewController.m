@@ -149,10 +149,10 @@ typedef enum {
             filter = nil;
             break;
         case FilterActive:
-            filter = @"status = 0";
+            filter = @"state = 0";
             break;
         case FilterInactive:
-            filter = @"status != 0";
+            filter = @"state != 0";
             break;
     }
 
@@ -205,7 +205,7 @@ typedef enum {
         todo.status = (todo.status == TodoStatusCompleted) ? TodoStatusNormal : TodoStatusCompleted;
         [[IBCoreDataStore mainStore] save];
     } else if (buttonIndex == takeActionButtonIndex) {
-        [todo createEntry:EntryTypeTakeAction];
+        [todo createEntry:EntryTypeAction];
         [[IBCoreDataStore mainStore] save];
     } else if (buttonIndex == editButtonIndex) {
         [self showEditTodoView:todo];

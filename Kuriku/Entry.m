@@ -22,7 +22,7 @@
 @dynamic todo;
 @dynamic journal;
 @dynamic type;
-@dynamic status;
+@dynamic state;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
@@ -49,15 +49,11 @@
     } else if ([key isEqualToString:@"type"]) {
         switch (self.type) {
             case EntryTypeComplete:
-                self.status = EntryStatusClosed;
-                break;
-                
-            case EntryTypeHold:
-                self.status = EntryStatusHold;
+                self.state = EntryStateInactive;
                 break;
                 
             default:
-                self.status = EntryStatusOpen;
+                self.state = EntryStateActive;
         }
     }
 }

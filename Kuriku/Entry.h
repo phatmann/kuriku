@@ -12,23 +12,22 @@
 @class Journal, Todo;
 
 typedef enum {
-    EntryTypeCreate,
-    EntryTypeTakeAction,
+    EntryTypeNew,
+    EntryTypeAction,
     EntryTypeComplete,
     EntryTypeReady,
     EntryTypeHold
 } EntryType;
 
 typedef enum {
-    EntryStatusOpen,
-    EntryStatusClosed,
-    EntryStatusHold
-} EntryStatus;
+    EntryStateActive,
+    EntryStateInactive
+} EntryState;
 
 @interface Entry : NSManagedObject
 
 @property (nonatomic) int16_t type;
-@property (nonatomic) int16_t status;
+@property (nonatomic) int16_t state;
 @property (nonatomic, strong) Todo *todo;
 @property (nonatomic) NSString *journalDateString;
 @property (nonatomic, strong) NSDate *timestamp;

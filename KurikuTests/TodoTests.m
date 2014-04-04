@@ -36,7 +36,7 @@
     NSSet *entries = self.todo.entries;
     assertThatInteger(entries.count, equalToInteger(1));
     Entry *entry = [entries anyObject];
-    assertThatInteger(entry.type, equalToInteger(EntryTypeCreate));
+    assertThatInteger(entry.type, equalToInteger(EntryTypeNew));
 }
 
 - (void)test_insert_ready_entry_if_no_entries {
@@ -221,9 +221,9 @@
 - (void)test_get_entries_by_date {
     Entry *entry1 = [self.todo.entries anyObject];
     [NSThread sleepForTimeInterval:0.1];
-    Entry *entry2 = [self.todo createEntry:EntryTypeTakeAction];
+    Entry *entry2 = [self.todo createEntry:EntryTypeAction];
     [NSThread sleepForTimeInterval:0.1];
-    Entry *entry3 = [self.todo createEntry:EntryTypeTakeAction];
+    Entry *entry3 = [self.todo createEntry:EntryTypeAction];
     NSArray *entries = [self.todo entriesByDate];
     
     assertThat(entries[0], is(entry1));
@@ -233,19 +233,19 @@
 
 - (void)test_get_entries_by_date_after_changes {
     Entry *createEntry = [self.todo.entries anyObject];
-    Entry *entry1 = [self.todo createEntry:EntryTypeTakeAction];
+    Entry *entry1 = [self.todo createEntry:EntryTypeAction];
     assertThat(self.todo.entriesByDate, is(@[createEntry, entry1]));
-    Entry *entry2 = [self.todo createEntry:EntryTypeTakeAction];
+    Entry *entry2 = [self.todo createEntry:EntryTypeAction];
     assertThat(self.todo.entriesByDate, is(@[createEntry, entry1, entry2]));
 }
 
 - (void)test_get_last_entry_date {
-    [self.todo createEntry:EntryTypeTakeAction];
-    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeTakeAction));
+    [self.todo createEntry:EntryTypeAction];
+    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeAction));
 }
 
 - (void)test_get_last_entry_type {
-    Entry *entry = [self.todo createEntry:EntryTypeTakeAction];
+    Entry *entry = [self.todo createEntry:EntryTypeAction];
     assertThat(self.todo.lastEntryDate, is(entry.timestamp));
 }
 

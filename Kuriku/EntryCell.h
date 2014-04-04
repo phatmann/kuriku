@@ -16,13 +16,6 @@
 @property (nonatomic) BOOL isEditing;
 @property (weak, nonatomic) JournalViewController *journalViewController;
 
-- (NSString *)entryTypeString:(EntryType)type;
-- (NSString *)dueDateString:(NSDate *)dueDate;
-- (NSString *)holdDateString:(NSDate *)holdDate;
-- (NSString *)styleClassForTodo:(Todo *)todo;
-- (NSString *)styleClassForEntry:(Entry *)entry;
-- (NSMutableAttributedString *)titleForTodo:(Todo *)todo;
-- (NSMutableAttributedString *)titleForEntry:(Entry *)entry;
 - (void)refresh;
 
 @end
