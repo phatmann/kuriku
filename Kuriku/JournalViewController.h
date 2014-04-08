@@ -16,8 +16,5 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 - (void)textViewDidChange:(UITextView *)textView;
-- (void)reloadData;
-- (void)showTodoActionSheet:(Todo *)todo;
-- (void)showEditTodoView:(Todo *)todo;
 
 @end

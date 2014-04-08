@@ -21,7 +21,7 @@ typedef enum {
 
 @interface JournalViewController ()
 
-@property (strong, nonatomic) Todo *selectedTodo;
+@property (strong, nonatomic) Entry *selectedEntry;
 @property (strong, nonatomic) NSIndexPath *pinchIndexPath;
 @property (nonatomic) int pinchInitialImportance;
 @property (nonatomic) Filter filter;
@@ -30,6 +30,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 @property (strong, nonatomic) UIBarButtonItem *addButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
+@property (strong, nonatomic) UIActionSheet *todoActionSheet;
+@property (strong, nonatomic) UIActionSheet *deleteActionSheet;
 
 @end
 
@@ -124,17 +126,31 @@ typedef enum {
     }
 }
 
-- (void)showTodoActionSheet:(Todo *)todo {
-    self.selectedTodo = todo;
-    NSString *completionActionName = (todo.status == TodoStatusCompleted) ?  @"Unmark completed" : @"Mark completed";
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:nil
-                                  delegate:self
-                                  cancelButtonTitle:@"Cancel"
-                                  destructiveButtonTitle:nil
-                                  otherButtonTitles:completionActionName, @"Take action", @"Edit", nil];
+- (void)showTodoActionSheet:(Entry *)entry {
+    self.selectedEntry = entry;
+    NSString *completionActionName = (entry.todo.status == TodoStatusCompleted) ?  @"Unmark completed" : @"Mark completed";
     
-    [actionSheet showInView:self.view];
+    self.todoActionSheet = [[UIActionSheet alloc]
+                              initWithTitle:nil
+                              delegate:self
+                              cancelButtonTitle:@"Cancel"
+                              destructiveButtonTitle:nil
+                              otherButtonTitles:completionActionName, @"Take action", @"Edit", nil];
+    
+    [self.todoActionSheet showInView:self.view];
+}
+
+- (void)showDeleteActionSheet:(Entry *)entry {
+    self.selectedEntry = entry;
+    
+    self.deleteActionSheet = [[UIActionSheet alloc]
+                                initWithTitle:nil
+                                delegate:self
+                                cancelButtonTitle:@"Cancel"
+                                destructiveButtonTitle:@"Delete Todo"
+                                otherButtonTitles:@"Delete This Entry", nil];
+    
+    [self.deleteActionSheet showInView:self.view];
 }
 
 - (void)showEditTodoView:(Todo *)todo {
@@ -195,11 +211,19 @@ typedef enum {
 #pragma mark - Action Sheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSInteger markCompletedButtonIndex = actionSheet.firstOtherButtonIndex;
+    if (actionSheet == self.todoActionSheet) {
+        [self todoActionSheetButtonClicked:buttonIndex];
+    } else if (actionSheet == self.deleteActionSheet) {
+        [self deleteActionSheetButtonClicked:buttonIndex];
+    }
+}
+
+- (void)todoActionSheetButtonClicked:(NSInteger)buttonIndex {
+    NSInteger markCompletedButtonIndex = self.todoActionSheet.firstOtherButtonIndex;
     NSInteger takeActionButtonIndex    = markCompletedButtonIndex + 1;
     NSInteger editButtonIndex          = takeActionButtonIndex + 1;
     
-    Todo *todo = (Todo *)self.selectedTodo;
+    Todo *todo = self.selectedEntry.todo;
     
     if (buttonIndex == markCompletedButtonIndex) {
         todo.status = (todo.status == TodoStatusCompleted) ? TodoStatusNormal : TodoStatusCompleted;
@@ -211,6 +235,17 @@ typedef enum {
         [self showEditTodoView:todo];
     }
 }
+
+- (void)deleteActionSheetButtonClicked:(NSInteger)buttonIndex {
+    if (buttonIndex == self.deleteActionSheet.destructiveButtonIndex) {
+        [self.selectedEntry.todo destroy];
+    } else {
+        [self.selectedEntry.todo removeEntriesObject:self.selectedEntry];
+        [self.selectedEntry destroy];
+    }
+    
+    [IBCoreDataStore save];
+}   
 
 #pragma mark - Table View Delegate
 
@@ -249,8 +284,7 @@ typedef enum {
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    Entry *entry = [self entryAtIndexPath:indexPath];
-    [self showTodoActionSheet:entry.todo];
+    [self showTodoActionSheet:[self entryAtIndexPath:indexPath]];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -295,10 +329,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Entry *entry = [self entryAtIndexPath:indexPath];
-        [entry.todo removeEntriesObject:entry];
-        [entry destroy];
-        [IBCoreDataStore save];
+        [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
     }
 }
 

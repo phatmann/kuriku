@@ -2,12 +2,17 @@
 Bugs
 ----
 * Sometimes expanding text views makes table scroll bounce
-* Adding a new todo sometimes uses wrong color and text attributes (e.g. gray strikeout)
-* Deleting new journal entry should delete todo
+
+Deletion semantics
+------------------
+* Deleting only entry should delete the todo with no prompt
+* Deleting active entry should activate previous entry
+* Deleting NEW entry should delete Todo with no prompt
+* Deleting COMPLETED entry should make Todo ready and remove any COMPLETED or READY entries above it
+* Deleting READY entry should make Todo completed
 
 Missing Features
 ----------------
-* Provide a way to delete the todo
 
 
 
@@ -40,7 +45,6 @@ Testing
 Cosmetic
 --------
 * get rid of nav bar or make it worth it
-* icons for tab bar
 * warmer looking journal
 * replace entry type text with icon
 * complete entries should look different than closed
@@ -51,7 +55,6 @@ Before shipping
 * Remove test data
 * Show helpful sample data
 * Graphics
-* Decide about semantics of journal entry deletion or disallow
 
 Tweaks
 ------
@@ -117,7 +120,6 @@ In Box
 * Edit title field should use correct font based on settings
 * Hide urgency slider if due date is set
 * Show urgent maybe todos properly (or disallow)
-* Remove Pixate and use NUI or GRFancyText
 
 New Thoughts
 ------------
