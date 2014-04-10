@@ -5,7 +5,6 @@ Bugs
 
 Deletion semantics
 ------------------
-* Deleting only entry should delete the todo with no prompt
 * Deleting active entry should activate previous entry
 * Deleting NEW entry should delete Todo with no prompt
 * Deleting COMPLETED entry should make Todo ready and remove any COMPLETED or READY entries above it
@@ -13,11 +12,6 @@ Deletion semantics
 
 Missing Features
 ----------------
-
-
-
-
-
 
 
 PRE-JOURNAL-ONLY

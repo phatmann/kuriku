@@ -329,7 +329,13 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
+        Entry *entry = [self entryAtIndexPath:indexPath];
+        
+        if (entry.todo.entries.count > 1) {
+            [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
+        } else {
+            [entry.todo destroy];
+        }
     }
 }
 
