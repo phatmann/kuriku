@@ -13,6 +13,10 @@
 static const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
 static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
+@interface Todo ()
+@property (nonatomic, readwrite) int16_t status;
+@end
+
 @implementation Todo
 
 @dynamic title;
@@ -21,7 +25,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic createDate;
 @dynamic dueDate;
 @dynamic holdDate, primitiveHoldDate;
-@dynamic lastEntryDate, primitiveLastEntryType;
+@dynamic lastEntryDate;
+@dynamic primitiveLastEntryType;
 @dynamic repeatDays;
 @dynamic priority;
 @dynamic star;
@@ -45,29 +50,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"] || [key isEqualToString:@"commitment"]) {
         [self updatePriority];
     } else if ([key isEqualToString:@"status"]) {
-        switch (self.status) {
-            case TodoStatusNormal:
-                if (self.lastEntry.type != EntryTypeReady)
-                  [self createEntry:EntryTypeReady];
-                break;
-            case TodoStatusCompleted:
-                if (self.lastEntry.type != EntryTypeComplete)
-                    [self createEntry:EntryTypeComplete];
-                
-                if (self.repeatDays == 0) {
-                    self.status = TodoStatusNormal;
-                } else {
-                    if (self.repeatDays > 0) {
-                        self.holdDate = [[[NSDate date] dateByAddingDays:self.repeatDays] dateAtStartOfDay];
-                    }
-                }
-                break;
-            case TodoStatusHold:
-                if (self.lastEntry.type != EntryTypeComplete)
-                    [self createEntry:EntryTypeHold];
-                break;
-        }
-        
         if (self.status != TodoStatusHold && self.holdDate) {
             self.primitiveHoldDate = nil;
         }
@@ -109,22 +91,24 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         return;
     
     if ([inKey isEqualToString:@"entries"]) {
-        if (self.entries.count == 0) {
-            [self destroy];
-        } else if (inMutationKind == NSKeyValueMinusSetMutation) {
-            if (inObjects.count == 1) {
-                Entry *deletedEntry = [inObjects anyObject];
-                
-                switch (deletedEntry.type) {
-                    case EntryTypeNew:
-                        [self destroy];
-                        return;
-                    case EntryTypeComplete:
-                        self.primitiveStatus = @(TodoStatusNormal);
-                        break;
-                    case EntryTypeReady:
-                        self.primitiveStatus = @(TodoStatusCompleted);
-                        break;
+        if (inMutationKind == NSKeyValueMinusSetMutation) {
+            if (self.entries.count == 0) {
+                [self destroy];
+            } else {
+                if (inObjects.count == 1) {
+                    Entry *deletedEntry = [inObjects anyObject];
+                    
+                    switch (deletedEntry.type) {
+                        case EntryTypeNew:
+                            [self destroy];
+                            return;
+                        case EntryTypeComplete:
+                            self.primitiveStatus = @(TodoStatusNormal);
+                            break;
+                        case EntryTypeReady:
+                            self.primitiveStatus = @(TodoStatusCompleted);
+                            break;
+                    }
                 }
             }
         }
@@ -133,10 +117,19 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (void)willSave {
     [super willSave];
+    
     [self deleteObsoleteEntries];
     
-    if (self.lastEntry.state != EntryStateActive)
-        self.lastEntry.state = EntryStateActive;
+    Entry *lastEntry = self.lastEntry;
+    
+    if (self.lastEntryType != lastEntry.type)
+        self.lastEntryType = lastEntry.type;
+    
+    if (![self.lastEntryDate isEqualToDate:lastEntry.timestamp])
+        self.lastEntryDate = lastEntry.timestamp;
+    
+    [self updateStatusFromLastEntry];
+    [self activateLastEntry];
 }
 
 - (NSArray *)entriesByDate {
@@ -150,6 +143,42 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 
 #pragma mark -
+
+- (void)activateLastEntry {
+    if (self.lastEntry.state != EntryStateActive)
+        self.lastEntry.state = EntryStateActive;
+}
+
+- (void)updateStatusFromLastEntry {
+    switch (self.lastEntryType) {
+        case EntryTypeNew:
+        case EntryTypeAction:
+        case EntryTypeReady:
+            if (self.status != TodoStatusNormal)
+                self.status = TodoStatusNormal;
+            break;
+        case EntryTypeComplete:
+            if (self.status != TodoStatusCompleted) {
+                if (self.repeatDays == 0) {
+                    [self createEntry:EntryTypeReady];
+                    
+                    if (self.status != TodoStatusNormal)
+                        self.status = TodoStatusNormal;
+                } else {
+                    self.status = TodoStatusCompleted;
+                    
+                    if (self.repeatDays > 0)
+                        self.holdDate = [[[NSDate date] dateByAddingDays:self.repeatDays] dateAtStartOfDay];
+                }
+            }
+            
+            break;
+        case EntryTypeHold  :
+            if (self.status != TodoStatusHold)
+                self.status = TodoStatusHold;
+            break;
+    }
+}
 
 - (void)deleteObsoleteEntries {
     for (Entry *entry in [self.entries copy]) {
@@ -221,9 +250,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     entry.type = type;
     entry.todo = self;
     [self addEntriesObject:entry];
-    
-    self.lastEntryType = type;
-    self.lastEntryDate = entry.timestamp;
     
     return entry;
 }

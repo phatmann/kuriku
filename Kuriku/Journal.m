@@ -31,7 +31,8 @@
     todo.title      = @"Completed";
     todo.importance = TodoImportanceDefaultValue;
     todo.urgency    = TodoUrgencyDefaultValue;
-    todo.status     = TodoStatusCompleted;
+    
+    [todo createEntry:EntryTypeComplete];
     
     [[IBCoreDataStore mainStore] save];
 }

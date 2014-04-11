@@ -226,7 +226,7 @@ typedef enum {
     Todo *todo = self.selectedEntry.todo;
     
     if (buttonIndex == markCompletedButtonIndex) {
-        todo.status = (todo.status == TodoStatusCompleted) ? TodoStatusNormal : TodoStatusCompleted;
+        [todo createEntry:(todo.status == TodoStatusCompleted) ? EntryTypeReady : EntryTypeComplete];
         [[IBCoreDataStore mainStore] save];
     } else if (buttonIndex == takeActionButtonIndex) {
         [todo createEntry:EntryTypeAction];

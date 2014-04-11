@@ -2,10 +2,11 @@
 Bugs
 ----
 * Sometimes expanding text views makes table scroll bounce
+* Do not allow action on completed task
 
 Deletion semantics
 ------------------
-*
+
 Missing Features
 ----------------
 

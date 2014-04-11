@@ -39,34 +39,21 @@
     assertThatInteger(entry.type, equalToInteger(EntryTypeNew));
 }
 
-- (void)test_insert_ready_entry_when_status_changes_from_hold_to_normal {
-    self.todo.status = TodoStatusHold;
-    self.todo.status = TodoStatusNormal;
-    [IBCoreDataStore save];
-    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeReady));
-}
+//- (void)test_insert_ready_entry_when_status_changes_from_hold_to_normal {
+//    [self.todo createEntry:EntryTypeHold];
+//    [IBCoreDataStore save];
+//    
+//    self.todo.status = TodoStatusNormal;
+//    [IBCoreDataStore save];
+//    
+//    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeReady));
+//}
 
-- (void)test_insert_ready_entry_when_status_changes_from_completed_to_normal {
-    self.todo.status = TodoStatusCompleted;
-    [IBCoreDataStore save];
-    
-    self.todo.status = TodoStatusNormal;
-    [IBCoreDataStore save];
-    
-    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeReady));
-}
-
-- (void)test_insert_complete_entry_when_status_changes_to_completed {
-    self.todo.status = TodoStatusCompleted;
-    [IBCoreDataStore save];
-    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeComplete));
-}
-
-- (void)test_insert_hold_entry_when_status_changes_to_hold {
-    self.todo.status = TodoStatusHold;
-    [IBCoreDataStore save];
-    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeHold));
-}
+//- (void)test_insert_hold_entry_when_status_changes_to_hold {
+//    self.todo.status = TodoStatusHold;
+//    [IBCoreDataStore save];
+//    assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeHold));
+//}
 
 - (void)test_insert_new_entry_deactivates_previous_entry {
     Entry *entry1 = [self.todo.entries anyObject];
@@ -106,19 +93,21 @@
 }
 
 - (void)test_delete_last_completion_entry_readies_todo {
-    self.todo.status = TodoStatusCompleted;
-
-    [self.todo.lastEntry destroy];
+    Entry *completionEntry = [self.todo createEntry:EntryTypeComplete];
     [IBCoreDataStore save];
+    assertThatInt(self.todo.status, equalToInt(TodoStatusCompleted));
     
+    [completionEntry destroy];
+    [IBCoreDataStore save];
     assertThatInt(self.todo.status, equalToInt(TodoStatusNormal));
 }
 
 - (void)test_delete_any_completion_entry_readies_todo {
-    self.todo.status = TodoStatusCompleted;
-    Entry *completionEntry = self.todo.lastEntry;
+    Entry *completionEntry = [self.todo createEntry:EntryTypeComplete];
+    [IBCoreDataStore save];
     
-    self.todo.status = TodoStatusNormal;
+    [self.todo createEntry:EntryTypeReady];
+    [IBCoreDataStore save];
     
     [completionEntry destroy];
     [IBCoreDataStore save];
@@ -127,38 +116,61 @@
 }
 
 - (void)test_delete_completion_entry_deletes_subsequent_ready_and_completed_entries {
-    self.todo.status = TodoStatusCompleted;
-    Entry *completionEntry = self.todo.lastEntry;
-    self.todo.status = TodoStatusNormal;
-    [self.todo createEntry:EntryTypeAction];
-    self.todo.status = TodoStatusCompleted;
-    self.todo.status = TodoStatusNormal;
+    Entry *completionEntry = [self.todo createEntry:EntryTypeComplete];
     [IBCoreDataStore save];
+    
+    [self.todo createEntry:EntryTypeReady];
+    [IBCoreDataStore save];
+    
+    [self.todo createEntry:EntryTypeAction];
+    
+    [self.todo createEntry:EntryTypeComplete];
+    [IBCoreDataStore save];
+    
+    [self.todo createEntry:EntryTypeReady];
+    [IBCoreDataStore save];
+
     assertThatInt(self.todo.entries.count, equalToInt(6));
     [completionEntry destroy];
     [IBCoreDataStore save];
+    
     assertThatInt(self.todo.entries.count, equalToInt(2));
 }
 
 - (void)test_delete_ready_entry_completes_todo {
-    self.todo.status = TodoStatusCompleted;
-    self.todo.status = TodoStatusNormal;
+    [self.todo createEntry:EntryTypeComplete];
+    [IBCoreDataStore save];
+    
+    [self.todo createEntry:EntryTypeReady];
+    [IBCoreDataStore save];
+    
     [self.todo.lastEntry destroy];
     [IBCoreDataStore save];
+    
     assertThatInt(self.todo.status, equalToInt(TodoStatusCompleted));
 }
 
 - (void)test_delete_ready_entry_deletes_subsequent_ready_and_completion_entries {
-    self.todo.status = TodoStatusCompleted;
-    self.todo.status = TodoStatusNormal;
-    Entry *readyEntry = self.todo.lastEntry;
-    [self.todo createEntry:EntryTypeAction];
-    self.todo.status = TodoStatusCompleted;
-    self.todo.status = TodoStatusNormal;
+    [self.todo createEntry:EntryTypeComplete];
     [IBCoreDataStore save];
+    
+    Entry *readyEntry = [self.todo createEntry:EntryTypeReady];
+    [IBCoreDataStore save];
+    
+    [self.todo createEntry:EntryTypeAction];
+    [IBCoreDataStore save];
+    
+    [self.todo createEntry:EntryTypeComplete];
+    [IBCoreDataStore save];
+    
+    [self.todo createEntry:EntryTypeReady];
+    [IBCoreDataStore save];
+
     assertThatInt(self.todo.entries.count, equalToInt(6));
+    
     [readyEntry destroy];
     [IBCoreDataStore save];
+    
     assertThatInt(self.todo.entries.count, equalToInt(3));
 }
 
@@ -266,28 +278,30 @@
 
 - (void)test_set_status_to_normal_after_status_changes_to_completed_with_immediate_repeat {
     self.todo.repeatDays = 0;
-    self.todo.status = TodoStatusCompleted;
+    [self.todo createEntry:EntryTypeComplete];
     assertThatInteger(self.todo.status, equalToInteger(TodoStatusNormal));
 }
 
 - (void)test_does_not_set_status_to_normal_after_status_changes_to_completed_with_no_repeat {
     self.todo.repeatDays = -1;
-    self.todo.status = TodoStatusCompleted;
+    [self.todo createEntry:EntryTypeComplete];
+    [IBCoreDataStore save];
+    
     assertThatInteger(self.todo.status, equalToInteger(TodoStatusCompleted));
 }
 
-- (void)test_set_hold_date_when_status_changes_to_completed_with_repeat {
-    self.todo.repeatDays = 1;
-    self.todo.status = TodoStatusCompleted;
-    NSDate *oneDayFromToday = [[NSDate today] dateByAddingDays:1];
-    assertThat(self.todo.holdDate, is(oneDayFromToday));
-}
-
-- (void)test_clear_hold_date_when_status_changes_to_not_hold {
-    self.todo.holdDate = [[NSDate today] dateByAddingDays:1];
-    self.todo.status = TodoStatusNormal;
-    assertThat(self.todo.holdDate, is(nilValue()));
-}
+//- (void)test_set_hold_date_when_status_changes_to_completed_with_repeat {
+//    self.todo.repeatDays = 1;
+//    [self.todo createEntry:EntryTypeComplete];
+//    NSDate *oneDayFromToday = [[NSDate today] dateByAddingDays:1];
+//    assertThat(self.todo.holdDate, is(oneDayFromToday));
+//}
+//
+//- (void)test_clear_hold_date_when_status_changes_to_not_hold {
+//    self.todo.holdDate = [[NSDate today] dateByAddingDays:1];
+//    [self.todo createEntry:EntryTypeComplete];
+//    assertThat(self.todo.holdDate, is(nilValue()));
+//}
 
 - (void)test_update_urgency_when_due_date_changes {
     self.todo.dueDate = [NSDate today];

@@ -37,7 +37,7 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic) int16_t importance;
 @property (nonatomic) int16_t urgency;
-@property (nonatomic) int16_t status;
+@property (nonatomic, readonly) int16_t status;
 @property (nonatomic) float_t priority;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *dueDate;
