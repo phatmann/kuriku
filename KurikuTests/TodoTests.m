@@ -42,22 +42,29 @@
 - (void)test_insert_ready_entry_when_status_changes_from_hold_to_normal {
     self.todo.status = TodoStatusHold;
     self.todo.status = TodoStatusNormal;
+    [IBCoreDataStore save];
     assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeReady));
 }
 
 - (void)test_insert_ready_entry_when_status_changes_from_completed_to_normal {
     self.todo.status = TodoStatusCompleted;
+    [IBCoreDataStore save];
+    
     self.todo.status = TodoStatusNormal;
+    [IBCoreDataStore save];
+    
     assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeReady));
 }
 
 - (void)test_insert_complete_entry_when_status_changes_to_completed {
     self.todo.status = TodoStatusCompleted;
+    [IBCoreDataStore save];
     assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeComplete));
 }
 
 - (void)test_insert_hold_entry_when_status_changes_to_hold {
     self.todo.status = TodoStatusHold;
+    [IBCoreDataStore save];
     assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeHold));
 }
 
@@ -97,6 +104,64 @@
     [IBCoreDataStore save];
     assertThat(self.todo.managedObjectContext, nilValue());
 }
+
+- (void)test_delete_last_completion_entry_readies_todo {
+    self.todo.status = TodoStatusCompleted;
+
+    [self.todo.lastEntry destroy];
+    [IBCoreDataStore save];
+    
+    assertThatInt(self.todo.status, equalToInt(TodoStatusNormal));
+}
+
+- (void)test_delete_any_completion_entry_readies_todo {
+    self.todo.status = TodoStatusCompleted;
+    Entry *completionEntry = self.todo.lastEntry;
+    
+    self.todo.status = TodoStatusNormal;
+    
+    [completionEntry destroy];
+    [IBCoreDataStore save];
+    
+    assertThatInt(self.todo.status, equalToInt(TodoStatusNormal));
+}
+
+- (void)test_delete_completion_entry_deletes_subsequent_ready_and_completed_entries {
+    self.todo.status = TodoStatusCompleted;
+    Entry *completionEntry = self.todo.lastEntry;
+    self.todo.status = TodoStatusNormal;
+    [self.todo createEntry:EntryTypeAction];
+    self.todo.status = TodoStatusCompleted;
+    self.todo.status = TodoStatusNormal;
+    [IBCoreDataStore save];
+    assertThatInt(self.todo.entries.count, equalToInt(6));
+    [completionEntry destroy];
+    [IBCoreDataStore save];
+    assertThatInt(self.todo.entries.count, equalToInt(2));
+}
+
+- (void)test_delete_ready_entry_completes_todo {
+    self.todo.status = TodoStatusCompleted;
+    self.todo.status = TodoStatusNormal;
+    [self.todo.lastEntry destroy];
+    [IBCoreDataStore save];
+    assertThatInt(self.todo.status, equalToInt(TodoStatusCompleted));
+}
+
+- (void)test_delete_ready_entry_deletes_subsequent_ready_and_completion_entries {
+    self.todo.status = TodoStatusCompleted;
+    self.todo.status = TodoStatusNormal;
+    Entry *readyEntry = self.todo.lastEntry;
+    [self.todo createEntry:EntryTypeAction];
+    self.todo.status = TodoStatusCompleted;
+    self.todo.status = TodoStatusNormal;
+    [IBCoreDataStore save];
+    assertThatInt(self.todo.entries.count, equalToInt(6));
+    [readyEntry destroy];
+    [IBCoreDataStore save];
+    assertThatInt(self.todo.entries.count, equalToInt(3));
+}
+
 
 - (void)test_can_save_a_new_todo_with_title {
     assertThatBool([IBCoreDataStore save], equalToBool(YES));

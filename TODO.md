@@ -5,9 +5,7 @@ Bugs
 
 Deletion semantics
 ------------------
-* Deleting COMPLETED entry should make Todo ready and remove any COMPLETED or READY entries above it
-* Deleting READY entry should make Todo completed and remove any COMPLETED or READY entries above it
-
+*
 Missing Features
 ----------------
 

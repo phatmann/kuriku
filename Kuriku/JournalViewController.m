@@ -329,7 +329,7 @@ typedef enum {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Entry *entry = [self entryAtIndexPath:indexPath];
         
-        if (entry.type == EntryTypeNew || entry.todo.entries.count == 1) {
+        if (entry.type == EntryTypeNew) {
             [entry.todo destroy];
         } else {
             [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];

@@ -1,7 +1,10 @@
 PODS:
   - CoreParse (1.1)
   - InnerBand (1.0.7)
-  - NUI (0.5.2):
+  - KIF (3.0.1):
+    - KIF/XCTest
+  - KIF/XCTest (3.0.1)
+  - NUI (0.5.3):
     - CoreParse
   - OCHamcrest (3.0.1)
   - SAMTextView (0.2.1)
@@ -10,6 +13,7 @@ PODS:
 DEPENDENCIES:
   - CoreParse (from `git@github.com:phatmann/CoreParse.git`, branch `pod`)
   - InnerBand (from `git@github.com:phatmann/InnerBand.git`)
+  - KIF (from `git@github.com:kif-framework/KIF.git`)
   - NUI (from `git@github.com:phatmann/nui.git`)
   - OCHamcrest
   - SAMTextView
@@ -21,15 +25,18 @@ EXTERNAL SOURCES:
     :git: git@github.com:phatmann/CoreParse.git
   InnerBand:
     :git: git@github.com:phatmann/InnerBand.git
+  KIF:
+    :git: git@github.com:kif-framework/KIF.git
   NUI:
     :git: git@github.com:phatmann/nui.git
 
 SPEC CHECKSUMS:
   CoreParse: c8da33c94916683f2448e3cbc51ced058aa68c45
   InnerBand: a1dce796b91d7e89035a03fbe0437f025ff0c9d1
-  NUI: 5603608a1491035a15c980532ee7ad0b4bb9f5e1
+  KIF: c57e1904042662b561853c3c1bfa9f26c93dc1c1
+  NUI: 888ab639871c9c0bb7a64d08c204a1f97feb37d1
   OCHamcrest: 782c52ae8c673e5d6060a65005cfd26d20d519ba
   SAMTextView: f0dae9662a7cc45e890eb2b24aa1769148ea2933
   TPKeyboardAvoiding: 17995aaa6db26ac2a9fa8714a86509c5888f0392
 
-COCOAPODS: 0.29.0
+COCOAPODS: 0.31.1

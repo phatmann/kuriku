@@ -10,6 +10,7 @@ end
 
 target "KurikuTests" do
     pod "OCHamcrest"
+    pod "KIF", :git => 'git@github.com:kif-framework/KIF.git'
 end
 
 link_with 'Kuriku', 'KurikuTests'

@@ -10,10 +10,6 @@
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
-@interface Todo ()
-
-@end
-
 static const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
 static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
@@ -25,12 +21,11 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic createDate;
 @dynamic dueDate;
 @dynamic holdDate, primitiveHoldDate;
-@dynamic primitiveLastEntryType;
-@dynamic lastEntryDate;
+@dynamic lastEntryDate, primitiveLastEntryType;
 @dynamic repeatDays;
 @dynamic priority;
 @dynamic star;
-@dynamic status;
+@dynamic status, primitiveStatus;
 @dynamic notes;
 @dynamic commitment;
 @dynamic entries;
@@ -52,10 +47,12 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     } else if ([key isEqualToString:@"status"]) {
         switch (self.status) {
             case TodoStatusNormal:
-                [self createEntry:EntryTypeReady];
+                if (self.lastEntry.type != EntryTypeReady)
+                  [self createEntry:EntryTypeReady];
                 break;
             case TodoStatusCompleted:
-                [self createEntry:EntryTypeComplete];
+                if (self.lastEntry.type != EntryTypeComplete)
+                    [self createEntry:EntryTypeComplete];
                 
                 if (self.repeatDays == 0) {
                     self.status = TodoStatusNormal;
@@ -64,10 +61,10 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
                         self.holdDate = [[[NSDate date] dateByAddingDays:self.repeatDays] dateAtStartOfDay];
                     }
                 }
-
                 break;
             case TodoStatusHold:
-                [self createEntry:EntryTypeHold];
+                if (self.lastEntry.type != EntryTypeComplete)
+                    [self createEntry:EntryTypeHold];
                 break;
         }
         
@@ -85,6 +82,26 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
+- (void)willChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
+    [super willChangeValueForKey:inKey withSetMutation:inMutationKind usingObjects:inObjects];
+    
+    if (inMutationKind == NSKeyValueMinusSetMutation && inObjects.count == 1) {
+        Entry *deletedEntry = [inObjects anyObject];
+        
+        if (deletedEntry.state != EntryStateObsolete &&
+            (deletedEntry.type == EntryTypeComplete || deletedEntry.type == EntryTypeReady)) {
+            NSUInteger deletedEntryIndex = [self.entriesByDate indexOfObject:deletedEntry];
+            NSArray *entries = [self.entriesByDate subarrayWithRange:NSMakeRange(deletedEntryIndex + 1, self.entriesByDate.count - deletedEntryIndex - 1)];
+            
+            for (Entry *entry in entries) {
+                if (entry.type == EntryTypeComplete || entry.type == EntryTypeReady) {
+                    entry.state = EntryStateObsolete;
+                }
+            }
+        }
+    }
+}
+
 - (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
     [super didChangeValueForKey:inKey withSetMutation:inMutationKind usingObjects:inObjects];
     
@@ -95,17 +112,31 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         if (self.entries.count == 0) {
             [self destroy];
         } else if (inMutationKind == NSKeyValueMinusSetMutation) {
-            for (Entry *entry in inObjects) {
-                if (entry.type == EntryTypeNew) {
-                    [self destroy];
-                    return;
+            if (inObjects.count == 1) {
+                Entry *deletedEntry = [inObjects anyObject];
+                
+                switch (deletedEntry.type) {
+                    case EntryTypeNew:
+                        [self destroy];
+                        return;
+                    case EntryTypeComplete:
+                        self.primitiveStatus = @(TodoStatusNormal);
+                        break;
+                    case EntryTypeReady:
+                        self.primitiveStatus = @(TodoStatusCompleted);
+                        break;
                 }
             }
-            
-            if (self.lastEntry.state != EntryStateActive)
-                self.lastEntry.state = EntryStateActive;
         }
     }
+}
+
+- (void)willSave {
+    [super willSave];
+    [self deleteObsoleteEntries];
+    
+    if (self.lastEntry.state != EntryStateActive)
+        self.lastEntry.state = EntryStateActive;
 }
 
 - (NSArray *)entriesByDate {
@@ -119,6 +150,14 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 
 #pragma mark -
+
+- (void)deleteObsoleteEntries {
+    for (Entry *entry in [self.entries copy]) {
+        if (entry.state == EntryStateObsolete) {
+            [entry destroy];
+        }
+    }
+}
 
 + (void)updateAllPriorities {
     for (Todo *todo in [Todo all]) {

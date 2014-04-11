@@ -21,7 +21,8 @@ typedef enum {
 
 typedef enum {
     EntryStateActive,
-    EntryStateInactive
+    EntryStateInactive,
+    EntryStateObsolete
 } EntryState;
 
 @interface Entry : NSManagedObject
