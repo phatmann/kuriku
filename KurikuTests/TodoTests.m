@@ -59,7 +59,6 @@
     assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeReady));
 }
 
-
 - (void)test_insert_complete_entry_when_status_changes_to_completed {
     self.todo.status = TodoStatusCompleted;
     assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeComplete));
@@ -69,12 +68,29 @@
     self.todo.status = TodoStatusHold;
     assertThatInteger(self.todo.lastEntryType, equalToInteger(EntryTypeHold));
 }
+
+- (void)test_insert_new_entry_deactivates_previous_entry {
+    Entry *entry1 = [self.todo.entries anyObject];
+    assertThatInt(entry1.state, equalToInt(EntryStateActive));
+    
+    Entry *entry2 = [self.todo createEntry:EntryTypeAction];
+    assertThatInt(entry1.state, equalToInt(EntryStateInactive));
+    assertThatInt(entry2.state, equalToInt(EntryStateActive));
+}
     
 - (void)test_delete_all_entries_when_deleting_todo {
     [self.todo destroy];
     assertThatInteger([[Entry all] count], equalToInteger(0));
 }
-    
+
+- (void)test_delete_last_entry_activates_previous_entry {
+    Entry *entry1 = [self.todo.entries anyObject];
+    Entry *entry2 = [self.todo createEntry:EntryTypeAction];
+    [entry2 destroy];
+    [IBCoreDataStore save];
+    assertThatInt(entry1.state, equalToInt(EntryStateActive));
+}
+
 - (void)test_can_save_a_new_todo_with_title {
     assertThatBool([IBCoreDataStore save], equalToBool(YES));
 }

@@ -93,11 +93,15 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     if ([inKey isEqualToString:@"entries"]) {
         if (self.entries.count == 0) {
             [self createEntry:EntryTypeReady];
+        } else if (inMutationKind == NSKeyValueMinusSetMutation) {
+            if (self.lastEntry.state != EntryStateActive)
+                self.lastEntry.state = EntryStateActive;
         }
     }
 }
 
 - (NSArray *)entriesByDate {
+    // TODO: cache sorted entries
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
     return [self.entries sortedArrayUsingDescriptors:@[sortDescriptor]];
 }
