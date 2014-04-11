@@ -41,6 +41,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     self.createDate = [NSDate date];
     [self createEntry:EntryTypeNew];
     self.journal = [Journal first];
+    [self updatePriority];
 }
 
 - (void)didChangeValueForKey:(NSString *)key {

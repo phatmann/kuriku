@@ -107,6 +107,7 @@
 
 - (void)test_update_priority_when_importance_changes {
     float oldPriority = self.todo.priority;
+    assertThatFloat(oldPriority, isNot(equalToFloat(0)));
     self.todo.importance = 0;
     assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
 }
@@ -177,6 +178,10 @@
     Todo *todo2 = [self createTodo];
     float oldPriority1 = todo1.priority;
     float oldPriority2 = todo2.priority;
+    
+    assertThatFloat(oldPriority1, isNot(equalToFloat(0)));
+    assertThatFloat(oldPriority2, isNot(equalToFloat(0)));
+    
     todo1.priority = 0;
     todo2.priority = 0;
     
