@@ -323,18 +323,16 @@ typedef enum {
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleDelete;
-    //Entry *entry = [self entryAtIndexPath:indexPath];
-    //return entry.type == EntryTypeCreateTodo ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Entry *entry = [self entryAtIndexPath:indexPath];
         
-        if (entry.todo.entries.count > 1) {
-            [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
-        } else {
+        if (entry.type == EntryTypeNew || entry.todo.entries.count == 1) {
             [entry.todo destroy];
+        } else {
+            [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
         }
     }
 }

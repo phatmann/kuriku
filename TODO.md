@@ -5,10 +5,8 @@ Bugs
 
 Deletion semantics
 ------------------
-* Deleting active entry should activate previous entry
-* Deleting NEW entry should delete Todo with no prompt
 * Deleting COMPLETED entry should make Todo ready and remove any COMPLETED or READY entries above it
-* Deleting READY entry should make Todo completed
+* Deleting READY entry should make Todo completed and remove any COMPLETED or READY entries above it
 
 Missing Features
 ----------------

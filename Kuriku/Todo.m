@@ -93,8 +93,15 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     if ([inKey isEqualToString:@"entries"]) {
         if (self.entries.count == 0) {
-            [self createEntry:EntryTypeReady];
+            [self destroy];
         } else if (inMutationKind == NSKeyValueMinusSetMutation) {
+            for (Entry *entry in inObjects) {
+                if (entry.type == EntryTypeNew) {
+                    [self destroy];
+                    return;
+                }
+            }
+            
             if (self.lastEntry.state != EntryStateActive)
                 self.lastEntry.state = EntryStateActive;
         }

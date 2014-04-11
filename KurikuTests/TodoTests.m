@@ -39,14 +39,6 @@
     assertThatInteger(entry.type, equalToInteger(EntryTypeNew));
 }
 
-- (void)test_insert_ready_entry_if_no_entries {
-    [self.todo removeEntries:self.todo.entries];
-    NSSet *entries = self.todo.entries;
-    assertThatInteger(entries.count, equalToInteger(1));
-    Entry *entry = [entries anyObject];
-    assertThatInteger(entry.type, equalToInteger(EntryTypeReady));
-}
-
 - (void)test_insert_ready_entry_when_status_changes_from_hold_to_normal {
     self.todo.status = TodoStatusHold;
     self.todo.status = TodoStatusNormal;
@@ -83,12 +75,27 @@
     assertThatInteger([[Entry all] count], equalToInteger(0));
 }
 
+- (void)test_delete_todo_if_no_entries {
+    [self.todo removeEntries:self.todo.entries];
+    [IBCoreDataStore save];
+    assertThat(self.todo.managedObjectContext, nilValue());
+}
+
 - (void)test_delete_last_entry_activates_previous_entry {
     Entry *entry1 = [self.todo.entries anyObject];
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
     [entry2 destroy];
     [IBCoreDataStore save];
     assertThatInt(entry1.state, equalToInt(EntryStateActive));
+}
+
+- (void)test_delete_creation_entry_deletes_todo {
+    Entry *entry1 = [self.todo.entries anyObject];
+    [self.todo createEntry:EntryTypeAction];
+    [self.todo createEntry:EntryTypeAction];
+    [entry1 destroy];
+    [IBCoreDataStore save];
+    assertThat(self.todo.managedObjectContext, nilValue());
 }
 
 - (void)test_can_save_a_new_todo_with_title {
