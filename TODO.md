@@ -1,7 +1,6 @@
 
 Bugs
 -------------
-* Should add HOLD entry when startDate changes
 * Sometimes expanding text views makes table scroll bounce
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
