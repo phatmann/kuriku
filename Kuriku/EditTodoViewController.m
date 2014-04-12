@@ -249,7 +249,7 @@ int commitmentToChooserValue(TodoCommitment commitment) {
     }
 }
 
-TodoCommitment chooserValueToCommitment(int value) {
+TodoCommitment chooserValueToCommitment(NSInteger value) {
     switch (value) {
         case 0:
             return TodoCommitmentMaybe;

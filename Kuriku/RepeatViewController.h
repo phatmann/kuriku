@@ -18,7 +18,7 @@
 
 @interface RepeatViewController : UITableViewController
 
-@property (nonatomic) int days;
+@property (nonatomic) NSInteger days;
 @property (nonatomic, weak) id<RepeatViewControllerDelegate> delegate;
 
 @end

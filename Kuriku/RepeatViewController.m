@@ -29,7 +29,7 @@
         self.daysField.text = [@(self.days) stringValue];
 }
 
-- (void)setDays:(int)days {
+- (void)setDays:(NSInteger)days {
     _days = days;
     [self.delegate repeatViewControllerDaysChanged:self];
 }

@@ -185,7 +185,7 @@ typedef enum {
 }
 
 - (IBAction)filterChooserValueChanged:(UISegmentedControl *)filterChooser {
-    self.filter = filterChooser.selectedSegmentIndex;
+    self.filter = (Filter)filterChooser.selectedSegmentIndex;
     [self reloadData];
 }
 
