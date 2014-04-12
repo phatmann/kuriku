@@ -1,7 +1,6 @@
 
 Bugs
 -------------
-* Deletions not saved
 * Sometimes expanding text views makes table scroll bounce
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
@@ -9,7 +8,6 @@ Bugs
 Missing Features
 ----------------
 * Tap inactive task goes to active task
-* Visualize on hold
 
 New Thoughts
 ------------
