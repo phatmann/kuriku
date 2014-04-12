@@ -1,22 +1,38 @@
 
 Bugs
-----
+-------------
+* Deletions not saved
 * Sometimes expanding text views makes table scroll bounce
-* Do not allow action on completed task
-
-Deletion semantics
-------------------
+* Do not allow actions on completed task
+* Do not allow actions on inactive task
 
 Missing Features
 ----------------
+* Tap inactive task goes to active task
+* Visualize on hold
+
+New Thoughts
+------------
+* "Edit Todo" -> "Edit Entry"
+* Filter slider: show all -> hide inactive/pending -> show higher pri -> show highest pri
+* Pinch up/down to set importance, left/right for urgency
+* "Urgency" -> "glow"
+* Slide to set urgency, start date on one side, due date on other side
+* Urgency driven by due date (glow red) or start date (glow blue), or manual override
+* No start date == no commitment
+* Commitment icons: none (maybe), hollow star (must), filled in star (today), jogger (habit)
+* "Do again..." action adds completed action and sets start date via dialog
+* "Completed" action -> "Did it"
+* Can make a todo a "habit". Separate them to reduce noise.
+* Multiple journals chosen from nav bar
+* Journals are hierarchical, can use for projects
+* Show "i" accessory when editing to add a note, edit properties
+* When there is a note, show below todo, tap to edit
+* In Edit dialog mention gestures for each property
+* Show progress of todos by partial coloring, assume one action will complete and scale accordingly
 
 
 PRE-JOURNAL-ONLY
-
-Implement
----------
-* Indicate when todo has notes
-
 
 Code
 ----
@@ -35,7 +51,6 @@ Testing
 
 Cosmetic
 --------
-* get rid of nav bar or make it worth it
 * warmer looking journal
 * replace entry type text with icon
 * complete entries should look different than closed
@@ -49,10 +64,8 @@ Before shipping
 
 Tweaks
 ------
-* Show time in latest action date in Todo view
 * Tomorrow and Next Week buttons in Date picker
 * Colors for edit todo view values (e.g. gray Never)
-* Secondary sorts
 * Max todo height with ellipsis
 * Dismiss keyboard when edit view scrolled up
 
@@ -60,7 +73,6 @@ Advanced Features
 -----------------
 * Priority looks at lastActionDate
 * Customize UI: hide unused features, set value ranges, etc. Optimize real-time usage.
-* Stalled filter in Todo view
 * Archive completed entries
 * Inline editing
 * Landscape mode
@@ -96,37 +108,20 @@ Advanced Features
 
 In Box
 ------
-* replace tab bar
 * indicate stale actions
 * Autofocus: move pending todos to end of journal
 * Decide if all entries for completed todod should be crossed out
 * Sort up/down
 * Remember Todos filter setting
 * Consider star for Today items instead of bold
-* Consider segemented controls to replace sliders
+* Consider segmented controls to replace sliders
 * Consider more randomness in priority
-* Better term than Priority?
 * Commitment sort
 * Intl date format
 * Edit title field should use correct font based on settings
 * Hide urgency slider if due date is set
 * Show urgent maybe todos properly (or disallow)
 
-New Thoughts
-------------
-* Pinch to set importance
-* "Todos" -> "Radar"
-* Slide to set urgency, start date on one side, due date on other side
-* Urgency driven by due date or start date, or manual override
-* No start date == no commitment
-* Commitment icons: none (maybe), hollow star (must), filled in star (today), jogger (habit)
-* "Do again..." action adds completed action and sets start date via dialog
-* "Completed" action -> "Did it"
-* Can make a todo a "habit". Separate them to reduce noise.
-* Multiple journals chosen from nav bar
-* Journals are hierarchical, can use for projects
-* Show "i" accessory when editing to add a note, edit properties
-* When there is a note, show below todo, tap to edit
-* In Edit dialog mention gestures for each property
+
 
 
