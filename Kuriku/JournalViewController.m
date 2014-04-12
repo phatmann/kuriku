@@ -158,24 +158,23 @@ typedef enum {
 }
 
 - (void)createFetchedResultsController {
-    NSString *filter;
+    NSPredicate *predicate;
     
     switch (self.filter) {
         case FilterAll:
-            filter = nil;
+            predicate = nil;
             break;
         case FilterActive:
-            filter = @"state = 0";
+            predicate = [NSPredicate predicateWithFormat:@"state = %d AND (startDate = NULL OR startDate < %@)", EntryStateActive, [NSDate today]];
             break;
         case FilterInactive:
-            filter = @"state != 0";
+            predicate = [NSPredicate predicateWithFormat:@"state != %d OR (startDate != NULL AND startDate >= %@)", EntryStateActive, [NSDate today]];
             break;
     }
 
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    NSPredicate *predicate = filter ? [NSPredicate predicateWithFormat:filter] : nil;
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
