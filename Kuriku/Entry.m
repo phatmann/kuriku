@@ -23,6 +23,7 @@
 @dynamic journal;
 @dynamic type;
 @dynamic state;
+@dynamic holdDate;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];
@@ -43,10 +44,7 @@
 - (void)didChangeValueForKey:(NSString *)key {
     [super didChangeValueForKey:key];
     
-    if ([key isEqualToString:@"todo"]) {
-        self.todo.lastEntryDate = self.timestamp;
-        self.todo.lastEntryType = self.type;
-    } else if ([key isEqualToString:@"type"]) {
+    if ([key isEqualToString:@"type"]) {
         switch (self.type) {
             case EntryTypeComplete:
                 self.state = EntryStateInactive;

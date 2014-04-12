@@ -58,7 +58,7 @@ enum {
         self.importanceSlider.value                 = self.todo.importance;
         self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(self.todo.commitment);
         self.dueDateLabel.text                      = dateToString(self.todo.dueDate);
-        self.holdDateLabel.text                     = dateToString(self.todo.holdDate);
+        //self.holdDateLabel.text                     = dateToString(self.todo.holdDate);
         self.repeatLabel.text                       = daysToString(self.todo.repeatDays);
         self.notesField.text                        = self.todo.notes;
     } else {
@@ -110,11 +110,11 @@ enum {
     if (!datesEqual(self.todo.dueDate, dueDate))
         self.todo.dueDate = dueDate;
     
-    NSDate *holdDate = stringToDate(self.holdDateLabel.text);
+//    NSDate *holdDate = stringToDate(self.holdDateLabel.text);
     
-    if (!datesEqual(self.todo.holdDate, holdDate)) {
-        self.todo.holdDate = holdDate;
-    }
+//    if (!datesEqual(self.todo.holdDate, holdDate)) {
+//        self.todo.holdDate = holdDate;
+//    }
     
     if (!self.todo.dueDate)
         self.todo.urgency = self.urgencySlider.value;

@@ -13,12 +13,6 @@
 @class Journal;
 
 typedef enum {
-    TodoStatusNormal,
-    TodoStatusCompleted,
-    TodoStatusHold
-} TodoStatus;
-
-typedef enum {
     TodoCommitmentMaybe = 0,
     TodoCommitmentMust = 2,
     TodoCommitmentToday = 4
@@ -37,22 +31,14 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic) int16_t importance;
 @property (nonatomic) int16_t urgency;
-@property (nonatomic, readonly) int16_t status;
 @property (nonatomic) float_t priority;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *dueDate;
-@property (nonatomic, strong) NSDate *holdDate;
-@property (nonatomic) EntryType lastEntryType;
-@property (nonatomic, strong) NSDate *lastEntryDate;
-@property (nonatomic) BOOL star;
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic) int16_t repeatDays;
 @property (nonatomic) int16_t commitment;
 @property (nonatomic, strong) NSSet *entries;
 @property (nonatomic, strong) Journal *journal;
-@property (nonatomic) NSNumber *primitiveLastEntryType;
-@property (nonatomic) NSNumber *primitiveStatus;
-@property (nonatomic, strong) NSDate *primitiveHoldDate;
 
 @property (nonatomic, strong, readonly) NSArray *entriesByDate;
 

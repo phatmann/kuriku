@@ -128,7 +128,7 @@ typedef enum {
 
 - (void)showTodoActionSheet:(Entry *)entry {
     self.selectedEntry = entry;
-    NSString *completionActionName = (entry.todo.status == TodoStatusCompleted) ?  @"Unmark completed" : @"Mark completed";
+    NSString *completionActionName = (entry.todo.lastEntry.type == EntryTypeComplete) ?  @"Unmark completed" : @"Mark completed";
     
     self.todoActionSheet = [[UIActionSheet alloc]
                               initWithTitle:nil
@@ -226,7 +226,7 @@ typedef enum {
     Todo *todo = self.selectedEntry.todo;
     
     if (buttonIndex == markCompletedButtonIndex) {
-        [todo createEntry:(todo.status == TodoStatusCompleted) ? EntryTypeReady : EntryTypeComplete];
+        [todo createEntry:(todo.lastEntry.type == EntryTypeComplete) ? EntryTypeReady : EntryTypeComplete];
         [[IBCoreDataStore mainStore] save];
     } else if (buttonIndex == takeActionButtonIndex) {
         [todo createEntry:EntryTypeAction];

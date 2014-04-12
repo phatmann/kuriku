@@ -57,16 +57,17 @@
 - (NSString *)styleClassForEntry:(Entry *)entry {
     NSString *state, *status, *commitment;
     
-    switch (entry.todo.status) {
-        case TodoStatusNormal:
+    switch (entry.type) {
+        case EntryTypeNew:
+        case EntryTypeReady:
             status = @"Normal";
             break;
             
-        case TodoStatusCompleted:
+        case EntryTypeComplete:
             status = @"Completed";
             break;
             
-        case TodoStatusHold:
+        case EntryTypeHold:
             status = @"Hold";
             break;
     }
@@ -124,7 +125,7 @@
     [self.titleTextView applyNUI];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
-    self.holdDateLabel.text = (self.entry.type == EntryTypeHold) ? [self holdDateString:self.entry.todo.holdDate] : nil;
+    //self.holdDateLabel.text = (self.entry.type == EntryTypeHold) ? [self holdDateString:self.entry.todo.holdDate] : nil;
 }
     
 #pragma Text View Delegate

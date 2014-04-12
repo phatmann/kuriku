@@ -13,10 +13,6 @@
 static const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
 static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
-@interface Todo ()
-@property (nonatomic, readwrite) int16_t status;
-@end
-
 @implementation Todo
 
 @dynamic title;
@@ -24,13 +20,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic urgency;
 @dynamic createDate;
 @dynamic dueDate;
-@dynamic holdDate, primitiveHoldDate;
-@dynamic lastEntryDate;
-@dynamic primitiveLastEntryType;
 @dynamic repeatDays;
 @dynamic priority;
-@dynamic star;
-@dynamic status, primitiveStatus;
 @dynamic notes;
 @dynamic commitment;
 @dynamic entries;
@@ -49,18 +40,12 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"] || [key isEqualToString:@"commitment"]) {
         [self updatePriority];
-    } else if ([key isEqualToString:@"status"]) {
-        if (self.status != TodoStatusHold && self.holdDate) {
-            self.primitiveHoldDate = nil;
-        }
     } else if ([key isEqualToString:@"dueDate"]) {
         if (self.dueDate) {
             [self updateUrgencyFromDueDate];
         } else {
             self.urgency = 0;
         }
-    } else if ([key isEqualToString:@"holdDate"]) {
-        self.status = self.holdDate ? TodoStatusHold : TodoStatusNormal;
     }
 }
 
@@ -95,19 +80,10 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
             if (self.entries.count == 0) {
                 [self destroy];
             } else {
-                if (inObjects.count == 1) {
-                    Entry *deletedEntry = [inObjects anyObject];
-                    
-                    switch (deletedEntry.type) {
-                        case EntryTypeNew:
-                            [self destroy];
-                            return;
-                        case EntryTypeComplete:
-                            self.primitiveStatus = @(TodoStatusNormal);
-                            break;
-                        case EntryTypeReady:
-                            self.primitiveStatus = @(TodoStatusCompleted);
-                            break;
+                for (Entry *entry in inObjects) {
+                    if (entry.type == EntryTypeNew) {
+                        [self destroy];
+                        break;
                     }
                 }
             }
@@ -117,18 +93,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (void)willSave {
     [super willSave];
-    
     [self deleteObsoleteEntries];
-    
-    Entry *lastEntry = self.lastEntry;
-    
-    if (self.lastEntryType != lastEntry.type)
-        self.lastEntryType = lastEntry.type;
-    
-    if (![self.lastEntryDate isEqualToDate:lastEntry.timestamp])
-        self.lastEntryDate = lastEntry.timestamp;
-    
-    [self updateStatusFromLastEntry];
     [self activateLastEntry];
 }
 
@@ -149,36 +114,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         self.lastEntry.state = EntryStateActive;
 }
 
-- (void)updateStatusFromLastEntry {
-    switch (self.lastEntryType) {
-        case EntryTypeNew:
-        case EntryTypeAction:
-        case EntryTypeReady:
-            if (self.status != TodoStatusNormal)
-                self.status = TodoStatusNormal;
-            break;
-        case EntryTypeComplete:
-            if (self.status != TodoStatusCompleted) {
-                if (self.repeatDays == 0) {
-                    [self createEntry:EntryTypeReady];
-                    
-                    if (self.status != TodoStatusNormal)
-                        self.status = TodoStatusNormal;
-                } else {
-                    self.status = TodoStatusCompleted;
-                    
-                    if (self.repeatDays > 0)
-                        self.holdDate = [[[NSDate date] dateByAddingDays:self.repeatDays] dateAtStartOfDay];
-                }
-            }
-            
-            break;
-        case EntryTypeHold  :
-            if (self.status != TodoStatusHold)
-                self.status = TodoStatusHold;
-            break;
-    }
-}
 
 - (void)deleteObsoleteEntries {
     for (Entry *entry in [self.entries copy]) {
@@ -196,22 +131,12 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 + (void)updateAllUrgenciesFromDueDate {
     NSDate *dateUrgentDaysFromNow = [NSDate dateWithTimeIntervalSinceNow:kSecondsInDay * kUrgentDaysBeforeDueDate];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@ AND status = %d", dateUrgentDaysFromNow, TodoStatusNormal];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@", dateUrgentDaysFromNow];
     NSArray *todos = [Todo allForPredicate:predicate];
     
     for (Todo *todo in todos) {
-        [todo updateUrgencyFromDueDate];
-    }
-    
-    [IBCoreDataStore save];
-}
-
-+ (void)updateAllStatusesFromHoldDate {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"holdDate != NULL AND holdDate <= %@", [NSDate today]];
-    NSArray *todos = [Todo allForPredicate:predicate];
-    
-    for (Todo *todo in todos) {
-        todo.holdDate = nil;
+        if (todo.lastEntry.type != EntryTypeHold && todo.lastEntry.type != EntryTypeComplete)
+            [todo updateUrgencyFromDueDate];
     }
     
     [IBCoreDataStore save];
@@ -230,14 +155,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     } else {
         return ((kUrgentDaysBeforeDueDate - daysUntilDue) *  TodoRangeMaxValue) / kUrgentDaysBeforeDueDate;
     }
-}
-
-- (EntryType)lastEntryType {
-    return [[self primitiveLastEntryType] intValue];
-}
-
-- (void)setLastEntryType:(EntryType)lastEntryType {
-    self.primitiveLastEntryType = @(lastEntryType);
 }
 
 - (Entry *)createEntry:(EntryType)type {
@@ -275,7 +192,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     if (!updateDate || ![updateDate isSameDay:today]) {
         [self updateAllUrgenciesFromDueDate];
-        [self updateAllStatusesFromHoldDate];
         
         [[IBCoreDataStore mainStore] setMetadataObject:today forKey:dailyUpdateKey];
         [[IBCoreDataStore mainStore] save];
