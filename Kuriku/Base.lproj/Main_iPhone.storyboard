@@ -74,7 +74,7 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8b-SE-R1L" userLabel="Hold Date">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8b-SE-R1L" userLabel="Start Date">
                                                     <rect key="frame" x="57" y="4" width="30" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -108,7 +108,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dueDateLabel" destination="DaY-QM-H8E" id="6sr-Ls-fqh"/>
-                                            <outlet property="holdDateLabel" destination="i8b-SE-R1L" id="WrO-LJ-tEu"/>
+                                            <outlet property="startDateLabel" destination="i8b-SE-R1L" id="YVu-6f-jZl"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
                                             <outlet property="titleTextView" destination="wJy-G4-VdD" id="HkB-1m-qm6"/>
                                             <outlet property="typeLabel" destination="naT-or-Sdq" id="zea-a3-RMM"/>
@@ -361,22 +361,22 @@
                             </tableViewSection>
                             <tableViewSection id="pXU-Lu-iuU" userLabel="Schedule Section">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="QRZ-fZ-JLE" userLabel="Hold Date Cell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="QRZ-fZ-JLE" userLabel="Start Date Cell">
                                         <rect key="frame" x="0.0" y="379" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QRZ-fZ-JLE" id="n0c-OY-ddy">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold Until" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mu-by-zII">
-                                                    <rect key="frame" x="20" y="11" width="76" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mu-by-zII" userLabel="Start Label">
+                                                    <rect key="frame" x="20" y="11" width="78" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oo-fx-j6Q" userLabel="Hold Date">
-                                                    <rect key="frame" x="253" y="12" width="34" height="20"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oo-fx-j6Q" userLabel="Start Date">
+                                                    <rect key="frame" x="248" y="12" width="39" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -394,45 +394,12 @@
                                             <segue destination="khI-gR-KO2" kind="push" identifier="Choose hold date" id="pyG-uA-QCx"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Cui-iE-yer" userLabel="Repeat Cell">
-                                        <rect key="frame" x="0.0" y="423" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cui-iE-yer" id="8u7-ic-K8P">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repeat" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzj-Y1-Wde">
-                                                    <rect key="frame" x="20" y="11" width="55" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Never" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Slr-Ta-Goj" userLabel="Repeat">
-                                                    <rect key="frame" x="244" y="12" width="43" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="xzj-Y1-Wde" secondAttribute="centerY" id="ERJ-Jw-DfK"/>
-                                                <constraint firstItem="xzj-Y1-Wde" firstAttribute="leading" secondItem="8u7-ic-K8P" secondAttribute="leading" constant="20" symbolic="YES" id="Fcz-nH-YrO"/>
-                                                <constraint firstItem="Slr-Ta-Goj" firstAttribute="baseline" secondItem="xzj-Y1-Wde" secondAttribute="baseline" id="Sux-qB-OgT"/>
-                                                <constraint firstAttribute="trailing" secondItem="Slr-Ta-Goj" secondAttribute="trailing" id="kHl-vl-tjq"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="AxI-bI-YAl" kind="push" identifier="Choose repeat" id="j1j-xX-53D"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="pWe-gC-4Gp" userLabel="Notes Section">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="200" id="OHr-kk-VQ1" userLabel="Notes Cell">
-                                        <rect key="frame" x="0.0" y="487" width="320" height="200"/>
+                                        <rect key="frame" x="0.0" y="443" width="320" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OHr-kk-VQ1" id="nNG-Wm-jWb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
@@ -488,10 +455,9 @@
                     <connections>
                         <outlet property="commitmentChooser" destination="A4F-gL-aaT" id="I84-6I-T6e"/>
                         <outlet property="dueDateLabel" destination="jsp-N7-hPg" id="JgU-cI-bdj"/>
-                        <outlet property="holdDateLabel" destination="4oo-fx-j6Q" id="Ale-RV-pmh"/>
                         <outlet property="importanceSlider" destination="xqf-QQ-XLX" id="ONL-sg-Kzo"/>
                         <outlet property="notesField" destination="c0S-lQ-ReJ" id="IH5-5J-IOS"/>
-                        <outlet property="repeatLabel" destination="Slr-Ta-Goj" id="oyh-uu-jVs"/>
+                        <outlet property="startDateLabel" destination="4oo-fx-j6Q" id="HpP-v0-Cru"/>
                         <outlet property="titleField" destination="WgV-aG-XgD" id="YXv-z7-f99"/>
                         <outlet property="urgencyLabel" destination="WUe-Kk-FGj" id="Qnd-Bb-RQb"/>
                         <outlet property="urgencySlider" destination="TRa-yE-wfk" id="Z3w-pL-qK8"/>
@@ -519,7 +485,7 @@
         <!--Repeat View Controller-->
         <scene sceneID="kyU-gN-bo1">
             <objects>
-                <tableViewController id="AxI-bI-YAl" customClass="RepeatViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="repeatViewController" id="AxI-bI-YAl" customClass="RepeatViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Jhs-lK-qNQ" userLabel="Table View" customClass="TPKeyboardAvoidingTableView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -528,7 +494,7 @@
                             <tableViewSection headerTitle="After completing the todo, repeat:" id="Eq8-Rs-Dcu">
                                 <cells>
                                     <tableViewCell tag="-1" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="DPB-95-xHh" userLabel="Never">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DPB-95-xHh" id="yvb-2N-oV5">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -545,7 +511,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="kKz-W4-5TG" userLabel="Immediately">
-                                        <rect key="frame" x="0.0" y="130" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kKz-W4-5TG" id="3Br-ol-xcr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -562,7 +528,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell tag="1" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9nC-Rk-2W5" userLabel="Day">
-                                        <rect key="frame" x="0.0" y="174" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="110" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9nC-Rk-2W5" id="OIb-og-wg5">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -579,7 +545,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell tag="7" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1Mf-tt-Uhp" userLabel="Week">
-                                        <rect key="frame" x="0.0" y="218" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="154" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Mf-tt-Uhp" id="tsg-mI-3Kd">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -596,7 +562,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell tag="30" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9At-sS-JOt" userLabel="Month">
-                                        <rect key="frame" x="0.0" y="262" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="198" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9At-sS-JOt" id="8PO-fP-UB0">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -613,7 +579,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell tag="365" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="LiL-Vv-hnl" userLabel="Year">
-                                        <rect key="frame" x="0.0" y="306" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="242" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LiL-Vv-hnl" id="dmc-si-VEF">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -630,7 +596,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell tag="-2" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="doJ-Wj-11o" userLabel="Custom">
-                                        <rect key="frame" x="0.0" y="350" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="286" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="doJ-Wj-11o" id="0r3-d3-dKj">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>

@@ -23,7 +23,7 @@
 @dynamic journal;
 @dynamic type;
 @dynamic state;
-@dynamic holdDate;
+@dynamic startDate;
 
 - (void)awakeFromInsert {
     [super awakeFromInsert];

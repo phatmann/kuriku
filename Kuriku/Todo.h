@@ -35,7 +35,6 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *dueDate;
 @property (nonatomic, strong) NSString *notes;
-@property (nonatomic) int16_t repeatDays;
 @property (nonatomic) int16_t commitment;
 @property (nonatomic, strong) NSSet *entries;
 @property (nonatomic, strong) Journal *journal;

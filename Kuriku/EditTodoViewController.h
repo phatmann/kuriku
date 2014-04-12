@@ -18,7 +18,7 @@
 
 @end
 
-@interface EditTodoViewController : UITableViewController<DatePickerViewControllerDelegate, RepeatViewControllerDelegate>
+@interface EditTodoViewController : UITableViewController<DatePickerViewControllerDelegate>
 
 @property (strong, nonatomic) Todo *todo;
 @property (weak, nonatomic) id<EditTodoViewControllerDelegate> delegate;

@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *holdDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
 @end
 
 @implementation EntryCell
@@ -50,8 +50,8 @@
     return dueDate ? [NSString stringWithFormat:@"DUE %@", [dueDate formattedDatePattern:@"M/d"]] : @"";
 }
 
-- (NSString *)holdDateString:(NSDate *)holdDate {
-    return holdDate ? [NSString stringWithFormat:@"%@", [holdDate formattedDatePattern:@"M/d"]] : @"";
+- (NSString *)startDateString:(NSDate *)startDate {
+    return startDate ? [NSString stringWithFormat:@"%@", [startDate formattedDatePattern:@"M/d"]] : @"";
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
@@ -125,7 +125,7 @@
     [self.titleTextView applyNUI];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
-    //self.holdDateLabel.text = (self.entry.type == EntryTypeHold) ? [self holdDateString:self.entry.todo.holdDate] : nil;
+    self.startDateLabel.text = self.entry.startDate ? [self startDateString:self.entry.startDate] : nil;
 }
     
 #pragma Text View Delegate

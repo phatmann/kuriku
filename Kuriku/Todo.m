@@ -20,7 +20,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic urgency;
 @dynamic createDate;
 @dynamic dueDate;
-@dynamic repeatDays;
 @dynamic priority;
 @dynamic notes;
 @dynamic commitment;

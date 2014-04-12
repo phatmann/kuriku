@@ -19,9 +19,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *holdDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *urgencyLabel;
-@property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
 
 @property (weak, nonatomic) UILabel *selectedDateLabel;
 
@@ -58,8 +57,7 @@ enum {
         self.importanceSlider.value                 = self.todo.importance;
         self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(self.todo.commitment);
         self.dueDateLabel.text                      = dateToString(self.todo.dueDate);
-        //self.holdDateLabel.text                     = dateToString(self.todo.holdDate);
-        self.repeatLabel.text                       = daysToString(self.todo.repeatDays);
+        self.startDateLabel.text                    = dateToString(self.todo.lastEntry.startDate);
         self.notesField.text                        = self.todo.notes;
     } else {
         self.navigationItem.title = @"New Todo";
@@ -69,8 +67,7 @@ enum {
         self.importanceSlider.value                 = TodoImportanceDefaultValue;
         self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(TodoCommitmentDefaultValue);
         self.dueDateLabel.text                      = NoDateString;
-        self.holdDateLabel.text                     = NoDateString;
-        self.repeatLabel.text                       = NoDaysString;
+        self.startDateLabel.text                    = NoDateString;
         self.notesField.text                        = nil;
         
         [self.titleField becomeFirstResponder];
@@ -87,10 +84,6 @@ enum {
         self.selectedDateLabel = (UILabel *)[cell viewWithTag:1];
         datePickerViewController.date = stringToDate(self.selectedDateLabel.text);
         datePickerViewController.delegate = self;
-    } else if ([segue.identifier isEqualToString:@"Choose repeat"]) {
-        RepeatViewController *repeatViewController = segue.destinationViewController;
-        repeatViewController.days = stringToDays(self.repeatLabel.text);
-        repeatViewController.delegate = self;
     }
 }
     
@@ -110,11 +103,11 @@ enum {
     if (!datesEqual(self.todo.dueDate, dueDate))
         self.todo.dueDate = dueDate;
     
-//    NSDate *holdDate = stringToDate(self.holdDateLabel.text);
-    
-//    if (!datesEqual(self.todo.holdDate, holdDate)) {
-//        self.todo.holdDate = holdDate;
-//    }
+    NSDate *startDate = stringToDate(self.startDateLabel.text);
+
+    if (!datesEqual(self.todo.lastEntry.startDate, startDate)) {
+        self.todo.lastEntry.startDate = startDate;
+    }
     
     if (!self.todo.dueDate)
         self.todo.urgency = self.urgencySlider.value;
@@ -123,7 +116,6 @@ enum {
     self.todo.importance = self.importanceSlider.value;
     self.todo.commitment = chooserValueToCommitment(self.commitmentChooser.selectedSegmentIndex);
     self.todo.notes      = self.notesField.text;
-    self.todo.repeatDays = stringToDays(self.repeatLabel.text);
     
     [[IBCoreDataStore mainStore] save];
     [self.delegate todoWasEdited:self.todo];
@@ -147,12 +139,6 @@ enum {
             [self updateControls];
         }
     }
-}
-
-#pragma mark - Repeat View Controller Delegate
-
-- (void)repeatViewControllerDaysChanged:(RepeatViewController *)repeatViewController {
-    self.repeatLabel.text = daysToString(repeatViewController.days);
 }
 
 #pragma mark - Table View Delegate
