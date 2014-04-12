@@ -237,6 +237,24 @@
     assertThatFloat(todo2.priority, equalToFloat(oldPriority2));
 }
 
+- (void)test_update_todos_ready_to_start {
+    Todo *todo = self.todo;
+    Entry *entry = [todo createEntry:EntryTypeHold];
+    entry.startDate = [NSDate today];
+    
+    Todo *todo2 = [self createTodo];
+    entry = [todo2 createEntry:EntryTypeHold];
+    entry.startDate = [[NSDate today] dateByAddingDays:1];
+    
+    Todo *todo3 = [self createTodo];
+    
+    [Todo updateTodosReadyToStart];
+    
+    assertThatInt(todo.lastEntry.type, equalToInt(EntryTypeReady));
+    assertThatInt(todo2.lastEntry.type, equalToInt(EntryTypeHold));
+    assertThatInt(todo3.lastEntry.type, equalToInt(EntryTypeNew));
+}
+
 - (void)test_update_urgency_when_due_date_changes {
     self.todo.dueDate = [NSDate today];
     assertThatInteger(self.todo.urgency, equalToInteger(TodoRangeMaxValue));

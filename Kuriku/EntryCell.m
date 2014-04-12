@@ -63,7 +63,7 @@
             
             if (entry.type == EntryTypeComplete) {
                 status = @"Completed";
-            } else if ([entry.startDate timeIntervalSinceNow] > 0) {
+            } else if (entry.startDate) {
                 status = @"Hold";
             }
             
@@ -113,13 +113,13 @@
     self.typeLabel.text = [self entryTypeString:self.entry.type];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     
-    if (self.entry.state == EntryStateActive) {
+//    if (self.entry.state == EntryStateActive) {
         self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
         self.startDateLabel.text = self.entry.startDate ? [self startDateString:self.entry.startDate] : nil;
-    } else {
-        self.dueDateLabel.text   = nil;
-        self.startDateLabel.text = nil;
-    }
+//    } else {
+//        self.dueDateLabel.text   = nil;
+//        self.startDateLabel.text = nil;
+//    }
     
     [self updateTitleLabel];
 }

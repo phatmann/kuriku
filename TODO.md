@@ -1,13 +1,22 @@
 
 Bugs
 -------------
+* Should add HOLD entry when startDate changes
 * Sometimes expanding text views makes table scroll bounce
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
+* If start date in past applied, ignore it
 
 Missing Features
 ----------------
 * Tap inactive task goes to active task
+* Should not add HOLD entry when startDate changes if NEW or COMPLETED entry is "recent"
+
+Performance
+-----------
+* Use cache file for NSFetchedResultControllers
+* Cache Todo.entriesByDate
+* Make lastEntry a modeled property
 
 New Thoughts
 ------------

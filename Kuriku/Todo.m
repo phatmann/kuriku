@@ -183,6 +183,22 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
++ (void)updateTodosReadyToStart {
+    // TODO: use lastEntry key path when modeled
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"lastEntry.startDate >= %@", [NSDate today]];
+    //NSArray *todos = [Todo allForPredicate:predicate];
+    
+    NSArray *todos = [Todo all];
+    NSDate *today = [NSDate today];
+    
+    for (Todo *todo in todos) {
+        if (todo.lastEntry.startDate && [todo.lastEntry.startDate timeIntervalSinceDate:today] <= 0)
+            [todo createEntry:EntryTypeReady];
+    }
+    
+    [IBCoreDataStore save];
+}
+
 + (void)dailyUpdate {
     static NSString *dailyUpdateKey = @"DailyUpdate";
     
@@ -191,6 +207,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     if (!updateDate || ![updateDate isSameDay:today]) {
         [self updateAllUrgenciesFromDueDate];
+        [self updateTodosReadyToStart];
         
         [[IBCoreDataStore mainStore] setMetadataObject:today forKey:dailyUpdateKey];
         [[IBCoreDataStore mainStore] save];

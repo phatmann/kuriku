@@ -106,7 +106,8 @@ enum {
     NSDate *startDate = stringToDate(self.startDateLabel.text);
 
     if (!datesEqual(self.todo.lastEntry.startDate, startDate)) {
-        self.todo.lastEntry.startDate = startDate;
+        Entry *entry = [self.todo createEntry:startDate ? EntryTypeHold : EntryTypeReady];
+        entry.startDate = startDate;
     }
     
     if (!self.todo.dueDate)

@@ -46,6 +46,7 @@ static const int TodoPriorityVersion = 5;
 
 + (int)urgencyFromDueDate:(NSDate *)dueDate;
 + (void)updateAllPrioritiesIfNeeded;
++ (void)updateTodosReadyToStart;
 + (void)dailyUpdate;
 + (void)migrate;
 

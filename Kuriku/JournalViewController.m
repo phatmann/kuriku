@@ -165,10 +165,10 @@ typedef enum {
             predicate = nil;
             break;
         case FilterActive:
-            predicate = [NSPredicate predicateWithFormat:@"state = %d AND (startDate = NULL OR startDate < %@)", EntryStateActive, [NSDate today]];
+            predicate = [NSPredicate predicateWithFormat:@"state = %d AND startDate = NULL", EntryStateActive];
             break;
         case FilterInactive:
-            predicate = [NSPredicate predicateWithFormat:@"state != %d OR (startDate != NULL AND startDate >= %@)", EntryStateActive, [NSDate today]];
+            predicate = [NSPredicate predicateWithFormat:@"state != %d OR startDate != NULL", EntryStateActive];
             break;
     }
 
