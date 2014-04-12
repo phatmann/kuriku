@@ -55,20 +55,22 @@
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
-    NSString *state, *status, *commitment;
+    NSString *state, *status = @"Normal", *commitment;
     
-    switch (entry.type) {
-        case EntryTypeNew:
-        case EntryTypeReady:
-            status = @"Normal";
+    switch (entry.state) {
+        case EntryStateActive:
+            state = @"Active";
+            
+            if (entry.type == EntryTypeComplete) {
+                status = @"Completed";
+            } else if ([entry.startDate timeIntervalSinceNow] < 0) {
+                status = @"Hold";
+            }
+            
             break;
             
-        case EntryTypeComplete:
-            status = @"Completed";
-            break;
-            
-        case EntryTypeHold:
-            status = @"Hold";
+        case EntryStateInactive:
+            state = @"Inactive";
             break;
     }
     
@@ -83,17 +85,6 @@
             
         case TodoCommitmentToday:
             commitment = @"Today";
-            break;
-    }
-
-    
-    switch (entry.state) {
-        case EntryStateActive:
-            state = @"Active";
-            break;
-            
-        case EntryStateInactive:
-            state = @"Inactive";
             break;
     }
     
@@ -120,12 +111,30 @@
 - (void)refresh
 {
     self.typeLabel.text = [self entryTypeString:self.entry.type];
-    self.titleTextView.text = self.entry.todo.title;
-    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:self.entry]];
-    [self.titleTextView applyNUI];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
     self.startDateLabel.text = self.entry.startDate ? [self startDateString:self.entry.startDate] : nil;
+    
+    [self updateTitleLabel];
+}
+
+#pragma mark -
+
+- (void)updateTitleLabel {
+    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:self.entry]];
+
+    NSString *title = self.entry.todo.title ? self.entry.todo.title : @"";
+    
+    NSString *decoration = [NUISettings get:@"text-decoration" withClass:self.titleTextView.nuiClass];
+    NSUnderlineStyle strikethroughStyle = [decoration isEqualToString:@"line-through"] ?
+        NSUnderlineStyleSingle : NSUnderlineStyleNone;
+    
+    NSDictionary *attributes = @{NSStrikethroughStyleAttributeName: @(strikethroughStyle)};
+    
+    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:title
+                                                                        attributes:attributes];
+    self.titleTextView.typingAttributes = attributes;
+    [self.titleTextView applyNUI];
 }
     
 #pragma Text View Delegate

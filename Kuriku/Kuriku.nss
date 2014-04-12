@@ -1,6 +1,5 @@
 Entry {
     font-name: Helvetica;
-    xfont-size: 25;
 }
 
 Urgency0 {
@@ -53,6 +52,10 @@ CommitmentToday {
 
 StatusHold {
     font-name: Helvetica-Oblique;
+}
+
+StatusCompleted {
+    text-decoration: line-through;
 }
 
 StateInactive {
