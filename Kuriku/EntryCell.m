@@ -63,7 +63,7 @@
             
             if (entry.type == EntryTypeComplete) {
                 status = @"Completed";
-            } else if ([entry.startDate timeIntervalSinceNow] < 0) {
+            } else if ([entry.startDate timeIntervalSinceNow] > 0) {
                 status = @"Hold";
             }
             
