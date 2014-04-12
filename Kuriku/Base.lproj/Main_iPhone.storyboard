@@ -391,7 +391,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="khI-gR-KO2" kind="push" identifier="Choose hold date" id="pyG-uA-QCx"/>
+                                            <segue destination="khI-gR-KO2" kind="push" identifier="Choose start date" id="pyG-uA-QCx"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -786,6 +786,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gRM-kr-JnK"/>
+        <segue reference="pyG-uA-QCx"/>
     </inferredMetricsTieBreakers>
 </document>
