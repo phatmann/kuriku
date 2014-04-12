@@ -56,6 +56,7 @@ StatusHold {
 
 StatusCompleted {
     text-decoration: line-through;
+    font-color: black;
 }
 
 StateInactive {

@@ -112,8 +112,14 @@
 {
     self.typeLabel.text = [self entryTypeString:self.entry.type];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
-    self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
-    self.startDateLabel.text = self.entry.startDate ? [self startDateString:self.entry.startDate] : nil;
+    
+    if (self.entry.state == EntryStateActive) {
+        self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
+        self.startDateLabel.text = self.entry.startDate ? [self startDateString:self.entry.startDate] : nil;
+    } else {
+        self.dueDateLabel.text   = nil;
+        self.startDateLabel.text = nil;
+    }
     
     [self updateTitleLabel];
 }
