@@ -29,6 +29,7 @@ typedef enum {
 
 @property (nonatomic) int16_t type;
 @property (nonatomic) int16_t state;
+@property (nonatomic) float_t priority;
 @property (nonatomic, strong) Todo *todo;
 @property (nonatomic) NSString *journalDateString;
 @property (nonatomic, strong) NSDate *timestamp;
@@ -37,6 +38,7 @@ typedef enum {
 
 @property (nonatomic) NSDate *journalDate;
 
+- (void)updatePriorityFromTodo;
 + (NSDate *)journalDateFromString:(NSString *)journalDateString;
 + (void)migrate;
 

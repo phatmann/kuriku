@@ -39,6 +39,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"] || [key isEqualToString:@"commitment"]) {
         [self updatePriority];
+    } else if ([key isEqualToString:@"priority"]) {
+        [self.lastEntry updatePriorityFromTodo];
     } else if ([key isEqualToString:@"dueDate"]) {
         if (self.dueDate) {
             [self updateUrgencyFromDueDate];
@@ -165,6 +167,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     Entry *entry = [Entry create];
     entry.type = type;
     entry.todo = self;
+    
     [self addEntriesObject:entry];
     
     return entry;

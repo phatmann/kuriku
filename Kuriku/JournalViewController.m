@@ -14,18 +14,12 @@
 #import <InnerBand.h>
 #import "TMGrowingTextView.h"
 
-typedef enum {
-    FilterAll,
-    FilterActive,
-    FilterInactive
-} Filter;
-
 @interface JournalViewController ()
 
 @property (strong, nonatomic) Entry *selectedEntry;
 @property (strong, nonatomic) NSIndexPath *pinchIndexPath;
 @property (nonatomic) int pinchInitialImportance;
-@property (nonatomic) Filter filter;
+@property (nonatomic) float_t minimumPriority;
 @property (nonatomic) BOOL isAdding;
 @property (nonatomic) EntryCell *activeCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
@@ -168,24 +162,11 @@ typedef enum {
 }
 
 - (void)createFetchedResultsController {
-    NSPredicate *predicate;
-    
-    switch (self.filter) {
-        case FilterAll:
-            predicate = nil;
-            break;
-        case FilterActive:
-            predicate = [NSPredicate predicateWithFormat:@"state = %d AND startDate = NULL AND type != %d", EntryStateActive, EntryTypeComplete];
-            break;
-        case FilterInactive:
-            predicate = [NSPredicate predicateWithFormat:@"state != %d OR startDate != NULL OR type = %d", EntryStateActive, EntryTypeComplete];
-            break;
-    }
-
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.minimumPriority];
     [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
@@ -194,8 +175,8 @@ typedef enum {
                                      cacheName:nil];
 }
 
-- (IBAction)filterChooserValueChanged:(UISegmentedControl *)filterChooser {
-    self.filter = (Filter)filterChooser.selectedSegmentIndex;
+- (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
+    self.minimumPriority = filterSlider.value;
     [self reloadData];
 }
 

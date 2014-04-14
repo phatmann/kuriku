@@ -1,5 +1,5 @@
 //
-//  EntryTests.m
+//  JournalTests.m
 //  KurikuTests
 //
 //  Created by Tony Mann on 12/11/13.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface EntryTests : XCTestCase
+@interface JournalTests : XCTestCase
 
 @end
 
-@implementation EntryTests
+@implementation JournalTests
 
 - (void)setUp {
     [super setUp];
@@ -22,8 +22,6 @@
     [super tearDown];
 }
 
-- (void)test_entries_sorted_in_date_order_in_journal {
-    
-}
+
 
 @end

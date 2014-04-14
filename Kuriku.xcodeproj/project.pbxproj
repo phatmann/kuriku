@@ -15,8 +15,8 @@
 		EA20528A187AE04F00B8330B /* TMGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA205289187AE04F00B8330B /* TMGrowingTextView.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
 		EA7307311889F0F5008C8F39 /* Kuriku.nss in Resources */ = {isa = PBXBuildFile; fileRef = EA7307301889F0F5008C8F39 /* Kuriku.nss */; };
-		EA737BD8187676B6003A1BBE /* EntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD7187676B6003A1BBE /* EntryTests.m */; };
-		EA737BDA187676FD003A1BBE /* JournalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD9187676FD003A1BBE /* JournalTests.m */; };
+		EA737BD8187676B6003A1BBE /* JournalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD7187676B6003A1BBE /* JournalTests.m */; };
+		EA737BDA187676FD003A1BBE /* EntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD9187676FD003A1BBE /* EntryTests.m */; };
 		EA89E74E185C074600643266 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA89E74D185C074600643266 /* EditTodoViewController.m */; };
 		EA89E750185C136400643266 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA89E74F185C136400643266 /* CoreData.framework */; };
 		EAAC95501858F7D400E8BAB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAC954F1858F7D400E8BAB5 /* Foundation.framework */; };
@@ -66,10 +66,11 @@
 		EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatViewController.m; sourceTree = "<group>"; };
 		EA40F7A11873F7E9005DC6AA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		EA40F7A31873F7EF005DC6AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EA589AF618FC5D6800B040D1 /* Kuriku17.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku17.xcdatamodel; sourceTree = "<group>"; };
 		EA61241818EED35000DE8E75 /* Kuriku15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku15.xcdatamodel; sourceTree = "<group>"; };
 		EA7307301889F0F5008C8F39 /* Kuriku.nss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Kuriku.nss; sourceTree = "<group>"; };
-		EA737BD7187676B6003A1BBE /* EntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryTests.m; sourceTree = "<group>"; };
-		EA737BD9187676FD003A1BBE /* JournalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalTests.m; sourceTree = "<group>"; };
+		EA737BD7187676B6003A1BBE /* JournalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalTests.m; sourceTree = "<group>"; };
+		EA737BD9187676FD003A1BBE /* EntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryTests.m; sourceTree = "<group>"; };
 		EA8267C11880886900CC6DE3 /* Kuriku14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku14.xcdatamodel; sourceTree = "<group>"; };
 		EA89E74C185C074600643266 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EA89E74D185C074600643266 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
@@ -202,7 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				EAAC95551858F7D400E8BAB5 /* Kuriku */,
-				EAAC957A1858F7D400E8BAB5 /* KurikuTests */,
+				EAAC957A1858F7D400E8BAB5 /* Tests */,
 				EAAC954E1858F7D400E8BAB5 /* Frameworks */,
 				EAAC954D1858F7D400E8BAB5 /* Products */,
 				EA10F1261861B2FF0084F6C8 /* TODO.md */,
@@ -262,14 +263,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		EAAC957A1858F7D400E8BAB5 /* KurikuTests */ = {
+		EAAC957A1858F7D400E8BAB5 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				EAAC95801858F7D400E8BAB5 /* TodoTests.m */,
-				EA737BD7187676B6003A1BBE /* EntryTests.m */,
-				EA737BD9187676FD003A1BBE /* JournalTests.m */,
+				EA737BD9187676FD003A1BBE /* EntryTests.m */,
+				EA737BD7187676B6003A1BBE /* JournalTests.m */,
 				EAAC957B1858F7D400E8BAB5 /* Supporting Files */,
 			);
+			name = Tests;
 			path = KurikuTests;
 			sourceTree = "<group>";
 		};
@@ -471,9 +473,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA737BD8187676B6003A1BBE /* EntryTests.m in Sources */,
+				EA737BD8187676B6003A1BBE /* JournalTests.m in Sources */,
 				EAAC95811858F7D400E8BAB5 /* TodoTests.m in Sources */,
-				EA737BDA187676FD003A1BBE /* JournalTests.m in Sources */,
+				EA737BDA187676FD003A1BBE /* EntryTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +704,7 @@
 			isa = XCVersionGroup;
 			children = (
 				EA025E5118F8F25B000C9214 /* Kuriku16.xcdatamodel */,
+				EA589AF618FC5D6800B040D1 /* Kuriku17.xcdatamodel */,
 				EA8267C11880886900CC6DE3 /* Kuriku14.xcdatamodel */,
 				EA61241818EED35000DE8E75 /* Kuriku15.xcdatamodel */,
 				EAAEEB0F187E1EE80098C4F0 /* Kuriku01.xcdatamodel */,
@@ -718,7 +721,7 @@
 				EAAEEB19187E1EE80098C4F0 /* Kuriku08.xcdatamodel */,
 				EAAEEB1A187E1EE80098C4F0 /* Kuriku09.xcdatamodel */,
 			);
-			currentVersion = EA025E5118F8F25B000C9214 /* Kuriku16.xcdatamodel */;
+			currentVersion = EA589AF618FC5D6800B040D1 /* Kuriku17.xcdatamodel */;
 			path = Kuriku.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

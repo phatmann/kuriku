@@ -16,7 +16,7 @@
 @end
 
 @implementation Entry
-
+@dynamic priority;
 @dynamic journalDateString;
 @dynamic timestamp;
 @dynamic todo;
@@ -54,6 +54,16 @@
                 self.state = EntryStateActive;
         }
     }
+    
+    if (![key isEqualToString:@"priority"])
+        [self updatePriorityFromTodo];
+}
+
+- (void)updatePriorityFromTodo {
+    if (self.state == EntryStateInactive || self.type == EntryTypeComplete || self.startDate)
+        self.priority = 0;
+    else
+        self.priority = self.todo.priority;
 }
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString {
@@ -61,6 +71,10 @@
 }
 
 + (void)migrate {
+    for (Entry *entry in [Entry all]) {
+        [entry updatePriorityFromTodo];
+    }
+    
     [IBCoreDataStore save];
 }
 

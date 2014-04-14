@@ -29,20 +29,15 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="m2w-Na-DFd" userLabel="Filter Chooser">
-                                <rect key="frame" x="20" y="72" width="280" height="29"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="GpR-5f-hes" userLabel="Filter Slider">
+                                <rect key="frame" x="8" y="72" width="304" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="All"/>
-                                    <segment title="Active"/>
-                                    <segment title="Inactive"/>
-                                </segments>
                                 <connections>
-                                    <action selector="filterChooserValueChanged:" destination="CZ4-MO-1fc" eventType="valueChanged" id="dbQ-eN-rnk"/>
+                                    <action selector="filterSliderValueChanged:" destination="CZ4-MO-1fc" eventType="valueChanged" id="Abn-5i-Z0I"/>
                                 </connections>
-                            </segmentedControl>
+                            </slider>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="30" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aKD-IV-7AV">
-                                <rect key="frame" x="0.0" y="108" width="320" height="452"/>
+                                <rect key="frame" x="0.0" y="110" width="320" height="450"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -126,15 +121,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="aKD-IV-7AV" secondAttribute="trailing" id="0e9-RW-ocX"/>
-                            <constraint firstItem="aKD-IV-7AV" firstAttribute="top" secondItem="m2w-Na-DFd" secondAttribute="bottom" constant="8" id="3jE-Tb-Iln"/>
-                            <constraint firstItem="m2w-Na-DFd" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" constant="20" symbolic="YES" id="Cum-4l-xYZ"/>
                             <constraint firstItem="Xn6-C0-d19" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" id="Gbw-2r-6WN"/>
                             <constraint firstItem="bcP-VR-DSe" firstAttribute="top" secondItem="aKD-IV-7AV" secondAttribute="bottom" constant="20" symbolic="YES" id="NFc-7a-ev2"/>
+                            <constraint firstItem="GpR-5f-hes" firstAttribute="top" secondItem="Xn6-C0-d19" secondAttribute="bottom" constant="8" id="bu8-so-owG"/>
                             <constraint firstAttribute="trailing" secondItem="Xn6-C0-d19" secondAttribute="trailing" id="gvy-dY-8IY"/>
-                            <constraint firstItem="m2w-Na-DFd" firstAttribute="top" secondItem="Xn6-C0-d19" secondAttribute="bottom" constant="8" id="l3y-VR-ASV"/>
+                            <constraint firstItem="GpR-5f-hes" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" constant="10" id="hx5-1Y-Cfb"/>
+                            <constraint firstItem="aKD-IV-7AV" firstAttribute="top" secondItem="GpR-5f-hes" secondAttribute="bottom" constant="8" id="maK-h2-mjh"/>
                             <constraint firstItem="Xn6-C0-d19" firstAttribute="top" secondItem="X0C-EJ-ULc" secondAttribute="bottom" id="nVD-RS-48w"/>
                             <constraint firstItem="aKD-IV-7AV" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" id="sJp-bZ-rTL"/>
-                            <constraint firstAttribute="trailing" secondItem="m2w-Na-DFd" secondAttribute="trailing" constant="20" symbolic="YES" id="ufK-zk-ZjH"/>
+                            <constraint firstAttribute="trailing" secondItem="GpR-5f-hes" secondAttribute="trailing" constant="10" id="xLd-e7-zls"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
