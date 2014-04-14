@@ -42,6 +42,7 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong, readonly) NSArray *entriesByDate;
 
 - (Entry *)createEntry:(EntryType)type;
+- (Entry *)findOrCreateEntryForStartDate:(EntryType)type;
 - (Entry *)lastEntry;
 
 + (int)urgencyFromDueDate:(NSDate *)dueDate;

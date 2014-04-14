@@ -21,28 +21,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UITableViewCell *cell = [self cellForDays];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    
-    if (cell.tag == self.customCell.tag)
-        self.daysField.text = [@(self.days) stringValue];
 }
 
 - (void)setDays:(NSInteger)days {
     _days = days;
     [self.delegate repeatViewControllerDaysChanged:self];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [self checkCell:cell];
-    
     self.days = cell.tag;
 }
 
 - (IBAction)daysFieldWasChanged {
-    [self checkCell:self.customCell];
     self.days = [self.daysField.text intValue];
 }
 
@@ -53,12 +45,6 @@
     }
     
     return self.customCell;
-}
-
-- (void)checkCell:(UITableViewCell *)cell {
-    UITableViewCell *oldCell = [self cellForDays];
-    oldCell.accessoryType = UITableViewCellAccessoryNone;
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
 }
 
 @end

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <InnerBand/InnerBand.h>
 #import "EditTodoViewController.h"
+#import "RepeatViewController.h"
 
-@interface JournalViewController : UIViewController  <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, EditTodoViewControllerDelegate>
+@interface JournalViewController : UIViewController  <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, EditTodoViewControllerDelegate, RepeatViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

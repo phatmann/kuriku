@@ -170,6 +170,10 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     return entry;
 }
 
+- (Entry *)findOrCreateEntryForStartDate:(EntryType)type {
+    return [self createEntry:type];
+}
+
 + (void)updateAllPrioritiesIfNeeded {
     static NSString *priorityVersionKey = @"PriorityVersion";
     

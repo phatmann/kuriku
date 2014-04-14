@@ -11,6 +11,7 @@
 #import "Todo.h"
 #import "EntryCell.h"
 #import "EditTodoViewController.h"
+#import <InnerBand.h>
 #import "TMGrowingTextView.h"
 
 typedef enum {
@@ -49,12 +50,17 @@ typedef enum {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    Todo *todo = sender;
+    
     if ([segue.identifier isEqualToString:@"Edit todo"]) {
-        Todo *todo = sender;
         UINavigationController *navigationController = segue.destinationViewController;
         EditTodoViewController *entryViewController = [navigationController.viewControllers firstObject];
         entryViewController.delegate = self;
         entryViewController.todo = todo;
+    } else if ([segue.identifier isEqualToString:@"Repeat todo"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
+        repeatViewController.delegate = self;
     }
 }
 
@@ -128,14 +134,14 @@ typedef enum {
 
 - (void)showTodoActionSheet:(Entry *)entry {
     self.selectedEntry = entry;
-    NSString *completionActionName = (entry.todo.lastEntry.type == EntryTypeComplete) ?  @"Unmark completed" : @"Mark completed";
+    NSString *completionActionName = (entry.todo.lastEntry.type == EntryTypeComplete) ?  @"Didn't do it :(" : @"Did it!";
     
     self.todoActionSheet = [[UIActionSheet alloc]
                               initWithTitle:nil
                               delegate:self
                               cancelButtonTitle:@"Cancel"
                               destructiveButtonTitle:nil
-                              otherButtonTitles:completionActionName, @"Take action", @"Edit", nil];
+                              otherButtonTitles:completionActionName, @"Did some of it", @"Do it again", nil];
     
     [self.todoActionSheet showInView:self.view];
 }
@@ -155,6 +161,10 @@ typedef enum {
 
 - (void)showEditTodoView:(Todo *)todo {
     [self performSegueWithIdentifier:@"Edit todo" sender:todo];
+}
+
+- (void)showRepeatView:(Todo *)todo {
+    [self performSegueWithIdentifier:@"Repeat todo" sender:todo];
 }
 
 - (void)createFetchedResultsController {
@@ -220,7 +230,7 @@ typedef enum {
 - (void)todoActionSheetButtonClicked:(NSInteger)buttonIndex {
     NSInteger markCompletedButtonIndex = self.todoActionSheet.firstOtherButtonIndex;
     NSInteger takeActionButtonIndex    = markCompletedButtonIndex + 1;
-    NSInteger editButtonIndex          = takeActionButtonIndex + 1;
+    NSInteger doAgainButtonIndex       = takeActionButtonIndex + 1;
     
     Todo *todo = self.selectedEntry.todo;
     
@@ -230,8 +240,8 @@ typedef enum {
     } else if (buttonIndex == takeActionButtonIndex) {
         [todo createEntry:EntryTypeAction];
         [[IBCoreDataStore mainStore] save];
-    } else if (buttonIndex == editButtonIndex) {
-        [self showEditTodoView:todo];
+    } else if (buttonIndex == doAgainButtonIndex) {
+        [self showRepeatView:todo];
     }
 }
 
@@ -373,6 +383,29 @@ typedef enum {
 
 - (void)todoWasEdited:(Todo *)todo {
     [self.tableView reloadData];
+}
+
+#pragma mark - Repeat Controller Delegate
+
+- (void)repeatViewControllerDaysChanged:(RepeatViewController *)repeatViewController {
+    [self.selectedEntry.todo createEntry:EntryTypeComplete];
+    
+    switch (repeatViewController.days) {
+        case -1:
+            break;
+            
+        case 0:
+            [self.selectedEntry.todo createEntry:EntryTypeReady];
+            break;
+            
+        default:
+        {
+            Entry *entry = [self.selectedEntry.todo findOrCreateEntryForStartDate:EntryTypeHold];
+            entry.startDate = [[NSDate today] dateByAddingDays:repeatViewController.days];
+        }
+    }
+    
+    [IBCoreDataStore save];
 }
     
 #pragma Text View Delegate

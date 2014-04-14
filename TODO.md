@@ -1,3 +1,5 @@
+Kuriku
+The visual intelligent action journal
 
 Bugs
 -------------
@@ -19,16 +21,15 @@ Performance
 
 New Thoughts
 ------------
-* "Edit Todo" -> "Edit Entry"
 * Filter slider: show all -> hide inactive/pending -> show higher pri -> show highest pri
 * Pinch up/down to set importance, left/right for urgency
+* "Importance" -> "prominence"
 * "Urgency" -> "glow"
 * Slide to set urgency, start date on one side, due date on other side
 * Urgency driven by due date (glow red) or start date (glow blue), or manual override
 * No start date == no commitment
 * Commitment icons: none (maybe), hollow star (must), filled in star (today), jogger (habit)
 * "Do again..." action adds completed action and sets start date via dialog
-* "Completed" action -> "Did it"
 * Can make a todo a "habit". Separate them to reduce noise.
 * Multiple journals chosen from nav bar
 * Journals are hierarchical, can use for projects
