@@ -21,15 +21,19 @@ Performance
 
 New Thoughts
 ------------
+* One line entry: type icon on left, time on right
+* Clean way to combine recent entry types (e.g. new and hold).
+* Tap and drag up/down to glow more/less. If not glowing, down to set due date.
+* Tap and drag right/left to put on hold, yellow color
+* If not yellow, tap and drag left to put place start date in past, blue glow.
 * Filter slider: show all -> hide inactive/pending -> show higher pri -> show highest pri
-* Pinch up/down to set importance, left/right for urgency
+* Pinch left/right to set prominence
 * "Importance" -> "prominence"
 * "Urgency" -> "glow"
-* Slide to set urgency, start date on one side, due date on other side
-* Urgency driven by due date (glow red) or start date (glow blue), or manual override
+* Setting glow sets due date or start date, but dates not shown in journal (?)
+* Glow driven by due date (glow red) or start date (glow blue)
 * No start date == no commitment
 * Commitment icons: none (maybe), hollow star (must), filled in star (today), jogger (habit)
-* "Do again..." action adds completed action and sets start date via dialog
 * Can make a todo a "habit". Separate them to reduce noise.
 * Multiple journals chosen from nav bar
 * Journals are hierarchical, can use for projects
