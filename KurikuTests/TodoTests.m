@@ -58,83 +58,50 @@
         entry.todo = nil;
     }
     
-    [IBCoreDataStore save];
-    assertThat(self.todo.managedObjectContext, nilValue());
+    assertThatBool(self.todo.isDeleted, equalToBool(YES));
 }
 
 - (void)test_delete_last_entry_activates_previous_entry {
     Entry *entry1 = [self.todo.entries firstObject];
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
-    [entry2 destroy];
-    [IBCoreDataStore save];
+    entry2.todo = nil;
     assertThatInt(entry1.state, equalToInt(EntryStateActive));
 }
 
 - (void)test_delete_creation_entry_deletes_todo {
-    Entry *entry1 = [self.todo.entries firstObject];
+    Entry *creationEntry = [self.todo.entries firstObject];
     [self.todo createEntry:EntryTypeAction];
     [self.todo createEntry:EntryTypeAction];
-    [entry1 destroy];
-    [IBCoreDataStore save];
-    assertThat(self.todo.managedObjectContext, nilValue());
+    creationEntry.todo = nil;
+    assertThatBool(self.todo.isDeleted, equalToBool(YES));
 }
 
 - (void)test_delete_any_completion_entry_readies_todo {
     Entry *completionEntry = [self.todo createEntry:EntryTypeComplete];
-    [IBCoreDataStore save];
-    
     [self.todo createEntry:EntryTypeReady];
-    [IBCoreDataStore save];
-    
-    [completionEntry destroy];
-    [IBCoreDataStore save];
-    
+    completionEntry.todo = nil;
     assertThatInt(self.todo.lastEntry.type, equalToInt(EntryTypeNew));
 }
 
 - (void)test_delete_completion_entry_deletes_subsequent_ready_and_completed_entries {
     Entry *completionEntry = [self.todo createEntry:EntryTypeComplete];
-    [IBCoreDataStore save];
-    
     [self.todo createEntry:EntryTypeReady];
-    [IBCoreDataStore save];
-    
     [self.todo createEntry:EntryTypeAction];
-    
     [self.todo createEntry:EntryTypeComplete];
-    [IBCoreDataStore save];
-    
     [self.todo createEntry:EntryTypeReady];
-    [IBCoreDataStore save];
-
     assertThatInt(self.todo.entries.count, equalToInt(6));
-    [completionEntry destroy];
-    [IBCoreDataStore save];
-    
+    completionEntry.todo = nil;
     assertThatInt(self.todo.entries.count, equalToInt(2));
 }
 
 - (void)test_delete_ready_entry_deletes_subsequent_ready_and_completion_entries {
     [self.todo createEntry:EntryTypeComplete];
-    [IBCoreDataStore save];
-    
     Entry *readyEntry = [self.todo createEntry:EntryTypeReady];
-    [IBCoreDataStore save];
-    
     [self.todo createEntry:EntryTypeAction];
-    [IBCoreDataStore save];
-    
     [self.todo createEntry:EntryTypeComplete];
-    [IBCoreDataStore save];
-    
     [self.todo createEntry:EntryTypeReady];
-    [IBCoreDataStore save];
-
     assertThatInt(self.todo.entries.count, equalToInt(6));
-    
-    [readyEntry destroy];
-    [IBCoreDataStore save];
-    
+    readyEntry.todo = nil;
     assertThatInt(self.todo.entries.count, equalToInt(3));
 }
 

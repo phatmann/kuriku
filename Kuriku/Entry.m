@@ -25,6 +25,11 @@
 @dynamic state;
 @dynamic startDate;
 
+- (void)awakeFromFetch {
+    [super awakeFromFetch];
+    [self setup];
+}
+
 - (void)awakeFromInsert {
     [super awakeFromInsert];
 
@@ -32,11 +37,16 @@
     self.journalDate = [self.timestamp dateAtStartOfDay];
     self.journal = [Journal first];
     
+    [self setup];
+}
+
+- (void)setup {
     [self addObserver:self forKeyPath:@"todo.priority" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"type" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"startDate" options:NSKeyValueObservingOptionInitial context:nil];
 }
+
 
 - (void)setJournalDate:(NSDate *)date {
     self.journalDateString = [journalDateFormatter() stringFromDate:date];
@@ -73,10 +83,6 @@
 }
 
 + (void)migrate {
-    for (Entry *entry in [Entry all]) {
-        [entry updatePriorityFromTodo];
-    }
-    
     [IBCoreDataStore save];
 }
 
