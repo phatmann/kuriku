@@ -36,10 +36,8 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSDate *dueDate;
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic) int16_t commitment;
-@property (nonatomic, strong) NSSet *entries;
+@property (nonatomic, strong) NSOrderedSet *entries;
 @property (nonatomic, strong) Journal *journal;
-
-@property (nonatomic, strong, readonly) NSArray *entriesByDate;
 
 - (Entry *)createEntry:(EntryType)type;
 - (Entry *)findOrCreateEntryForStartDate:(EntryType)type;
@@ -50,15 +48,6 @@ static const int TodoPriorityVersion = 5;
 + (void)updateTodosReadyToStart;
 + (void)dailyUpdate;
 + (void)migrate;
-
-@end
-
-@interface Todo (CoreDataGeneratedAccessors)
-
-- (void)addEntriesObject:(NSManagedObject *)value;
-- (void)removeEntriesObject:(NSManagedObject *)value;
-- (void)addEntries:(NSSet *)values;
-- (void)removeEntries:(NSSet *)values;
 
 @end
 

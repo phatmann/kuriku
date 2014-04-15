@@ -31,6 +31,11 @@
     self.timestamp = [NSDate date];
     self.journalDate = [self.timestamp dateAtStartOfDay];
     self.journal = [Journal first];
+    
+    [self addObserver:self forKeyPath:@"todo.priority" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"type" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"startDate" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
 - (void)setJournalDate:(NSDate *)date {
@@ -41,10 +46,8 @@
     return [Entry journalDateFromString:self.journalDateString];
 }
 
-- (void)didChangeValueForKey:(NSString *)key {
-    [super didChangeValueForKey:key];
-    
-    if ([key isEqualToString:@"type"]) {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"type"]) {
         switch (self.type) {
             case EntryTypeComplete:
                 self.state = EntryStateInactive;
@@ -55,8 +58,7 @@
         }
     }
     
-    if (![key isEqualToString:@"priority"])
-        [self updatePriorityFromTodo];
+    [self updatePriorityFromTodo];
 }
 
 - (void)updatePriorityFromTodo {

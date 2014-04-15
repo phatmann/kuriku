@@ -66,6 +66,7 @@
 		EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatViewController.m; sourceTree = "<group>"; };
 		EA40F7A11873F7E9005DC6AA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		EA40F7A31873F7EF005DC6AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EA490C9B18FD66FE0083660B /* Kuriku18.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku18.xcdatamodel; sourceTree = "<group>"; };
 		EA589AF618FC5D6800B040D1 /* Kuriku17.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku17.xcdatamodel; sourceTree = "<group>"; };
 		EA61241818EED35000DE8E75 /* Kuriku15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku15.xcdatamodel; sourceTree = "<group>"; };
 		EA7307301889F0F5008C8F39 /* Kuriku.nss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Kuriku.nss; sourceTree = "<group>"; };
@@ -705,6 +706,7 @@
 		EAAEEB0E187E1EE80098C4F0 /* Kuriku.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EA490C9B18FD66FE0083660B /* Kuriku18.xcdatamodel */,
 				EA025E5118F8F25B000C9214 /* Kuriku16.xcdatamodel */,
 				EA589AF618FC5D6800B040D1 /* Kuriku17.xcdatamodel */,
 				EA8267C11880886900CC6DE3 /* Kuriku14.xcdatamodel */,
@@ -723,7 +725,7 @@
 				EAAEEB19187E1EE80098C4F0 /* Kuriku08.xcdatamodel */,
 				EAAEEB1A187E1EE80098C4F0 /* Kuriku09.xcdatamodel */,
 			);
-			currentVersion = EA589AF618FC5D6800B040D1 /* Kuriku17.xcdatamodel */;
+			currentVersion = EA490C9B18FD66FE0083660B /* Kuriku18.xcdatamodel */;
 			path = Kuriku.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

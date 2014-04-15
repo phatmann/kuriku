@@ -33,14 +33,14 @@
 }
 
 - (void)test_insert_create_entry {
-    NSSet *entries = self.todo.entries;
+    NSOrderedSet *entries = self.todo.entries;
     assertThatInteger(entries.count, equalToInteger(1));
-    Entry *entry = [entries anyObject];
+    Entry *entry = [entries firstObject];
     assertThatInteger(entry.type, equalToInteger(EntryTypeNew));
 }
 
 - (void)test_insert_new_entry_deactivates_previous_entry {
-    Entry *entry1 = [self.todo.entries anyObject];
+    Entry *entry1 = [self.todo.entries firstObject];
     assertThatInt(entry1.state, equalToInt(EntryStateActive));
     
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
@@ -54,13 +54,16 @@
 }
 
 - (void)test_delete_todo_if_no_entries {
-    [self.todo removeEntries:self.todo.entries];
+    for (Entry *entry in [self.todo.entries copy]) {
+        entry.todo = nil;
+    }
+    
     [IBCoreDataStore save];
     assertThat(self.todo.managedObjectContext, nilValue());
 }
 
 - (void)test_delete_last_entry_activates_previous_entry {
-    Entry *entry1 = [self.todo.entries anyObject];
+    Entry *entry1 = [self.todo.entries firstObject];
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
     [entry2 destroy];
     [IBCoreDataStore save];
@@ -68,7 +71,7 @@
 }
 
 - (void)test_delete_creation_entry_deletes_todo {
-    Entry *entry1 = [self.todo.entries anyObject];
+    Entry *entry1 = [self.todo.entries firstObject];
     [self.todo createEntry:EntryTypeAction];
     [self.todo createEntry:EntryTypeAction];
     [entry1 destroy];
@@ -267,24 +270,23 @@
 }
 
 - (void)test_get_entries_by_date {
-    Entry *entry1 = [self.todo.entries anyObject];
+    Entry *entry1 = [self.todo.entries firstObject];
     [NSThread sleepForTimeInterval:0.1];
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
     [NSThread sleepForTimeInterval:0.1];
     Entry *entry3 = [self.todo createEntry:EntryTypeAction];
-    NSArray *entries = [self.todo entriesByDate];
-    
-    assertThat(entries[0], is(entry1));
-    assertThat(entries[1], is(entry2));
-    assertThat(entries[2], is(entry3));
+
+    assertThat(self.todo.entries[0], is(entry1));
+    assertThat(self.todo.entries[1], is(entry2));
+    assertThat(self.todo.entries[2], is(entry3));
 }
 
 - (void)test_get_entries_by_date_after_changes {
-    Entry *createEntry = [self.todo.entries anyObject];
+    Entry *createEntry = [self.todo.entries firstObject];
     Entry *entry1 = [self.todo createEntry:EntryTypeAction];
-    assertThat(self.todo.entriesByDate, is(@[createEntry, entry1]));
+    assertThat(self.todo.entries.array, is(@[createEntry, entry1]));
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
-    assertThat(self.todo.entriesByDate, is(@[createEntry, entry1, entry2]));
+    assertThat(self.todo.entries.array, is(@[createEntry, entry1, entry2]));
 }
 
 - (void)test_update_urgency_from_due_date {

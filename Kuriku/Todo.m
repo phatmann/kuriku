@@ -31,60 +31,61 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     self.createDate = [NSDate date];
     [self createEntry:EntryTypeNew];
     self.journal = [Journal first];
-    [self updatePriority];
+    [self setup];
 }
 
-- (void)didChangeValueForKey:(NSString *)key {
-    [super didChangeValueForKey:key];
+- (void)awakeFromFetch {
+    [super awakeFromFetch];
+    [self setup];
+}
+
+- (void)setup {
+    [self addObserver:self forKeyPath:@"importance" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"urgency" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"commitment" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"dueDate" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"entries" options:NSKeyValueObservingOptionOld context:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    int kind            = [change[NSKeyValueChangeKindKey] intValue];
     
-    if ([key isEqualToString:@"urgency"] || [key isEqualToString:@"importance"] || [key isEqualToString:@"commitment"]) {
+    if ([keyPath isEqualToString:@"urgency"] || [keyPath isEqualToString:@"importance"] || [keyPath isEqualToString:@"commitment"]) {
         [self updatePriority];
-    } else if ([key isEqualToString:@"priority"]) {
-        [self.lastEntry updatePriorityFromTodo];
-    } else if ([key isEqualToString:@"dueDate"]) {
+    } else if ([keyPath isEqualToString:@"dueDate"]) {
         if (self.dueDate) {
             [self updateUrgencyFromDueDate];
         } else {
             self.urgency = 0;
         }
-    }
-}
-
-- (void)willChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
-    [super willChangeValueForKey:inKey withSetMutation:inMutationKind usingObjects:inObjects];
-    
-    if (inMutationKind == NSKeyValueMinusSetMutation && inObjects.count == 1) {
-        Entry *deletedEntry = [inObjects anyObject];
+    } else if ([keyPath isEqualToString:@"entries"]) {
+        NSArray *oldEntries = change[NSKeyValueChangeOldKey];
         
-        if (deletedEntry.state != EntryStateObsolete &&
-            (deletedEntry.type == EntryTypeComplete || deletedEntry.type == EntryTypeReady)) {
-            NSUInteger deletedEntryIndex = [self.entriesByDate indexOfObject:deletedEntry];
-            NSArray *entries = [self.entriesByDate subarrayWithRange:NSMakeRange(deletedEntryIndex + 1, self.entriesByDate.count - deletedEntryIndex - 1)];
-            
-            for (Entry *entry in entries) {
-                if (entry.type == EntryTypeComplete || entry.type == EntryTypeReady) {
-                    entry.state = EntryStateObsolete;
-                }
-            }
-        }
-    }
-}
-
-- (void)didChangeValueForKey:(NSString *)inKey withSetMutation:(NSKeyValueSetMutationKind)inMutationKind usingObjects:(NSSet *)inObjects {
-    [super didChangeValueForKey:inKey withSetMutation:inMutationKind usingObjects:inObjects];
-    
-    if (self.isDeleted)
-        return;
-    
-    if ([inKey isEqualToString:@"entries"]) {
-        if (inMutationKind == NSKeyValueMinusSetMutation) {
+        if (kind == NSKeyValueChangeRemoval) {
             if (self.entries.count == 0) {
                 [self destroy];
+                return;
             } else {
-                for (Entry *entry in inObjects) {
+                for (Entry *entry in oldEntries) {
                     if (entry.type == EntryTypeNew) {
                         [self destroy];
-                        break;
+                        return;
+                    }
+                }
+            }
+            
+            if (oldEntries.count == 1) {
+                Entry *deletedEntry = [oldEntries firstObject];
+                
+                if (deletedEntry.state != EntryStateObsolete &&
+                    (deletedEntry.type == EntryTypeComplete || deletedEntry.type == EntryTypeReady)) {
+                    NSIndexSet *indexes = change[NSKeyValueChangeIndexesKey];
+                    NSUInteger deletedEntryIndex = [indexes firstIndex];
+                    NSOrderedSet *entries = [NSOrderedSet orderedSetWithOrderedSet:self.entries range:NSMakeRange(deletedEntryIndex, self.entries.count - deletedEntryIndex) copyItems:NO];
+                    for (Entry *entry in entries) {
+                        if (entry.type == EntryTypeComplete || entry.type == EntryTypeReady) {
+                            entry.state = EntryStateObsolete;
+                        }
                     }
                 }
             }
@@ -98,14 +99,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     [self activateLastEntry];
 }
 
-- (NSArray *)entriesByDate {
-    // TODO: cache sorted entries
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
-    return [self.entries sortedArrayUsingDescriptors:@[sortDescriptor]];
-}
-
 - (Entry *)lastEntry {
-    return [[self entriesByDate] lastObject];
+    return [self.entries lastObject];
 }
 
 #pragma mark -
@@ -115,10 +110,10 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         self.lastEntry.state = EntryStateActive;
 }
 
-
 - (void)deleteObsoleteEntries {
     for (Entry *entry in [self.entries copy]) {
         if (entry.state == EntryStateObsolete) {
+            entry.todo = nil;
             [entry destroy];
         }
     }
@@ -160,15 +155,12 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (Entry *)createEntry:(EntryType)type {
     if (type != EntryTypeNew) {
-        Entry *lastEntry = [self.entriesByDate lastObject];
-        lastEntry.state = EntryStateInactive;
+        self.lastEntry.state = EntryStateInactive;
     }
     
     Entry *entry = [Entry create];
     entry.type = type;
     entry.todo = self;
-    
-    [self addEntriesObject:entry];
     
     return entry;
 }

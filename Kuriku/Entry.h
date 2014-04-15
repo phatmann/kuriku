@@ -38,7 +38,6 @@ typedef enum {
 
 @property (nonatomic) NSDate *journalDate;
 
-- (void)updatePriorityFromTodo;
 + (NSDate *)journalDateFromString:(NSString *)journalDateString;
 + (void)migrate;
 

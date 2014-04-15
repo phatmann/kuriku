@@ -1,6 +1,17 @@
 Kuriku
 The visual intelligent action journal
 
+Todo
+----
+* Do not use didChangeValueForKey etc.
+* Get rid of urgency override
+* Clean way to combine recent entry types (e.g. new and hold)
+* Clean up hold API
+* Tap to edit
+* Slide to take action, set complete, or repeat
+* Pinch left/right to smoothly set prominence
+* Glow blue if getting past start date
+
 Bugs
 -------------
 * Sometimes expanding text views makes table scroll bounce
@@ -19,16 +30,6 @@ Performance
 * Use cache file for NSFetchedResultControllers
 * Cache Todo.entriesByDate
 * Make lastEntry a modeled property
-
-Todo
-----
-* Clean way to combine recent entry types (e.g. new and hold)
-* Clean up hold API
-* Tap to edit
-* Slide to take action, set complete, or repeat
-* Pinch left/right to smoothly set prominence
-* Glow blue if getting past start date
-
 
 New Thoughts
 ------------

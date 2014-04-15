@@ -245,7 +245,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     if (buttonIndex == self.deleteActionSheet.destructiveButtonIndex) {
         [self.selectedEntry.todo destroy];
     } else {
-        [self.selectedEntry.todo removeEntriesObject:self.selectedEntry];
         [self.selectedEntry destroy];
     }
     
