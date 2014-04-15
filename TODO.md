@@ -3,6 +3,7 @@ The visual intelligent action journal
 
 Bugs
 -------------
+* Adding new task does not work when filtered
 * Sometimes expanding text views makes table scroll bounce
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
@@ -10,6 +11,7 @@ Bugs
 
 Missing Features
 ----------------
+* Remember filter setting
 * Tap inactive task goes to active task
 * Should not add HOLD entry when startDate changes if NEW or COMPLETED entry is "recent"
 
@@ -21,6 +23,7 @@ Performance
 
 New Thoughts
 ------------
+* "READY" -> "TODO"
 * One line entry: type icon on left, time on right
 * Clean way to combine recent entry types (e.g. new and hold).
 * Tap and drag up/down to glow more/less. If not glowing, down to set due date.

@@ -7,7 +7,7 @@ Urgency0 {
 }
 
 Urgency1 {
-    font-color: hsl(37.5, 1.0, 1.0);
+    font-color: hsl(37, 1.0, 1.0);
 }
 
 Urgency2 {
@@ -15,7 +15,7 @@ Urgency2 {
 }
 
 Urgency3 {
-    font-color: hsl(12.5, 1.0, 1.0);
+    font-color: hsl(12, 1.0, 1.0);
 }
 
 Urgency4 {
