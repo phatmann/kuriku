@@ -267,12 +267,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="H0g-fr-MrV" userLabel="Urgent Section">
-                                <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="snK-LY-qUX" userLabel="Urgent Cell">
-                                        <rect key="frame" x="0.0" y="271" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="251" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="snK-LY-qUX" id="h2K-8N-Wad">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -321,6 +317,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="pXU-Lu-iuU" userLabel="Schedule Section">
+                                <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="AdN-vm-8jL" userLabel="Due Date Cell">
                                         <rect key="frame" x="0.0" y="315" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -354,12 +354,8 @@
                                             <segue destination="khI-gR-KO2" kind="push" identifier="Choose due date" id="gRM-kr-JnK"/>
                                         </connections>
                                     </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="pXU-Lu-iuU" userLabel="Schedule Section">
-                                <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="QRZ-fZ-JLE" userLabel="Start Date Cell">
-                                        <rect key="frame" x="0.0" y="379" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="359" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QRZ-fZ-JLE" id="n0c-OY-ddy">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -396,7 +392,7 @@
                             <tableViewSection id="pWe-gC-4Gp" userLabel="Notes Section">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="200" id="OHr-kk-VQ1" userLabel="Notes Cell">
-                                        <rect key="frame" x="0.0" y="443" width="320" height="200"/>
+                                        <rect key="frame" x="0.0" y="423" width="320" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OHr-kk-VQ1" id="nNG-Wm-jWb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
