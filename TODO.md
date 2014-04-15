@@ -7,10 +7,10 @@ Bugs
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
 * If start date in past applied, ignore it
+* Should deploy only to iOS 7
 
 Missing Features
 ----------------
-* Remember filter setting
 * Tap inactive task goes to active task
 * Should not add HOLD entry when startDate changes if NEW or COMPLETED entry is "recent"
 
@@ -20,19 +20,27 @@ Performance
 * Cache Todo.entriesByDate
 * Make lastEntry a modeled property
 
+Todo
+----
+* Clean way to combine recent entry types (e.g. new and hold)
+* Clean up hold API
+* Tap to edit
+* Slide to take action, set complete, or repeat
+* Pinch left/right to smoothly set prominence
+* Glow blue if getting past start date
+
+
 New Thoughts
 ------------
 * "READY" -> "TODO"
+* "HOLD" -> "DEFER"?
 * One line entry: type icon on left, time on right
-* Clean way to combine recent entry types (e.g. new and hold).
 * Tap and drag up/down to glow more/less. If not glowing, down to set due date.
 * Tap and drag right/left to put on hold, yellow color
 * If not yellow, tap and drag left to put place start date in past, blue glow.
-* Pinch left/right to set prominence
 * "Importance" -> "prominence"
 * "Urgency" -> "glow"
 * Setting glow sets due date or start date, but dates not shown in journal (?)
-* Glow driven by due date (glow red) or start date (glow blue)
 * No start date == no commitment
 * Commitment icons: none (maybe), hollow star (must), filled in star (today), jogger (habit)
 * Can make a todo a "habit". Separate them to reduce noise.
@@ -133,6 +141,54 @@ In Box
 * Edit title field should use correct font based on settings
 * Hide urgency slider if due date is set
 * Show urgent maybe todos properly (or disallow)
+
+Old Notes
+==========================
+
+Kuriku
+
+Tabs: Journal, Discover, Commit, Projects
+
+Properties:
+urgency/due date: black to red
+importance: small to large
+commitment: star
+project
+actions
+start date
+estimate
+
+Journal:
+Section per day
+Hide days with no open items
+Option to show all
+Day browser
+Jump to day
+
+Commands: delete, archive
+
+Task timer: choose todo, start timer. Moves in journal to current date and crosses off old one. Can name new action or choose from an existing action. Can add estimate. If estimated counts down. Timer appears on Commit tab. 
+
+Minimal: Journal, Discover
+Soon: Commit tab and star
+Upgrades: multiple journals, projects, syncing, timer/actions
+
+Maybe:
+Track interruptions
+Activity stats
+Choose filters and sorts in discover view
+
+Desktop:
+Menu bar app
+Task timer floating window
+
+Sync:
+Reminders
+iCloud
+Calendar
+Dropbox
+Evernote
+
 
 
 

@@ -44,7 +44,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewWasPinched:)];
 	[self.tableView addGestureRecognizer:pinchRecognizer];
     
-    [self reloadData];
+    float_t savedPriorityFilter = [[NSUserDefaults standardUserDefaults] floatForKey:@"priorityFilter"];
+    
+    if (savedPriorityFilter > 0)
+        self.priorityFilter = savedPriorityFilter;
+    else
+        [self reloadData];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -61,6 +66,16 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
         repeatViewController.delegate = self;
     }
+}
+
+- (void)setPriorityFilter:(float_t)priorityFilter {
+    _priorityFilter = priorityFilter;
+    self.filterSlider.value = priorityFilter;
+    
+    [[NSUserDefaults standardUserDefaults] setFloat:priorityFilter forKey:@"priorityFilter"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self reloadData];
 }
 
 #pragma mark - Private
@@ -182,14 +197,11 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
     self.priorityFilter = filterSlider.value;
-    [self reloadData];
 }
 
 - (IBAction)addButtonTapped {
     if (self.priorityFilter > PriorityFilterShowActive) {
-        self.filterSlider.value = PriorityFilterShowActive;
         self.priorityFilter = PriorityFilterShowActive;
-        [self reloadData];
     }
     
     self.filterSlider.enabled = NO;
