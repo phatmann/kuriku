@@ -18,23 +18,23 @@
 @dynamic todos;
 
 - (void)createSampleItems {
-    for (int importance = 0; importance <= TodoRangeMaxValue; ++importance) {
-        for (int urgency = 0; urgency <= TodoRangeMaxValue; ++urgency) {
-            Todo *todo      = [Todo create];
-            todo.importance = importance;
-            todo.urgency    = urgency;
-            todo.title      = [NSString stringWithFormat:@"Importance %d, Urgency %d", importance, urgency];
-        }
-    }
-    
-    Todo *todo      = [Todo create];
-    todo.title      = @"Completed";
-    todo.importance = TodoImportanceDefaultValue;
-    todo.urgency    = TodoUrgencyDefaultValue;
-    
-    [todo createEntry:EntryTypeComplete];
-    
-    [[IBCoreDataStore mainStore] save];
+//    for (int importance = 0; importance <= TodoRangeMaxValue; ++importance) {
+//        for (int urgency = 0; urgency <= TodoRangeMaxValue; ++urgency) {
+//            Todo *todo      = [Todo create];
+//            todo.importance = importance;
+//            todo.urgency    = urgency;
+//            todo.title      = [NSString stringWithFormat:@"Importance %d, Urgency %d", importance, urgency];
+//        }
+//    }
+//    
+//    Todo *todo      = [Todo create];
+//    todo.title      = @"Completed";
+//    todo.importance = TodoImportanceDefaultValue;
+//    todo.urgency    = TodoUrgencyDefaultValue;
+//    
+//    [todo createEntry:EntryTypeComplete];
+//    
+//    [[IBCoreDataStore mainStore] save];
 }
 
 @end

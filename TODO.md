@@ -3,7 +3,6 @@ The visual intelligent action journal
 
 Todo
 ----
-* Do not use didChangeValueForKey etc.
 * Get rid of urgency override
 * Clean way to combine recent entry types (e.g. new and hold)
 * Clean up hold API

@@ -10,14 +10,13 @@
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
-static const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
+const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
 static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 @implementation Todo
 
 @dynamic title;
 @dynamic importance;
-@dynamic urgency;
 @dynamic createDate;
 @dynamic dueDate;
 @dynamic priority;
@@ -52,14 +51,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
-    if ([keyPath isEqualToString:@"urgency"] || [keyPath isEqualToString:@"importance"] || [keyPath isEqualToString:@"commitment"]) {
+    if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"importance"] || [keyPath isEqualToString:@"commitment"]) {
         [self updatePriority];
-    } else if ([keyPath isEqualToString:@"dueDate"]) {
-        if (self.dueDate) {
-            [self updateUrgencyFromDueDate];
-        } else {
-            self.urgency = 0;
-        }
     } else if ([keyPath isEqualToString:@"entries"]) {
         NSArray *removedEntries = change[NSKeyValueChangeOldKey];
         
@@ -99,38 +92,28 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     }
 }
 
++ (NSSet *)keyPathsForValuesAffectingUrgency {
+    return [NSSet setWithObjects:@"dueDate", @"lastEntry.startDate", nil];
+}
+
 - (Entry *)lastEntry {
     return [self.entries lastObject];
 }
 
+- (int16_t)urgency {
+    return urgencyFromDueDate(self.dueDate);
+}
+
+- (void)setUrgency:(int16_t)urgency {
+    self.dueDate = dueDateFromUrgency(urgency);
+}
+
 #pragma mark -
 
-- (void)activateLastEntry {
-}
-
-+ (void)updateAllPriorities {
-    for (Todo *todo in [Todo all]) {
-        [todo updatePriority];
-    }
-}
-
-+ (void)updateAllUrgenciesFromDueDate {
-    NSDate *dateUrgentDaysFromNow = [NSDate dateWithTimeIntervalSinceNow:kSecondsInDay * kUrgentDaysBeforeDueDate];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@", dateUrgentDaysFromNow];
-    NSArray *todos = [Todo allForPredicate:predicate];
-    
-    for (Todo *todo in todos) {
-        if (todo.lastEntry.type != EntryTypeHold && todo.lastEntry.type != EntryTypeComplete)
-            [todo updateUrgencyFromDueDate];
-    }
-    
-    [IBCoreDataStore save];
-}
-
-+ (int)urgencyFromDueDate:(NSDate *)dueDate {
+int16_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)
         return 0;
-    
+        
     int daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
     
     if (daysUntilDue <= 0) {
@@ -140,6 +123,34 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     } else {
         return ((kUrgentDaysBeforeDueDate - daysUntilDue) *  TodoRangeMaxValue) / kUrgentDaysBeforeDueDate;
     }
+}
+
+NSDate *dueDateFromUrgency(int16_t urgency) {
+    if (urgency == 0) {
+        return nil;
+    } else {
+        int daysUntilDue = kUrgentDaysBeforeDueDate - ((urgency * kUrgentDaysBeforeDueDate) / TodoRangeMaxValue);
+        return [[NSDate today] dateByAddingDays:daysUntilDue];
+    }
+}
+
++ (void)updateAllPriorities {
+    for (Todo *todo in [Todo all]) {
+        [todo updatePriority];
+    }
+}
+
++ (void)updatePrioritiesFromDueDate {
+    NSDate *dateUrgentDaysFromNow = [NSDate dateWithTimeIntervalSinceNow:kSecondsInDay * kUrgentDaysBeforeDueDate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@", dateUrgentDaysFromNow];
+    NSArray *todos = [Todo allForPredicate:predicate];
+    
+    for (Todo *todo in todos) {
+        if (todo.lastEntry.type != EntryTypeHold && todo.lastEntry.type != EntryTypeComplete)
+            [todo updatePriority];
+    }
+    
+    [IBCoreDataStore save];
 }
 
 - (Entry *)createEntry:(EntryType)type {
@@ -194,7 +205,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     NSDate *today = [NSDate today];
     
     if (!updateDate || ![updateDate isSameDay:today]) {
-        [self updateAllUrgenciesFromDueDate];
+        [self updatePrioritiesFromDueDate];
         [self updateTodosReadyToStart];
         
         [[IBCoreDataStore mainStore] setMetadataObject:today forKey:dailyUpdateKey];
@@ -216,10 +227,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
         self.priority += maxValue + 1;
     else if (self.commitment == TodoCommitmentMaybe)
         self.priority -= maxValue + 1;
-}
-
-- (void)updateUrgencyFromDueDate {
-    self.urgency = [Todo urgencyFromDueDate:self.dueDate];
 }
 
 @end

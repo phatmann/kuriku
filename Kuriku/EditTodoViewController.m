@@ -125,6 +125,10 @@ enum {
 
 - (IBAction)sliderValueChanged:(UISlider *)slider {
     [slider setValue:roundf(slider.value) animated:YES];
+    
+    if (slider == self.urgencySlider) {
+        self.dueDateLabel.text = dateToString(dueDateFromUrgency(self.urgencySlider.value));
+    }
 }
 
 #pragma mark - Date Picker View Controller Delegate
@@ -136,7 +140,7 @@ enum {
         self.selectedDateLabel.text = dateString;
         
         if (self.selectedDateLabel == self.dueDateLabel) {
-            self.urgencySlider.value = [Todo urgencyFromDueDate:dateViewController.date];
+            self.urgencySlider.value = urgencyFromDueDate(dateViewController.date);
             [self updateControls];
         }
     }
@@ -171,8 +175,6 @@ enum {
 #pragma mark - Private
 
 - (void)updateControls {
-    self.urgencySlider.enabled = [self.dueDateLabel.text isEqualToString:NoDateString];
-    self.urgencyLabel.enabled  = self.urgencySlider.enabled;
     self.navigationItem.rightBarButtonItem.enabled = (self.titleField.text.length > 0);
 }
 

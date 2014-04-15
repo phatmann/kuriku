@@ -30,7 +30,6 @@ static const int TodoPriorityVersion = 5;
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic) int16_t importance;
-@property (nonatomic) int16_t urgency;
 @property (nonatomic) float_t priority;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *dueDate;
@@ -39,15 +38,22 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSOrderedSet *entries;
 @property (nonatomic, strong) Journal *journal;
 
+@property (nonatomic, weak, readonly) Entry *lastEntry;
+@property (nonatomic) int16_t urgency;
+
 - (Entry *)createEntry:(EntryType)type;
 - (Entry *)findOrCreateEntryForStartDate:(EntryType)type;
-- (Entry *)lastEntry;
 
-+ (int)urgencyFromDueDate:(NSDate *)dueDate;
+
 + (void)updateAllPrioritiesIfNeeded;
 + (void)updateTodosReadyToStart;
 + (void)dailyUpdate;
 + (void)migrate;
+
+int16_t urgencyFromDueDate(NSDate *dueDate);
+NSDate *dueDateFromUrgency(int16_t urgency);
+
+extern const NSTimeInterval kUrgentDaysBeforeDueDate;
 
 @end
 
