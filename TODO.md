@@ -3,7 +3,6 @@ The visual intelligent action journal
 
 Bugs
 -------------
-* Enter new todo with autocorrect pending, tap slider, crash.
 * Sometimes expanding text views makes table scroll bounce
 * Do not allow actions on completed task
 * Do not allow actions on inactive task

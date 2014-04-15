@@ -192,6 +192,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         [self reloadData];
     }
     
+    self.filterSlider.enabled = NO;
     [Todo create];
     self.isAdding = YES;
 }
@@ -406,6 +407,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     self.activeCell.isEditing = NO;
+    self.filterSlider.enabled = YES;
     self.isAdding = NO;
     self.navigationBarItem.rightBarButtonItem = self.addButton;
     
