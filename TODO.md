@@ -3,7 +3,7 @@ The visual intelligent action journal
 
 Bugs
 -------------
-* Adding new task does not work when filtered
+* Enter new todo with autocorrect pending, tap slider, crash.
 * Sometimes expanding text views makes table scroll bounce
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
@@ -29,7 +29,6 @@ New Thoughts
 * Tap and drag up/down to glow more/less. If not glowing, down to set due date.
 * Tap and drag right/left to put on hold, yellow color
 * If not yellow, tap and drag left to put place start date in past, blue glow.
-* Filter slider: show all -> hide inactive/pending -> show higher pri -> show highest pri
 * Pinch left/right to set prominence
 * "Importance" -> "prominence"
 * "Urgency" -> "glow"

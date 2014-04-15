@@ -17,5 +17,6 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 - (void)textViewDidChange:(UITextView *)textView;
+- (void)textViewDidEndEditing:(UITextView *)textView;
 
 @end

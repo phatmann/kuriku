@@ -108,6 +108,10 @@
     }
 }
 
+- (BOOL)resignFirstResponder {
+    return [self.titleTextView resignFirstResponder];
+}
+
 - (void)refresh
 {
     self.typeLabel.text = [self entryTypeString:self.entry.type];
@@ -143,6 +147,11 @@
 - (void)textViewDidChange:(UITextView *)textView {
     self.entry.todo.title = textView.text;
     [self.journalViewController textViewDidChange:textView];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    self.entry.todo.title = textView.text;
+    [self.journalViewController textViewDidEndEditing:textView];
 }
 
 @end

@@ -14,12 +14,16 @@
 #import <InnerBand.h>
 #import "TMGrowingTextView.h"
 
+static const float_t PriorityFilterShowAll __unused     = 0.0;
+static const float_t PriorityFilterShowActive           = 0.1;
+static const float_t PriorityFilterShowHigh __unused    = 1.0;
+
 @interface JournalViewController ()
 
 @property (strong, nonatomic) Entry *selectedEntry;
 @property (strong, nonatomic) NSIndexPath *pinchIndexPath;
 @property (nonatomic) int pinchInitialImportance;
-@property (nonatomic) float_t minimumPriority;
+@property (nonatomic) float_t priorityFilter;
 @property (nonatomic) BOOL isAdding;
 @property (nonatomic) EntryCell *activeCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
@@ -27,6 +31,7 @@
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) UIActionSheet *todoActionSheet;
 @property (strong, nonatomic) UIActionSheet *deleteActionSheet;
+@property (weak, nonatomic) IBOutlet UISlider *filterSlider;
 
 @end
 
@@ -166,7 +171,7 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.minimumPriority];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
     [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
@@ -176,26 +181,23 @@
 }
 
 - (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
-    self.minimumPriority = filterSlider.value;
+    self.priorityFilter = filterSlider.value;
     [self reloadData];
 }
 
 - (IBAction)addButtonTapped {
+    if (self.priorityFilter > PriorityFilterShowActive) {
+        self.filterSlider.value = PriorityFilterShowActive;
+        self.priorityFilter = PriorityFilterShowActive;
+        [self reloadData];
+    }
+    
     [Todo create];
     self.isAdding = YES;
 }
 
 - (void)doneButtonTapped {
-    self.activeCell.isEditing = NO;
-    self.isAdding = NO;
-    self.navigationBarItem.rightBarButtonItem = self.addButton;
-    
-    Todo *todo = self.activeCell.entry.todo;
-    
-    if (todo.title.length > 0)
-        [IBCoreDataStore save];
-    else
-        [todo destroy];
+    [self.activeCell resignFirstResponder];
 }
 
 #pragma mark - Action Sheet Delegate
@@ -400,6 +402,19 @@
     caretRect = [self.tableView convertRect:caretRect fromView:textView];
     caretRect.size.height += 8;
     [self.tableView scrollRectToVisible:caretRect animated:YES];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    self.activeCell.isEditing = NO;
+    self.isAdding = NO;
+    self.navigationBarItem.rightBarButtonItem = self.addButton;
+    
+    Todo *todo = self.activeCell.entry.todo;
+    
+    if (todo.title.length > 0)
+        [IBCoreDataStore save];
+    else
+        [todo destroy];
 }
 
 #pragma mark -
