@@ -33,6 +33,7 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic) float_t priority;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *dueDate;
+@property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSString *notes;
 @property (nonatomic) int16_t commitment;
 @property (nonatomic, strong) NSOrderedSet *entries;
@@ -42,8 +43,6 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic) int16_t urgency;
 
 - (Entry *)createEntry:(EntryType)type;
-- (Entry *)findOrCreateEntryForStartDate:(EntryType)type;
-
 
 + (void)updateAllPrioritiesIfNeeded;
 + (void)updateTodosReadyToStart;

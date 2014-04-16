@@ -15,8 +15,7 @@ typedef enum {
     EntryTypeNew,
     EntryTypeAction,
     EntryTypeComplete,
-    EntryTypeReady,
-    EntryTypeHold
+    EntryTypeReady
 } EntryType;
 
 typedef enum {
@@ -32,7 +31,6 @@ typedef enum {
 @property (nonatomic, strong) Todo *todo;
 @property (nonatomic) NSString *journalDateString;
 @property (nonatomic, strong) NSDate *timestamp;
-@property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) Journal *journal;
 
 @property (nonatomic) NSDate *journalDate;

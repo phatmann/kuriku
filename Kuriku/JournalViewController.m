@@ -395,8 +395,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             
         default:
         {
-            Entry *entry = [self.selectedEntry.todo findOrCreateEntryForStartDate:EntryTypeHold];
-            entry.startDate = [[NSDate today] dateByAddingDays:repeatViewController.days];
+            self.selectedEntry.todo.startDate = [[NSDate today] dateByAddingDays:repeatViewController.days];
         }
     }
     

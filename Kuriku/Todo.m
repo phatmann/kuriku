@@ -19,6 +19,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic importance;
 @dynamic createDate;
 @dynamic dueDate;
+@dynamic startDate;
 @dynamic priority;
 @dynamic notes;
 @dynamic commitment;
@@ -146,7 +147,7 @@ NSDate *dueDateFromUrgency(int16_t urgency) {
     NSArray *todos = [Todo allForPredicate:predicate];
     
     for (Todo *todo in todos) {
-        if (todo.lastEntry.type != EntryTypeHold && todo.lastEntry.type != EntryTypeComplete)
+        if (todo.lastEntry.type != EntryTypeComplete)
             [todo updatePriority];
     }
     
@@ -163,10 +164,6 @@ NSDate *dueDateFromUrgency(int16_t urgency) {
     entry.todo = self;
     
     return entry;
-}
-
-- (Entry *)findOrCreateEntryForStartDate:(EntryType)type {
-    return [self createEntry:type];
 }
 
 + (void)updateAllPrioritiesIfNeeded {
@@ -191,7 +188,7 @@ NSDate *dueDateFromUrgency(int16_t urgency) {
     NSDate *today = [NSDate today];
     
     for (Todo *todo in todos) {
-        if (todo.lastEntry.startDate && [todo.lastEntry.startDate timeIntervalSinceDate:today] <= 0)
+        if (todo.startDate && [todo.startDate timeIntervalSinceDate:today] <= 0)
             [todo createEntry:EntryTypeReady];
     }
     

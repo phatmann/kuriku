@@ -38,9 +38,6 @@
             
         case EntryTypeReady:
             return @"READY";
-            
-        case EntryTypeHold:
-            return @"HOLD";
     }
     
     return nil;
@@ -63,7 +60,7 @@
             
             if (entry.type == EntryTypeComplete) {
                 status = @"Completed";
-            } else if (entry.startDate) {
+            } else if (entry.todo.startDate) {
                 status = @"Hold";
             }
             
@@ -118,7 +115,7 @@
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     
     self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
-    self.startDateLabel.text = self.entry.startDate ? [self startDateString:self.entry.startDate] : nil;
+    self.startDateLabel.text = self.entry.todo.startDate ? [self startDateString:self.entry.todo.startDate] : nil;
     
     [self updateTitleLabel];
 }

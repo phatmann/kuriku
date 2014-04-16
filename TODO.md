@@ -3,13 +3,12 @@ The visual intelligent action journal
 
 Todo
 ----
-* Get rid of urgency override
-* Clean way to combine recent entry types (e.g. new and hold)
-* Clean up hold API
+* Show red if hot or blue if cold
+* Make urgency a float
 * Tap to edit
 * Slide to take action, set complete, or repeat
-* Pinch left/right to smoothly set prominence
-* Glow blue if getting past start date
+* Implement temperature
+* Glide to set temperature, via start date or due date
 
 Bugs
 -------------
@@ -22,18 +21,21 @@ Bugs
 Missing Features
 ----------------
 * Tap inactive task goes to active task
-* Should not add HOLD entry when startDate changes if NEW or COMPLETED entry is "recent"
-
-Performance
------------
-* Use cache file for NSFetchedResultControllers
-* Cache Todo.entriesByDate
-* Make lastEntry a modeled property
 
 New Thoughts
 ------------
+* Remove start date when action taken?
+* Don't need prominent type icons in journal. Every entry is newness, readiness or action.
+* Filter slider has stops: all, hide inactive, hide complete, hide cold
+* Check priority calcs
+* Staleness driven by last action date
+* Iciness driven by distance from start date
+* Temperature from urgency, staleness and iciness
+* Glide left to make more icy (start date) or right to make more urgent (due date)
+* No more commitment: importance 0 = no commitment, no staleness
 * "READY" -> "TODO"
-* "HOLD" -> "DEFER"?
+* Slide left to see "bar" partial complete, more left check, more left repeat
+* Tap and drag: up more prominent, down less prominent remove start date, left blue, right red
 * One line entry: type icon on left, time on right
 * Tap and drag up/down to glow more/less. If not glowing, down to set due date.
 * Tap and drag right/left to put on hold, yellow color
@@ -51,6 +53,10 @@ New Thoughts
 * In Edit dialog mention gestures for each property
 * Show progress of todos by partial coloring, assume one action will complete and scale accordingly
 
+Performance
+-----------
+* Use cache file for NSFetchedResultControllers
+* Cache lastEntry metadata
 
 PRE-JOURNAL-ONLY
 
@@ -59,11 +65,6 @@ Code
 * Enhance InnerBand to return fetch requests and/or fetch results controller
 * Clean up urgency/due-date mess
 * Replace entry timestamp with journalTimeString
-
-Performance
------------
-* Use cache file for both NSFetchedResultControllers
-* Cache Todo.entriesByDate
 
 Testing
 -------

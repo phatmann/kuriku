@@ -57,7 +57,7 @@ enum {
         self.importanceSlider.value                 = self.todo.importance;
         self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(self.todo.commitment);
         self.dueDateLabel.text                      = dateToString(self.todo.dueDate);
-        self.startDateLabel.text                    = dateToString(self.todo.lastEntry.startDate);
+        self.startDateLabel.text                    = dateToString(self.todo.startDate);
         self.notesField.text                        = self.todo.notes;
     } else {
         self.navigationItem.title = @"New Todo";
@@ -105,9 +105,8 @@ enum {
     
     NSDate *startDate = stringToDate(self.startDateLabel.text);
 
-    if (!datesEqual(self.todo.lastEntry.startDate, startDate)) {
-        Entry *entry = [self.todo findOrCreateEntryForStartDate:startDate ? EntryTypeHold : EntryTypeReady];
-        entry.startDate = startDate;
+    if (!datesEqual(self.todo.startDate, startDate)) {
+        self.todo.startDate = startDate;
     }
     
     if (!self.todo.dueDate)

@@ -23,7 +23,6 @@
 @dynamic journal;
 @dynamic type;
 @dynamic state;
-@dynamic startDate;
 
 - (void)awakeFromFetch {
     [super awakeFromFetch];
@@ -72,7 +71,7 @@
 }
 
 - (void)updatePriorityFromTodo {
-    if (self.state == EntryStateInactive || self.type == EntryTypeComplete || self.startDate)
+    if (self.state == EntryStateInactive || self.type == EntryTypeComplete)
         self.priority = 0;
     else
         self.priority = self.todo.priority;
