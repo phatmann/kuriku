@@ -85,7 +85,7 @@
             break;
     }
     
-    return [NSString stringWithFormat:@"Importance%d:Commitment%@:Status%@:State%@", entry.todo.importance, commitment, status, state];
+    return [NSString stringWithFormat:@"Commitment%@:Status%@:State%@", commitment, status, state];
 }
 
 - (void)setEntry:(Entry *)entry {
@@ -151,6 +151,12 @@
         UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
         self.titleTextView.textColor = color;
     }
+    
+    CGFloat lowImportanceFontSize  = [NUISettings getFloat:@"font-size" withClass:@"ImportanceLow"];
+    CGFloat highImportanceFontSize = [NUISettings getFloat:@"font-size" withClass:@"ImportanceHigh"];
+    
+    CGFloat fontSize = lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * self.entry.todo.importance);
+    self.titleTextView.font = [self.titleTextView.font fontWithSize:fontSize];
 }
     
 #pragma Text View Delegate

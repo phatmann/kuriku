@@ -147,7 +147,7 @@
 }
 
 - (void)test_calculate_priority2 {
-    self.todo.importance = 2;
+    self.todo.importance = 0.5;
     self.todo.urgency    = 0;
     //self.todo.commitment = TodoCommitmentMust;
     assertThatFloat(self.todo.priority, closeTo(0.25, 0.2));
@@ -161,7 +161,7 @@
 }
 
 - (void)test_calculate_priority4 {
-    self.todo.importance = 2;
+    self.todo.importance = 0.5;
     self.todo.urgency    = 0.5;
     //self.todo.commitment = TodoCommitmentMust;
     assertThatFloat(self.todo.priority, closeTo(0.5, 0.2));
@@ -182,7 +182,7 @@
 //}
 
 - (void)test_calculate_priority7 {
-    self.todo.importance = TodoRangeMaxValue;
+    self.todo.importance = 1.0;
     self.todo.urgency    = 1.0;
     //self.todo.commitment = TodoCommitmentDefaultValue;
     assertThatFloat(self.todo.priority, equalToFloat(1.0));

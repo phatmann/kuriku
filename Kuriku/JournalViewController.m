@@ -125,7 +125,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     
     if (self.pinchIndexPath && (self.pinchIndexPath.section != NSNotFound) && (self.pinchIndexPath.row != NSNotFound)) {
         Todo* todo =  [self todoAtIndexPath:self.pinchIndexPath];
-		todo.importance = round(MAX(0, MIN(TodoRangeMaxValue, self.pinchInitialImportance * scale)));
+		todo.importance = MAX(0.0, MIN(1.0, self.pinchInitialImportance * scale));
         EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
         [cell refresh];
     }

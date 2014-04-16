@@ -3,7 +3,6 @@ The visual intelligent action journal
 
 Todo
 ----
-* Make importance a float
 * Show red if hot or blue if cold
 * Tap to edit
 * Slide to take action, set complete, or repeat

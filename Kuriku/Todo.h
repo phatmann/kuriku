@@ -29,7 +29,7 @@ static const int TodoPriorityVersion = 5;
 @interface Todo : NSManagedObject
 
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic) int16_t importance;
+@property (nonatomic) float_t importance;
 @property (nonatomic) float_t priority;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *dueDate;

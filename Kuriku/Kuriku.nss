@@ -14,23 +14,11 @@ UrgencyHot {
     font-color: hsl(0.001, 1.0, 1.0);
 }
 
-Importance0 {
+ImportanceLow {
     font-size: 12;
 }
 
-Importance1 {
-    font-size: 14;
-}
-
-Importance2 {
-    font-size: 16;
-}
-
-Importance3 {
-    font-size: 18;
-}
-
-Importance4 {
+ImportanceHigh {
     font-size: 20;
 }
 
