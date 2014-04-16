@@ -3,11 +3,11 @@ The visual intelligent action journal
 
 Todo
 ----
+* Make importance a float
 * Show red if hot or blue if cold
-* Make urgency a float
 * Tap to edit
 * Slide to take action, set complete, or repeat
-* Implement temperature
+* Implement temperature, including staleness based on last action date
 * Glide to set temperature, via start date or due date
 
 Bugs

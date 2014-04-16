@@ -40,7 +40,7 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) Journal *journal;
 
 @property (nonatomic, weak, readonly) Entry *lastEntry;
-@property (nonatomic) int16_t urgency;
+@property (nonatomic) float_t urgency;
 
 - (Entry *)createEntry:(EntryType)type;
 
@@ -49,8 +49,8 @@ static const int TodoPriorityVersion = 5;
 + (void)dailyUpdate;
 + (void)migrate;
 
-int16_t urgencyFromDueDate(NSDate *dueDate);
-NSDate *dueDateFromUrgency(int16_t urgency);
+float_t urgencyFromDueDate(NSDate *dueDate);
+NSDate *dueDateFromUrgency(float_t urgency);
 
 extern const NSTimeInterval kUrgentDaysBeforeDueDate;
 

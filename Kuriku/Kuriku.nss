@@ -2,24 +2,16 @@ Entry {
     font-name: Helvetica;
 }
 
-Urgency0 {
+UrgencyNone {
     font-color: black;
 }
 
-Urgency1 {
-    font-color: hsl(37, 1.0, 1.0);
+UrgencyWarm {
+    font-color: hsl(0.15, 1.0, 1.0);
 }
 
-Urgency2 {
-    font-color: hsl(25, 1.0, 1.0);
-}
-
-Urgency3 {
-    font-color: hsl(12, 1.0, 1.0);
-}
-
-Urgency4 {
-    font-color: hsl(0, 1.0, 1.0);
+UrgencyHot {
+    font-color: hsl(0.001, 1.0, 1.0);
 }
 
 Importance0 {

@@ -123,7 +123,7 @@ enum {
 }
 
 - (IBAction)sliderValueChanged:(UISlider *)slider {
-    [slider setValue:roundf(slider.value) animated:YES];
+    //[slider setValue:roundf(slider.value) animated:YES];
     
     if (slider == self.urgencySlider) {
         self.dueDateLabel.text = dateToString(dueDateFromUrgency(self.urgencySlider.value));

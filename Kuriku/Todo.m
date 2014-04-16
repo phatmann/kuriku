@@ -11,6 +11,7 @@
 #import <InnerBand/InnerBand.h>
 
 const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
+const NSTimeInterval kStaleDaysAfterLastEntryDate = 14;
 static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 @implementation Todo
@@ -102,36 +103,36 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     return [self.entries lastObject];
 }
 
-- (int16_t)urgency {
+- (float_t)urgency {
     return urgencyFromDueDate(self.dueDate);
 }
 
-- (void)setUrgency:(int16_t)urgency {
+- (void)setUrgency:(float_t)urgency {
     self.dueDate = dueDateFromUrgency(urgency);
 }
 
 #pragma mark -
 
-int16_t urgencyFromDueDate(NSDate *dueDate) {
+float_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)
         return 0;
         
-    int daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
+    CGFloat daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
     
     if (daysUntilDue <= 0) {
-        return TodoRangeMaxValue;
+        return 1.0f;
     } else if (daysUntilDue >= kUrgentDaysBeforeDueDate) {
-        return 0;
+        return 0.0f;
     } else {
-        return ((kUrgentDaysBeforeDueDate - daysUntilDue) *  TodoRangeMaxValue) / kUrgentDaysBeforeDueDate;
+        return (kUrgentDaysBeforeDueDate - daysUntilDue) / kUrgentDaysBeforeDueDate;
     }
 }
 
-NSDate *dueDateFromUrgency(int16_t urgency) {
+NSDate *dueDateFromUrgency(float_t urgency) {
     if (urgency == 0) {
         return nil;
     } else {
-        int daysUntilDue = kUrgentDaysBeforeDueDate - ((urgency * kUrgentDaysBeforeDueDate) / TodoRangeMaxValue);
+        int daysUntilDue = kUrgentDaysBeforeDueDate - (urgency * kUrgentDaysBeforeDueDate);
         return [[NSDate today] dateByAddingDays:daysUntilDue];
     }
 }
@@ -221,14 +222,12 @@ NSDate *dueDateFromUrgency(int16_t urgency) {
         return;
     }
     
-    static const CGFloat kMaxValue = TodoRangeMaxValue * 2;
+    self.priority = (self.urgency * 0.5) + (((float_t)self.importance / TodoRangeMaxValue) * 0.5);
     
-    self.priority = (self.urgency + self.importance) / kMaxValue;
-    
-    if (self.commitment == TodoCommitmentToday)
-        self.priority += kMaxValue + 1;
-    else if (self.commitment == TodoCommitmentMaybe)
-        self.priority -= kMaxValue + 1;
+//    if (self.commitment == TodoCommitmentToday)
+//        self.priority += kMaxValue + 1;
+//    else if (self.commitment == TodoCommitmentMaybe)
+//        self.priority -= kMaxValue + 1;
 }
 
 @end

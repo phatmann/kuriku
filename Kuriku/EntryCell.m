@@ -85,7 +85,7 @@
             break;
     }
     
-    return [NSString stringWithFormat:@"Urgency%d:Importance%d:Commitment%@:Status%@:State%@", entry.todo.urgency, entry.todo.importance, commitment, status, state];
+    return [NSString stringWithFormat:@"Importance%d:Commitment%@:Status%@:State%@", entry.todo.importance, commitment, status, state];
 }
 
 - (void)setEntry:(Entry *)entry {
@@ -137,6 +137,20 @@
                                                                         attributes:attributes];
     self.titleTextView.typingAttributes = attributes;
     [self.titleTextView applyNUI];
+    
+    if (self.entry.todo.urgency == 0) {
+        self.titleTextView.textColor = [NUISettings getColor:@"font-color" withClass:@"UrgencyNone"];
+    } else {
+        UIColor *warmColor = [NUISettings getColor:@"font-color" withClass:@"UrgencyWarm"];
+        UIColor *hotColor  = [NUISettings getColor:@"font-color" withClass:@"UrgencyHot"];
+        
+        CGFloat warmHue, hotHue, warmSaturation, hotSaturation, warmBrightness, hotBrightness;
+        [warmColor getHue:&warmHue saturation:&warmSaturation brightness:&warmBrightness alpha:nil];
+        [hotColor  getHue:&hotHue saturation:&hotSaturation brightness:&hotBrightness alpha:nil];
+        CGFloat hue = warmHue - ((warmHue + hotHue) * self.entry.todo.urgency);
+        UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
+        self.titleTextView.textColor = color;
+    }
 }
     
 #pragma Text View Delegate
