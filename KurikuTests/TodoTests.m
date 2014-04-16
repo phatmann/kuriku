@@ -209,19 +209,19 @@
 
 - (void)test_update_todos_ready_to_start {
     Todo *todo = self.todo;
-    Entry *entry = [todo createEntry:EntryTypeHold];
-    entry.startDate = [NSDate today];
+    todo.startDate = [NSDate today];
     
     Todo *todo2 = [self createTodo];
-    entry = [todo2 createEntry:EntryTypeHold];
-    entry.startDate = [[NSDate today] dateByAddingDays:1];
+    todo2.startDate = [[NSDate today] dateByAddingDays:1];
     
     Todo *todo3 = [self createTodo];
     
     [Todo updateTodosReadyToStart];
     
     assertThatInt(todo.lastEntry.type, equalToInt(EntryTypeReady));
-    assertThatInt(todo2.lastEntry.type, equalToInt(EntryTypeHold));
+    assertThat(todo.startDate, is(nilValue()));
+    
+    assertThatInt(todo2.lastEntry.type, equalToInt(EntryTypeNew));
     assertThatInt(todo3.lastEntry.type, equalToInt(EntryTypeNew));
 }
 
@@ -254,6 +254,12 @@
     assertThat(self.todo.entries.array, is(@[createEntry, entry1]));
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
     assertThat(self.todo.entries.array, is(@[createEntry, entry1, entry2]));
+}
+
+- (void)test_priority_zero_when_start_date {
+    assertThatFloat(self.todo.priority, isNot(equalToFloat(0)));
+    self.todo.startDate = [[NSDate today] dateByAddingDays:1];
+    assertThatFloat(self.todo.priority, equalToFloat(0));
 }
 
 - (void)test_update_urgency_from_due_date {

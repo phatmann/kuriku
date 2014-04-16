@@ -54,13 +54,6 @@
     assertThatFloat(entry.priority, equalToFloat(0));
 }
 
-- (void)test_priority_zero_when_start_date {
-    assertThatFloat(self.todo.priority, isNot(equalToFloat(0)));
-    Entry *entry = [self.todo findOrCreateEntryForStartDate:EntryTypeHold];
-    entry.startDate = [[NSDate today] dateByAddingDays:1];
-    assertThatFloat(entry.priority, equalToFloat(0));
-}
-
 - (Todo *)createTodo {
     Todo *todo = [Todo create];
     todo.title = @"title";

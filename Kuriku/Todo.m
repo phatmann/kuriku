@@ -44,6 +44,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     [self addObserver:self forKeyPath:@"urgency" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"commitment" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"dueDate" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"startDate" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"entries" options:NSKeyValueObservingOptionOld context:nil];
 }
 
@@ -52,7 +53,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
-    if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"importance"] || [keyPath isEqualToString:@"commitment"]) {
+    if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"] || [keyPath isEqualToString:@"importance"] || [keyPath isEqualToString:@"commitment"]) {
         [self updatePriority];
     } else if ([keyPath isEqualToString:@"entries"]) {
         NSArray *removedEntries = change[NSKeyValueChangeOldKey];
@@ -180,16 +181,14 @@ NSDate *dueDateFromUrgency(int16_t urgency) {
 }
 
 + (void)updateTodosReadyToStart {
-    // TODO: use lastEntry key path when modeled
-    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"lastEntry.startDate >= %@", [NSDate today]];
-    //NSArray *todos = [Todo allForPredicate:predicate];
-    
     NSArray *todos = [Todo all];
     NSDate *today = [NSDate today];
     
     for (Todo *todo in todos) {
-        if (todo.startDate && [todo.startDate timeIntervalSinceDate:today] <= 0)
+        if (todo.startDate && [todo.startDate timeIntervalSinceDate:today] <= 0) {
+            todo.startDate = nil;
             [todo createEntry:EntryTypeReady];
+        }
     }
     
     [IBCoreDataStore save];
@@ -217,13 +216,19 @@ NSDate *dueDateFromUrgency(int16_t urgency) {
 #pragma mark - Private
 
 - (void)updatePriority {
-    CGFloat maxValue = TodoRangeMaxValue * 2;
-    self.priority = (self.urgency + self.importance) / maxValue;
+    if (self.startDate) {
+        self.priority = 0;
+        return;
+    }
+    
+    static const CGFloat kMaxValue = TodoRangeMaxValue * 2;
+    
+    self.priority = (self.urgency + self.importance) / kMaxValue;
     
     if (self.commitment == TodoCommitmentToday)
-        self.priority += maxValue + 1;
+        self.priority += kMaxValue + 1;
     else if (self.commitment == TodoCommitmentMaybe)
-        self.priority -= maxValue + 1;
+        self.priority -= kMaxValue + 1;
 }
 
 @end

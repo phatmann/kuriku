@@ -43,7 +43,6 @@
     [self addObserver:self forKeyPath:@"todo.priority" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"type" options:NSKeyValueObservingOptionInitial context:nil];
-    [self addObserver:self forKeyPath:@"startDate" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
 
