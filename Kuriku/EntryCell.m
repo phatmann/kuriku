@@ -127,12 +127,16 @@
             UIColor *warmColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureWarm"];
             UIColor *hotColor  = [NUISettings getColor:@"font-color" withClass:@"TemperatureHot"];
             
+            CGFloat hotRed;
+            [hotColor getRed:&hotRed green:nil blue:nil alpha:nil];
+            
             CGFloat warmHue, hotHue;
             [warmColor getHue:&warmHue saturation:nil brightness:nil alpha:nil];
             [hotColor  getHue:&hotHue saturation:nil brightness:nil alpha:nil];
-            // Ignore hotHue for now, wrong anyway due to NUI bug
+            warmHue = fmod(warmHue, 1.0);
+            hotHue = fmod(hotHue, 1.0);
             
-            CGFloat hue = warmHue - (warmHue * self.entry.todo.temperature);
+            CGFloat hue = warmHue - ((warmHue - hotHue) * self.entry.todo.temperature);
             UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
             self.titleTextView.textColor = color;
         } else if (self.entry.todo.temperature < 0) {
@@ -142,6 +146,8 @@
             CGFloat coolHue, coldHue;
             [coolColor getHue:&coolHue saturation:nil brightness:nil alpha:nil];
             [coldColor getHue:&coldHue saturation:nil brightness:nil alpha:nil];
+            coolHue = fmod(coolHue, 1.0);
+            coldHue = fmod(coldHue, 1.0);
             
             CGFloat hue = coolHue + ((coldHue - coolHue) * -self.entry.todo.temperature);
             UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
