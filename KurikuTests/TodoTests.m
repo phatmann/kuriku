@@ -287,6 +287,16 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.staleness, equalToFloat(0.0));
 }
 
+- (void)test_calculate_frostiness_for_frozen_todo {
+    self.todo.startDate = [[NSDate today] dateByAddingDays:kFrostyDaysBeforeStartDate];
+    assertThatFloat(self.todo.frostiness, equalToFloat(1.0));
+}
+
+- (void)test_calculate_frostiness_for_thawed_todo {
+    self.todo.startDate = [NSDate today];
+    assertThatFloat(self.todo.frostiness, equalToFloat(0.0));
+}
+
 #pragma mark -
 
 - (Todo *)createTodo {

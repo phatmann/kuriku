@@ -138,7 +138,7 @@
     self.titleTextView.typingAttributes = attributes;
     [self.titleTextView applyNUI];
     
-    if (self.entry.todo.urgency > 0.1) {
+    if (self.entry.todo.urgency > 0) {
         UIColor *warmColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureWarm"];
         UIColor *hotColor  = [NUISettings getColor:@"font-color" withClass:@"TemperatureHot"];
         
@@ -150,7 +150,7 @@
         CGFloat hue = warmHue - (warmHue * self.entry.todo.urgency);
         UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
         self.titleTextView.textColor = color;
-    } else if (self.entry.todo.staleness > 0.1) {
+    } else if (self.entry.todo.frostiness > 0) {
         UIColor *coolColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureCool"];
         UIColor *coldColor  = [NUISettings getColor:@"font-color" withClass:@"TemperatureCold"];
         
@@ -158,7 +158,7 @@
         [coolColor getHue:&coolHue saturation:nil brightness:nil alpha:nil];
         [coldColor  getHue:&coldHue saturation:nil brightness:nil alpha:nil];
         
-        CGFloat hue = coolHue + ((coldHue - coolHue) * self.entry.todo.staleness);
+        CGFloat hue = coolHue + ((coldHue - coolHue) * self.entry.todo.frostiness);
         UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
         self.titleTextView.textColor = color;
     } else {

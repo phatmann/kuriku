@@ -12,6 +12,8 @@
 
 const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
 const NSTimeInterval kStaleDaysAfterLastEntryDate = 14;
+const NSTimeInterval kFrostyDaysBeforeStartDate = 14;
+
 static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 @implementation Todo
@@ -107,12 +109,27 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     if (!self.lastEntry)
         return 0;
     
-    int daysAfterLastEntryDate = -[[self.lastEntry.timestamp dateAtStartOfDay] timeIntervalSinceNow] / kSecondsInDay;
+    int daysAfterLastEntryDate = -roundf([[self.lastEntry.timestamp dateAtStartOfDay] timeIntervalSinceNow] / kSecondsInDay);
     
     if (daysAfterLastEntryDate >= kStaleDaysAfterLastEntryDate) {
         return 1.0f;
     } else {
         return 1.0f - ((kStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / kStaleDaysAfterLastEntryDate);
+    }
+}
+
+- (float_t)frostiness {
+    if (!self.startDate)
+        return 0;
+    
+    int daysUntilDefrosted = roundf([self.startDate timeIntervalSinceNow] / kSecondsInDay);
+    
+    if (daysUntilDefrosted <= 0) {
+        return 0.0f;
+    } else if (daysUntilDefrosted >= kFrostyDaysBeforeStartDate) {
+        return 1.0f;
+    } else {
+        return (kFrostyDaysBeforeStartDate - daysUntilDefrosted) / kFrostyDaysBeforeStartDate;
     }
 }
 
@@ -130,7 +147,7 @@ float_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)
         return 0;
         
-    int daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
+    int daysUntilDue = roundf([dueDate timeIntervalSinceNow] / kSecondsInDay);
     
     if (daysUntilDue <= 0) {
         return 1.0f;
