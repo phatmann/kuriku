@@ -33,6 +33,7 @@ ImportanceHigh {
 StatusCompleted {
     text-decoration: line-through;
     font-color: black;
+    font-color: #D8D9DC;
 }
 
 StateInactive {

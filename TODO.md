@@ -3,7 +3,6 @@ The visual intelligent action journal
 
 Todo
 ----
-* Show red if hot or blue if cold
 * Tap to edit
 * Slide to take action, set complete, or repeat
 * Implement temperature, including staleness based on last action date

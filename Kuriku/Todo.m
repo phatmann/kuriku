@@ -33,20 +33,38 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     self.createDate = [NSDate date];
     [self createEntry:EntryTypeNew];
     self.journal = [Journal first];
-    [self setup];
+    [self setUp];
 }
 
 - (void)awakeFromFetch {
     [super awakeFromFetch];
-    [self setup];
+    [self setUp];
 }
 
-- (void)setup {
+- (void)awakeFromSnapshotEvents:(NSSnapshotEventType)flags {
+   [super awakeFromSnapshotEvents:flags];
+   [self setUp];
+}
+
+- (void)willTurnIntoFault {
+    [super willTurnIntoFault];
+    [self tearDown];
+}
+
+- (void)setUp {
     [self addObserver:self forKeyPath:@"importance" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"urgency" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"dueDate" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"startDate" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"entries" options:NSKeyValueObservingOptionOld context:nil];
+}
+
+- (void)tearDown {
+    [self removeObserver:self forKeyPath:@"importance"];
+    [self removeObserver:self forKeyPath:@"urgency"];
+    [self removeObserver:self forKeyPath:@"dueDate"];
+    [self removeObserver:self forKeyPath:@"startDate"];
+    [self removeObserver:self forKeyPath:@"entries"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

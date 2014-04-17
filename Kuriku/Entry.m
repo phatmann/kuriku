@@ -26,7 +26,7 @@
 
 - (void)awakeFromFetch {
     [super awakeFromFetch];
-    [self setup];
+    [self setUp];
 }
 
 - (void)awakeFromInsert {
@@ -36,15 +36,25 @@
     self.journalDate = [self.timestamp dateAtStartOfDay];
     self.journal = [Journal first];
     
-    [self setup];
+    [self setUp];
 }
 
-- (void)setup {
+- (void)awakeFromSnapshotEvents:(NSSnapshotEventType)flags {
+    [super awakeFromSnapshotEvents:flags];
+    [self setUp];
+}
+
+- (void)setUp {
     [self addObserver:self forKeyPath:@"todo.priority" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"type" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
+- (void)tearDown {
+    [self removeObserver:self forKeyPath:@"todo.priority"];
+    [self removeObserver:self forKeyPath:@"state"];
+    [self removeObserver:self forKeyPath:@"type"];
+}
 
 - (void)setJournalDate:(NSDate *)date {
     self.journalDateString = [journalDateFormatter() stringFromDate:date];
@@ -55,17 +65,6 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"type"]) {
-        switch (self.type) {
-            case EntryTypeComplete:
-                self.state = EntryStateInactive;
-                break;
-                
-            default:
-                self.state = EntryStateActive;
-        }
-    }
-    
     [self updatePriorityFromTodo];
 }
 
