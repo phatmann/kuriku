@@ -151,11 +151,14 @@
         }
     }
     
+    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
+}
+
++ (CGFloat)fontSizeForImportance:(CGFloat)importance {
     CGFloat lowImportanceFontSize  = [NUISettings getFloat:@"font-size" withClass:@"ImportanceLow"];
     CGFloat highImportanceFontSize = [NUISettings getFloat:@"font-size" withClass:@"ImportanceHigh"];
     
-    CGFloat fontSize = lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * self.entry.todo.importance);
-    self.titleTextView.font = [self.titleTextView.font fontWithSize:fontSize];
+    return lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * importance);
 }
     
 #pragma Text View Delegate

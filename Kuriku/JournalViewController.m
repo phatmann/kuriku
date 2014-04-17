@@ -84,10 +84,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
-- (Todo *)todoAtIndexPath:(NSIndexPath *)indexPath {
-    return [[self entryAtIndexPath:indexPath] todo];
-}
-
 - (void)reloadData {
     [self createFetchedResultsController];
     self.fetchedResultsController.delegate = self;
@@ -100,8 +96,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     if (pinchRecognizer.state == UIGestureRecognizerStateBegan) {
         CGPoint pinchLocation = [pinchRecognizer locationInView:self.tableView];
         self.pinchIndexPath = [self.tableView indexPathForRowAtPoint:pinchLocation];
-        Todo* todo =  [self todoAtIndexPath:self.pinchIndexPath];
-        self.pinchInitialImportance = todo.importance;
+        Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
+        self.pinchInitialImportance = entry.todo.importance;
         
         [self updateImportanceForPinchScale:pinchRecognizer.scale];
     }
@@ -124,8 +120,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 - (void)updateImportanceForPinchScale:(CGFloat)scale {
     
     if (self.pinchIndexPath && (self.pinchIndexPath.section != NSNotFound) && (self.pinchIndexPath.row != NSNotFound)) {
-        Todo* todo =  [self todoAtIndexPath:self.pinchIndexPath];
-		todo.importance = MAX(0.0, MIN(1.0, self.pinchInitialImportance * scale));
+        Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
+		entry.todo.importance = MAX(0.0, MIN(1.0, self.pinchInitialImportance * scale));
         EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
         [cell refresh];
     }
@@ -140,7 +136,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
             
             if (cell.isHighlighted) {
-                [self showEditTodoView:[self todoAtIndexPath:indexPath]];
+                Entry* entry =  [self entryAtIndexPath:indexPath];
+                [self showEditTodoView:entry.todo];
             }
         }
     }
@@ -271,12 +268,15 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     
     if (!sizingTextView) {
         sizingTextView = [TMGrowingTextView new];
-        sizingTextView.font = [UIFont systemFontOfSize:14];
     }
     
-    sizingTextView.text = [[self todoAtIndexPath:indexPath ] title];
+    Entry *entry = [self entryAtIndexPath:indexPath];
+    
+    sizingTextView.text = entry.todo.title;
+    sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
+    
     CGFloat width = self.tableView.bounds.size.width - 60;
-    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 35;
+    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 25;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

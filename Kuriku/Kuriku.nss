@@ -23,7 +23,7 @@ TemperatureHot {
 }
 
 ImportanceLow {
-    font-size: 12;
+    font-size: 14;
 }
 
 ImportanceHigh {
