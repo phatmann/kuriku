@@ -7,11 +7,11 @@ TemperatureNone {
 }
 
 TemperatureCold {
-    font-color: hsl(0.7, 1.0, 1.0);
+    font-color: hsl(0.6, 1.0, 1.0);
 }
 
 TemperatureCool {
-    font-color: hsl(0.6, 1.0, 1.0);
+    font-color: hsl(0.5, 1.0, 1.0);
 }
 
 TemperatureWarm {
@@ -36,10 +36,6 @@ CommitmentMaybe {
 
 CommitmentToday {
     font-name: Helvetica-Bold;
-}
-
-StatusHold {
-    font-name: Helvetica-Oblique;
 }
 
 StatusCompleted {

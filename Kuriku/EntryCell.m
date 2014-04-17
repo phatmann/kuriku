@@ -60,8 +60,6 @@
             
             if (entry.type == EntryTypeComplete) {
                 status = @"Completed";
-            } else if (entry.todo.startDate) {
-                status = @"Hold";
             }
             
             break;
@@ -156,7 +154,7 @@
         
         CGFloat coolHue, coldHue;
         [coolColor getHue:&coolHue saturation:nil brightness:nil alpha:nil];
-        [coldColor  getHue:&coldHue saturation:nil brightness:nil alpha:nil];
+        [coldColor getHue:&coldHue saturation:nil brightness:nil alpha:nil];
         
         CGFloat hue = coolHue + ((coldHue - coolHue) * -self.entry.todo.temperature);
         UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];

@@ -178,7 +178,7 @@ float_t frostinessFromStartDate(NSDate *startDate) {
     } else if (daysUntilThawed >= kFrostyDaysBeforeStartDate) {
         return 1.0f;
     } else {
-        return (kFrostyDaysBeforeStartDate - daysUntilThawed) / kFrostyDaysBeforeStartDate;
+        return 1.0f - (kFrostyDaysBeforeStartDate - daysUntilThawed) / kFrostyDaysBeforeStartDate;
     }
 }
 

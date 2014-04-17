@@ -292,6 +292,11 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.frostiness, equalToFloat(1.0));
 }
 
+- (void)test_calculate_frostiness_for_thawing_todo {
+    self.todo.startDate = [[NSDate today] dateByAddingDays:kFrostyDaysBeforeStartDate/4];
+    assertThatFloat(self.todo.frostiness, closeTo(0.2, 0.2));
+}
+
 - (void)test_calculate_frostiness_for_thawed_todo {
     self.todo.startDate = [NSDate today];
     assertThatFloat(self.todo.frostiness, equalToFloat(0.0));
