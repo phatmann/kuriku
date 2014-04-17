@@ -158,21 +158,21 @@ static NSDate *entryDate;
     self.todo.importance = 0.5;
     self.todo.urgency    = 0;
     //self.todo.commitment = TodoCommitmentMust;
-    assertThatFloat(self.todo.priority, closeTo(0.25, 0.2));
+    assertThatFloat(self.todo.priority, equalToFloat(0.25));
 }
 
 - (void)test_calculate_priority3 {
     self.todo.importance = 0;
     self.todo.urgency    = 0.5;
     //self.todo.commitment = TodoCommitmentMust;
-    assertThatFloat(self.todo.priority, closeTo(0.25, 0.2));
+    assertThatFloat(self.todo.priority, equalToFloat(self.todo.urgency * 0.5));
 }
 
 - (void)test_calculate_priority4 {
     self.todo.importance = 0.5;
     self.todo.urgency    = 0.5;
     //self.todo.commitment = TodoCommitmentMust;
-    assertThatFloat(self.todo.priority, closeTo(0.5, 0.2));
+    assertThatFloat(self.todo.priority, equalToFloat(0.25 + self.todo.urgency * 0.5));
 }
 
 //- (void)test_calculate_priority5 {
@@ -280,11 +280,11 @@ static NSDate *entryDate;
 
 - (void)test_calculate_staleness_for_old_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate];
-    assertThatFloat(self.todo.staleness, closeTo(1.0, 0.1));
+    assertThatFloat(self.todo.staleness, equalToFloat(1.0));
 }
 
 - (void)test_calculate_staleness_for_new_todo {
-    assertThatFloat(self.todo.staleness, closeTo(0.0, 0.1));
+    assertThatFloat(self.todo.staleness, equalToFloat(0.0));
 }
 
 #pragma mark -

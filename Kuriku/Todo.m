@@ -107,12 +107,12 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     if (!self.lastEntry)
         return 0;
     
-    CGFloat daysAfterLastEntryDate = -[[self.lastEntry.timestamp dateAtStartOfDay] timeIntervalSinceNow] / kSecondsInDay;
+    int daysAfterLastEntryDate = -[[self.lastEntry.timestamp dateAtStartOfDay] timeIntervalSinceNow] / kSecondsInDay;
     
     if (daysAfterLastEntryDate >= kStaleDaysAfterLastEntryDate) {
         return 1.0f;
     } else {
-        return 1.0 - ((kStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / kStaleDaysAfterLastEntryDate);
+        return 1.0f - ((kStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / kStaleDaysAfterLastEntryDate);
     }
 }
 
@@ -130,7 +130,7 @@ float_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)
         return 0;
         
-    CGFloat daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
+    int daysUntilDue = [dueDate timeIntervalSinceNow] / kSecondsInDay;
     
     if (daysUntilDue <= 0) {
         return 1.0f;
@@ -234,8 +234,6 @@ NSDate *dueDateFromUrgency(float_t urgency) {
         self.priority = 0;
         return;
     }
-    
-
     
     self.priority = self.importance * 0.5;
     
