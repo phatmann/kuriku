@@ -37,7 +37,7 @@
 }
 
 - (void)test_priority_updated_when_todo_priority_changes {
-    self.todo.importance = TodoRangeMaxValue;
+    self.todo.importance = 1.0;
     assertThatFloat(self.todo.lastEntry.priority, equalToFloat(self.todo.priority));
 }
 

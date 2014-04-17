@@ -8,6 +8,7 @@ Todo
 * Slide to take action, set complete, or repeat
 * Implement temperature, including staleness based on last action date
 * Glide to set temperature, via start date or due date
+* importance 0 = no commitment, no staleness
 
 Bugs
 -------------
@@ -31,7 +32,6 @@ New Thoughts
 * Iciness driven by distance from start date
 * Temperature from urgency, staleness and iciness
 * Glide left to make more icy (start date) or right to make more urgent (due date)
-* No more commitment: importance 0 = no commitment, no staleness
 * "READY" -> "TODO"
 * Slide left to see "bar" partial complete, more left check, more left repeat
 * Tap and drag: up more prominent, down less prominent remove start date, left blue, right red

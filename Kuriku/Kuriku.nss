@@ -30,14 +30,6 @@ ImportanceHigh {
     font-size: 20;
 }
 
-CommitmentMaybe {
-    font-name: Helvetica-Light;
-}
-
-CommitmentToday {
-    font-name: Helvetica-Bold;
-}
-
 StatusCompleted {
     text-decoration: line-through;
     font-color: black;

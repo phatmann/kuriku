@@ -145,58 +145,33 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
 }
 
-//- (void)test_update_priority_when_commitment_changes {
-//    float oldPriority = self.todo.priority;
-//    self.todo.commitment = 0;
-//    assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
-//}
-
 - (void)test_calculate_priority1 {
     self.todo.importance = 0;
     self.todo.urgency    = 0;
-    //self.todo.commitment = TodoCommitmentMust;
     assertThatFloat(self.todo.priority, equalToFloat(0));
 }
 
 - (void)test_calculate_priority2 {
     self.todo.importance = 0.5;
     self.todo.urgency    = 0;
-    //self.todo.commitment = TodoCommitmentMust;
     assertThatFloat(self.todo.priority, equalToFloat(0.25));
 }
 
 - (void)test_calculate_priority3 {
     self.todo.importance = 0;
     self.todo.urgency    = 0.5;
-    //self.todo.commitment = TodoCommitmentMust;
     assertThatFloat(self.todo.priority, equalToFloat(self.todo.urgency * 0.5));
 }
 
 - (void)test_calculate_priority4 {
     self.todo.importance = 0.5;
     self.todo.urgency    = 0.5;
-    //self.todo.commitment = TodoCommitmentMust;
     assertThatFloat(self.todo.priority, equalToFloat(0.25 + self.todo.urgency * 0.5));
 }
-
-//- (void)test_calculate_priority5 {
-//    self.todo.importance = 2;
-//    self.todo.urgency    = 0.5;
-//    //self.todo.commitment = TodoCommitmentMaybe;
-//    assertThatFloat(self.todo.priority, equalToFloat(4.0/8.0 - 9));
-//}
-
-//- (void)test_calculate_priority6 {
-//    self.todo.importance = 2;
-//    self.todo.urgency    = 0.5;
-//    //self.todo.commitment = TodoCommitmentToday;
-//    assertThatFloat(self.todo.priority, equalToFloat(4.0/8.0 + 9));
-//}
 
 - (void)test_calculate_priority7 {
     self.todo.importance = 1.0;
     self.todo.urgency    = 1.0;
-    //self.todo.commitment = TodoCommitmentDefaultValue;
     assertThatFloat(self.todo.priority, equalToFloat(1.0));
 }
 

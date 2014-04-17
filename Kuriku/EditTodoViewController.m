@@ -14,7 +14,6 @@
 @interface EditTodoViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *titleField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *commitmentChooser;
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
 @property (weak, nonatomic) IBOutlet UISlider *importanceSlider;
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
@@ -55,7 +54,6 @@ enum {
         self.titleField.text                        = self.todo.title;
         self.urgencySlider.value                    = self.todo.urgency;
         self.importanceSlider.value                 = self.todo.importance;
-        self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(self.todo.commitment);
         self.dueDateLabel.text                      = dateToString(self.todo.dueDate);
         self.startDateLabel.text                    = dateToString(self.todo.startDate);
         self.notesField.text                        = self.todo.notes;
@@ -65,7 +63,6 @@ enum {
         self.titleField.text                        = nil;
         self.urgencySlider.value                    = TodoUrgencyDefaultValue;
         self.importanceSlider.value                 = TodoImportanceDefaultValue;
-        self.commitmentChooser.selectedSegmentIndex = commitmentToChooserValue(TodoCommitmentDefaultValue);
         self.dueDateLabel.text                      = NoDateString;
         self.startDateLabel.text                    = NoDateString;
         self.notesField.text                        = nil;
@@ -114,7 +111,6 @@ enum {
     
     self.todo.title      = self.titleField.text;
     self.todo.importance = self.importanceSlider.value;
-    self.todo.commitment = chooserValueToCommitment(self.commitmentChooser.selectedSegmentIndex);
     self.todo.notes      = self.notesField.text;
     
     [[IBCoreDataStore mainStore] save];
@@ -237,28 +233,6 @@ BOOL datesEqual(NSDate *date1, NSDate *date2) {
         return false;
     
     return [date1 isEqualToDate:date2];
-}
-
-int commitmentToChooserValue(TodoCommitment commitment) {
-    switch (commitment) {
-        case TodoCommitmentMaybe:
-            return 0;
-        case TodoCommitmentMust:
-            return 1;
-        case TodoCommitmentToday:
-            return 2;
-    }
-}
-
-TodoCommitment chooserValueToCommitment(NSInteger value) {
-    switch (value) {
-        case 0:
-            return TodoCommitmentMaybe;
-        case 2:
-            return TodoCommitmentToday;
-        default:
-            return TodoCommitmentMust;
-    }
 }
 
 @end

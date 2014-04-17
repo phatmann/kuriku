@@ -25,7 +25,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 @dynamic startDate;
 @dynamic priority;
 @dynamic notes;
-@dynamic commitment;
 @dynamic entries;
 @dynamic journal;
 
@@ -45,7 +44,6 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 - (void)setup {
     [self addObserver:self forKeyPath:@"importance" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"urgency" options:NSKeyValueObservingOptionInitial context:nil];
-    [self addObserver:self forKeyPath:@"commitment" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"dueDate" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"startDate" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"entries" options:NSKeyValueObservingOptionOld context:nil];
@@ -56,7 +54,7 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
-    if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"] || [keyPath isEqualToString:@"importance"] || [keyPath isEqualToString:@"commitment"]) {
+    if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"] || [keyPath isEqualToString:@"importance"]) {
         [self updatePriority];
     } else if ([keyPath isEqualToString:@"entries"]) {
         NSArray *removedEntries = change[NSKeyValueChangeOldKey];

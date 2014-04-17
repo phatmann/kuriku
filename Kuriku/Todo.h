@@ -12,17 +12,8 @@
 
 @class Journal;
 
-typedef enum {
-    TodoCommitmentMaybe = 0,
-    TodoCommitmentMust = 2,
-    TodoCommitmentToday = 4
-} TodoCommitment;
-
-static const int TodoRangeMaxValue = 4;
-
-static const int  TodoCommitmentDefaultValue = 2;
-static const int  TodoImportanceDefaultValue = 2;
-static const int  TodoUrgencyDefaultValue    = 0;
+static const float_t  TodoImportanceDefaultValue = 0.5f;
+static const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
 static const int TodoPriorityVersion = 5;
 
@@ -35,7 +26,6 @@ static const int TodoPriorityVersion = 5;
 @property (nonatomic, strong) NSDate *dueDate;
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSString *notes;
-@property (nonatomic) int16_t commitment;
 @property (nonatomic, strong) NSOrderedSet *entries;
 @property (nonatomic, strong) Journal *journal;
 

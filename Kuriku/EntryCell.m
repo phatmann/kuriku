@@ -52,7 +52,7 @@
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
-    NSString *state, *status = @"Normal", *commitment;
+    NSString *state, *status = @"Normal";
     
     switch (entry.state) {
         case EntryStateActive:
@@ -69,21 +69,7 @@
             break;
     }
     
-    switch (entry.todo.commitment) {
-        case TodoCommitmentMaybe:
-            commitment = @"Maybe";
-            break;
-            
-        case TodoCommitmentMust:
-            commitment = @"Must";
-            break;
-            
-        case TodoCommitmentToday:
-            commitment = @"Today";
-            break;
-    }
-    
-    return [NSString stringWithFormat:@"Commitment%@:Status%@:State%@", commitment, status, state];
+    return [NSString stringWithFormat:@"Status%@:State%@", status, state];
 }
 
 - (void)setEntry:(Entry *)entry {
