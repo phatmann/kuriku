@@ -1,25 +1,26 @@
 Entry {
     font-name: Helvetica;
-}
-
-TemperatureNone {
     font-color: black;
 }
 
+TemperatureNone {
+    background-color: lightGray;
+}
+
 TemperatureCold {
-    font-color: hsl(0.6, 1.0, 1.0);
+    background-color: hsl(0.6, 1.0, 1.0);
 }
 
 TemperatureCool {
-    font-color: hsl(0.5, 1.0, 1.0);
+    background-color: hsl(0.5, 1.0, 1.0);
 }
 
 TemperatureWarm {
-    font-color: hsl(0.15, 1.0, 1.0);
+    background-color: hsl(0.15, 1.0, 1.0);
 }
 
 TemperatureHot {
-    font-color: hsl(0.0, 1.0, 1.0);
+    background-color: hsl(0.0, 1.0, 1.0);
 }
 
 ImportanceLow {

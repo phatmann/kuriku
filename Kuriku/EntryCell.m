@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
+@property (weak, nonatomic) IBOutlet UIView *statusView;
 @end
 
 @implementation EntryCell
@@ -77,24 +78,27 @@
     [self refresh];
 }
 
-- (void)setIsEditing:(BOOL)isEditing {
-    if (isEditing) {
-        self.titleTextView.userInteractionEnabled = YES;
-        self.titleTextView.editable = YES;
-        [self.titleTextView becomeFirstResponder];
-    } else {
-        self.titleTextView.userInteractionEnabled = NO;
-        self.titleTextView.editable = NO;
-        [self.titleTextView resignFirstResponder];
-    }
+//- (void)setIsEditing:(BOOL)isEditing {
+//    if (isEditing) {
+//        self.titleTextView.userInteractionEnabled = YES;
+//        self.titleTextView.editable = YES;
+//        [self.titleTextView becomeFirstResponder];
+//    } else {
+//        self.titleTextView.userInteractionEnabled = NO;
+//        self.titleTextView.editable = NO;
+//        [self.titleTextView resignFirstResponder];
+//    }
+//}
+
+- (BOOL)becomeFirstResponder {
+    return [self.titleTextView becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
     return [self.titleTextView resignFirstResponder];
 }
 
-- (void)refresh
-{
+- (void)refresh {
     self.typeLabel.text = [self entryTypeString:self.entry.type];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     
@@ -102,6 +106,10 @@
     self.startDateLabel.text = self.entry.todo.startDate ? [self startDateString:self.entry.todo.startDate] : nil;
     
     [self updateTitleLabel];
+}
+
+- (IBAction)statusWasTapped {
+    [self.journalViewController statusWasTappedForCell:self];
 }
 
 #pragma mark -
@@ -127,22 +135,22 @@
             static UIColor *warmColor, *hotColor;
             
             if (!warmColor) {
-                warmColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureWarm"];
-                hotColor  = [NUISettings getColor:@"font-color" withClass:@"TemperatureHot"];
+                warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+                hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
             }
             
-            self.titleTextView.textColor = [EntryCell huedColorForScale:self.entry.todo.temperature fromColor:warmColor toColor:hotColor];
+            self.statusView.backgroundColor = [EntryCell huedColorForScale:self.entry.todo.temperature fromColor:warmColor toColor:hotColor];
         } else if (self.entry.todo.temperature < 0) {
             static UIColor *coolColor, *coldColor;
             
             if (!coolColor) {
-                coolColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureCool"];
-                coldColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureCold"];
+                coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+                coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
             }
             
-            self.titleTextView.textColor = [EntryCell huedColorForScale:-self.entry.todo.temperature fromColor:coolColor toColor:coldColor];
+            self.statusView.backgroundColor = [EntryCell huedColorForScale:-self.entry.todo.temperature fromColor:coolColor toColor:coldColor];
         } else {
-            self.titleTextView.textColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureNone"];
+            self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
         }
     }
     
@@ -175,8 +183,13 @@
     [self.journalViewController textViewDidChange:textView];
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    self.accessoryType = UITableViewCellAccessoryDetailButton;
+    [self.journalViewController textViewDidBeginEditing:textView];
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    self.entry.todo.title = textView.text;
+    self.accessoryType = UITableViewCellAccessoryNone;
     [self.journalViewController textViewDidEndEditing:textView];
 }
 

@@ -136,11 +136,15 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
             
             if (cell.isHighlighted) {
-                Entry* entry =  [self entryAtIndexPath:indexPath];
-                [self showEditTodoView:entry.todo];
+                //Entry* entry =  [self entryAtIndexPath:indexPath];
+                //[self showEditTodoView:entry.todo];
             }
         }
     }
+}
+
+- (void)statusWasTappedForCell:(EntryCell *)cell {
+    [self showTodoActionSheet:cell.entry];
 }
 
 - (void)showTodoActionSheet:(Entry *)entry {
@@ -287,8 +291,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self showTodoActionSheet:[self entryAtIndexPath:indexPath]];
+    self.activeCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [self.activeCell becomeFirstResponder];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -362,14 +366,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     
     if (self.isAdding) {
         self.activeCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        self.activeCell.isEditing = YES;
-        
-        if (!self.doneButton) {
-            self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped)];
-            self.addButton = self.navigationBarItem.rightBarButtonItem;
-        }
-        
-        self.navigationBarItem.rightBarButtonItem = self.doneButton;
+        [self.activeCell becomeFirstResponder];
     }
 }
 
@@ -415,8 +412,16 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [self.tableView scrollRectToVisible:caretRect animated:YES];
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    if (!self.doneButton) {
+        self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped)];
+        self.addButton = self.navigationBarItem.rightBarButtonItem;
+    }
+    
+    self.navigationBarItem.rightBarButtonItem = self.doneButton;
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    self.activeCell.isEditing = NO;
     self.filterSlider.enabled = YES;
     self.isAdding = NO;
     self.navigationBarItem.rightBarButtonItem = self.addButton;

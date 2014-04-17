@@ -11,12 +11,16 @@
 #import "EditTodoViewController.h"
 #import "RepeatViewController.h"
 
+@class EntryCell;
+
 @interface JournalViewController : UIViewController  <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, EditTodoViewControllerDelegate, RepeatViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
-- (void)textViewDidChange:(UITextView *)textView;
+- (void)statusWasTappedForCell:(EntryCell *)cell;
+- (void)textViewDidBeginEditing:(UITextView *)textView;
 - (void)textViewDidEndEditing:(UITextView *)textView;
+- (void)textViewDidChange:(UITextView *)textView;
 
 @end
