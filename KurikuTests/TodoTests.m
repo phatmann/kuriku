@@ -145,44 +145,44 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
 }
 
-- (void)test_calculate_priority1 {
+- (void)test_priority1 {
     self.todo.importance = 0;
     self.todo.urgency    = 0;
     assertThatFloat(self.todo.priority, equalToFloat(0));
 }
 
-- (void)test_calculate_priority2 {
+- (void)test_priority2 {
     self.todo.importance = 0.5;
     self.todo.urgency    = 0;
     assertThatFloat(self.todo.priority, equalToFloat(0.25));
 }
 
-- (void)test_calculate_priority3 {
+- (void)test_priority3 {
     self.todo.importance = 0;
     self.todo.urgency    = 0.5;
     assertThatFloat(self.todo.priority, equalToFloat(self.todo.urgency * 0.5));
 }
 
-- (void)test_calculate_priority4 {
+- (void)test_priority4 {
     self.todo.importance = 0.5;
     self.todo.urgency    = 0.5;
     assertThatFloat(self.todo.priority, equalToFloat(0.25 + self.todo.urgency * 0.5));
 }
 
-- (void)test_calculate_priority7 {
+- (void)test_priority5 {
     self.todo.importance = 1.0;
     self.todo.urgency    = 1.0;
     assertThatFloat(self.todo.priority, equalToFloat(1.0));
 }
 
-- (void)test_calculate_priority8 {
+- (void)test_priority6 {
     self.todo.importance = 0.5;
     entryDate = [[NSDate today] dateByAddingDays:-1];
     [self.todo updatePriority];
     assertThatFloat(self.todo.priority, closeTo(0.25, 0.2));
 }
 
-- (void)test_calculate_priority9 {
+- (void)test_priority7 {
     self.todo.importance = 0.5;
     self.todo.urgency    = 1.0;
     assertThatFloat(self.todo.priority, equalToFloat(0.75));
@@ -262,44 +262,42 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.priority, equalToFloat(0));
 }
 
-- (void)test_update_urgency_from_due_date {
-    
-}
-
-- (void)test_daily_update_all_urgencies_from_due_date {
-    
-}
-
-- (void)test_calculate_staleness_for_old_todo {
+- (void)test_staleness_for_old_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate];
     assertThatFloat(self.todo.staleness, equalToFloat(1.0));
 }
 
-- (void)test_calculate_staleness_for_aging_todo {
+- (void)test_staleness_for_aging_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate/2];
     assertThatFloat(self.todo.staleness, equalToFloat(0.5));
 }
 
-- (void)test_calculate_staleness_for_young_todo {
+- (void)test_staleness_for_young_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate/4];
     assertThatFloat(self.todo.staleness, closeTo(0.2, 0.2));
 }
 
-- (void)test_calculate_staleness_for_new_todo {
+- (void)test_staleness_for_new_todo {
     assertThatFloat(self.todo.staleness, equalToFloat(0.0));
 }
 
-- (void)test_calculate_frostiness_for_frozen_todo {
+- (void)test_staleness_for_old_unimportant_todo {
+    entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate];
+    self.todo.importance = 0.0;
+    assertThatFloat(self.todo.staleness, equalToFloat(0.0));
+}
+
+- (void)test_frostiness_for_frozen_todo {
     self.todo.startDate = [[NSDate today] dateByAddingDays:kFrostyDaysBeforeStartDate];
     assertThatFloat(self.todo.frostiness, equalToFloat(1.0));
 }
 
-- (void)test_calculate_frostiness_for_thawing_todo {
+- (void)test_frostiness_for_thawing_todo {
     self.todo.startDate = [[NSDate today] dateByAddingDays:kFrostyDaysBeforeStartDate/4];
     assertThatFloat(self.todo.frostiness, closeTo(0.2, 0.2));
 }
 
-- (void)test_calculate_frostiness_for_thawed_todo {
+- (void)test_frostiness_for_thawed_todo {
     self.todo.startDate = [NSDate today];
     assertThatFloat(self.todo.frostiness, equalToFloat(0.0));
 }
@@ -327,6 +325,14 @@ static NSDate *entryDate;
     entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate / 2];
     self.todo.dueDate = [[NSDate today] dateByAddingDays:kUrgentDaysBeforeDueDate / 2];
     assertThatFloat(self.todo.temperature, equalToFloat(1.0));
+}
+
+- (void)test_update_urgency_from_due_date {
+    
+}
+
+- (void)test_daily_update_all_urgencies_from_due_date {
+    
 }
 
 #pragma mark -

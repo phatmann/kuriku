@@ -104,8 +104,8 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 
 - (float_t)staleness {
-    if (!self.lastEntry)
-        return 0;
+    if (!self.lastEntry || self.importance == 0.0f)
+        return 0.0f;
     
     int daysAfterLastEntryDate = -roundf([[self.lastEntry.timestamp dateAtStartOfDay] timeIntervalSinceNow] / kSecondsInDay);
     

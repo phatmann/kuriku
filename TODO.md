@@ -8,7 +8,6 @@ Todo
 * Slide to take action, set complete, or repeat
 * Implement temperature, including staleness based on last action date
 * Glide to set temperature, via start date or due date
-* importance 0 = no commitment, no staleness
 
 Bugs
 -------------
