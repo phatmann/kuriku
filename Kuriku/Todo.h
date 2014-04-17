@@ -41,8 +41,9 @@ static const int TodoPriorityVersion = 5;
 
 @property (nonatomic, weak, readonly) Entry *lastEntry;
 @property (nonatomic) float_t urgency;
+@property (nonatomic) float_t frostiness;
 @property (nonatomic, readonly) float_t staleness;
-@property (nonatomic, readonly) float_t frostiness;
+@property (nonatomic, readonly) float_t temperature;
 
 - (Entry *)createEntry:(EntryType)type;
 
@@ -53,6 +54,8 @@ static const int TodoPriorityVersion = 5;
 
 float_t urgencyFromDueDate(NSDate *dueDate);
 NSDate *dueDateFromUrgency(float_t urgency);
+float_t frostinessFromStartDate(NSDate *startDate);
+NSDate *startDateFromFrostiness(float_t frostiness);
 
 extern const NSTimeInterval kUrgentDaysBeforeDueDate;
 extern const NSTimeInterval kStaleDaysAfterLastEntryDate;

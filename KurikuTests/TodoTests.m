@@ -297,6 +297,31 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.frostiness, equalToFloat(0.0));
 }
 
+- (void)test_temperature_for_new_todo {
+    assertThatFloat(self.todo.temperature, equalToFloat(0.0));
+}
+
+- (void)test_temperature_for_frozen_todo {
+    self.todo.startDate = [[NSDate today] dateByAddingDays:kFrostyDaysBeforeStartDate];
+    assertThatFloat(self.todo.temperature, equalToFloat(-1.0));
+}
+
+- (void)test_temperature_for_urgent_todo {
+    self.todo.dueDate = [NSDate today];
+    assertThatFloat(self.todo.temperature, equalToFloat(1.0));
+}
+
+- (void)test_temperature_for_stale_todo {
+    entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate];
+    assertThatFloat(self.todo.temperature, equalToFloat(1.0));
+}
+
+- (void)test_temperature_for_urgent_stale_todo {
+    entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate / 2];
+    self.todo.dueDate = [[NSDate today] dateByAddingDays:kUrgentDaysBeforeDueDate / 2];
+    assertThatFloat(self.todo.temperature, equalToFloat(1.0));
+}
+
 #pragma mark -
 
 - (Todo *)createTodo {

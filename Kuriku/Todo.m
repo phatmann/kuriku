@@ -119,18 +119,11 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 
 - (float_t)frostiness {
-    if (!self.startDate)
-        return 0;
-    
-    int daysUntilDefrosted = roundf([self.startDate timeIntervalSinceNow] / kSecondsInDay);
-    
-    if (daysUntilDefrosted <= 0) {
-        return 0.0f;
-    } else if (daysUntilDefrosted >= kFrostyDaysBeforeStartDate) {
-        return 1.0f;
-    } else {
-        return (kFrostyDaysBeforeStartDate - daysUntilDefrosted) / kFrostyDaysBeforeStartDate;
-    }
+    return frostinessFromStartDate(self.startDate);
+}
+
+- (void)setFrostiness:(float_t)frostiness {
+    self.startDate = startDateFromFrostiness(frostiness);
 }
 
 - (float_t)urgency {
@@ -139,6 +132,13 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 
 - (void)setUrgency:(float_t)urgency {
     self.dueDate = dueDateFromUrgency(urgency);
+}
+
+- (float_t)temperature {
+    if (self.frostiness > 0)
+        return -self.frostiness;
+
+    return MIN(1.0, self.urgency + self.staleness);
 }
 
 #pragma mark -
@@ -162,8 +162,32 @@ NSDate *dueDateFromUrgency(float_t urgency) {
     if (urgency == 0) {
         return nil;
     } else {
-        int daysUntilDue = kUrgentDaysBeforeDueDate - (urgency * kUrgentDaysBeforeDueDate);
+        int daysUntilDue = roundf(kUrgentDaysBeforeDueDate - (urgency * kUrgentDaysBeforeDueDate));
         return [[NSDate today] dateByAddingDays:daysUntilDue];
+    }
+}
+
+float_t frostinessFromStartDate(NSDate *startDate) {
+    if (!startDate)
+        return 0;
+
+    int daysUntilThawed = roundf([startDate timeIntervalSinceNow] / kSecondsInDay);
+
+    if (daysUntilThawed <= 0) {
+        return 0.0f;
+    } else if (daysUntilThawed >= kFrostyDaysBeforeStartDate) {
+        return 1.0f;
+    } else {
+        return (kFrostyDaysBeforeStartDate - daysUntilThawed) / kFrostyDaysBeforeStartDate;
+    }
+}
+
+NSDate *startDateFromFrostiness(float_t frostiness) {
+    if (frostiness == 0) {
+        return nil;
+    } else {
+        int daysUntilThawed = roundf(frostiness * kFrostyDaysBeforeStartDate);
+        return [[NSDate today] dateByAddingDays:daysUntilThawed];
     }
 }
 
@@ -247,25 +271,12 @@ NSDate *dueDateFromUrgency(float_t urgency) {
 #pragma mark - Private
 
 - (void)updatePriority {
-    if (self.startDate) {
+    if (self.frostiness > 0) {
         self.priority = 0;
         return;
     }
     
-    self.priority = self.importance * 0.5;
-    
-    // TODO: replace with temperature
-    
-    if (self.urgency > 0.1) {
-        self.priority += self.urgency * 0.5;
-    } else if (self.staleness > 0.1) {
-        self.priority += self.staleness * 0.5;
-    }
-    
-//    if (self.commitment == TodoCommitmentToday)
-//        self.priority += kMaxValue + 1;
-//    else if (self.commitment == TodoCommitmentMaybe)
-//        self.priority -= kMaxValue + 1;
+    self.priority = (self.importance * 0.5) + (self.temperature * 0.5);
 }
 
 @end
