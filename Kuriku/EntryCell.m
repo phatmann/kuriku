@@ -145,7 +145,7 @@
         [hotColor  getHue:&hotHue saturation:nil brightness:nil alpha:nil];
         // Ignore hotHue for now, wrong anyway due to NUI bug
         
-        CGFloat hue = warmHue - (warmHue * self.entry.todo.urgency);
+        CGFloat hue = warmHue - (warmHue * self.entry.todo.temperature);
         UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
         self.titleTextView.textColor = color;
     } else if (self.entry.todo.temperature < 0) {

@@ -18,6 +18,10 @@
 
 static NSDate *entryDate;
 
+@interface Todo(Testing)
+- (void)updatePriority;
+@end
+
 @implementation Entry(Testing)
 - (NSDate *)timestamp {return entryDate ?  entryDate : [self primitiveValueForKey:@"timestamp"];}
 @end
@@ -196,6 +200,19 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.priority, equalToFloat(1.0));
 }
 
+- (void)test_calculate_priority8 {
+    self.todo.importance = 0.5;
+    entryDate = [[NSDate today] dateByAddingDays:-1];
+    [self.todo updatePriority];
+    assertThatFloat(self.todo.priority, closeTo(0.25, 0.2));
+}
+
+- (void)test_calculate_priority9 {
+    self.todo.importance = 0.5;
+    self.todo.urgency    = 1.0;
+    assertThatFloat(self.todo.priority, equalToFloat(0.75));
+}
+
 - (void)test_update_all_priorities_when_priority_version_changes {
     Todo *todo1 = self.todo;
     Todo *todo2 = [self createTodo];
@@ -281,6 +298,16 @@ static NSDate *entryDate;
 - (void)test_calculate_staleness_for_old_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate];
     assertThatFloat(self.todo.staleness, equalToFloat(1.0));
+}
+
+- (void)test_calculate_staleness_for_aging_todo {
+    entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate/2];
+    assertThatFloat(self.todo.staleness, equalToFloat(0.5));
+}
+
+- (void)test_calculate_staleness_for_young_todo {
+    entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate/4];
+    assertThatFloat(self.todo.staleness, closeTo(0.2, 0.2));
 }
 
 - (void)test_calculate_staleness_for_new_todo {
