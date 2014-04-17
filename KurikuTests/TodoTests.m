@@ -6,14 +6,21 @@
 //  Copyright (c) 2013 7Actions. All rights reserved.
 //
 
+#define HC_SHORTHAND
+
 #import <XCTest/XCTest.h>
 #import <InnerBand/InnerBand.h>
 #import "Journal.h"
 #import "Todo.h"
 #import "Entry.h"
-
-#define HC_SHORTHAND
 #import <OCHamcrest/OCHamcrest.h>
+#import <OCMock/OCMock.h>
+
+static NSDate *entryDate;
+
+@implementation Entry(Testing)
+- (NSDate *)timestamp {return entryDate ?  entryDate : [self primitiveValueForKey:@"timestamp"];}
+@end
 
 @interface TodoTests : XCTestCase
 @property (nonatomic) Todo *todo;
@@ -25,6 +32,7 @@
     [super setUp];
     [IBCoreDataStore clearAllData];
     [Journal create];
+    entryDate = nil;
     self.todo = [self createTodo];
 }
 
@@ -270,15 +278,13 @@
     
 }
 
-- (void)test_calculate_urgency_if_due_date {
-    
+- (void)test_calculate_staleness_for_old_todo {
+    entryDate = [[NSDate today] dateByAddingDays:-kStaleDaysAfterLastEntryDate];
+    assertThatFloat(self.todo.staleness, closeTo(1.0, 0.1));
 }
 
-- (void)test_calculate_urgency_if_no_due_date {
-    
-}
-
-- (void)test_calculate_staleness_for_last_entry_date {
+- (void)test_calculate_staleness_for_new_todo {
+    assertThatFloat(self.todo.staleness, closeTo(0.0, 0.1));
 }
 
 #pragma mark -

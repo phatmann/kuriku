@@ -96,11 +96,24 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
 }
 
 + (NSSet *)keyPathsForValuesAffectingUrgency {
-    return [NSSet setWithObjects:@"dueDate", @"lastEntry.startDate", nil];
+    return [NSSet setWithObjects:@"dueDate", nil];
 }
 
 - (Entry *)lastEntry {
     return [self.entries lastObject];
+}
+
+- (float_t)staleness {
+    if (!self.lastEntry)
+        return 0;
+    
+    CGFloat daysAfterLastEntryDate = -[[self.lastEntry.timestamp dateAtStartOfDay] timeIntervalSinceNow] / kSecondsInDay;
+    
+    if (daysAfterLastEntryDate >= kStaleDaysAfterLastEntryDate) {
+        return 1.0f;
+    } else {
+        return 1.0 - ((kStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / kStaleDaysAfterLastEntryDate);
+    }
 }
 
 - (float_t)urgency {

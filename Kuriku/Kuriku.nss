@@ -2,16 +2,24 @@ Entry {
     font-name: Helvetica;
 }
 
-UrgencyNone {
+TemperatureNone {
     font-color: black;
 }
 
-UrgencyWarm {
+TemperatureCold {
+    font-color: hsl(0.7, 1.0, 1.0);
+}
+
+TemperatureCool {
+    font-color: hsl(0.6, 1.0, 1.0);
+}
+
+TemperatureWarm {
     font-color: hsl(0.15, 1.0, 1.0);
 }
 
-UrgencyHot {
-    font-color: hsl(0.001, 1.0, 1.0);
+TemperatureHot {
+    font-color: hsl(0.0, 1.0, 1.0);
 }
 
 ImportanceLow {

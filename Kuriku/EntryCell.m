@@ -139,15 +139,18 @@
     [self.titleTextView applyNUI];
     
     if (self.entry.todo.urgency == 0) {
-        self.titleTextView.textColor = [NUISettings getColor:@"font-color" withClass:@"UrgencyNone"];
+        self.titleTextView.textColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureNone"];
     } else {
-        UIColor *warmColor = [NUISettings getColor:@"font-color" withClass:@"UrgencyWarm"];
-        UIColor *hotColor  = [NUISettings getColor:@"font-color" withClass:@"UrgencyHot"];
+        UIColor *warmColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureWarm"];
+        UIColor *hotColor  = [NUISettings getColor:@"font-color" withClass:@"TemperatureHot"];
         
         CGFloat warmHue, hotHue, warmSaturation, hotSaturation, warmBrightness, hotBrightness;
         [warmColor getHue:&warmHue saturation:&warmSaturation brightness:&warmBrightness alpha:nil];
         [hotColor  getHue:&hotHue saturation:&hotSaturation brightness:&hotBrightness alpha:nil];
-        CGFloat hue = warmHue - ((warmHue + hotHue) * self.entry.todo.urgency);
+        
+        // Ignore hotHue for now, wrong anyway due to NUI bug
+        
+        CGFloat hue = warmHue - (warmHue * self.entry.todo.urgency);
         UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
         self.titleTextView.textColor = color;
     }
