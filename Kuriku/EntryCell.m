@@ -124,34 +124,23 @@
     
     if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
         if (self.entry.todo.temperature > 0) {
-            UIColor *warmColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureWarm"];
-            UIColor *hotColor  = [NUISettings getColor:@"font-color" withClass:@"TemperatureHot"];
+            static UIColor *warmColor, *hotColor;
             
-            CGFloat hotRed;
-            [hotColor getRed:&hotRed green:nil blue:nil alpha:nil];
+            if (!warmColor) {
+                warmColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureWarm"];
+                hotColor  = [NUISettings getColor:@"font-color" withClass:@"TemperatureHot"];
+            }
             
-            CGFloat warmHue, hotHue;
-            [warmColor getHue:&warmHue saturation:nil brightness:nil alpha:nil];
-            [hotColor  getHue:&hotHue saturation:nil brightness:nil alpha:nil];
-            warmHue = fmod(warmHue, 1.0);
-            hotHue = fmod(hotHue, 1.0);
-            
-            CGFloat hue = warmHue - ((warmHue - hotHue) * self.entry.todo.temperature);
-            UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
-            self.titleTextView.textColor = color;
+            self.titleTextView.textColor = [EntryCell huedColorForScale:self.entry.todo.temperature fromColor:warmColor toColor:hotColor];
         } else if (self.entry.todo.temperature < 0) {
-            UIColor *coolColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureCool"];
-            UIColor *coldColor  = [NUISettings getColor:@"font-color" withClass:@"TemperatureCold"];
+            static UIColor *coolColor, *coldColor;
             
-            CGFloat coolHue, coldHue;
-            [coolColor getHue:&coolHue saturation:nil brightness:nil alpha:nil];
-            [coldColor getHue:&coldHue saturation:nil brightness:nil alpha:nil];
-            coolHue = fmod(coolHue, 1.0);
-            coldHue = fmod(coldHue, 1.0);
+            if (!coolColor) {
+                coolColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureCool"];
+                coldColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureCold"];
+            }
             
-            CGFloat hue = coolHue + ((coldHue - coolHue) * -self.entry.todo.temperature);
-            UIColor *color = [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
-            self.titleTextView.textColor = color;
+            self.titleTextView.textColor = [EntryCell huedColorForScale:-self.entry.todo.temperature fromColor:coolColor toColor:coldColor];
         } else {
             self.titleTextView.textColor = [NUISettings getColor:@"font-color" withClass:@"TemperatureNone"];
         }
@@ -166,7 +155,19 @@
     
     return lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * importance);
 }
+
++ (UIColor *)huedColorForScale:(float_t)scale fromColor:(UIColor*)fromColor toColor:(UIColor *)toColor {
+    CGFloat fromHue, toHue;
+    [fromColor getHue:&fromHue saturation:nil brightness:nil alpha:nil];
+    [toColor getHue:&toHue saturation:nil brightness:nil alpha:nil];
     
+    fromHue = fmod(fromHue, 1.0);
+    toHue   = fmod(toHue, 1.0);
+    
+    CGFloat hue = fromHue + ((toHue - fromHue) * scale);
+    return [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
+}
+
 #pragma Text View Delegate
 
 - (void)textViewDidChange:(UITextView *)textView {
