@@ -3,9 +3,12 @@ The visual intelligent action journal
 
 Todo
 ----
+* No todo should be stale until at least N weeks have passed
+* Make unimportant font larger
+* Get cell size to hug text
+* Try background color instead of text color
 * Tap to edit
 * Slide to take action, set complete, or repeat
-* Implement temperature, including staleness based on last action date
 * Glide to set temperature, via start date or due date
 
 Bugs
@@ -19,6 +22,7 @@ Bugs
 Missing Features
 ----------------
 * Tap inactive task goes to active task
+* Let user adjust stale, urgent, and frosty days
 
 New Thoughts
 ------------

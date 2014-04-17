@@ -10,11 +10,26 @@
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
-const NSTimeInterval kUrgentDaysBeforeDueDate = 14;
-const NSTimeInterval kStaleDaysAfterLastEntryDate = 14;
-const NSTimeInterval kFrostyDaysBeforeStartDate = 14;
+const NSTimeInterval kUrgentDaysBeforeDueDate        = 14;
+const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
+const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 14;
+const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
+
+
+
+@interface NSDate (Todo)
+- (int)daysFromToday;
+@end
+
+@implementation NSDate (Todo)
 
 static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
+
+- (int)daysFromToday {
+    return (int)roundf([self timeIntervalSinceDate:[NSDate today]] / kSecondsInDay);
+}
+
+@end
 
 @implementation Todo
 
@@ -125,12 +140,14 @@ static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
     if (!self.lastEntry || self.importance == 0.0f)
         return 0.0f;
     
-    int daysAfterLastEntryDate = -roundf([[self.lastEntry.timestamp dateAtStartOfDay] timeIntervalSinceNow] / kSecondsInDay);
+    int daysAfterLastEntryDate = -[self.lastEntry.timestamp daysFromToday];
     
-    if (daysAfterLastEntryDate >= kStaleDaysAfterLastEntryDate) {
+    if (daysAfterLastEntryDate < kMinStaleDaysAfterLastEntryDate) {
+        return 0.0f;
+    } else if (daysAfterLastEntryDate >= kMaxStaleDaysAfterLastEntryDate) {
         return 1.0f;
     } else {
-        return 1.0f - ((kStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / kStaleDaysAfterLastEntryDate);
+        return 1.0f - ((kMaxStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / kMaxStaleDaysAfterLastEntryDate);
     }
 }
 
@@ -163,7 +180,7 @@ float_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)
         return 0;
         
-    int daysUntilDue = roundf([dueDate timeIntervalSinceNow] / kSecondsInDay);
+    int daysUntilDue = [dueDate daysFromToday];
     
     if (daysUntilDue <= 0) {
         return 1.0f;
@@ -187,7 +204,7 @@ float_t frostinessFromStartDate(NSDate *startDate) {
     if (!startDate)
         return 0;
 
-    int daysUntilThawed = roundf([startDate timeIntervalSinceNow] / kSecondsInDay);
+    int daysUntilThawed = [startDate daysFromToday];
 
     if (daysUntilThawed <= 0) {
         return 0.0f;
@@ -214,7 +231,7 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 }
 
 + (void)updatePrioritiesFromDueDate {
-    NSDate *dateUrgentDaysFromNow = [NSDate dateWithTimeIntervalSinceNow:kSecondsInDay * kUrgentDaysBeforeDueDate];
+    NSDate *dateUrgentDaysFromNow = [[NSDate dateWithTimeIntervalSinceNow:kSecondsInDay * kUrgentDaysBeforeDueDate] dateAtStartOfDay];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@", dateUrgentDaysFromNow];
     NSArray *todos = [Todo allForPredicate:predicate];
     

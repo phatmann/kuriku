@@ -48,7 +48,8 @@ float_t frostinessFromStartDate(NSDate *startDate);
 NSDate *startDateFromFrostiness(float_t frostiness);
 
 extern const NSTimeInterval kUrgentDaysBeforeDueDate;
-extern const NSTimeInterval kStaleDaysAfterLastEntryDate;
+extern const NSTimeInterval kMinStaleDaysAfterLastEntryDate;
+extern const NSTimeInterval kMaxStaleDaysAfterLastEntryDate;
 extern const NSTimeInterval kFrostyDaysBeforeStartDate;
 
 @end
