@@ -235,7 +235,17 @@ NSDate *dueDateFromUrgency(float_t urgency) {
         return;
     }
     
-    self.priority = (self.urgency * 0.5) + (self.importance * 0.5);
+
+    
+    self.priority = self.importance * 0.5;
+    
+    // TODO: replace with temperature
+    
+    if (self.urgency > 0.1) {
+        self.priority += self.urgency * 0.5;
+    } else if (self.staleness > 0.1) {
+        self.priority += self.staleness * 0.5;
+    }
     
 //    if (self.commitment == TodoCommitmentToday)
 //        self.priority += kMaxValue + 1;
