@@ -3,7 +3,7 @@ The visual intelligent action journal
 
 Todo
 ----
-* Glide to set temperature, via start date or due date
+* Show progress of todos by partial coloring, assume one action will complete and scale accordingly
 
 Bugs
 -------------
@@ -16,21 +16,20 @@ Bugs
 Missing Features
 ----------------
 * Tap inactive task goes to active task
-* Let user adjust stale, urgent, and frosty days
+* Scroll to new entry after taking action?
+* Let user change settings for stale, urgent, and frosty days
 
 New Thoughts
 ------------
+* Change repeat names?
+* Glide to set temperature, via start date or due date
+* How do we handle urgency and importance changes with filter? Adjust filter?
 * Reducing importance reduces staleness, 0 eliminates it
 * Slide to take action, set complete, or repeat
 * Remove start date when action taken?
-* Don't need prominent type icons in journal. Every entry is newness, readiness or action.
 * Filter slider has stops: all, hide inactive, hide complete, hide cold
 * Check priority calcs
-* Staleness driven by last action date
-* Iciness driven by distance from start date
-* Temperature from urgency, staleness and iciness
 * Glide left to make more icy (start date) or right to make more urgent (due date)
-* "READY" -> "TODO"
 * Slide left to see "bar" partial complete, more left check, more left repeat
 * Tap and drag: up more prominent, down less prominent remove start date, left blue, right red
 * One line entry: type icon on left, time on right
@@ -39,21 +38,19 @@ New Thoughts
 * If not yellow, tap and drag left to put place start date in past, blue glow.
 * "Importance" -> "prominence"
 * "Urgency" -> "glow"
-* Setting glow sets due date or start date, but dates not shown in journal (?)
 * No start date == no commitment
 * Commitment icons: none (maybe), hollow star (must), filled in star (today), jogger (habit)
 * Can make a todo a "habit". Separate them to reduce noise.
 * Multiple journals chosen from nav bar
 * Journals are hierarchical, can use for projects
-* Show "i" accessory when editing to add a note, edit properties
 * When there is a note, show below todo, tap to edit
 * In Edit dialog mention gestures for each property
-* Show progress of todos by partial coloring, assume one action will complete and scale accordingly
 
 Performance
 -----------
 * Use cache file for NSFetchedResultControllers
 * Cache lastEntry metadata
+* Cache entry progress
 
 PRE-JOURNAL-ONLY
 

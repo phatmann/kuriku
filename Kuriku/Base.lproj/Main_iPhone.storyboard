@@ -59,13 +59,24 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQr-Vf-hwZ" userLabel="Progress">
+                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="0.31794593978102192" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="10" id="kpv-1e-dp9" userLabel="Progress Width"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.89601391423357668" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="4RX-Tv-YGt"/>
                                                         <constraint firstAttribute="centerX" secondItem="DaY-QM-H8E" secondAttribute="centerX" id="4bH-7U-MmB"/>
                                                         <constraint firstAttribute="centerY" secondItem="DaY-QM-H8E" secondAttribute="centerY" id="CVi-bG-kgx"/>
-                                                        <constraint firstAttribute="width" constant="30" id="lLO-WM-xAU"/>
+                                                        <constraint firstItem="cQr-Vf-hwZ" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="leading" id="DdB-ix-qbJ"/>
+                                                        <constraint firstItem="cQr-Vf-hwZ" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" id="Y6k-Mb-cSf"/>
+                                                        <constraint firstAttribute="bottom" secondItem="cQr-Vf-hwZ" secondAttribute="bottom" id="afo-qE-co4"/>
+                                                        <constraint firstAttribute="width" constant="30" id="lLO-WM-xAU" userLabel="Status View Width"/>
                                                     </constraints>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igV-lu-tIO" userLabel="Status Button">
@@ -117,7 +128,10 @@
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="dateLabel" destination="DaY-QM-H8E" id="fma-ML-0fu"/>
+                                            <outlet property="progressView" destination="cQr-Vf-hwZ" id="Pyq-HF-Z9C"/>
+                                            <outlet property="progressViewWidthConstraint" destination="kpv-1e-dp9" id="NJo-f9-pRi"/>
                                             <outlet property="statusView" destination="rvS-BL-gMe" id="PGi-hQ-WNc"/>
+                                            <outlet property="statusViewWidthConstraint" destination="lLO-WM-xAU" id="sMN-YK-glU"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
                                             <outlet property="titleTextView" destination="wJy-G4-VdD" id="HkB-1m-qm6"/>
                                         </connections>

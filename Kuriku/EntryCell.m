@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
+@property (weak, nonatomic) IBOutlet UIView *progressView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
 @end
 
 @implementation EntryCell
@@ -82,6 +85,15 @@
     self.typeLabel.text = [self entryTypeString:self.entry.type];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dateLabel.text = nil;
+    
+    // TODO: cache entry progress
+    NSUInteger entryIndex = [self.entry.todo.entries indexOfObject:self.entry];
+    NSUInteger entryCount = self.entry.todo.entries.count;
+    
+    if (self.entry.todo.lastEntry.type == EntryTypeComplete)
+        --entryCount;
+    
+    self.progressViewWidthConstraint.constant = (entryIndex * self.statusViewWidthConstraint.constant) / entryCount;
     
     if (self.entry.state == EntryStateActive) {
         if (self.entry.todo.startDate) {
@@ -150,6 +162,8 @@
         } else {
             self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
         }
+    } else {
+        self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
     }
     
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
