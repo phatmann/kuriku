@@ -15,7 +15,7 @@
 static const float_t  TodoImportanceDefaultValue = 0.5f;
 static const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
-static const int TodoPriorityVersion = 5;
+static const int TodoPriorityVersion = 6;
 
 @interface Todo : NSManagedObject
 
