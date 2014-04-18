@@ -77,22 +77,15 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TYPE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naT-or-Sdq" userLabel="Type">
-                                                    <rect key="frame" x="90" y="4" width="29" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8b-SE-R1L" userLabel="Start Date">
-                                                    <rect key="frame" x="127" y="4" width="30" height="14"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="START 00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8b-SE-R1L" userLabel="Start Date">
+                                                    <rect key="frame" x="90" y="4" width="68" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DUE 00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaY-QM-H8E" userLabel="Due Date">
-                                                    <rect key="frame" x="167" y="4" width="56" height="14"/>
+                                                    <rect key="frame" x="168" y="4" width="56" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -110,23 +103,21 @@
                                                 </textView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="naT-or-Sdq" secondAttribute="bottom" constant="2" id="5H1-e0-xCK"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" constant="2" id="ErX-Ts-i7z"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="trailing" secondItem="rvS-BL-gMe" secondAttribute="trailing" id="Fa2-Qc-J2w"/>
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="5" id="Fr2-Oq-Z58"/>
-                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="leading" secondItem="naT-or-Sdq" secondAttribute="trailing" constant="8" symbolic="YES" id="Omj-kj-zda"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="Kf5-IE-ktF" secondAttribute="leading" id="PLG-QQ-8Zh"/>
-                                                <constraint firstItem="naT-or-Sdq" firstAttribute="leading" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="R94-L8-IJI"/>
                                                 <constraint firstItem="DaY-QM-H8E" firstAttribute="leading" secondItem="i8b-SE-R1L" secondAttribute="trailing" constant="10" id="U2x-Fn-4eE"/>
                                                 <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="VTt-7h-kE8"/>
-                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="baseline" secondItem="naT-or-Sdq" secondAttribute="baseline" id="aTf-Q8-Wxi"/>
+                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="leading" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="XJC-zR-QT6"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="baseline" secondItem="DaY-QM-H8E" secondAttribute="baseline" id="b9F-fP-zq2"/>
                                                 <constraint firstItem="rvS-BL-gMe" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="2" id="bX8-Dz-NwP"/>
-                                                <constraint firstItem="naT-or-Sdq" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="4" id="gLm-t2-YAE"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" id="iRS-Ge-T1R"/>
                                                 <constraint firstAttribute="bottom" secondItem="rvS-BL-gMe" secondAttribute="bottom" constant="2" id="me3-K5-REl"/>
                                                 <constraint firstItem="i8b-SE-R1L" firstAttribute="baseline" secondItem="DaY-QM-H8E" secondAttribute="baseline" id="qdE-pT-pPi"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="5" id="ssg-Kh-l5M"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="bottom" secondItem="rvS-BL-gMe" secondAttribute="bottom" id="xHa-qI-JtG"/>
+                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="4" id="yB7-Cm-lNC"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="leading" id="yIK-I6-B12"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="5" id="zd8-He-BcQ"/>
                                             </constraints>
@@ -137,7 +128,6 @@
                                             <outlet property="statusView" destination="rvS-BL-gMe" id="PGi-hQ-WNc"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
                                             <outlet property="titleTextView" destination="wJy-G4-VdD" id="HkB-1m-qm6"/>
-                                            <outlet property="typeLabel" destination="naT-or-Sdq" id="zea-a3-RMM"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

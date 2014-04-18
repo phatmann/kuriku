@@ -9,27 +9,12 @@
 #import "Todo.h"
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
+#import "NSDate+Kuriku.h"
 
 const NSTimeInterval kUrgentDaysBeforeDueDate        = 14;
 const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 14;
 const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
-
-
-
-@interface NSDate (Todo)
-- (int)daysFromToday;
-@end
-
-@implementation NSDate (Todo)
-
-static const NSTimeInterval kSecondsInDay = 24 * 60 * 60;
-
-- (int)daysFromToday {
-    return (int)roundf([self timeIntervalSinceDate:[NSDate today]] / kSecondsInDay);
-}
-
-@end
 
 @implementation Todo
 
@@ -231,7 +216,7 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 }
 
 + (void)updatePrioritiesFromDueDate {
-    NSDate *dateUrgentDaysFromNow = [[NSDate dateWithTimeIntervalSinceNow:kSecondsInDay * kUrgentDaysBeforeDueDate] dateAtStartOfDay];
+    NSDate *dateUrgentDaysFromNow = [NSDate dateFromTodayWithDays:kUrgentDaysBeforeDueDate];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@", dateUrgentDaysFromNow];
     NSArray *todos = [Todo allForPredicate:predicate];
     

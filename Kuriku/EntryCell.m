@@ -12,6 +12,7 @@
 #import "JournalViewController.h"
 #import <InnerBand/InnerBand.h>
 #import <NUI/UITextView+NUI.h>
+#import "NSDate+Kuriku.h"
 
 @interface EntryCell ()
 
@@ -45,11 +46,17 @@
 }
 
 - (NSString *)dueDateString:(NSDate *)dueDate {
-    return dueDate ? [NSString stringWithFormat:@"DUE %@", [dueDate formattedDatePattern:@"M/d"]] : @"";
+    if (!dueDate || [dueDate daysFromToday] <= kUrgentDaysBeforeDueDate)
+        return @"";
+    
+    return [NSString stringWithFormat:@"DUE %@", [dueDate formattedDatePattern:@"M/d"]];
 }
 
 - (NSString *)startDateString:(NSDate *)startDate {
-    return startDate ? [NSString stringWithFormat:@"%@", [startDate formattedDatePattern:@"M/d"]] : @"";
+    if (!startDate || [startDate daysFromToday] <= kFrostyDaysBeforeStartDate)
+        return @"";
+    
+    return [NSString stringWithFormat:@"START %@", [startDate formattedDatePattern:@"M/d"]];
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {

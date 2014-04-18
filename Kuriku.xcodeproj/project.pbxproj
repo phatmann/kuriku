@@ -14,6 +14,7 @@
 		EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = EA10F1261861B2FF0084F6C8 /* TODO.md */; };
 		EA20528A187AE04F00B8330B /* TMGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA205289187AE04F00B8330B /* TMGrowingTextView.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
+		EA5386AC1900A37F00D6266A /* NSDate+Kuriku.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5386AB1900A37F00D6266A /* NSDate+Kuriku.m */; };
 		EA7307311889F0F5008C8F39 /* Kuriku.nss in Resources */ = {isa = PBXBuildFile; fileRef = EA7307301889F0F5008C8F39 /* Kuriku.nss */; };
 		EA737BD8187676B6003A1BBE /* JournalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD7187676B6003A1BBE /* JournalTests.m */; };
 		EA737BDA187676FD003A1BBE /* EntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA737BD9187676FD003A1BBE /* EntryTests.m */; };
@@ -69,6 +70,8 @@
 		EA44731718FDDA2900231321 /* Kuriku19.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku19.xcdatamodel; sourceTree = "<group>"; };
 		EA44731E18FEF1B800231321 /* Kuriku20.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku20.xcdatamodel; sourceTree = "<group>"; };
 		EA490C9B18FD66FE0083660B /* Kuriku18.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku18.xcdatamodel; sourceTree = "<group>"; };
+		EA5386AA1900A37F00D6266A /* NSDate+Kuriku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Kuriku.h"; sourceTree = "<group>"; };
+		EA5386AB1900A37F00D6266A /* NSDate+Kuriku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Kuriku.m"; sourceTree = "<group>"; };
 		EA589AF618FC5D6800B040D1 /* Kuriku17.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku17.xcdatamodel; sourceTree = "<group>"; };
 		EA61241818EED35000DE8E75 /* Kuriku15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku15.xcdatamodel; sourceTree = "<group>"; };
 		EA7307301889F0F5008C8F39 /* Kuriku.nss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Kuriku.nss; sourceTree = "<group>"; };
@@ -174,6 +177,8 @@
 			children = (
 				EA205288187AE04F00B8330B /* TMGrowingTextView.h */,
 				EA205289187AE04F00B8330B /* TMGrowingTextView.m */,
+				EA5386AA1900A37F00D6266A /* NSDate+Kuriku.h */,
+				EA5386AB1900A37F00D6266A /* NSDate+Kuriku.m */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -462,6 +467,7 @@
 				EAAC9591185936A300E8BAB5 /* Journal.m in Sources */,
 				EAAEEB1B187E1EE80098C4F0 /* Kuriku.xcdatamodeld in Sources */,
 				EAAC9594185936A400E8BAB5 /* Entry.m in Sources */,
+				EA5386AC1900A37F00D6266A /* NSDate+Kuriku.m in Sources */,
 				EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */,
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
 				EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */,
