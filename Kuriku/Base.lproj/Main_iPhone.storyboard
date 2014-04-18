@@ -41,7 +41,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" id="17P-5o-DvO" userLabel="Entry Cell" customClass="EntryCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="EntryCell" editingAccessoryType="detailButton" id="17P-5o-DvO" userLabel="Entry Cell" customClass="EntryCell">
                                         <rect key="frame" x="0.0" y="30" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="17P-5o-DvO" id="gjI-eT-jYN">
@@ -77,15 +77,15 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="START 00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8b-SE-R1L" userLabel="Start Date">
-                                                    <rect key="frame" x="90" y="4" width="68" height="14"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DUE 00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaY-QM-H8E" userLabel="Due Date">
+                                                    <rect key="frame" x="90" y="4" width="56" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DUE 00/00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaY-QM-H8E" userLabel="Due Date">
-                                                    <rect key="frame" x="168" y="4" width="56" height="14"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="START 00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8b-SE-R1L" userLabel="Start Date">
+                                                    <rect key="frame" x="232" y="4" width="68" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -106,12 +106,12 @@
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" constant="2" id="ErX-Ts-i7z"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="trailing" secondItem="rvS-BL-gMe" secondAttribute="trailing" id="Fa2-Qc-J2w"/>
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="5" id="Fr2-Oq-Z58"/>
+                                                <constraint firstAttribute="trailing" secondItem="i8b-SE-R1L" secondAttribute="trailing" constant="20" id="I8s-te-wK1"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="Kf5-IE-ktF" secondAttribute="leading" id="PLG-QQ-8Zh"/>
-                                                <constraint firstItem="DaY-QM-H8E" firstAttribute="leading" secondItem="i8b-SE-R1L" secondAttribute="trailing" constant="10" id="U2x-Fn-4eE"/>
                                                 <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="VTt-7h-kE8"/>
-                                                <constraint firstItem="i8b-SE-R1L" firstAttribute="leading" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="XJC-zR-QT6"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="baseline" secondItem="DaY-QM-H8E" secondAttribute="baseline" id="b9F-fP-zq2"/>
                                                 <constraint firstItem="rvS-BL-gMe" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="2" id="bX8-Dz-NwP"/>
+                                                <constraint firstItem="DaY-QM-H8E" firstAttribute="leading" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="gkJ-35-XFP"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" id="iRS-Ge-T1R"/>
                                                 <constraint firstAttribute="bottom" secondItem="rvS-BL-gMe" secondAttribute="bottom" constant="2" id="me3-K5-REl"/>
                                                 <constraint firstItem="i8b-SE-R1L" firstAttribute="baseline" secondItem="DaY-QM-H8E" secondAttribute="baseline" id="qdE-pT-pPi"/>

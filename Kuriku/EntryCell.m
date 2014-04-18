@@ -191,12 +191,12 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    self.accessoryType = UITableViewCellAccessoryDetailButton;
+    [self setEditing:YES animated:YES];
     [self.journalViewController textViewDidBeginEditing:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    self.accessoryType = UITableViewCellAccessoryNone;
+    [self setEditing:NO animated:YES];
     [self.journalViewController textViewDidEndEditing:textView];
 }
 
