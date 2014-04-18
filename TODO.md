@@ -3,18 +3,15 @@ The visual intelligent action journal
 
 Todo
 ----
-* Try background color instead of text color
-* Tap to edit
-* Slide to take action, set complete, or repeat
 * Glide to set temperature, via start date or due date
 
 Bugs
 -------------
 * Sometimes expanding text views makes table scroll bounce
+* Keyboard avoiding table needed
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
 * If start date in past applied, ignore it
-* Should deploy only to iOS 7
 
 Missing Features
 ----------------
@@ -23,6 +20,7 @@ Missing Features
 
 New Thoughts
 ------------
+* Slide to take action, set complete, or repeat
 * Remove start date when action taken?
 * Don't need prominent type icons in journal. Every entry is newness, readiness or action.
 * Filter slider has stops: all, hide inactive, hide complete, hide cold

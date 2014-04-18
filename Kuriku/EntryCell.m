@@ -19,8 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @end
 
@@ -47,16 +46,16 @@
 
 - (NSString *)dueDateString:(NSDate *)dueDate {
     if (!dueDate || [dueDate daysFromToday] <= kUrgentDaysBeforeDueDate)
-        return @"";
+        return nil;
     
-    return [NSString stringWithFormat:@"DUE %@", [dueDate formattedDatePattern:@"M/d"]];
+    return [NSString stringWithFormat:@"%@", [dueDate formattedDatePattern:@"M/d"]];
 }
 
 - (NSString *)startDateString:(NSDate *)startDate {
     if (!startDate || [startDate daysFromToday] <= kFrostyDaysBeforeStartDate)
-        return @"";
+        return nil;
     
-    return [NSString stringWithFormat:@"START %@", [startDate formattedDatePattern:@"M/d"]];
+    return [NSString stringWithFormat:@"%@", [startDate formattedDatePattern:@"M/d"]];
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
@@ -85,18 +84,6 @@
     [self refresh];
 }
 
-//- (void)setIsEditing:(BOOL)isEditing {
-//    if (isEditing) {
-//        self.titleTextView.userInteractionEnabled = YES;
-//        self.titleTextView.editable = YES;
-//        [self.titleTextView becomeFirstResponder];
-//    } else {
-//        self.titleTextView.userInteractionEnabled = NO;
-//        self.titleTextView.editable = NO;
-//        [self.titleTextView resignFirstResponder];
-//    }
-//}
-
 - (BOOL)becomeFirstResponder {
     return [self.titleTextView becomeFirstResponder];
 }
@@ -108,9 +95,14 @@
 - (void)refresh {
     self.typeLabel.text = [self entryTypeString:self.entry.type];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
+    self.dateLabel.text = nil;
     
-    self.dueDateLabel.text = [self dueDateString:self.entry.todo.dueDate];
-    self.startDateLabel.text = self.entry.todo.startDate ? [self startDateString:self.entry.todo.startDate] : nil;
+    if (self.entry.state == EntryStateActive) {
+        if (self.entry.todo.startDate)
+            self.dateLabel.text = [self startDateString:self.entry.todo.startDate];
+        else if (self.entry.todo.dueDate)
+            self.dateLabel.text = [self dueDateString:self.entry.todo.dueDate];
+    }
     
     [self updateTitleLabel];
 }
