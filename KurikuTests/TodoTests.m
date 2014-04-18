@@ -262,6 +262,11 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.priority, equalToFloat(0.0f));
 }
 
+- (void)test_priority_with_distant_due_date {
+    self.todo.dueDate = [[NSDate today] dateByAddingDays:365];
+    assertThatFloat(self.todo.priority, equalToFloat(0.25f));
+}
+
 - (void)test_staleness_for_old_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate];
     assertThatFloat(self.todo.staleness, equalToFloat(1.0f));
@@ -329,7 +334,7 @@ static NSDate *entryDate;
 - (void)test_temperature_for_urgent_stale_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate / 2];
     self.todo.dueDate = [[NSDate today] dateByAddingDays:kUrgentDaysBeforeDueDate / 2];
-    assertThatFloat(self.todo.temperature, equalToFloat(1.0f));
+    assertThatFloat(self.todo.temperature, equalToFloat(0.5f));
 }
 
 - (void)test_update_urgency_from_due_date {

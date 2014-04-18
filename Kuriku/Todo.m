@@ -153,10 +153,13 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
 }
 
 - (float_t)temperature {
-    if (self.frostiness > 0)
+    if (self.startDate)
         return -self.frostiness;
 
-    return MIN(1.0, self.urgency + self.staleness);
+    if (self.dueDate)
+        return self.urgency;
+    
+    return self.staleness;
 }
 
 #pragma mark -
@@ -289,7 +292,7 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 #pragma mark - Private
 
 - (void)updatePriority {
-    if (self.frostiness > 0) {
+    if (self.startDate) {
         self.priority = 0;
         return;
     }
