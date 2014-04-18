@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabelInProgressView;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
@@ -107,6 +108,8 @@
         
         [self.dateLabel applyNUI];
     }
+    
+    self.dateLabelInProgressView.text = self.dateLabel.text;
     
     [self updateTitleLabel];
 }
