@@ -33,6 +33,7 @@ typedef enum {
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic, strong) Journal *journal;
 
+@property (nonatomic, readonly) CGFloat progress;
 @property (nonatomic) NSDate *journalDate;
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString;

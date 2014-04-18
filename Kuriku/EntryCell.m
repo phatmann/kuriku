@@ -85,15 +85,8 @@
     self.typeLabel.text = [self entryTypeString:self.entry.type];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dateLabel.text = nil;
-    
-    // TODO: cache entry progress
-    NSUInteger entryIndex = [self.entry.todo.entries indexOfObject:self.entry];
-    NSUInteger entryCount = self.entry.todo.entries.count;
-    
-    if (self.entry.todo.lastEntry.type == EntryTypeComplete)
-        --entryCount;
-    
-    self.progressViewWidthConstraint.constant = (entryIndex * self.statusViewWidthConstraint.constant) / entryCount;
+
+    self.progressViewWidthConstraint.constant = self.entry.progress * self.statusViewWidthConstraint.constant;
     
     if (self.entry.state == EntryStateActive) {
         if (self.entry.todo.startDate) {

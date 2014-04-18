@@ -7,7 +7,7 @@ Todo
 
 Bugs
 -------------
-* Sometimes expanding text views makes table scroll bounce
+* Progress view wrong for repeated todos
 * Keyboard avoiding table needed
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
@@ -21,6 +21,7 @@ Missing Features
 
 New Thoughts
 ------------
+* Don't unmark todo completed, instead delete completion entry. Needed for accurate progress measurement.
 * Change repeat names?
 * Glide to set temperature, via start date or due date
 * How do we handle urgency and importance changes with filter? Adjust filter?
@@ -53,6 +54,10 @@ Performance
 * Cache entry progress
 
 PRE-JOURNAL-ONLY
+
+Bugs
+----
+* Sometimes expanding text views makes table scroll bounce
 
 Code
 ----

@@ -64,6 +64,42 @@
     return [Entry journalDateFromString:self.journalDateString];
 }
 
+- (CGFloat)progress {
+    // TODO: cache entry progress
+    
+    if (self.type == EntryTypeComplete)
+        return 1.0;
+        
+    __block NSUInteger startActionIndex = 0;
+    __block NSUInteger completedActionIndex = NSNotFound;
+    __block NSUInteger thisActionIndex  = NSNotFound;
+    
+    [self.todo.entries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        Entry *entry = (Entry *)obj;
+        
+        if (completedActionIndex != NSNotFound) {
+            startActionIndex = idx;
+            completedActionIndex = NSNotFound;
+        }
+        
+        if (entry == self) {
+            thisActionIndex = idx;
+        }
+        
+        if (entry.type == EntryTypeComplete) {
+            completedActionIndex = idx;
+            
+            if (thisActionIndex != NSNotFound)
+                *stop = YES;
+        }
+    }];
+    
+    if (completedActionIndex == NSNotFound)
+        completedActionIndex = thisActionIndex + 1;
+    
+    return (float)(thisActionIndex - startActionIndex) / (completedActionIndex - startActionIndex);
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     [self updatePriorityFromTodo];
 }
