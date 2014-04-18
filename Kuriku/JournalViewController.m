@@ -280,7 +280,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
     
     CGFloat width = self.tableView.bounds.size.width - 60;
-    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 7;
+    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 11;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

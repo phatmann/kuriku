@@ -20,6 +20,7 @@ Missing Features
 
 New Thoughts
 ------------
+* Reducing importance reduces staleness, 0 eliminates it
 * Slide to take action, set complete, or repeat
 * Remove start date when action taken?
 * Don't need prominent type icons in journal. Every entry is newness, readiness or action.
