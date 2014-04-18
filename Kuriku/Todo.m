@@ -68,8 +68,6 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    //[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
     if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"] || [keyPath isEqualToString:@"importance"]) {
@@ -122,7 +120,7 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
 }
 
 - (float_t)staleness {
-    if (!self.lastEntry || self.importance == 0.0f)
+    if (!self.lastEntry)
         return 0.0f;
     
     int daysAfterLastEntryDate = -[self.lastEntry.timestamp daysFromToday];
@@ -159,7 +157,7 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
     if (self.dueDate)
         return self.urgency;
     
-    return self.staleness;
+    return self.staleness * self.importance;
 }
 
 #pragma mark -

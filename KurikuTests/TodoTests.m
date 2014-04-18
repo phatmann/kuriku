@@ -286,10 +286,10 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.staleness, equalToFloat(0.0f));
 }
 
-- (void)test_staleness_for_old_unimportant_todo {
+- (void)test_temperature_for_old_unimportant_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate];
     self.todo.importance = 0.0;
-    assertThatFloat(self.todo.staleness, equalToFloat(0.0f));
+    assertThatFloat(self.todo.temperature, equalToFloat(0.0f));
 }
 
 - (void)test_frostiness_for_frozen_todo {
@@ -328,7 +328,7 @@ static NSDate *entryDate;
 
 - (void)test_temperature_for_stale_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate];
-    assertThatFloat(self.todo.temperature, equalToFloat(1.0f));
+    assertThatFloat(self.todo.temperature, equalToFloat(0.5f));
 }
 
 - (void)test_temperature_for_urgent_stale_todo {
