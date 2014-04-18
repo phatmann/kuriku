@@ -54,16 +54,15 @@
     switch (entry.state) {
         case EntryStateActive:
             state = @"Active";
-            
-            if (entry.type == EntryTypeComplete) {
-                status = @"Completed";
-            }
-            
             break;
             
         case EntryStateInactive:
             state = @"Inactive";
             break;
+    }
+    
+    if (entry.type == EntryTypeComplete) {
+        status = @"Completed";
     }
     
     return [NSString stringWithFormat:@"Status%@:State%@", status, state];
