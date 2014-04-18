@@ -115,6 +115,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 - (void)updateRowHeights {
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    self.activeCell.editing = YES;
 }
 
 - (void)updateImportanceForPinchScale:(CGFloat)scale {

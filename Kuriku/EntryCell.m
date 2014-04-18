@@ -191,12 +191,14 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    [self setEditing:YES animated:YES];
+    self.editing = YES;
+    self.timeLabel.hidden = YES;
     [self.journalViewController textViewDidBeginEditing:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    [self setEditing:NO animated:YES];
+    self.editing = NO;
+    self.timeLabel.hidden = NO;
     [self.journalViewController textViewDidEndEditing:textView];
 }
 

@@ -13,7 +13,6 @@
 @interface EntryCell : UITableViewCell
 
 @property (strong, nonatomic) Entry *entry;
-//@property (nonatomic) BOOL isEditing;
 @property (weak, nonatomic) JournalViewController *journalViewController;
 
 - (void)refresh;

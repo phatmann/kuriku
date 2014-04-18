@@ -3,11 +3,11 @@ The visual intelligent action journal
 
 Todo
 ----
-* Show progress of todos by partial coloring, assume one action will complete and scale accordingly
+* Allow multiple todos to be entered (via return key?)
 
 Bugs
 -------------
-* Progress view wrong for repeated todos
+* Details indicator disappears when text is edited
 * Keyboard avoiding table needed
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
