@@ -44,20 +44,6 @@
     return nil;
 }
 
-- (NSString *)dueDateString:(NSDate *)dueDate {
-    if (!dueDate || [dueDate daysFromToday] <= kUrgentDaysBeforeDueDate)
-        return nil;
-    
-    return [NSString stringWithFormat:@"%@", [dueDate formattedDatePattern:@"M/d"]];
-}
-
-- (NSString *)startDateString:(NSDate *)startDate {
-    if (!startDate || [startDate daysFromToday] <= kFrostyDaysBeforeStartDate)
-        return nil;
-    
-    return [NSString stringWithFormat:@"%@", [startDate formattedDatePattern:@"M/d"]];
-}
-
 - (NSString *)styleClassForEntry:(Entry *)entry {
     NSString *state, *status = @"Normal";
     
@@ -98,10 +84,23 @@
     self.dateLabel.text = nil;
     
     if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.startDate)
-            self.dateLabel.text = [self startDateString:self.entry.todo.startDate];
-        else if (self.entry.todo.dueDate)
-            self.dateLabel.text = [self dueDateString:self.entry.todo.dueDate];
+        if (self.entry.todo.startDate) {
+            if ([self.entry.todo.startDate daysFromToday] <= kFrostyDaysBeforeStartDate) {
+                self.dateLabel.text = nil;
+            } else {
+                self.dateLabel.nuiClass = @"StartDate";
+                self.dateLabel.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
+            }
+        } else if (self.entry.todo.dueDate) {
+            if ([self.entry.todo.dueDate daysFromToday] <= kUrgentDaysBeforeDueDate) {
+                self.dateLabel.text = nil;
+            } else {
+                self.dateLabel.nuiClass = @"DueDate";
+                self.dateLabel.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
+            }
+        }
+        
+        [self.dateLabel applyNUI];
     }
     
     [self updateTitleLabel];

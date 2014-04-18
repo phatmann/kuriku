@@ -1,26 +1,39 @@
+@warmColor: hsl(0.15, 1.0, 1.0);
+@hotColor:  hsl(0.0, 1.0, 1.0);
+@coolColor: hsl(0.5, 1.0, 1.0);
+@coldColor: hsl(0.6, 1.0, 1.0);
+
 Entry {
     font-name: Helvetica;
     font-color: black;
 }
 
+DueDate {
+    font-color: @hotColor;
+}
+
+StartDate {
+    font-color: white;
+}
+
 TemperatureNone {
-    background-color: lightGray;
+    background-color: rgb(228, 228, 228);
 }
 
 TemperatureCold {
-    background-color: hsl(0.6, 1.0, 1.0);
+    background-color: @coldColor;
 }
 
 TemperatureCool {
-    background-color: hsl(0.5, 1.0, 1.0);
+    background-color: @coolColor;
 }
 
 TemperatureWarm {
-    background-color: hsl(0.15, 1.0, 1.0);
+    background-color: @warmColor;
 }
 
 TemperatureHot {
-    background-color: hsl(0.0, 1.0, 1.0);
+    background-color: @hotColor;
 }
 
 ImportanceLow {
