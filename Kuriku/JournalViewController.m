@@ -24,7 +24,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @property (strong, nonatomic) NSIndexPath *pinchIndexPath;
 @property (nonatomic) int pinchInitialImportance;
 @property (nonatomic) float_t priorityFilter;
-@property (nonatomic) BOOL isAdding;
 @property (nonatomic) EntryCell *activeCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 @property (strong, nonatomic) UIBarButtonItem *addButton;
@@ -36,9 +35,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @end
 
 @implementation JournalViewController
-{
-    NSArray *_sections;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -92,7 +88,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     self.fetchedResultsController.delegate = self;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
-    _sections = [self.fetchedResultsController.sections copy];
     [self.tableView reloadData];
 }
 
@@ -206,12 +201,16 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         self.priorityFilter = PriorityFilterShowActive;
     }
     
-    self.filterSlider.enabled = NO;
     [Todo create];
-    self.isAdding = YES;
+
+    [self reloadData];
+    
+    self.activeCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [self.activeCell becomeFirstResponder];
 }
 
 - (void)doneButtonTapped {
+    self.filterSlider.enabled = YES;
     [self.activeCell resignFirstResponder];
     self.activeCell = nil;
     [self reloadData];
@@ -258,12 +257,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #pragma mark - Table View Delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _sections.count;
+    return self.fetchedResultsController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
-    if (_sections.count > 0) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = _sections[section];
+    if (self.fetchedResultsController.sections.count > 0) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = self.fetchedResultsController.sections[section];
         return [sectionInfo numberOfObjects];
     }
     
@@ -339,7 +338,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #endif
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete;
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    return cell.editing ? UITableViewCellEditingStyleNone :  UITableViewCellEditingStyleDelete;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -369,18 +370,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     return [tinyDateFormatter stringFromDate:date];
 }
 #endif
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    if (self.activeCell)
-        return;
-    
-    [self.tableView reloadData];
-    
-    if (self.isAdding) {
-        self.activeCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        [self.activeCell becomeFirstResponder];
-    }
-}
 
 
 #pragma mark - Edit Todo Controller Delegate
@@ -424,6 +413,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
+    self.filterSlider.enabled = NO;
+    
     if (!self.doneButton) {
         self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped)];
         self.addButton = self.navigationBarItem.rightBarButtonItem;
@@ -434,8 +425,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    self.filterSlider.enabled = YES;
-    self.isAdding = NO;
     self.navigationBarItem.rightBarButtonItem = self.addButton;
     [self updateRowHeights];
     
