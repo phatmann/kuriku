@@ -128,15 +128,15 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 - (IBAction)cellWasLongPressed:(UILongPressGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint point = [gestureRecognizer locationInView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-        
-        if (indexPath != nil) {
-            Entry* entry =  [self entryAtIndexPath:indexPath];
-            [self showEditTodoView:entry.todo];
-        }
-    }
+//    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+//        CGPoint point = [gestureRecognizer locationInView:self.tableView];
+//        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+//        
+//        if (indexPath != nil) {
+//            Entry* entry =  [self entryAtIndexPath:indexPath];
+//            [self showEditTodoView:entry.todo];
+//        }
+//    }
 }
 
 - (void)statusWasTappedForCell:(EntryCell *)cell {

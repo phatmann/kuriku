@@ -7,7 +7,7 @@ Todo
 
 Bugs
 -------------
-* Fix filter
+* Need 0 notch for temp slider
 * Disable long press in text (interferes with cursor)
 * Keyboard avoiding table needed
 * Do not allow actions on completed task

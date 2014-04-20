@@ -84,6 +84,9 @@
 }
 
 - (IBAction)temperatureSliderWasChanged {
+    if (self.temperatureSlider.value > -0.05 && self.temperatureSlider.value < 0.05)
+        self.temperatureSlider.value = 0;
+    
     self.entry.todo.temperature = self.temperatureSlider.value;
     [self updateDateButtons];
     [self updateStatus];
@@ -96,8 +99,17 @@
 }
 
 - (void)updateDateButtons {
-    [self.startDateButton setTitle:[self.entry.todo.startDate formattedDatePattern:@"M/d"] forState:UIControlStateNormal];
-    [self.dueDateButton setTitle:[self.entry.todo.dueDate formattedDatePattern:@"M/d"] forState:UIControlStateNormal];
+    if (self.entry.todo.startDate) {
+        [self.startDateButton setTitle:[NSString stringWithFormat:@"START %@", [self.entry.todo.startDate formattedDatePattern:@"M/d"]] forState:UIControlStateNormal];
+    } else {
+        [self.startDateButton setTitle:nil forState:UIControlStateNormal];
+    }
+    
+    if (self.entry.todo.dueDate) {
+        [self.dueDateButton setTitle:[NSString stringWithFormat:@"DUE %@", [self.entry.todo.dueDate formattedDatePattern:@"M/d"]] forState:UIControlStateNormal];
+    } else {
+        [self.dueDateButton setTitle:nil forState:UIControlStateNormal];
+    }
 }
 
 - (void)updateTime {
