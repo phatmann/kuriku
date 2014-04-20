@@ -49,21 +49,22 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvS-BL-gMe" userLabel="Status">
-                                                    <rect key="frame" x="7" y="14" width="30" height="15"/>
+                                                    <rect key="frame" x="7" y="13" width="30" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaY-QM-H8E" userLabel="Date">
-                                                            <rect key="frame" x="1" y="1" width="29" height="14"/>
+                                                            <rect key="frame" x="1" y="3" width="29" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                                            <color key="textColor" red="0.96862745100000003" green="0.25882352939999997" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQr-Vf-hwZ" userLabel="Progress">
-                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="15"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sya-lK-32X" userLabel="Date">
-                                                                    <rect key="frame" x="1" y="1" width="29" height="14"/>
+                                                                    <rect key="frame" x="1" y="3" width="29" height="14"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -78,7 +79,7 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.89601391423357668" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="15" id="4RX-Tv-YGt"/>
+                                                        <constraint firstAttribute="height" constant="20" id="4RX-Tv-YGt"/>
                                                         <constraint firstAttribute="centerX" secondItem="DaY-QM-H8E" secondAttribute="centerX" id="4bH-7U-MmB"/>
                                                         <constraint firstAttribute="centerY" secondItem="DaY-QM-H8E" secondAttribute="centerY" id="CVi-bG-kgx"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="leading" id="DdB-ix-qbJ"/>
@@ -131,7 +132,7 @@
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" id="aMN-Tj-b3n"/>
                                                 <constraint firstAttribute="bottom" secondItem="wJy-G4-VdD" secondAttribute="bottom" id="mjy-ts-FOI"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="12" id="sBa-IF-qO1"/>
-                                                <constraint firstAttribute="centerY" secondItem="rvS-BL-gMe" secondAttribute="centerY" id="umZ-lc-eHc"/>
+                                                <constraint firstAttribute="centerY" secondItem="rvS-BL-gMe" secondAttribute="centerY" constant="-1" id="umZ-lc-eHc"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="centerX" secondItem="rvS-BL-gMe" secondAttribute="centerX" id="xjb-v5-jBH"/>
                                             </constraints>
                                         </tableViewCellContentView>
