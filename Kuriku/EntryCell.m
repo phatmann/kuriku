@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
 @property (weak, nonatomic) IBOutlet UIButton *startDateButton;
 @property (weak, nonatomic) IBOutlet UIButton *dueDateButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *temperatureViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
 @end
@@ -36,6 +37,11 @@
     UIImage *thumbImage = [UIImage imageNamed:@"slider-thumb"];
     [self.temperatureSlider setThumbImage:thumbImage forState:UIControlStateNormal];
     [self.temperatureSlider setThumbImage:thumbImage forState:UIControlStateHighlighted];
+    self.temperatureViewHeightConstraint.constant = 0;
+}
+
+- (void)prepareForReuse {
+    self.temperatureViewHeightConstraint.constant = 0;
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
@@ -219,13 +225,17 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     self.editing = YES;
+    self.timeLabel.hidden = YES;
     self.temperatureView.hidden = NO;
+    self.temperatureViewHeightConstraint.constant = 30;
     [self.journalViewController textViewDidBeginEditing:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    self.editing = NO;;
+    self.editing = NO;
+    self.timeLabel.hidden = NO;
     self.temperatureView.hidden = YES;
+    self.temperatureViewHeightConstraint.constant = 0;
     [self.journalViewController textViewDidEndEditing:textView];
 }
 
