@@ -130,10 +130,10 @@
     self.dateLabelInStatusView.text = nil;
     
     if (self.entry.state == EntryStateActive) {
-        if ([self.entry.todo.startDate daysFromToday] > kFrostyDaysBeforeStartDate) {
+        if (self.entry.todo.startDate && (self.editing || [self.entry.todo.startDate daysFromToday] > kFrostyDaysBeforeStartDate)) {
             self.dateLabelInStatusView.nuiClass = @"StartDate";
             self.dateLabelInStatusView.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
-        } else if ([self.entry.todo.dueDate daysFromToday] > kUrgentDaysBeforeDueDate) {
+        } else if (self.entry.todo.dueDate && (self.editing || [self.entry.todo.dueDate daysFromToday] > kUrgentDaysBeforeDueDate)) {
             self.dateLabelInStatusView.nuiClass = @"DueDate";
             self.dateLabelInStatusView.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
         }
@@ -228,6 +228,7 @@
     self.timeLabel.hidden = YES;
     self.temperatureView.hidden = NO;
     self.temperatureViewHeightConstraint.constant = 30;
+    [self updateStatus];
     [self.journalViewController textViewDidBeginEditing:textView];
 }
 
@@ -236,6 +237,7 @@
     self.timeLabel.hidden = NO;
     self.temperatureView.hidden = YES;
     self.temperatureViewHeightConstraint.constant = 0;
+    [self updateStatus];
     [self.journalViewController textViewDidEndEditing:textView];
 }
 
