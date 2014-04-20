@@ -125,31 +125,36 @@
                                                     <rect key="frame" x="7" y="49" width="303" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtu-aN-bdg" userLabel="Start Date Button">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtu-aN-bdg" userLabel="Start Date Button">
                                                             <rect key="frame" x="0.0" y="2" width="73" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="73" id="wTy-hk-5de"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="START 00/00">
-                                                                <color key="titleColor" red="0.0" green="0.50196081399917603" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y0O-Lr-4eq" userLabel="Temperature Slider">
-                                                            <rect key="frame" x="70" y="0.0" width="164" height="31"/>
+                                                            <rect key="frame" x="71" y="0.0" width="161" height="31"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="160" id="wFe-lq-cJ1"/>
-                                                            </constraints>
                                                             <connections>
                                                                 <action selector="temperatureSliderWasChanged" destination="17P-5o-DvO" eventType="valueChanged" id="ugw-F2-BH8"/>
                                                             </connections>
                                                         </slider>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xw6-tE-oic" userLabel="Due Date Button">
-                                                            <rect key="frame" x="242" y="2" width="61" height="27"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xw6-tE-oic" userLabel="Due Date Button">
+                                                            <rect key="frame" x="230" y="2" width="73" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="73" id="ZMj-tg-RNh"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="DUE 00/00">
-                                                                <color key="titleColor" red="0.50196081399917603" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
@@ -157,12 +162,12 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="Qtu-aN-bdg" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" id="48k-Io-vEI"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Y0O-Lr-4eq" secondAttribute="bottom" id="7DE-Ao-jsW"/>
+                                                        <constraint firstItem="Xw6-tE-oic" firstAttribute="leading" secondItem="Y0O-Lr-4eq" secondAttribute="trailing" id="8pi-cQ-4Bk"/>
                                                         <constraint firstItem="Y0O-Lr-4eq" firstAttribute="centerY" secondItem="Xw6-tE-oic" secondAttribute="centerY" id="Ffb-DF-gki"/>
+                                                        <constraint firstAttribute="centerY" secondItem="Y0O-Lr-4eq" secondAttribute="centerY" id="K4A-PI-8YZ"/>
                                                         <constraint firstAttribute="height" constant="30" id="M2k-5V-XLq"/>
-                                                        <constraint firstAttribute="centerX" secondItem="Y0O-Lr-4eq" secondAttribute="centerX" id="Nrp-V0-Pjv"/>
                                                         <constraint firstItem="Y0O-Lr-4eq" firstAttribute="centerY" secondItem="Qtu-aN-bdg" secondAttribute="centerY" id="Qw9-oG-MkR"/>
-                                                        <constraint firstItem="Y0O-Lr-4eq" firstAttribute="top" secondItem="xDz-pB-RBj" secondAttribute="top" id="Uaq-nH-eJz"/>
+                                                        <constraint firstItem="Y0O-Lr-4eq" firstAttribute="leading" secondItem="Qtu-aN-bdg" secondAttribute="trailing" id="TUm-sj-xis"/>
                                                         <constraint firstAttribute="trailing" secondItem="Xw6-tE-oic" secondAttribute="trailing" id="eQo-Jh-HfD"/>
                                                     </constraints>
                                                 </view>

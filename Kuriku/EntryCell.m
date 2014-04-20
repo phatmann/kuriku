@@ -219,14 +219,12 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     self.editing = YES;
-    self.timeLabel.hidden = YES;
     self.temperatureView.hidden = NO;
     [self.journalViewController textViewDidBeginEditing:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    self.editing = NO;
-    self.timeLabel.hidden = NO;
+    self.editing = NO;;
     self.temperatureView.hidden = YES;
     [self.journalViewController textViewDidEndEditing:textView];
 }
