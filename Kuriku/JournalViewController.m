@@ -36,6 +36,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @end
 
 @implementation JournalViewController
+{
+    NSArray *_sections;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -89,6 +92,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     self.fetchedResultsController.delegate = self;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
+    _sections = [self.fetchedResultsController.sections copy];
     [self.tableView reloadData];
 }
 
@@ -184,8 +188,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
-    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
-    //[fetchRequest setPredicate:predicate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
+    [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
                                      managedObjectContext:context
@@ -254,12 +258,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #pragma mark - Table View Delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.fetchedResultsController sections] count];
+    return _sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
-    if ([[self.fetchedResultsController sections] count] > 0) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    if (_sections.count > 0) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = _sections[section];
         return [sectionInfo numberOfObjects];
     }
     
@@ -283,7 +287,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     
     if ([[self.tableView indexPathForCell:self.activeCell] isEqual:indexPath])
-        height += 40;
+        height += 30;
     
     return height + margin;
 }

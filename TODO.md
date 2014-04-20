@@ -7,7 +7,7 @@ Todo
 
 Bugs
 -------------
-* FIX filter
+* Fix filter
 * Disable long press in text (interferes with cursor)
 * Keyboard avoiding table needed
 * Do not allow actions on completed task
@@ -16,6 +16,7 @@ Bugs
 
 Missing Features
 ----------------
+* Tap start date or due date to set
 * Tap inactive task goes to active task
 * Jump around to different dates
 * Search

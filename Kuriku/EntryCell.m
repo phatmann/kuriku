@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabelInProgressView;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
+@property (weak, nonatomic) IBOutlet UIView *temperatureView;
 @property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
 @property (weak, nonatomic) IBOutlet UIButton *startDateButton;
 @property (weak, nonatomic) IBOutlet UIButton *dueDateButton;
@@ -207,14 +208,14 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     self.editing = YES;
     self.timeLabel.hidden = YES;
-    self.temperatureSlider.hidden = NO;
+    self.temperatureView.hidden = NO;
     [self.journalViewController textViewDidBeginEditing:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     self.editing = NO;
     self.timeLabel.hidden = NO;
-    self.temperatureSlider.hidden = YES;
+    self.temperatureView.hidden = YES;
     [self.journalViewController textViewDidEndEditing:textView];
 }
 
