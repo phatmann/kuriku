@@ -33,7 +33,7 @@ static const int TodoPriorityVersion = 6;
 @property (nonatomic) float_t urgency;
 @property (nonatomic) float_t frostiness;
 @property (nonatomic, readonly) float_t staleness;
-@property (nonatomic, readonly) float_t temperature;
+@property (nonatomic) float_t temperature;
 
 - (Entry *)createEntry:(EntryType)type;
 

@@ -7,6 +7,7 @@ Todo
 
 Bugs
 -------------
+* FIX filter
 * Disable long press in text (interferes with cursor)
 * Keyboard avoiding table needed
 * Do not allow actions on completed task
@@ -16,6 +17,8 @@ Bugs
 Missing Features
 ----------------
 * Tap inactive task goes to active task
+* Jump around to different dates
+* Search
 * Scroll to new entry after taking action?
 * Let user change settings for stale, urgent, and frosty days
 

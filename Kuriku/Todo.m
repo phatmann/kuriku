@@ -150,6 +150,19 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
     self.dueDate = dueDateFromUrgency(urgency);
 }
 
+- (void)setTemperature:(float_t)temperature {
+    if (temperature == 0) {
+        self.startDate = nil;
+        self.dueDate = nil;
+    } if (temperature > 0) {
+        self.startDate = nil;
+        self.urgency = temperature;
+    } else {
+        self.dueDate = nil;
+        self.frostiness = -temperature;
+    }
+}
+
 - (float_t)temperature {
     if (self.startDate)
         return -self.frostiness;

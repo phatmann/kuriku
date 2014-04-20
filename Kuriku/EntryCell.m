@@ -18,11 +18,13 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabelInStatusView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabelInProgressView;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
+@property (weak, nonatomic) IBOutlet UIButton *startDateButton;
+@property (weak, nonatomic) IBOutlet UIButton *dueDateButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
 @end
@@ -69,58 +71,61 @@
 }
 
 - (void)refresh {
-    self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
-    self.dateLabel.text = nil;
-
-    self.progressViewWidthConstraint.constant = self.entry.progress * self.statusViewWidthConstraint.constant;
-    
-    if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.startDate) {
-            if ([self.entry.todo.startDate daysFromToday] <= kFrostyDaysBeforeStartDate) {
-                self.dateLabel.text = nil;
-            } else {
-                self.dateLabel.nuiClass = @"StartDate";
-                self.dateLabel.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
-            }
-        } else if (self.entry.todo.dueDate) {
-            if ([self.entry.todo.dueDate daysFromToday] <= kUrgentDaysBeforeDueDate) {
-                self.dateLabel.text = nil;
-            } else {
-                self.dateLabel.nuiClass = @"DueDate";
-                self.dateLabel.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
-            }
-        }
-        
-        [self.dateLabel applyNUI];
-    }
-    
-    self.dateLabelInProgressView.text = self.dateLabel.text;
-    
-    [self updateTitleLabel];
+    [self updateTime];
+    [self updateTitle];
+    [self updateStatus];
+    [self updateDateButtons];
+    [self updateTemperatureSlider];
 }
 
 - (IBAction)statusWasTapped {
     [self.journalViewController statusWasTappedForCell:self];
 }
 
+- (IBAction)temperatureSliderWasChanged {
+    self.entry.todo.temperature = self.temperatureSlider.value;
+    [self updateDateButtons];
+    [self updateStatus];
+}
+
 #pragma mark -
 
-- (void)updateTitleLabel {
-    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:self.entry]];
+- (void)updateTemperatureSlider {
+    self.temperatureSlider.value = self.entry.todo.temperature;
+}
 
-    NSString *title = self.entry.todo.title ? self.entry.todo.title : @"";
+- (void)updateDateButtons {
+    [self.startDateButton setTitle:[self.entry.todo.startDate formattedDatePattern:@"M/d"] forState:UIControlStateNormal];
+    [self.dueDateButton setTitle:[self.entry.todo.dueDate formattedDatePattern:@"M/d"] forState:UIControlStateNormal];
+}
+
+- (void)updateTime {
+    self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
+}
+
+- (void)updateProgress {
+    self.progressViewWidthConstraint.constant = self.entry.progress * self.statusViewWidthConstraint.constant;
+}
+
+- (void)updateStatusDate {
+    self.dateLabelInStatusView.text = nil;
     
-    NSString *decoration = [NUISettings get:@"text-decoration" withClass:self.titleTextView.nuiClass];
-    NSUnderlineStyle strikethroughStyle = [decoration isEqualToString:@"line-through"] ?
-        NSUnderlineStyleSingle : NSUnderlineStyleNone;
+    if (self.entry.state == EntryStateActive) {
+        if ([self.entry.todo.startDate daysFromToday] > kFrostyDaysBeforeStartDate) {
+            self.dateLabelInStatusView.nuiClass = @"StartDate";
+            self.dateLabelInStatusView.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
+        } else if ([self.entry.todo.dueDate daysFromToday] > kUrgentDaysBeforeDueDate) {
+            self.dateLabelInStatusView.nuiClass = @"DueDate";
+            self.dateLabelInStatusView.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
+        }
+        
+        [self.dateLabelInStatusView applyNUI];
+    }
     
-    NSDictionary *attributes = @{NSStrikethroughStyleAttributeName: @(strikethroughStyle)};
-    
-    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:title
-                                                                        attributes:attributes];
-    self.titleTextView.typingAttributes = attributes;
-    [self.titleTextView applyNUI];
-    
+    self.dateLabelInProgressView.text = self.dateLabelInStatusView.text;
+}
+
+- (void)updateStatusColor {
     if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
         if (self.entry.todo.temperature > 0) {
             static UIColor *warmColor, *hotColor;
@@ -146,6 +151,29 @@
     } else {
         self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
     }
+}
+
+- (void)updateStatus {
+    [self updateStatusDate];
+    [self updateProgress];
+    [self updateStatusColor];
+}
+
+- (void)updateTitle {
+    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:self.entry]];
+
+    NSString *title = self.entry.todo.title ? self.entry.todo.title : @"";
+    
+    NSString *decoration = [NUISettings get:@"text-decoration" withClass:self.titleTextView.nuiClass];
+    NSUnderlineStyle strikethroughStyle = [decoration isEqualToString:@"line-through"] ?
+        NSUnderlineStyleSingle : NSUnderlineStyleNone;
+    
+    NSDictionary *attributes = @{NSStrikethroughStyleAttributeName: @(strikethroughStyle)};
+    
+    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:title
+                                                                        attributes:attributes];
+    self.titleTextView.typingAttributes = attributes;
+    [self.titleTextView applyNUI];
     
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
 }

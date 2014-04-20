@@ -184,8 +184,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
-    [fetchRequest setPredicate:predicate];
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
+    //[fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
                                      managedObjectContext:context
@@ -210,7 +210,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 - (void)doneButtonTapped {
     [self.activeCell resignFirstResponder];
     self.activeCell = nil;
-    [self updateRowHeights];
+    [self reloadData];
 }
 
 #pragma mark - Action Sheet Delegate
@@ -367,6 +367,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #endif
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    if (self.activeCell)
+        return;
+    
     [self.tableView reloadData];
     
     if (self.isAdding) {
