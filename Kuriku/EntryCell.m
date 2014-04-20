@@ -16,36 +16,23 @@
 
 @interface EntryCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabelInProgressView;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
+@property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
 @end
 
 @implementation EntryCell
 
-- (NSString *)entryTypeString:(EntryType)type
-{
-    switch (type) {
-        case EntryTypeNew:
-            return @"NEW";
-            
-        case EntryTypeAction:
-            return @"ACTION";
-            
-        case EntryTypeComplete:
-            return @"COMPLETE";
-            
-        case EntryTypeReady:
-            return @"READY";
-    }
-    
-    return nil;
+- (void)awakeFromNib {
+    UIImage *thumbImage = [UIImage imageNamed:@"slider-thumb"];
+    [self.temperatureSlider setThumbImage:thumbImage forState:UIControlStateNormal];
+    [self.temperatureSlider setThumbImage:thumbImage forState:UIControlStateHighlighted];
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
@@ -82,7 +69,6 @@
 }
 
 - (void)refresh {
-    self.typeLabel.text = [self entryTypeString:self.entry.type];
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
     self.dateLabel.text = nil;
 
@@ -193,12 +179,14 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     self.editing = YES;
     self.timeLabel.hidden = YES;
+    self.temperatureSlider.hidden = NO;
     [self.journalViewController textViewDidBeginEditing:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     self.editing = NO;
     self.timeLabel.hidden = NO;
+    self.temperatureSlider.hidden = YES;
     [self.journalViewController textViewDidEndEditing:textView];
 }
 

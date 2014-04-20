@@ -209,6 +209,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (void)doneButtonTapped {
     [self.activeCell resignFirstResponder];
+    self.activeCell = nil;
+    [self updateRowHeights];
 }
 
 #pragma mark - Action Sheet Delegate
@@ -276,8 +278,14 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     sizingTextView.text = entry.todo.title;
     sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
     
+    static const CGFloat margin =  21;
     CGFloat width = self.tableView.bounds.size.width - 60;
-    return [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height + 21;
+    CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
+    
+    if ([[self.tableView indexPathForCell:self.activeCell] isEqual:indexPath])
+        height += 40;
+    
+    return height + margin;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -415,12 +423,14 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
     
     self.navigationBarItem.rightBarButtonItem = self.doneButton;
+    [self updateRowHeights];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     self.filterSlider.enabled = YES;
     self.isAdding = NO;
     self.navigationBarItem.rightBarButtonItem = self.addButton;
+    [self updateRowHeights];
     
     Todo *todo = self.activeCell.entry.todo;
     

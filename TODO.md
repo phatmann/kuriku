@@ -7,7 +7,7 @@ Todo
 
 Bugs
 -------------
-* Details indicator disappears when text is edited
+* Disable long press in text (interferes with cursor)
 * Keyboard avoiding table needed
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
