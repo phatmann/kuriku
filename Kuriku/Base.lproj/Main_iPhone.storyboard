@@ -110,7 +110,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xw6-tE-oic" userLabel="Due Date Button">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xw6-tE-oic" userLabel="Due Date Button">
                                                             <rect key="frame" x="26" y="-5" width="50" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -118,7 +118,9 @@
                                                                 <constraint firstAttribute="width" constant="50" id="rgz-n2-ZuE"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="00 days"/>
+                                                            <state key="normal" title="00 days">
+                                                                <color key="titleColor" red="1" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
                                                         </button>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="START" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKt-D4-Dh2">
                                                             <rect key="frame" x="176" y="1" width="38" height="15"/>
@@ -126,12 +128,14 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtu-aN-bdg" userLabel="Start Date Button">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtu-aN-bdg" userLabel="Start Date Button">
                                                             <rect key="frame" x="214" y="-5" width="50" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="00 days"/>
+                                                            <state key="normal" title="00 days">
+                                                                <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
                                                         </button>
                                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y0O-Lr-4eq" userLabel="Temperature Slider">
                                                             <rect key="frame" x="-2" y="0.0" width="268" height="31"/>
