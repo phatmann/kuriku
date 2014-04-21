@@ -48,8 +48,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
+                                                    <rect key="frame" x="44" y="12" width="271" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="17P-5o-DvO" id="bqg-1Q-VdT"/>
+                                                    </connections>
+                                                </textView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvS-BL-gMe" userLabel="Status">
-                                                    <rect key="frame" x="7" y="10" width="30" height="20"/>
+                                                    <rect key="frame" x="7" y="14" width="30" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaY-QM-H8E" userLabel="Date">
@@ -91,7 +101,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDz-pB-RBj" userLabel="Temperature">
-                                                    <rect key="frame" x="42" y="5" width="268" height="30"/>
+                                                    <rect key="frame" x="46" y="44" width="264" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DUE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HLp-5i-7jO">
@@ -111,20 +121,20 @@
                                                             <state key="normal" title="00 days"/>
                                                         </button>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="START" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKt-D4-Dh2">
-                                                            <rect key="frame" x="180" y="1" width="38" height="15"/>
+                                                            <rect key="frame" x="176" y="1" width="38" height="15"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtu-aN-bdg" userLabel="Start Date Button">
-                                                            <rect key="frame" x="218" y="-5" width="50" height="27"/>
+                                                            <rect key="frame" x="214" y="-5" width="50" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="00 days"/>
                                                         </button>
                                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y0O-Lr-4eq" userLabel="Temperature Slider">
-                                                            <rect key="frame" x="-2" y="0.0" width="272" height="31"/>
+                                                            <rect key="frame" x="-2" y="0.0" width="268" height="31"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <connections>
                                                                 <action selector="temperatureSliderWasChanged" destination="17P-5o-DvO" eventType="valueChanged" id="ugw-F2-BH8"/>
@@ -171,30 +181,20 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
-                                                    <rect key="frame" x="44" y="40" width="271" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="17P-5o-DvO" id="bqg-1Q-VdT"/>
-                                                    </connections>
-                                                </textView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="igV-lu-tIO" secondAttribute="bottom" id="8Y4-9f-xAE"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="94n-ce-2VS"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="trailing" secondItem="xDz-pB-RBj" secondAttribute="trailing" id="B2T-eT-zuU"/>
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="5" id="Fr2-Oq-Z58"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" constant="-2" id="PLA-YU-jKf"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="igV-lu-tIO" secondAttribute="trailing" constant="5" id="WOv-Gc-6pW"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="xDz-pB-RBj" secondAttribute="bottom" constant="5" id="YyJ-Gm-UnN"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="1" id="Z9I-FS-4lD"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" id="aMN-Tj-b3n"/>
-                                                <constraint firstItem="rvS-BL-gMe" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="10" id="jaR-CG-Pay"/>
-                                                <constraint firstItem="xDz-pB-RBj" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="5" id="okY-gb-eVE"/>
-                                                <constraint firstItem="xDz-pB-RBj" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="5" id="ow9-mK-xPE"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="centerY" secondItem="rvS-BL-gMe" secondAttribute="centerY" id="k3J-A5-MdC"/>
+                                                <constraint firstAttribute="bottom" secondItem="xDz-pB-RBj" secondAttribute="bottom" constant="5" id="kf2-4M-u10"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="centerX" secondItem="rvS-BL-gMe" secondAttribute="centerX" id="xjb-v5-jBH"/>
                                             </constraints>
                                         </tableViewCellContentView>
