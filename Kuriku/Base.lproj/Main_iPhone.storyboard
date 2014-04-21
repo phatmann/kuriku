@@ -49,7 +49,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
-                                                    <rect key="frame" x="44" y="12" width="271" height="24"/>
+                                                    <rect key="frame" x="44" y="12" width="261" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -196,7 +196,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="igV-lu-tIO" secondAttribute="bottom" id="8Y4-9f-xAE"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="94n-ce-2VS"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="trailing" secondItem="xDz-pB-RBj" secondAttribute="trailing" id="B2T-eT-zuU"/>
-                                                <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="5" id="Fr2-Oq-Z58"/>
+                                                <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="15" id="Fr2-Oq-Z58"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" constant="-2" id="PLA-YU-jKf"/>
@@ -232,7 +232,6 @@
                                 <connections>
                                     <outlet property="dataSource" destination="CZ4-MO-1fc" id="Rbh-2U-xO8"/>
                                     <outlet property="delegate" destination="CZ4-MO-1fc" id="GvJ-wC-xXd"/>
-                                    <outletCollection property="gestureRecognizers" destination="lER-El-waA" appends="YES" id="SDu-66-JjX"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -259,11 +258,6 @@
                         <segue destination="BLb-aQ-cLa" kind="modal" identifier="Repeat todo" id="ff9-5y-kUA"/>
                     </connections>
                 </viewController>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="lER-El-waA">
-                    <connections>
-                        <action selector="cellWasLongPressed:" destination="CZ4-MO-1fc" id="eFw-EF-NFz"/>
-                    </connections>
-                </pongPressGestureRecognizer>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="887" y="204"/>

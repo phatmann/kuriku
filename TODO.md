@@ -3,12 +3,11 @@ The visual intelligent action journal
 
 Todo
 ----
-* Allow multiple todos to be entered (via return key?)
+* Allow multiple todos to be entered
 
 Bugs
 -------------
 * Done button does not animate cell collapse
-* Disable long press in text (interferes with cursor)
 * Keyboard avoiding table needed
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
@@ -16,20 +15,19 @@ Bugs
 
 Missing Features
 ----------------
-* Tap start date or due date to set
 * Tap inactive task goes to active task
-* Jump around to different dates
+* Jump around to different dates in journal
 * Search
 * Scroll to new entry after taking action?
 * Let user change settings for stale, urgent, and frosty days
 
 New Thoughts
 ------------
+* Add notes by embedding return
 * Don't unmark todo completed, instead delete completion entry. Needed for accurate progress measurement.
 * Change repeat names?
 * Glide to set temperature, via start date or due date
 * How do we handle urgency and importance changes with filter? Adjust filter?
-* Reducing importance reduces staleness, 0 eliminates it
 * Slide to take action, set complete, or repeat
 * Remove start date when action taken?
 * Filter slider has stops: all, hide inactive, hide complete, hide cold
