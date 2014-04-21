@@ -90,6 +90,66 @@
                                                         <constraint firstItem="DaY-QM-H8E" firstAttribute="leading" secondItem="Sya-lK-32X" secondAttribute="leading" id="uFU-9K-rvn"/>
                                                     </constraints>
                                                 </view>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDz-pB-RBj" userLabel="Temperature">
+                                                    <rect key="frame" x="42" y="5" width="268" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DUE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HLp-5i-7jO">
+                                                            <rect key="frame" x="0.0" y="-5" width="26" height="27"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xw6-tE-oic" userLabel="Due Date Button">
+                                                            <rect key="frame" x="26" y="-5" width="50" height="27"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="50" id="rgz-n2-ZuE"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="00 days"/>
+                                                        </button>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="START" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKt-D4-Dh2">
+                                                            <rect key="frame" x="180" y="1" width="38" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtu-aN-bdg" userLabel="Start Date Button">
+                                                            <rect key="frame" x="218" y="-5" width="50" height="27"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="00 days"/>
+                                                        </button>
+                                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y0O-Lr-4eq" userLabel="Temperature Slider">
+                                                            <rect key="frame" x="-2" y="0.0" width="272" height="31"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <connections>
+                                                                <action selector="temperatureSliderWasChanged" destination="17P-5o-DvO" eventType="valueChanged" id="ugw-F2-BH8"/>
+                                                            </connections>
+                                                        </slider>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Y0O-Lr-4eq" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" id="2Wp-yf-CRd"/>
+                                                        <constraint firstItem="lKt-D4-Dh2" firstAttribute="baseline" secondItem="Qtu-aN-bdg" secondAttribute="baseline" id="4vo-eD-NEQ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Qtu-aN-bdg" secondAttribute="trailing" id="50P-WZ-uAR"/>
+                                                        <constraint firstItem="HLp-5i-7jO" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" id="Boj-EE-Q9b"/>
+                                                        <constraint firstItem="Xw6-tE-oic" firstAttribute="width" secondItem="Qtu-aN-bdg" secondAttribute="width" id="Cs0-fn-4xJ"/>
+                                                        <constraint firstItem="HLp-5i-7jO" firstAttribute="top" secondItem="xDz-pB-RBj" secondAttribute="top" constant="-5" id="Jzf-0H-vRm"/>
+                                                        <constraint firstAttribute="centerY" secondItem="Y0O-Lr-4eq" secondAttribute="centerY" id="K4A-PI-8YZ"/>
+                                                        <constraint firstAttribute="height" constant="30" id="M2k-5V-XLq" userLabel="Temperature Height "/>
+                                                        <constraint firstItem="Xw6-tE-oic" firstAttribute="leading" secondItem="HLp-5i-7jO" secondAttribute="trailing" id="bEL-9k-cTb"/>
+                                                        <constraint firstItem="HLp-5i-7jO" firstAttribute="height" secondItem="Xw6-tE-oic" secondAttribute="height" id="bMB-mR-Y1g"/>
+                                                        <constraint firstItem="HLp-5i-7jO" firstAttribute="baseline" secondItem="Xw6-tE-oic" secondAttribute="baseline" id="cSE-Gk-1WL"/>
+                                                        <constraint firstItem="Xw6-tE-oic" firstAttribute="top" secondItem="xDz-pB-RBj" secondAttribute="top" constant="-5" id="guZ-gb-jHd"/>
+                                                        <constraint firstItem="Xw6-tE-oic" firstAttribute="top" secondItem="Qtu-aN-bdg" secondAttribute="top" id="lan-Qk-1va"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Y0O-Lr-4eq" secondAttribute="trailing" id="o2p-Vi-nmw"/>
+                                                        <constraint firstItem="Qtu-aN-bdg" firstAttribute="leading" secondItem="lKt-D4-Dh2" secondAttribute="trailing" id="sbp-0A-izh"/>
+                                                    </constraints>
+                                                </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igV-lu-tIO" userLabel="Status Button">
                                                     <rect key="frame" x="5" y="0.0" width="34" height="79"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -121,56 +181,6 @@
                                                         <outlet property="delegate" destination="17P-5o-DvO" id="bqg-1Q-VdT"/>
                                                     </connections>
                                                 </textView>
-                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDz-pB-RBj" userLabel="Temperature">
-                                                    <rect key="frame" x="42" y="5" width="268" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <subviews>
-                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtu-aN-bdg" userLabel="Start Date Button">
-                                                            <rect key="frame" x="0.0" y="2" width="0.0" height="27"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" id="wTy-hk-5de"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="START 00/00">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
-                                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y0O-Lr-4eq" userLabel="Temperature Slider">
-                                                            <rect key="frame" x="-2" y="0.0" width="272" height="31"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <connections>
-                                                                <action selector="temperatureSliderWasChanged" destination="17P-5o-DvO" eventType="valueChanged" id="ugw-F2-BH8"/>
-                                                            </connections>
-                                                        </slider>
-                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xw6-tE-oic" userLabel="Due Date Button">
-                                                            <rect key="frame" x="268" y="2" width="0.0" height="27"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" id="ZMj-tg-RNh"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="DUE 00/00">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstItem="Qtu-aN-bdg" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" id="48k-Io-vEI"/>
-                                                        <constraint firstItem="Xw6-tE-oic" firstAttribute="leading" secondItem="Y0O-Lr-4eq" secondAttribute="trailing" id="8pi-cQ-4Bk"/>
-                                                        <constraint firstItem="Y0O-Lr-4eq" firstAttribute="centerY" secondItem="Xw6-tE-oic" secondAttribute="centerY" id="Ffb-DF-gki"/>
-                                                        <constraint firstAttribute="centerY" secondItem="Y0O-Lr-4eq" secondAttribute="centerY" id="K4A-PI-8YZ"/>
-                                                        <constraint firstAttribute="height" constant="30" id="M2k-5V-XLq" userLabel="Temperature Height "/>
-                                                        <constraint firstItem="Y0O-Lr-4eq" firstAttribute="centerY" secondItem="Qtu-aN-bdg" secondAttribute="centerY" id="Qw9-oG-MkR"/>
-                                                        <constraint firstItem="Y0O-Lr-4eq" firstAttribute="leading" secondItem="Qtu-aN-bdg" secondAttribute="trailing" id="TUm-sj-xis"/>
-                                                        <constraint firstAttribute="trailing" secondItem="Xw6-tE-oic" secondAttribute="trailing" id="eQo-Jh-HfD"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="igV-lu-tIO" secondAttribute="bottom" id="8Y4-9f-xAE"/>
@@ -193,9 +203,11 @@
                                             <outlet property="dateLabelInProgressView" destination="Sya-lK-32X" id="Fqr-iG-f74"/>
                                             <outlet property="dateLabelInStatusView" destination="DaY-QM-H8E" id="E7V-dR-c8a"/>
                                             <outlet property="dueDateButton" destination="Xw6-tE-oic" id="yEP-KK-zvZ"/>
+                                            <outlet property="dueDateLabel" destination="HLp-5i-7jO" id="Gnj-d1-F4A"/>
                                             <outlet property="progressView" destination="cQr-Vf-hwZ" id="Pyq-HF-Z9C"/>
                                             <outlet property="progressViewWidthConstraint" destination="kpv-1e-dp9" id="NJo-f9-pRi"/>
                                             <outlet property="startDateButton" destination="Qtu-aN-bdg" id="x0V-TR-NfF"/>
+                                            <outlet property="startDateLabel" destination="lKt-D4-Dh2" id="gVu-Ix-EdB"/>
                                             <outlet property="statusView" destination="rvS-BL-gMe" id="PGi-hQ-WNc"/>
                                             <outlet property="statusViewWidthConstraint" destination="lLO-WM-xAU" id="sMN-YK-glU"/>
                                             <outlet property="temperatureSlider" destination="Y0O-Lr-4eq" id="8l0-ot-BLY"/>

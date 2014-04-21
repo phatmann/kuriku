@@ -349,6 +349,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         
         if (entry.type == EntryTypeNew) {
             [entry.todo destroy];
+            [self reloadData];
         } else {
             [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
         }

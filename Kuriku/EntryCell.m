@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
 @property (weak, nonatomic) IBOutlet UIButton *startDateButton;
 @property (weak, nonatomic) IBOutlet UIButton *dueDateButton;
+@property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *temperatureViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
@@ -90,7 +92,7 @@
 }
 
 - (IBAction)temperatureSliderWasChanged {
-    if (self.temperatureSlider.value > -0.05 && self.temperatureSlider.value < 0.05)
+    if (self.temperatureSlider.value > -0.02 && self.temperatureSlider.value < 0.02)
         self.temperatureSlider.value = 0;
     
     self.entry.todo.temperature = self.temperatureSlider.value;
@@ -106,14 +108,23 @@
 
 - (void)updateDateButtons {
     if (self.entry.todo.startDate) {
-        [self.startDateButton setTitle:[NSString stringWithFormat:@"START %@", [self.entry.todo.startDate formattedDatePattern:@"M/d"]] forState:UIControlStateNormal];
+        self.startDateButton.hidden = NO;
+        self.startDateLabel.hidden  = NO;
+        int days = [self.entry.todo.startDate daysFromToday];
+        [self.startDateButton setTitle:[NSString stringWithFormat:@"%d days", days] forState:UIControlStateNormal];
     } else {
-        [self.startDateButton setTitle:nil forState:UIControlStateNormal];
+        self.startDateButton.hidden = YES;
+        self.startDateLabel.hidden  = YES;
     }
     
     if (self.entry.todo.dueDate) {
-        [self.dueDateButton setTitle:[NSString stringWithFormat:@"DUE %@", [self.entry.todo.dueDate formattedDatePattern:@"M/d"]] forState:UIControlStateNormal];
+        self.dueDateButton.hidden = NO;
+        self.dueDateLabel.hidden  = NO;
+        int days = [self.entry.todo.dueDate daysFromToday];
+        [self.dueDateButton setTitle:[NSString stringWithFormat:@"%d days", days] forState:UIControlStateNormal];
     } else {
+        self.dueDateButton.hidden = YES;
+        self.dueDateLabel.hidden  = YES;
         [self.dueDateButton setTitle:nil forState:UIControlStateNormal];
     }
 }
@@ -130,10 +141,10 @@
     self.dateLabelInStatusView.text = nil;
     
     if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.startDate && (self.editing || [self.entry.todo.startDate daysFromToday] > kFrostyDaysBeforeStartDate)) {
+        if ([self.entry.todo.startDate daysFromToday] > kFrostyDaysBeforeStartDate) {
             self.dateLabelInStatusView.nuiClass = @"StartDate";
             self.dateLabelInStatusView.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
-        } else if (self.entry.todo.dueDate && (self.editing || [self.entry.todo.dueDate daysFromToday] > kUrgentDaysBeforeDueDate)) {
+        } else if ([self.entry.todo.dueDate daysFromToday] > kUrgentDaysBeforeDueDate) {
             self.dateLabelInStatusView.nuiClass = @"DueDate";
             self.dateLabelInStatusView.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
         }
