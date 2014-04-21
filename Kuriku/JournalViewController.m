@@ -64,6 +64,18 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         UINavigationController *navigationController = segue.destinationViewController;
         RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
         repeatViewController.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"Choose start date"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        DatePickerViewController *datePickerViewController = [navigationController.viewControllers firstObject];
+        datePickerViewController.delegate = self;
+        datePickerViewController.tag = @"startDate";
+        datePickerViewController.date = self.activeCell.entry.todo.startDate;
+    } else if ([segue.identifier isEqualToString:@"Choose due date"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        DatePickerViewController *datePickerViewController = [navigationController.viewControllers firstObject];
+        datePickerViewController.delegate = self;
+        datePickerViewController.tag = @"dueDate";
+        datePickerViewController.date = self.activeCell.entry.todo.dueDate;
     }
 }
 
@@ -437,8 +449,16 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         [todo destroy];
 }
 
-#pragma mark -
+#pragma mark Date Picker View Delegate
 
+- (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController {
+    [self.activeCell.entry.todo setValue:dateViewController.date forKey:dateViewController.tag];
+    [self.activeCell becomeFirstResponder];
+    [self.activeCell temperatureWasChanged];
+}
 
+- (void)datePickerViewControllerCanceled:(DatePickerViewController *)dateViewController {
+     [self.activeCell becomeFirstResponder];
+}
 
 @end

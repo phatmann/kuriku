@@ -10,10 +10,17 @@
 #import <InnerBand/InnerBand.h>
 #import "EditTodoViewController.h"
 #import "RepeatViewController.h"
+#import "DatePickerViewController.h"
 
 @class EntryCell;
 
-@interface JournalViewController : UIViewController  <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, EditTodoViewControllerDelegate, RepeatViewControllerDelegate>
+@interface JournalViewController : UIViewController  <UITableViewDelegate,
+                                                      UITableViewDataSource,
+                                                      UIActionSheetDelegate,
+                                                      NSFetchedResultsControllerDelegate,
+                                                      EditTodoViewControllerDelegate,
+                                                      RepeatViewControllerDelegate,
+                                                      DatePickerViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

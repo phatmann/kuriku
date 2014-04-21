@@ -16,6 +16,7 @@
 @property (weak, nonatomic) JournalViewController *journalViewController;
 
 - (void)refresh;
+- (void)temperatureWasChanged;
 + (CGFloat)fontSizeForImportance:(CGFloat)importance;
 
 @end

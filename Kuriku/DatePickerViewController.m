@@ -29,6 +29,16 @@
 
 - (void)setDate:(NSDate *)date {
     _date = date;
+    
+}
+
+- (IBAction)cancelButtonWasTapped {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate datePickerViewControllerCanceled:self];
+}
+
+- (IBAction)doneButtonWasTapped {
+    [self dismissViewControllerAnimated:YES completion:nil];
     [self.delegate datePickerViewControllerDateChanged:self];
 }
 

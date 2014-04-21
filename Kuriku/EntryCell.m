@@ -87,6 +87,12 @@
     [self updateTemperatureSlider];
 }
 
+- (void)temperatureWasChanged {
+    [self updateStatus];
+    [self updateDateButtons];
+    [self updateTemperatureSlider];
+}
+
 - (IBAction)statusWasTapped {
     [self.journalViewController statusWasTappedForCell:self];
 }
@@ -107,11 +113,21 @@
 }
 
 - (void)updateDateButtons {
+    // TODO: factor out common code
+    
     if (self.entry.todo.startDate) {
         self.startDateButton.hidden = NO;
         self.startDateLabel.hidden  = NO;
         int days = [self.entry.todo.startDate daysFromToday];
-        [self.startDateButton setTitle:[NSString stringWithFormat:@"%d days", days] forState:UIControlStateNormal];
+        
+        if (days == 0)
+            [self.startDateButton setTitle:@"now" forState:UIControlStateNormal];
+        else if (days == 1)
+            [self.startDateButton setTitle:@"1 day" forState:UIControlStateNormal];
+        else if (days <= kFrostyDaysBeforeStartDate)
+            [self.startDateButton setTitle:[NSString stringWithFormat:@"%d days", days] forState:UIControlStateNormal];
+        else
+            [self.startDateButton setTitle:[self.entry.todo.startDate formattedDatePattern:@"M/d"] forState:UIControlStateNormal];
     } else {
         self.startDateButton.hidden = YES;
         self.startDateLabel.hidden  = YES;
@@ -121,7 +137,15 @@
         self.dueDateButton.hidden = NO;
         self.dueDateLabel.hidden  = NO;
         int days = [self.entry.todo.dueDate daysFromToday];
-        [self.dueDateButton setTitle:[NSString stringWithFormat:@"%d days", days] forState:UIControlStateNormal];
+        
+        if (days == 0)
+            [self.dueDateButton setTitle:@"now" forState:UIControlStateNormal];
+        else if (days == 1)
+            [self.dueDateButton setTitle:@"1 day" forState:UIControlStateNormal];
+        else if (days <= kUrgentDaysBeforeDueDate)
+            [self.dueDateButton setTitle:[NSString stringWithFormat:@"%d days", days] forState:UIControlStateNormal];
+        else
+            [self.dueDateButton setTitle:[self.entry.todo.dueDate formattedDatePattern:@"M/d"] forState:UIControlStateNormal];
     } else {
         self.dueDateButton.hidden = YES;
         self.dueDateLabel.hidden  = YES;

@@ -13,12 +13,14 @@
 @protocol DatePickerViewControllerDelegate <NSObject>
 
 - (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController;
+- (void)datePickerViewControllerCanceled:(DatePickerViewController *)dateViewController;
 
 @end
 
 @interface DatePickerViewController : UITableViewController
 
 @property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSString *tag;
 @property (nonatomic, weak) id<DatePickerViewControllerDelegate> delegate;
 
 @end
