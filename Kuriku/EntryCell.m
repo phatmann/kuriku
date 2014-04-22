@@ -93,6 +93,11 @@
     [self updateTemperatureSlider];
 }
 
+- (void)importanceWasChanged {
+    [self updateTitle];
+    [self updateStatus];
+}
+
 - (IBAction)statusWasTapped {
     [self.journalViewController statusWasTappedForCell:self];
 }
@@ -187,14 +192,23 @@
 - (void)updateStatusColor {
     if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
         if (self.entry.todo.temperature > 0) {
-            static UIColor *warmColor, *hotColor;
-            
-            if (!warmColor) {
-                warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-                hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+            if (self.entry.todo.dueDate) {
+                static UIColor *warmColor, *hotColor;
+                if (!warmColor) {
+                    warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+                    hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+                }
+                
+                self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:warmColor toColor:hotColor];
+            } else {
+                static UIColor *oldColor, *veryOldColor;
+                if (!oldColor) {
+                    oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+                    veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+                }
+                
+                self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
             }
-            
-            self.statusView.backgroundColor = [EntryCell huedColorForScale:self.entry.todo.temperature fromColor:warmColor toColor:hotColor];
         } else if (self.entry.todo.temperature < 0) {
             static UIColor *coolColor, *coldColor;
             
@@ -203,7 +217,7 @@
                 coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
             }
             
-            self.statusView.backgroundColor = [EntryCell huedColorForScale:-self.entry.todo.temperature fromColor:coolColor toColor:coldColor];
+            self.statusView.backgroundColor = [EntryCell scale:-self.entry.todo.temperature fromColor:coolColor toColor:coldColor];
         } else {
             self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
         }
@@ -244,16 +258,19 @@
     return lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * importance);
 }
 
-+ (UIColor *)huedColorForScale:(float_t)scale fromColor:(UIColor*)fromColor toColor:(UIColor *)toColor {
-    CGFloat fromHue, toHue;
-    [fromColor getHue:&fromHue saturation:nil brightness:nil alpha:nil];
-    [toColor getHue:&toHue saturation:nil brightness:nil alpha:nil];
++ (UIColor *)scale:(float_t)scale fromColor:(UIColor*)fromColor toColor:(UIColor *)toColor {
+    CGFloat fromHue, toHue, fromSaturation, toSaturation, fromBrightness, toBrightness;
+    [fromColor getHue:&fromHue saturation:&fromSaturation brightness:&fromBrightness alpha:nil];
+    [toColor getHue:&toHue saturation:&toSaturation brightness:&toBrightness alpha:nil];
     
     fromHue = fmod(fromHue, 1.0);
     toHue   = fmod(toHue, 1.0);
     
-    CGFloat hue = fromHue + ((toHue - fromHue) * scale);
-    return [UIColor colorWithHue:hue saturation:1.0 brightness:1.0 alpha:1.0];
+    CGFloat hue         = fromHue        + ((toHue - fromHue) * scale);
+    CGFloat saturation  = fromSaturation + ((toSaturation - fromSaturation) * scale);
+    CGFloat brightness  = fromBrightness + ((toBrightness - fromBrightness) * scale);
+    
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0];
 }
 
 #pragma Text View Delegate

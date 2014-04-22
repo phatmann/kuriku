@@ -3,12 +3,15 @@ The visual intelligent action journal
 
 Todo
 ----
+* When temp slider in middle position, show STALENESS if any
+* Use green for staleness
 
 Bugs
 -------------
+* MUST FIX: Keyboard avoiding table needed
+* Make pinch range larger
 * Cell covering top separator in edit mode
 * Done button does not animate cell collapse
-* Keyboard avoiding table needed
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
 * If start date in past applied, ignore it

@@ -135,7 +135,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 		notches = MAX(1.0, MIN(101.0, notches * scale));
         entry.todo.importance = (notches - 1) / 100.0f;
         EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
-        [cell updateTitle];
+        [cell importanceWasChanged];
         [self updateRowHeights];
     }
 }

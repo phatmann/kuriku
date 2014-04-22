@@ -17,7 +17,7 @@
 
 - (void)refresh;
 - (void)temperatureWasChanged;
-- (void)updateTitle;
+- (void)importanceWasChanged;
 + (CGFloat)fontSizeForImportance:(CGFloat)importance;
 
 @end

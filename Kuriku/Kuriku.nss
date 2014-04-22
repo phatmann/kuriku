@@ -2,6 +2,8 @@
 @hotColor:  hsl(0.0, 1.0, 1.0);
 @coolColor: hsl(0.5, 1.0, 1.0);
 @coldColor: hsl(0.6, 1.0, 1.0);
+@oldColor: hsl(0.3, 1.0, 0.5);
+@veryOldColor: hsl(0.3, 1.0, 1.0);
 
 Entry {
     font-name: Helvetica;
@@ -34,6 +36,14 @@ TemperatureWarm {
 
 TemperatureHot {
     background-color: @hotColor;
+}
+
+StalenessVeryOld {
+    background-color: @veryOldColor;
+}
+
+StalenessOld {
+    background-color: @oldColor;
 }
 
 ImportanceLow {
