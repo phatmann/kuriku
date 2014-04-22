@@ -3,10 +3,10 @@ The visual intelligent action journal
 
 Todo
 ----
-* Allow multiple todos to be entered
 
 Bugs
 -------------
+* Cell covering top separator in edit mode
 * Done button does not animate cell collapse
 * Keyboard avoiding table needed
 * Do not allow actions on completed task
@@ -15,6 +15,7 @@ Bugs
 
 Missing Features
 ----------------
+* Allow multiple todos to be entered
 * Tap inactive task goes to active task
 * Jump around to different dates in journal
 * Search

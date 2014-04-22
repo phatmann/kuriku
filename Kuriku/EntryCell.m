@@ -109,7 +109,12 @@
 #pragma mark -
 
 - (void)updateTemperatureSlider {
-    self.temperatureSlider.value = self.entry.todo.temperature;
+    if (self.entry.todo.dueDate)
+        self.temperatureSlider.value = self.entry.todo.urgency;
+    else if (self.entry.todo.startDate)
+        self.temperatureSlider.value = self.entry.todo.frostiness;
+    else
+        self.temperatureSlider.value = 0;
 }
 
 - (void)updateDateButtons {

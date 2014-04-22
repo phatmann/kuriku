@@ -109,7 +109,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         self.pinchIndexPath = [self.tableView indexPathForRowAtPoint:pinchLocation];
         Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
         self.pinchInitialImportance = entry.todo.importance;
-        
         [self updateImportanceForPinchScale:pinchRecognizer.scale];
     }
     else {
@@ -118,7 +117,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         }
         else if ((pinchRecognizer.state == UIGestureRecognizerStateCancelled) || (pinchRecognizer.state == UIGestureRecognizerStateEnded)) {
             self.pinchIndexPath = nil;
-            [self updateRowHeights];
         }
     }
 }
@@ -133,9 +131,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     
     if (self.pinchIndexPath && (self.pinchIndexPath.section != NSNotFound) && (self.pinchIndexPath.row != NSNotFound)) {
         Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
-		entry.todo.importance = MAX(0.0, MIN(1.0, self.pinchInitialImportance * scale));
+        CGFloat notches = (entry.todo.importance * 100) + 1;
+		notches = MAX(1.0, MIN(101.0, notches * scale));
+        entry.todo.importance = (notches - 1) / 100.0f;
         EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
-        [cell refresh];
+        [cell updateTitle];
+        [self updateRowHeights];
     }
 }
 
@@ -248,9 +249,11 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     if (buttonIndex == markCompletedButtonIndex) {
         [todo createEntry:(todo.lastEntry.type == EntryTypeComplete) ? EntryTypeReady : EntryTypeComplete];
         [[IBCoreDataStore mainStore] save];
+        [self reloadData];
     } else if (buttonIndex == takeActionButtonIndex) {
         [todo createEntry:EntryTypeAction];
         [[IBCoreDataStore mainStore] save];
+        [self reloadData];
     } else if (buttonIndex == doAgainButtonIndex) {
         [self showRepeatView:todo];
     }
@@ -264,6 +267,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
     
     [IBCoreDataStore save];
+    [self reloadData];
 }   
 
 #pragma mark - Table View Delegate
@@ -411,6 +415,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
     
     [IBCoreDataStore save];
+    [self reloadData];
 }
     
 #pragma Text View Delegate
