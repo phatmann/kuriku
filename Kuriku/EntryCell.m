@@ -281,7 +281,7 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    self.editing = YES;
+    //self.editing = YES;
     self.titleTextView.userInteractionEnabled = YES;
     self.timeLabel.hidden = YES;
     self.temperatureView.hidden = NO;
@@ -291,7 +291,7 @@
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    self.editing = NO;
+    //self.editing = NO;
     self.titleTextView.userInteractionEnabled = NO;
     self.timeLabel.hidden = NO;
     self.temperatureView.hidden = YES;

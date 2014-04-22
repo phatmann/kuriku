@@ -38,6 +38,10 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
     self.tableView.estimatedRowHeight = 44;
     
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewWasPinched:)];
@@ -90,6 +94,40 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 #pragma mark - Private
+
+- (void)keyboardWillShow:(NSNotification*)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    
+    CGRect keyboardRect = [self.tableView convertRect:[userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    
+    UIEdgeInsets newInset = self.tableView.contentInset;
+    newInset.bottom = keyboardRect.size.height - (CGRectGetMaxY(keyboardRect) - CGRectGetMaxY(self.tableView.bounds));
+    self.tableView.contentInset = newInset;
+    self.tableView.scrollIndicatorInsets = newInset;
+    
+    //NSIndexPath *activeIndexPath = [self.tableView indexPathForCell:self.activeCell];
+    //[self.tableView scrollToRowAtIndexPath:activeIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    
+    [UIView commitAnimations];
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+    
+    [UIView commitAnimations];
+}
+
 
 - (Entry *)entryAtIndexPath:(NSIndexPath *)indexPath {
     return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -420,14 +458,17 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     
 #pragma Text View Delegate
     
-- (void)textViewDidChange:(UITextView *)textView {
-    // TODO: share common code with EditTodoViewController
-    [self updateRowHeights];
-    
+- (void)scrollCaretIntoView:(UITextView *)textView {
     CGRect caretRect = [textView caretRectForPosition:textView.selectedTextRange.start];
     caretRect = [self.tableView convertRect:caretRect fromView:textView];
     caretRect.size.height += 8;
-    [self.tableView scrollRectToVisible:caretRect animated:YES];
+    [self.tableView scrollRectToVisible:caretRect animated:NO];
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    // TODO: share common code with EditTodoViewController
+    [self updateRowHeights];
+    [self scrollCaretIntoView:textView];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
@@ -439,7 +480,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
     
     self.navigationBarItem.rightBarButtonItem = self.doneButton;
+    
     [self updateRowHeights];
+    [self scrollCaretIntoView:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {

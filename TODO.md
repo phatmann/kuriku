@@ -3,12 +3,13 @@ The visual intelligent action journal
 
 Todo
 ----
+* Move table out of way of keyboard. Support in-line editing and switching cell focus. Maybe fix TPKeyboardAvoiding bugs?
 * When temp slider in middle position, show STALENESS if any
-* Use green for staleness
+* Tap and slide on status button to set temperature
+* Notch for normal importance
 
 Bugs
 -------------
-* MUST FIX: Keyboard avoiding table needed
 * Make pinch range larger
 * Cell covering top separator in edit mode
 * Done button does not animate cell collapse
