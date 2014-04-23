@@ -10,7 +10,6 @@ Todo
 
 Bugs
 -------------
-* Make pinch range larger
 * Cell covering top separator in edit mode
 * Done button does not animate cell collapse
 * Do not allow actions on completed task

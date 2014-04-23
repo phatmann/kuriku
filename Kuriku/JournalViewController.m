@@ -22,7 +22,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 @property (strong, nonatomic) Entry *selectedEntry;
 @property (strong, nonatomic) NSIndexPath *pinchIndexPath;
-@property (nonatomic) int pinchInitialImportance;
+@property (nonatomic) CGFloat pinchInitialImportance;
 @property (nonatomic) float_t priorityFilter;
 @property (nonatomic) EntryCell *activeCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
@@ -169,7 +169,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     
     if (self.pinchIndexPath && (self.pinchIndexPath.section != NSNotFound) && (self.pinchIndexPath.row != NSNotFound)) {
         Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
-        CGFloat notches = (entry.todo.importance * 100) + 1;
+        CGFloat notches = (self.pinchInitialImportance * 100) + 1;
 		notches = MAX(1.0, MIN(101.0, notches * scale));
         entry.todo.importance = (notches - 1) / 100.0f;
         EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
