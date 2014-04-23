@@ -35,7 +35,9 @@
 
 @implementation EntryCell
 {
-    BOOL _statusButtonDragged;
+    BOOL _statusButtonDragging;
+    CGPoint _statusButtonInitialLocation;
+    CGFloat _temperatureBeforeDrag;
 }
 
 - (void)awakeFromNib {
@@ -112,38 +114,41 @@
 }
 
 - (IBAction)statusButtonWasReleasedOutside {
-    _statusButtonDragged = NO;
+    _statusButtonDragging = NO;
 }
 
 - (IBAction)statusButtonWasReleasedInside {
-    if (!_statusButtonDragged)
+    if (!_statusButtonDragging)
         [self.journalViewController statusWasTappedForCell:self];
     
-    _statusButtonDragged = NO;
+    _statusButtonDragging = NO;
 }
 
 - (IBAction)statusButtonWasDragged:(UIButton *)button forEvent:(UIEvent *)event {
-    _statusButtonDragged = YES;
     UITouch *touch = [[event touchesForView:button] anyObject];
     
-	CGPoint previousLocation = [touch previousLocationInView:button];
-	CGPoint location = [touch locationInView:button];
-	CGFloat offset = location.y - previousLocation.y;
-    
-    CGFloat initialTemp = 0;
-    
-    if (self.entry.todo.dueDate || self.entry.todo.startDate) {
-        initialTemp = self.entry.todo.temperature;
+    if (!_statusButtonDragging) {
+        _statusButtonDragging = YES;
+        _statusButtonInitialLocation = [touch previousLocationInView:button];
+        
+        if (self.entry.todo.dueDate || self.entry.todo.startDate) {
+            _temperatureBeforeDrag = self.entry.todo.temperature;
+        } else {
+            _temperatureBeforeDrag = 0.0f;
+        }
     }
     
-    static const CGFloat sensitivity = 75.0f;
+	CGPoint location = [touch locationInView:button];
+	CGFloat offset = location.y - _statusButtonInitialLocation.y;
     
-    CGFloat notches = (initialTemp * sensitivity) + 1.0f;
-    notches = MAX(-sensitivity - 1.0f, MIN(sensitivity + 1.0f, notches - offset));
-    self.entry.todo.temperature = (notches - 1.0f) / sensitivity;
+    static const CGFloat range = 20.0f;
+    CGFloat newTemperature = MAX(-1.0f, MIN(1.0f, ((_temperatureBeforeDrag * range) - offset) / range));
+    
+    if (newTemperature > -0.1 && newTemperature < 0.1)
+        newTemperature = 0.0f;
 
+    self.entry.todo.temperature = newTemperature;
     [self temperatureWasChanged];
-    button.highlighted = NO;
 }
 
 
@@ -153,7 +158,7 @@
     if (self.entry.todo.dueDate)
         self.temperatureSlider.value = self.entry.todo.urgency;
     else if (self.entry.todo.startDate)
-        self.temperatureSlider.value = self.entry.todo.frostiness;
+        self.temperatureSlider.value = -self.entry.todo.frostiness;
     else
         self.temperatureSlider.value = 0;
 }
