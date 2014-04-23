@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 @end
 
@@ -49,6 +50,9 @@
     
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasPanned:)];
     [self addGestureRecognizer:self.panGestureRecognizer];
+    
+    self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasLongPressed:)];
+    [self addGestureRecognizer:self.longPressGestureRecognizer];
 }
 
 - (void)prepareForReuse {
@@ -108,17 +112,17 @@
 }
 
 - (IBAction)statusButtonWasTapped {
-    [self.journalViewController statusWasTappedForCell:self];
+    //[self.journalViewController statusWasTappedForCell:self];
 }
 
-- (IBAction)temperatureSliderWasChanged {
-    if (self.temperatureSlider.value > -0.02 && self.temperatureSlider.value < 0.02)
-        self.temperatureSlider.value = 0;
-    
-    self.entry.todo.temperature = self.temperatureSlider.value;
-    [self updateDateButtons];
-    [self updateStatus];
-}
+//- (IBAction)temperatureSliderWasChanged {
+//    if (self.temperatureSlider.value > -0.02 && self.temperatureSlider.value < 0.02)
+//        self.temperatureSlider.value = 0;
+//    
+//    self.entry.todo.temperature = self.temperatureSlider.value;
+//    [self updateDateButtons];
+//    [self updateStatus];
+//}
 
 - (void)cellWasPanned:(UIPanGestureRecognizer *)panGestureRecognizer {
     switch (panGestureRecognizer.state) {
@@ -154,6 +158,15 @@
             
         default:
             ;
+    }
+}
+
+- (void)cellWasLongPressed:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint pt = [longPressGestureRecognizer locationInView:self.titleTextView];
+        
+        if (CGRectContainsPoint(self.titleTextView.bounds, pt))
+            [self.titleTextView becomeFirstResponder];
     }
 }
 
@@ -323,27 +336,35 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
     self.entry.todo.title = textView.text;
-    [self.journalViewController textViewDidChange:textView];
+    [self.journalViewController cell:self textViewDidChange:textView];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     //self.editing = YES;
+    self.longPressGestureRecognizer.enabled = NO;
     self.titleTextView.userInteractionEnabled = YES;
-    self.timeLabel.hidden = YES;
-    self.temperatureView.hidden = NO;
-    self.temperatureViewHeightConstraint.constant = 30;
-    [self updateStatus];
-    [self.journalViewController textViewDidBeginEditing:textView];
+    //self.timeLabel.hidden = YES;
+    //self.temperatureView.hidden = NO;
+    //self.temperatureViewHeightConstraint.constant = 30;
+    //[self updateStatus];
+    [self.journalViewController cell:self textViewDidBeginEditing:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     //self.editing = NO;
+    self.longPressGestureRecognizer.enabled = YES;
     self.titleTextView.userInteractionEnabled = NO;
-    self.timeLabel.hidden = NO;
-    self.temperatureView.hidden = YES;
-    self.temperatureViewHeightConstraint.constant = 0;
-    [self updateStatus];
-    [self.journalViewController textViewDidEndEditing:textView];
+    //self.timeLabel.hidden = NO;
+    //self.temperatureView.hidden = YES;
+    //self.temperatureViewHeightConstraint.constant = 0;
+    //[self updateStatus];
+    
+    [self.journalViewController cell:self textViewDidEndEditing:textView];
+    
+    if (self.entry.todo.title.length > 0)
+        [IBCoreDataStore save];
+    else
+        [self.entry.todo destroy];
 }
 
 @end

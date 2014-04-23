@@ -26,8 +26,8 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 - (void)statusWasTappedForCell:(EntryCell *)cell;
-- (void)textViewDidBeginEditing:(UITextView *)textView;
-- (void)textViewDidEndEditing:(UITextView *)textView;
-- (void)textViewDidChange:(UITextView *)textView;
+- (void)cell:(EntryCell *)cell textViewDidBeginEditing:(UITextView *)textView;
+- (void)cell:(EntryCell *)cell textViewDidEndEditing:(UITextView *)textView;
+- (void)cell:(EntryCell *)cell textViewDidChange:(UITextView *)textView;
 
 @end

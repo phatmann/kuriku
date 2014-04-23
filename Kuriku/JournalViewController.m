@@ -109,9 +109,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     self.tableView.contentInset = newInset;
     self.tableView.scrollIndicatorInsets = newInset;
     
-    //NSIndexPath *activeIndexPath = [self.tableView indexPathForCell:self.activeCell];
-    //[self.tableView scrollToRowAtIndexPath:activeIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    
     [UIView commitAnimations];
 }
 
@@ -162,7 +159,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 - (void)updateRowHeights {
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
-    self.activeCell.editing = YES;
 }
 
 - (void)updateImportanceForPinchScale:(CGFloat)scale {
@@ -178,20 +174,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
 }
 
-- (IBAction)cellWasLongPressed:(UILongPressGestureRecognizer *)gestureRecognizer {
-//    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-//        CGPoint point = [gestureRecognizer locationInView:self.tableView];
-//        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-//        
-//        if (indexPath != nil) {
-//            Entry* entry =  [self entryAtIndexPath:indexPath];
-//            [self showEditTodoView:entry.todo];
-//        }
-//    }
-}
-
 - (void)statusWasTappedForCell:(EntryCell *)cell {
-    [self showTodoActionSheet:cell.entry];
+    //[self showTodoActionSheet:cell.entry];
 }
 
 - (void)showTodoActionSheet:(Entry *)entry {
@@ -255,9 +239,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [Todo create];
 
     [self reloadData];
-    
-    self.activeCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [self.activeCell becomeFirstResponder];
 }
 
 - (void)doneButtonTapped {
@@ -339,9 +320,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     CGFloat width = self.tableView.bounds.size.width - 49;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     
-    if ([[self.tableView indexPathForCell:self.activeCell] isEqual:indexPath])
-        height += 30;
-    
     return height + margin;
 }
 
@@ -353,16 +331,18 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.activeCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    [self.activeCell becomeFirstResponder];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    if (self.activeCell != [self.tableView cellForRowAtIndexPath:indexPath])
+        [self showTodoActionSheet:[self entryAtIndexPath:indexPath]];
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    if (!tableView.isEditing) {
-        Entry *entry = [self entryAtIndexPath:indexPath];
-        [self showEditTodoView:entry.todo];
-    }
-}
+//- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+//    if (!tableView.isEditing) {
+//        Entry *entry = [self entryAtIndexPath:indexPath];
+//        [self showEditTodoView:entry.todo];
+//    }
+//}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([[self.fetchedResultsController sections] count] > 0) {
@@ -465,14 +445,14 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [self.tableView scrollRectToVisible:caretRect animated:NO];
 }
 
-- (void)textViewDidChange:(UITextView *)textView {
-    // TODO: share common code with EditTodoViewController
+- (void)cell:(EntryCell *)cell textViewDidChange:(UITextView *)textView {
     [self updateRowHeights];
     [self scrollCaretIntoView:textView];
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
+- (void)cell:(EntryCell *)cell textViewDidBeginEditing:(UITextView *)textView {
     self.filterSlider.enabled = NO;
+    self.activeCell = cell;
     
     if (!self.doneButton) {
         self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped)];
@@ -485,16 +465,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [self scrollCaretIntoView:textView];
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView {
+- (void)cell:(EntryCell *)cell textViewDidEndEditing:(UITextView *)textView {
     self.navigationBarItem.rightBarButtonItem = self.addButton;
     [self updateRowHeights];
-    
-    Todo *todo = self.activeCell.entry.todo;
-    
-    if (todo.title.length > 0)
-        [IBCoreDataStore save];
-    else
-        [todo destroy];
 }
 
 #pragma mark Date Picker View Delegate
