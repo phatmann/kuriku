@@ -31,13 +31,14 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *temperatureViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
+
+@property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
+
 @end
 
 @implementation EntryCell
 {
-    BOOL _statusButtonDragging;
-    CGPoint _statusButtonInitialLocation;
-    CGFloat _temperatureBeforeDrag;
+    CGFloat _temperatureBeforePan;
 }
 
 - (void)awakeFromNib {
@@ -45,6 +46,9 @@
     [self.temperatureSlider setThumbImage:thumbImage forState:UIControlStateNormal];
     [self.temperatureSlider setThumbImage:thumbImage forState:UIControlStateHighlighted];
     self.temperatureViewHeightConstraint.constant = 0;
+    
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasPanned:)];
+    [self addGestureRecognizer:self.panGestureRecognizer];
 }
 
 - (void)prepareForReuse {
@@ -103,6 +107,9 @@
     [self updateStatus];
 }
 
+- (IBAction)statusButtonWasTapped {
+    [self.journalViewController statusWasTappedForCell:self];
+}
 
 - (IBAction)temperatureSliderWasChanged {
     if (self.temperatureSlider.value > -0.02 && self.temperatureSlider.value < 0.02)
@@ -113,44 +120,42 @@
     [self updateStatus];
 }
 
-- (IBAction)statusButtonWasReleasedOutside {
-    _statusButtonDragging = NO;
-}
-
-- (IBAction)statusButtonWasReleasedInside {
-    if (!_statusButtonDragging)
-        [self.journalViewController statusWasTappedForCell:self];
-    
-    _statusButtonDragging = NO;
-}
-
-- (IBAction)statusButtonWasDragged:(UIButton *)button forEvent:(UIEvent *)event {
-    UITouch *touch = [[event touchesForView:button] anyObject];
-    
-    if (!_statusButtonDragging) {
-        _statusButtonDragging = YES;
-        _statusButtonInitialLocation = [touch previousLocationInView:button];
+- (void)cellWasPanned:(UIPanGestureRecognizer *)panGestureRecognizer {
+    switch (panGestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            //self.temperatureView.hidden = NO;
+            
+            if (self.entry.todo.dueDate || self.entry.todo.startDate) {
+                _temperatureBeforePan = self.entry.todo.temperature;
+            } else {
+                _temperatureBeforePan = 0.0f;
+            }
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            {
+                CGFloat offset = [panGestureRecognizer translationInView:self].x;
+                
+                static const CGFloat range = 100.0f;
+                CGFloat newTemperature = MAX(-1.0f, MIN(1.0f, ((_temperatureBeforePan * range) + offset) / range));
+                
+                if (newTemperature > -0.1 && newTemperature < 0.1)
+                    newTemperature = 0.0f;
+                
+                self.entry.todo.temperature = newTemperature;
+                [self temperatureWasChanged];
+            }
+            break;
         
-        if (self.entry.todo.dueDate || self.entry.todo.startDate) {
-            _temperatureBeforeDrag = self.entry.todo.temperature;
-        } else {
-            _temperatureBeforeDrag = 0.0f;
-        }
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled:
+            //self.temperatureView.hidden = YES;
+            break;
+            
+        default:
+            ;
     }
-    
-	CGPoint location = [touch locationInView:button];
-	CGFloat offset = location.y - _statusButtonInitialLocation.y;
-    
-    static const CGFloat range = 20.0f;
-    CGFloat newTemperature = MAX(-1.0f, MIN(1.0f, ((_temperatureBeforeDrag * range) - offset) / range));
-    
-    if (newTemperature > -0.1 && newTemperature < 0.1)
-        newTemperature = 0.0f;
-
-    self.entry.todo.temperature = newTemperature;
-    [self temperatureWasChanged];
 }
-
 
 #pragma mark -
 

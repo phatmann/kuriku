@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="CZ4-MO-1fc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="CZ4-MO-1fc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -182,10 +182,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="statusButtonWasDragged:forEvent:" destination="17P-5o-DvO" eventType="touchDragInside" id="osA-k7-3eg"/>
-                                                        <action selector="statusButtonWasReleasedInside" destination="17P-5o-DvO" eventType="touchUpInside" id="7vJ-e9-nFh"/>
-                                                        <action selector="statusButtonWasReleasedOutside" destination="17P-5o-DvO" eventType="touchCancel" id="hWu-eF-PGW"/>
-                                                        <action selector="statusButtonWasReleasedOutside" destination="17P-5o-DvO" eventType="touchUpOutside" id="oZi-8V-GL5"/>
+                                                        <action selector="statusButtonWasTapped" destination="17P-5o-DvO" eventType="touchUpInside" id="dIT-pP-3ew"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kf5-IE-ktF" userLabel="Time">
