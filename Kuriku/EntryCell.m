@@ -34,6 +34,9 @@
 @end
 
 @implementation EntryCell
+{
+    BOOL _statusButtonDragged;
+}
 
 - (void)awakeFromNib {
     UIImage *thumbImage = [UIImage imageNamed:@"slider-thumb"];
@@ -98,9 +101,6 @@
     [self updateStatus];
 }
 
-- (IBAction)statusWasTapped {
-    [self.journalViewController statusWasTappedForCell:self];
-}
 
 - (IBAction)temperatureSliderWasChanged {
     if (self.temperatureSlider.value > -0.02 && self.temperatureSlider.value < 0.02)
@@ -110,6 +110,42 @@
     [self updateDateButtons];
     [self updateStatus];
 }
+
+- (IBAction)statusButtonWasReleasedOutside {
+    _statusButtonDragged = NO;
+}
+
+- (IBAction)statusButtonWasReleasedInside {
+    if (!_statusButtonDragged)
+        [self.journalViewController statusWasTappedForCell:self];
+    
+    _statusButtonDragged = NO;
+}
+
+- (IBAction)statusButtonWasDragged:(UIButton *)button forEvent:(UIEvent *)event {
+    _statusButtonDragged = YES;
+    UITouch *touch = [[event touchesForView:button] anyObject];
+    
+	CGPoint previousLocation = [touch previousLocationInView:button];
+	CGPoint location = [touch locationInView:button];
+	CGFloat offset = location.y - previousLocation.y;
+    
+    CGFloat initialTemp = 0;
+    
+    if (self.entry.todo.dueDate || self.entry.todo.startDate) {
+        initialTemp = self.entry.todo.temperature;
+    }
+    
+    static const CGFloat sensitivity = 75.0f;
+    
+    CGFloat notches = (initialTemp * sensitivity) + 1.0f;
+    notches = MAX(-sensitivity - 1.0f, MIN(sensitivity + 1.0f, notches - offset));
+    self.entry.todo.temperature = (notches - 1.0f) / sensitivity;
+
+    [self temperatureWasChanged];
+    button.highlighted = NO;
+}
+
 
 #pragma mark -
 

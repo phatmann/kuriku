@@ -174,6 +174,7 @@
                                                     <rect key="frame" x="5" y="0.0" width="34" height="79"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="O9o-en-XPa"/>
                                                     </constraints>
@@ -181,7 +182,10 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="statusWasTapped" destination="17P-5o-DvO" eventType="touchUpInside" id="a7y-n4-pGz"/>
+                                                        <action selector="statusButtonWasDragged:forEvent:" destination="17P-5o-DvO" eventType="touchDragInside" id="osA-k7-3eg"/>
+                                                        <action selector="statusButtonWasReleasedInside" destination="17P-5o-DvO" eventType="touchUpInside" id="7vJ-e9-nFh"/>
+                                                        <action selector="statusButtonWasReleasedOutside" destination="17P-5o-DvO" eventType="touchCancel" id="hWu-eF-PGW"/>
+                                                        <action selector="statusButtonWasReleasedOutside" destination="17P-5o-DvO" eventType="touchUpOutside" id="oZi-8V-GL5"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kf5-IE-ktF" userLabel="Time">
