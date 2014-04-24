@@ -7,7 +7,6 @@ Todo
 
 Bugs
 -------------
-* Cannot scroll when swiping cell
 * No highlighting when cell is tapped
 * Done button does not animate cell collapse
 * Do not allow actions on completed task

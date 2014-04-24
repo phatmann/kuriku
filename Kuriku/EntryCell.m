@@ -18,8 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabelInStatusView;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabelInProgressView;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet UIView *temperatureView;
@@ -259,22 +258,20 @@
     self.progressViewWidthConstraint.constant = self.entry.progress * self.statusViewWidthConstraint.constant;
 }
 
-- (void)updateStatusDate {
-    self.dateLabelInStatusView.text = nil;
+- (void)updateDate {
+    self.dateLabel.text = nil;
     
     if (self.entry.state == EntryStateActive) {
         if ([self.entry.todo.startDate daysFromToday] > kFrostyDaysBeforeStartDate) {
-            self.dateLabelInStatusView.nuiClass = @"StartDate";
-            self.dateLabelInStatusView.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
+            self.dateLabel.nuiClass = @"StartDate";
+            self.dateLabel.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
         } else if ([self.entry.todo.dueDate daysFromToday] > kUrgentDaysBeforeDueDate) {
-            self.dateLabelInStatusView.nuiClass = @"DueDate";
-            self.dateLabelInStatusView.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
+            self.dateLabel.nuiClass = @"DueDate";
+            self.dateLabel.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
         }
         
-        [self.dateLabelInStatusView applyNUI];
+        [self.dateLabel applyNUI];
     }
-    
-    self.dateLabelInProgressView.text = self.dateLabelInStatusView.text;
 }
 
 - (void)updateStatusColor {
@@ -318,7 +315,7 @@
 }
 
 - (void)updateStatus {
-    [self updateStatusDate];
+    [self updateDate];
     [self updateProgress];
     [self updateStatusColor];
 }

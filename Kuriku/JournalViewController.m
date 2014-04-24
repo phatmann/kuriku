@@ -476,7 +476,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 #pragma mark Date Picker View Delegate
 
-- (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController {
+- (void)datePickerViewControllerDismissed:(DatePickerViewController *)dateViewController {
     [self.activeCell.entry.todo setValue:dateViewController.date forKey:dateViewController.tag];
     [self.activeCell becomeFirstResponder];
     [self.activeCell temperatureWasChanged];

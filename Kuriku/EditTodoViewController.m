@@ -141,10 +141,6 @@ enum {
     }
 }
 
-- (void)datePickerViewControllerCanceled:(DatePickerViewController *)dateViewController {
-    
-}
-
 #pragma mark - Table View Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

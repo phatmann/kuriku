@@ -11,9 +11,10 @@
 @class DatePickerViewController;
 
 @protocol DatePickerViewControllerDelegate <NSObject>
-
+@optional
 - (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController;
 - (void)datePickerViewControllerCanceled:(DatePickerViewController *)dateViewController;
+- (void)datePickerViewControllerDismissed:(DatePickerViewController *)dateViewController;
 
 @end
 
