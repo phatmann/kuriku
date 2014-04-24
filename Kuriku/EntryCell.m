@@ -10,6 +10,7 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "JournalViewController.h"
+#import "GradientView.h"
 #import <InnerBand/InnerBand.h>
 #import <NUI/UITextView+NUI.h>
 #import "NSDate+Kuriku.h"
@@ -28,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *dueDateButton;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
-@property (weak, nonatomic) IBOutlet UIView *urgencyBar;
+@property (weak, nonatomic) IBOutlet GradientView *urgencyBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *temperatureViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
@@ -57,28 +58,6 @@
     
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasLongPressed:)];
     [self addGestureRecognizer:self.longPressGestureRecognizer];
-    
-    ////////////
-    // EXPERIMENT
-    
-    CAGradientLayer *layer = [CAGradientLayer layer];
-    UIColor *warmColor, *hotColor;
-    warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-    hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-    layer.colors = @[(id)[warmColor CGColor],(id)[hotColor CGColor]];
-    layer.startPoint = CGPointMake(0.0f, 0.5f);
-    layer.endPoint = CGPointMake(1.0f, 0.5f);
-    [self.urgencyBar.layer addSublayer:layer];
-    
-    ////////////
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    CAGradientLayer *layer = [self.urgencyBar.layer.sublayers firstObject];
-    CGRect frame = self.urgencyBar.bounds;
-    frame.size.width = 34;
-    layer.frame = frame;
 }
 
 - (void)prepareForReuse {
@@ -107,6 +86,7 @@
 
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
+    self.urgencyBar.entry = entry;
     [self refresh];
 }
 

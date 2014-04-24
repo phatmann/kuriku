@@ -93,6 +93,14 @@
                                                         <userDefinedRuntimeAttribute type="string" keyPath="nuiClass" value="Time"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdd-kE-xP5" userLabel="Urgency Bar" customClass="GradientView">
+                                                    <rect key="frame" x="5" y="14" width="29" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="ETg-kk-RhB"/>
+                                                    </constraints>
+                                                </view>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
                                                     <rect key="frame" x="39" y="12" width="266" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -103,14 +111,6 @@
                                                         <outlet property="delegate" destination="17P-5o-DvO" id="bqg-1Q-VdT"/>
                                                     </connections>
                                                 </textView>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qtn-6A-oUu" userLabel="Urgency Bar">
-                                                    <rect key="frame" x="5" y="11" width="34" height="57"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="34" id="FWo-wd-kK9"/>
-                                                    </constraints>
-                                                </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDz-pB-RBj" userLabel="Temperature">
                                                     <rect key="frame" x="41" y="44" width="269" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -181,7 +181,7 @@
                                                         <constraint firstItem="Qtu-aN-bdg" firstAttribute="leading" secondItem="lKt-D4-Dh2" secondAttribute="trailing" id="sbp-0A-izh"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igV-lu-tIO" userLabel="Status Button">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igV-lu-tIO" userLabel="Status Button">
                                                     <rect key="frame" x="5" y="12" width="34" height="67"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -203,23 +203,23 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="DaY-QM-H8E" secondAttribute="top" id="2Sn-AA-Sdx"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="xdd-kE-xP5" secondAttribute="trailing" constant="5" id="84q-lR-NxJ"/>
                                                 <constraint firstAttribute="bottom" secondItem="igV-lu-tIO" secondAttribute="bottom" id="8Y4-9f-xAE"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="94n-ce-2VS"/>
                                                 <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="5" id="AIn-cM-dRf"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="trailing" secondItem="xDz-pB-RBj" secondAttribute="trailing" id="B2T-eT-zuU"/>
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="15" id="Fr2-Oq-Z58"/>
+                                                <constraint firstItem="xdd-kE-xP5" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="14" id="J3m-HZ-TLH"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
-                                                <constraint firstItem="qtn-6A-oUu" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="11" id="P6E-VH-Vvq"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" constant="-2" id="PLA-YU-jKf"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="igV-lu-tIO" secondAttribute="trailing" id="WOv-Gc-6pW"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="1" id="Z9I-FS-4lD"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="12" id="aMN-Tj-b3n"/>
                                                 <constraint firstAttribute="bottom" secondItem="xDz-pB-RBj" secondAttribute="bottom" constant="5" id="kf2-4M-u10"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="2" id="mne-EN-IX0"/>
-                                                <constraint firstAttribute="bottom" secondItem="qtn-6A-oUu" secondAttribute="bottom" constant="11" id="pDI-aA-S7d"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" constant="-1" id="rem-ay-gj8"/>
-                                                <constraint firstItem="qtn-6A-oUu" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="wrn-Lq-1Am"/>
+                                                <constraint firstItem="xdd-kE-xP5" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="xpL-4G-aE7"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -239,8 +239,7 @@
                                             <outlet property="temperatureViewHeightConstraint" destination="M2k-5V-XLq" id="IGF-g8-4ML"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
                                             <outlet property="titleTextView" destination="wJy-G4-VdD" id="HkB-1m-qm6"/>
-                                            <outlet property="urgencyBar" destination="qtn-6A-oUu" id="sNN-HK-qx2"/>
-                                            <outlet property="urgencyBarWidthConstraint" destination="FWo-wd-kK9" id="hut-pt-Mla"/>
+                                            <outlet property="urgencyBar" destination="xdd-kE-xP5" id="Qy6-TH-S1a"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -115,6 +115,10 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
     return [NSSet setWithObjects:@"dueDate", nil];
 }
 
++ (NSSet *)keyPathsForValuesAffectingTemperature {
+    return [NSSet setWithObjects:@"urgency", @"staleness", @"frostiness", @"importance", nil];
+}
+
 - (Entry *)lastEntry {
     return [self.entries lastObject];
 }
