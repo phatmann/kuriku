@@ -237,8 +237,10 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
     
     [Todo create];
-
     [self reloadData];
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [cell becomeFirstResponder];
 }
 
 - (void)doneButtonTapped {

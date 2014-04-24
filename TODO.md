@@ -7,7 +7,6 @@ Todo
 
 Bugs
 -------------
-* Add todo does not set focus
 * No highlighting when cell is tapped
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
