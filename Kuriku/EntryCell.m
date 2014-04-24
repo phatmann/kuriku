@@ -146,10 +146,19 @@
             
         case UIGestureRecognizerStateChanged:
             {
-                CGFloat offset = [panGestureRecognizer translationInView:self].x;
+                CGPoint offset = [panGestureRecognizer translationInView:self];
+                
+                if (fabs(offset.x) < 5)
+                    return;
+                
+                if (fabs(offset.y) > 5) {
+                    self.panGestureRecognizer.enabled = NO;
+                    self.panGestureRecognizer.enabled = YES;
+                    return;
+                }
                 
                 static const CGFloat range = 34.0f;
-                CGFloat newTemperature = MAX(-1.0f, MIN(1.0f, ((_temperatureBeforePan * range) + offset) / range));
+                CGFloat newTemperature = MAX(-1.0f, MIN(1.0f, ((_temperatureBeforePan * range) + offset.x) / range));
                 
                 if (newTemperature > -0.1 && newTemperature < 0.1)
                     newTemperature = 0.0f;
