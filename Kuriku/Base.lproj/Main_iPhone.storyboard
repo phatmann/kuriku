@@ -48,12 +48,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaY-QM-H8E" userLabel="Date">
+                                                    <rect key="frame" x="217" y="1" width="25" height="11"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                    <color key="textColor" red="0.96862745100000003" green="0.25882352939999997" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvS-BL-gMe" userLabel="Status">
-                                                    <rect key="frame" x="10" y="1" width="30" height="11"/>
+                                                    <rect key="frame" x="247" y="2" width="20" height="9"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQr-Vf-hwZ" userLabel="Progress">
-                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="11"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="9"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.31794593978102192" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -61,27 +68,30 @@
                                                             </constraints>
                                                         </view>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.89601391423357668" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="cQr-Vf-hwZ" secondAttribute="bottom" id="CIt-oI-7Lx"/>
-                                                        <constraint firstAttribute="width" constant="30" id="FSe-Yo-Y9s"/>
+                                                        <constraint firstAttribute="width" constant="20" id="FSe-Yo-Y9s" userLabel="Status Width"/>
+                                                        <constraint firstAttribute="height" constant="9" id="M3C-BI-1cd"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="leading" id="My9-F0-bGY"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" id="br7-sv-UMY"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nuiClass" value="Status"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kf5-IE-ktF" userLabel="Time">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kf5-IE-ktF" userLabel="Time">
                                                     <rect key="frame" x="269" y="1" width="41" height="11"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="41" id="dz7-FV-8r4"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaY-QM-H8E" userLabel="Date">
-                                                    <rect key="frame" x="236" y="1" width="25" height="11"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                                    <color key="textColor" red="0.96862745100000003" green="0.25882352939999997" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nuiClass" value="Time"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
                                                     <rect key="frame" x="39" y="12" width="266" height="24"/>
@@ -94,7 +104,7 @@
                                                     </connections>
                                                 </textView>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qtn-6A-oUu" userLabel="Urgency Bar">
-                                                    <rect key="frame" x="0.0" y="11" width="34" height="57"/>
+                                                    <rect key="frame" x="5" y="11" width="34" height="57"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -195,22 +205,21 @@
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="DaY-QM-H8E" secondAttribute="top" id="2Sn-AA-Sdx"/>
                                                 <constraint firstAttribute="bottom" secondItem="igV-lu-tIO" secondAttribute="bottom" id="8Y4-9f-xAE"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="94n-ce-2VS"/>
+                                                <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="5" id="AIn-cM-dRf"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="trailing" secondItem="xDz-pB-RBj" secondAttribute="trailing" id="B2T-eT-zuU"/>
-                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="8" id="DtR-11-7Tq"/>
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="15" id="Fr2-Oq-Z58"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
-                                                <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="10" id="OSu-5c-vJY"/>
                                                 <constraint firstItem="qtn-6A-oUu" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="11" id="P6E-VH-Vvq"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" constant="-2" id="PLA-YU-jKf"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="igV-lu-tIO" secondAttribute="trailing" id="WOv-Gc-6pW"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="1" id="Z9I-FS-4lD"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="12" id="aMN-Tj-b3n"/>
-                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="height" secondItem="rvS-BL-gMe" secondAttribute="height" id="c4g-aD-zUs"/>
                                                 <constraint firstAttribute="bottom" secondItem="xDz-pB-RBj" secondAttribute="bottom" constant="5" id="kf2-4M-u10"/>
+                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="2" id="mne-EN-IX0"/>
                                                 <constraint firstAttribute="bottom" secondItem="qtn-6A-oUu" secondAttribute="bottom" constant="11" id="pDI-aA-S7d"/>
-                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" id="rem-ay-gj8"/>
-                                                <constraint firstItem="qtn-6A-oUu" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" id="wrn-Lq-1Am"/>
+                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" constant="-1" id="rem-ay-gj8"/>
+                                                <constraint firstItem="qtn-6A-oUu" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="wrn-Lq-1Am"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -224,6 +233,7 @@
                                             <outlet property="startDateLabel" destination="lKt-D4-Dh2" id="gVu-Ix-EdB"/>
                                             <outlet property="statusButton" destination="igV-lu-tIO" id="pah-nR-eIO"/>
                                             <outlet property="statusView" destination="rvS-BL-gMe" id="PGi-hQ-WNc"/>
+                                            <outlet property="statusViewWidthConstraint" destination="FSe-Yo-Y9s" id="LP0-Cx-xss"/>
                                             <outlet property="temperatureSlider" destination="Y0O-Lr-4eq" id="8l0-ot-BLY"/>
                                             <outlet property="temperatureView" destination="xDz-pB-RBj" id="HAo-hM-2pw"/>
                                             <outlet property="temperatureViewHeightConstraint" destination="M2k-5V-XLq" id="IGF-g8-4ML"/>

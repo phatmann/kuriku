@@ -10,12 +10,21 @@ Entry {
     font-color: black;
 }
 
+Status {
+    border-width: 1;
+    border-color: rgb(200, 200, 200);
+}
+
+Time {
+    font-color: rgb(170, 170, 170);
+}
+
 DueDate {
     font-color: @hotColor;
 }
 
 StartDate {
-    font-color: white;
+    font-color: @coldColor;
 }
 
 TemperatureNone {
