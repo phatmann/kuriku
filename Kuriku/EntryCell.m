@@ -30,10 +30,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet GradientBar *urgencyBar;
+@property (weak, nonatomic) IBOutlet GradientBar *frostinessBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *temperatureViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *urgencyBarWidthConstraint;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
@@ -61,6 +61,9 @@
     
     self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
     self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+    
+    self.frostinessBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+    self.frostinessBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
 }
 
 - (void)prepareForReuse {
@@ -261,6 +264,11 @@
         self.urgencyBar.value = self.entry.todo.temperature;
     else
         self.urgencyBar.value = 0;
+    
+    if (self.entry.todo.temperature < 0)
+        self.frostinessBar.value = self.entry.todo.temperature;
+    else
+        self.frostinessBar.value = 0;
     
     return;
     

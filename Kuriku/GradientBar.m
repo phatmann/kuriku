@@ -31,7 +31,11 @@
     CGContextSaveGState(context);
     
     CGRect clipRect = self.bounds;
-    clipRect.size.width *= self.value;
+    clipRect.size.width *= fabs(self.value);
+    
+    if (self.value < 0)
+        clipRect.origin.x = self.bounds.size.width - clipRect.size.width;
+    
     CGContextAddRect(context, clipRect);
     CGContextClip(context);
     

@@ -102,7 +102,7 @@
                                                     </constraints>
                                                 </view>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
-                                                    <rect key="frame" x="39" y="12" width="266" height="24"/>
+                                                    <rect key="frame" x="39" y="12" width="242" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -111,6 +111,11 @@
                                                         <outlet property="delegate" destination="17P-5o-DvO" id="bqg-1Q-VdT"/>
                                                     </connections>
                                                 </textView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nh0-wT-mgJ" userLabel="Frostiness Bar" customClass="GradientBar">
+                                                    <rect key="frame" x="286" y="14" width="29" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDz-pB-RBj" userLabel="Temperature">
                                                     <rect key="frame" x="41" y="44" width="269" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -203,20 +208,24 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="DaY-QM-H8E" secondAttribute="top" id="2Sn-AA-Sdx"/>
+                                                <constraint firstItem="xdd-kE-xP5" firstAttribute="width" secondItem="nh0-wT-mgJ" secondAttribute="width" id="2Tw-cb-eh9"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="xdd-kE-xP5" secondAttribute="trailing" constant="5" id="84q-lR-NxJ"/>
                                                 <constraint firstAttribute="bottom" secondItem="igV-lu-tIO" secondAttribute="bottom" id="8Y4-9f-xAE"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="94n-ce-2VS"/>
                                                 <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="5" id="AIn-cM-dRf"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="trailing" secondItem="xDz-pB-RBj" secondAttribute="trailing" id="B2T-eT-zuU"/>
-                                                <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="15" id="Fr2-Oq-Z58"/>
                                                 <constraint firstItem="xdd-kE-xP5" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="14" id="J3m-HZ-TLH"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" constant="-2" id="PLA-YU-jKf"/>
+                                                <constraint firstAttribute="trailing" secondItem="nh0-wT-mgJ" secondAttribute="trailing" constant="5" id="Rzf-ab-nkk"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="igV-lu-tIO" secondAttribute="trailing" id="WOv-Gc-6pW"/>
+                                                <constraint firstItem="xdd-kE-xP5" firstAttribute="top" secondItem="nh0-wT-mgJ" secondAttribute="top" id="YN3-Sv-JuK"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="1" id="Z9I-FS-4lD"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="12" id="aMN-Tj-b3n"/>
+                                                <constraint firstItem="xdd-kE-xP5" firstAttribute="height" secondItem="nh0-wT-mgJ" secondAttribute="height" id="gWg-N5-epD"/>
                                                 <constraint firstAttribute="bottom" secondItem="xDz-pB-RBj" secondAttribute="bottom" constant="5" id="kf2-4M-u10"/>
+                                                <constraint firstItem="nh0-wT-mgJ" firstAttribute="leading" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="5" id="lPR-Gf-sQu"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="2" id="mne-EN-IX0"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" constant="-1" id="rem-ay-gj8"/>
                                                 <constraint firstItem="xdd-kE-xP5" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="5" id="xpL-4G-aE7"/>
@@ -227,6 +236,7 @@
                                             <outlet property="dateLabel" destination="DaY-QM-H8E" id="sI3-vb-bqw"/>
                                             <outlet property="dueDateButton" destination="Xw6-tE-oic" id="yEP-KK-zvZ"/>
                                             <outlet property="dueDateLabel" destination="HLp-5i-7jO" id="Gnj-d1-F4A"/>
+                                            <outlet property="frostinessBar" destination="nh0-wT-mgJ" id="Cnf-Np-mNE"/>
                                             <outlet property="progressView" destination="cQr-Vf-hwZ" id="Pyq-HF-Z9C"/>
                                             <outlet property="progressViewWidthConstraint" destination="kpv-1e-dp9" id="NJo-f9-pRi"/>
                                             <outlet property="startDateButton" destination="Qtu-aN-bdg" id="x0V-TR-NfF"/>

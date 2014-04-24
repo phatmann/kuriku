@@ -319,7 +319,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
     
     static const CGFloat margin =  21;
-    CGFloat width = self.tableView.bounds.size.width - 49;
+    CGFloat width = 242;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     
     return height + margin;
