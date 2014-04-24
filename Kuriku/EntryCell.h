@@ -10,7 +10,7 @@
 
 @class JournalViewController;
 
-@interface EntryCell : UITableViewCell
+@interface EntryCell : UITableViewCell <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) Entry *entry;
 @property (weak, nonatomic) JournalViewController *journalViewController;

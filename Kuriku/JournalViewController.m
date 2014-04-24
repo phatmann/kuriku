@@ -175,7 +175,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 - (void)statusWasTappedForCell:(EntryCell *)cell {
-    //[self showTodoActionSheet:cell.entry];
+    [self showEditTodoView:cell.entry.todo];
 }
 
 - (void)showTodoActionSheet:(Entry *)entry {

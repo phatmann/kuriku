@@ -49,6 +49,8 @@
     self.temperatureViewHeightConstraint.constant = 0;
     
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasPanned:)];
+    self.panGestureRecognizer.delegate = self;
+    self.panGestureRecognizer.maximumNumberOfTouches = 1;
     [self addGestureRecognizer:self.panGestureRecognizer];
     
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasLongPressed:)];
@@ -167,6 +169,8 @@
         
         if (CGRectContainsPoint(self.titleTextView.bounds, pt))
             [self.titleTextView becomeFirstResponder];
+        else
+            [self.journalViewController statusWasTappedForCell:self];
     }
 }
 
@@ -365,6 +369,13 @@
         [IBCoreDataStore save];
     else
         [self.entry.todo destroy];
+}
+
+#pragma mark - Gesture Recognizer Delegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
 @end
