@@ -374,8 +374,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #endif
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    return UITableViewCellEditingStyleNone;
     
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     return cell.editing ? UITableViewCellEditingStyleNone :  UITableViewCellEditingStyleDelete;
 }
 

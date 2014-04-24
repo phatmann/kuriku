@@ -1,17 +1,17 @@
 //
-//  GradientView.m
+//  GradientBar.m
 //  Kuriku
 //
 //  Created by Tony Mann on 4/24/14.
 //  Copyright (c) 2014 7Actions. All rights reserved.
 //
 
-#import "GradientView.h"
+#import "GradientBar.h"
 #import "Entry.h"
 #import "Todo.h"
 #import <NUI/NUISettings.h>
 
-@implementation GradientView
+@implementation GradientBar
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -22,24 +22,16 @@
     return self;
 }
 
-- (void)setEntry:(Entry *)entry {
-    if (_entry) {
-        [_entry.todo removeObserver:self forKeyPath:NSStringFromSelector(@selector(temperature))];
-    }
-    
-    _entry = entry;
-    [entry.todo addObserver:self forKeyPath:NSStringFromSelector(@selector(temperature)) options:NSKeyValueObservingOptionInitial context:NULL];
-}
-
-- (void)dealloc {
-    self.entry = nil;
+- (void)setValue:(CGFloat)value {
+    _value = value;
+    [self setNeedsDisplay];
 }
 
 - (void)drawLinearGradient:(CGContextRef)context startColor:(UIColor *)startColor endColor:(UIColor *)endColor {
     CGContextSaveGState(context);
     
     CGRect clipRect = self.bounds;
-    clipRect.size.width *= self.entry.todo.urgency;
+    clipRect.size.width *= self.value;
     CGContextAddRect(context, clipRect);
     CGContextClip(context);
     
@@ -61,22 +53,11 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    if (!self.entry.todo.dueDate)
+    if (self.value == 0)
         return;
-        
-    static UIColor *startColor, *endColor;
-    
-    if (!startColor) {
-        startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-        endColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-    }
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    [self drawLinearGradient:context startColor:startColor endColor:endColor];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    [self setNeedsDisplay];
+    [self drawLinearGradient:context startColor:self.startColor endColor:self.endColor];
 }
 
 @end

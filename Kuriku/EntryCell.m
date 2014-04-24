@@ -10,7 +10,7 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "JournalViewController.h"
-#import "GradientView.h"
+#import "GradientBar.h"
 #import <InnerBand/InnerBand.h>
 #import <NUI/UITextView+NUI.h>
 #import "NSDate+Kuriku.h"
@@ -29,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *dueDateButton;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
-@property (weak, nonatomic) IBOutlet GradientView *urgencyBar;
+@property (weak, nonatomic) IBOutlet GradientBar *urgencyBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *temperatureViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
@@ -58,6 +58,9 @@
     
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasLongPressed:)];
     [self addGestureRecognizer:self.longPressGestureRecognizer];
+    
+    self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+    self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
 }
 
 - (void)prepareForReuse {
@@ -86,7 +89,6 @@
 
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
-    self.urgencyBar.entry = entry;
     [self refresh];
 }
 
@@ -255,7 +257,11 @@
 }
 
 - (void)updateStatusColor {
-    self.urgencyBarWidthConstraint.constant = 34.0f * fabs(self.entry.todo.temperature);
+    if (self.entry.todo.temperature > 0)
+        self.urgencyBar.value = self.entry.todo.temperature;
+    else
+        self.urgencyBar.value = 0;
+    
     return;
     
     if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {

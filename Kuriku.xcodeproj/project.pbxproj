@@ -12,7 +12,7 @@
 		EA048CAA1860832500990957 /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CA91860832500990957 /* Todo.m */; };
 		EA048CBF1860C93600990957 /* EntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CBE1860C93600990957 /* EntryCell.m */; };
 		EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = EA10F1261861B2FF0084F6C8 /* TODO.md */; };
-		EA116BB219098FE7005EA252 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA116BB119098FE7005EA252 /* GradientView.m */; };
+		EA116BB219098FE7005EA252 /* GradientBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EA116BB119098FE7005EA252 /* GradientBar.m */; };
 		EA20528A187AE04F00B8330B /* TMGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA205289187AE04F00B8330B /* TMGrowingTextView.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
 		EA5386AC1900A37F00D6266A /* NSDate+Kuriku.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5386AB1900A37F00D6266A /* NSDate+Kuriku.m */; };
@@ -62,8 +62,8 @@
 		EA048CBD1860C92A00990957 /* EntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryCell.h; sourceTree = "<group>"; };
 		EA048CBE1860C93600990957 /* EntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryCell.m; sourceTree = "<group>"; };
 		EA10F1261861B2FF0084F6C8 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.md; sourceTree = "<group>"; };
-		EA116BB019098FE7005EA252 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
-		EA116BB119098FE7005EA252 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		EA116BB019098FE7005EA252 /* GradientBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientBar.h; sourceTree = "<group>"; };
+		EA116BB119098FE7005EA252 /* GradientBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientBar.m; sourceTree = "<group>"; };
 		EA205288187AE04F00B8330B /* TMGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMGrowingTextView.h; sourceTree = "<group>"; };
 		EA205289187AE04F00B8330B /* TMGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMGrowingTextView.m; sourceTree = "<group>"; };
 		EA3C0C09187029BF00EF1DAC /* RepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatViewController.h; sourceTree = "<group>"; };
@@ -193,8 +193,8 @@
 				EA048CBD1860C92A00990957 /* EntryCell.h */,
 				EAAC95671858F7D400E8BAB5 /* JournalViewController.h */,
 				EAAC95681858F7D400E8BAB5 /* JournalViewController.m */,
-				EA116BB019098FE7005EA252 /* GradientView.h */,
-				EA116BB119098FE7005EA252 /* GradientView.m */,
+				EA116BB019098FE7005EA252 /* GradientBar.h */,
+				EA116BB119098FE7005EA252 /* GradientBar.m */,
 			);
 			name = Journal;
 			sourceTree = "<group>";
@@ -479,7 +479,7 @@
 				EA20528A187AE04F00B8330B /* TMGrowingTextView.m in Sources */,
 				EA048CBF1860C93600990957 /* EntryCell.m in Sources */,
 				EAAC955C1858F7D400E8BAB5 /* main.m in Sources */,
-				EA116BB219098FE7005EA252 /* GradientView.m in Sources */,
+				EA116BB219098FE7005EA252 /* GradientBar.m in Sources */,
 				EA048CAA1860832500990957 /* Todo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
