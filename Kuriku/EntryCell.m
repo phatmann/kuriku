@@ -59,9 +59,6 @@
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasLongPressed:)];
     [self addGestureRecognizer:self.longPressGestureRecognizer];
     
-    self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-    self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-    
     self.frostinessBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
     self.frostinessBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
 }
@@ -260,10 +257,19 @@
 }
 
 - (void)updateStatusColor {
-    if (self.entry.todo.temperature > 0)
+    if (self.entry.todo.temperature > 0) {
+        if (self.entry.todo.dueDate) {
+            self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+            self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+        } else {
+            self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+            self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+        }
+    
         self.urgencyBar.value = self.entry.todo.temperature;
-    else
+    } else {
         self.urgencyBar.value = 0;
+    }
     
     if (self.entry.todo.temperature < 0)
         self.frostinessBar.value = self.entry.todo.temperature;
