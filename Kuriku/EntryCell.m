@@ -24,13 +24,16 @@
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet UIView *temperatureView;
 @property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
+@property (weak, nonatomic) IBOutlet UIButton *statusButton;
 @property (weak, nonatomic) IBOutlet UIButton *startDateButton;
 @property (weak, nonatomic) IBOutlet UIButton *dueDateButton;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
+@property (weak, nonatomic) IBOutlet UIView *urgencyBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *temperatureViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *urgencyBarWidthConstraint;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
@@ -55,6 +58,28 @@
     
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasLongPressed:)];
     [self addGestureRecognizer:self.longPressGestureRecognizer];
+    
+    ////////////
+    // EXPERIMENT
+    
+    CAGradientLayer *layer = [CAGradientLayer layer];
+    UIColor *warmColor, *hotColor;
+    warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+    hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+    layer.colors = @[(id)[warmColor CGColor],(id)[hotColor CGColor]];
+    layer.startPoint = CGPointMake(0.0f, 0.5f);
+    layer.endPoint = CGPointMake(1.0f, 0.5f);
+    [self.urgencyBar.layer addSublayer:layer];
+    
+    ////////////
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    CAGradientLayer *layer = [self.urgencyBar.layer.sublayers firstObject];
+    CGRect frame = self.urgencyBar.bounds;
+    frame.size.width = 34;
+    layer.frame = frame;
 }
 
 - (void)prepareForReuse {
@@ -142,7 +167,7 @@
             {
                 CGFloat offset = [panGestureRecognizer translationInView:self].x;
                 
-                static const CGFloat range = 100.0f;
+                static const CGFloat range = 34.0f;
                 CGFloat newTemperature = MAX(-1.0f, MIN(1.0f, ((_temperatureBeforePan * range) + offset) / range));
                 
                 if (newTemperature > -0.1 && newTemperature < 0.1)
@@ -253,6 +278,9 @@
 }
 
 - (void)updateStatusColor {
+    self.urgencyBarWidthConstraint.constant = 34.0f * fabs(self.entry.todo.temperature);
+    return;
+    
     if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
         if (self.entry.todo.temperature > 0) {
             if (self.entry.todo.dueDate) {

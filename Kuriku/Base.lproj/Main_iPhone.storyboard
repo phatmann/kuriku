@@ -100,6 +100,14 @@
                                                         <constraint firstItem="DaY-QM-H8E" firstAttribute="leading" secondItem="Sya-lK-32X" secondAttribute="leading" id="uFU-9K-rvn"/>
                                                     </constraints>
                                                 </view>
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qtn-6A-oUu" userLabel="Urgency Bar">
+                                                    <rect key="frame" x="0.0" y="11" width="34" height="57"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="34" id="FWo-wd-kK9"/>
+                                                    </constraints>
+                                                </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDz-pB-RBj" userLabel="Temperature">
                                                     <rect key="frame" x="46" y="44" width="264" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -182,6 +190,9 @@
                                                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nuiClass" value="StatusButton"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="statusButtonWasTapped" destination="17P-5o-DvO" eventType="touchUpInside" id="dIT-pP-3ew"/>
                                                     </connections>
@@ -201,12 +212,15 @@
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="15" id="Fr2-Oq-Z58"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
+                                                <constraint firstItem="qtn-6A-oUu" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="11" id="P6E-VH-Vvq"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="xDz-pB-RBj" secondAttribute="leading" constant="-2" id="PLA-YU-jKf"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="igV-lu-tIO" secondAttribute="trailing" constant="5" id="WOv-Gc-6pW"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="1" id="Z9I-FS-4lD"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" id="aMN-Tj-b3n"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="centerY" secondItem="rvS-BL-gMe" secondAttribute="centerY" id="k3J-A5-MdC"/>
                                                 <constraint firstAttribute="bottom" secondItem="xDz-pB-RBj" secondAttribute="bottom" constant="5" id="kf2-4M-u10"/>
+                                                <constraint firstAttribute="bottom" secondItem="qtn-6A-oUu" secondAttribute="bottom" constant="11" id="pDI-aA-S7d"/>
+                                                <constraint firstItem="qtn-6A-oUu" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" id="wrn-Lq-1Am"/>
                                                 <constraint firstItem="igV-lu-tIO" firstAttribute="centerX" secondItem="rvS-BL-gMe" secondAttribute="centerX" id="xjb-v5-jBH"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -220,6 +234,7 @@
                                             <outlet property="progressViewWidthConstraint" destination="kpv-1e-dp9" id="NJo-f9-pRi"/>
                                             <outlet property="startDateButton" destination="Qtu-aN-bdg" id="x0V-TR-NfF"/>
                                             <outlet property="startDateLabel" destination="lKt-D4-Dh2" id="gVu-Ix-EdB"/>
+                                            <outlet property="statusButton" destination="igV-lu-tIO" id="pah-nR-eIO"/>
                                             <outlet property="statusView" destination="rvS-BL-gMe" id="PGi-hQ-WNc"/>
                                             <outlet property="statusViewWidthConstraint" destination="lLO-WM-xAU" id="sMN-YK-glU"/>
                                             <outlet property="temperatureSlider" destination="Y0O-Lr-4eq" id="8l0-ot-BLY"/>
@@ -227,6 +242,8 @@
                                             <outlet property="temperatureViewHeightConstraint" destination="M2k-5V-XLq" id="IGF-g8-4ML"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
                                             <outlet property="titleTextView" destination="wJy-G4-VdD" id="HkB-1m-qm6"/>
+                                            <outlet property="urgencyBar" destination="qtn-6A-oUu" id="sNN-HK-qx2"/>
+                                            <outlet property="urgencyBarWidthConstraint" destination="FWo-wd-kK9" id="hut-pt-Mla"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
