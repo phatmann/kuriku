@@ -40,9 +40,16 @@
 
 @end
 
+typedef NS_ENUM(int, PanType) {
+    PanTypeNone,
+    PanTypeUrgency,
+    PanTypeFrostiness
+};
+
 @implementation EntryCell
 {
-    CGFloat _temperatureBeforePan;
+    CGFloat _panInitialValue;
+    PanType _panType;
 }
 
 - (void)awakeFromNib {
@@ -135,46 +142,54 @@
 - (void)cellWasPanned:(UIPanGestureRecognizer *)panGestureRecognizer {
     switch (panGestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
-            //self.temperatureView.hidden = NO;
-            
-            if (self.entry.todo.dueDate || self.entry.todo.startDate) {
-                _temperatureBeforePan = self.entry.todo.temperature;
-            } else {
-                _temperatureBeforePan = 0.0f;
-            }
             break;
             
         case UIGestureRecognizerStateChanged:
             {
                 CGPoint offset = [panGestureRecognizer translationInView:self];
                 
-                if (fabs(offset.x) < 5)
-                    return;
-                
-                if (fabs(offset.y) > 5) {
-                    self.panGestureRecognizer.enabled = NO;
-                    self.panGestureRecognizer.enabled = YES;
-                    return;
+                if (_panType == PanTypeNone) {
+                    if (fabs(offset.x) < 5) {
+                        if (fabs(offset.y) > 5) {
+                            self.panGestureRecognizer.enabled = NO;
+                            self.panGestureRecognizer.enabled = YES;
+                        }
+                        return;
+                    }
+                    
+                    CGPoint pt = [panGestureRecognizer locationOfTouch:0 inView:self];
+                    _panType = (pt.x < self.bounds.size.width / 2) ? PanTypeUrgency : PanTypeFrostiness;
+                    
+                    if (_panType == PanTypeUrgency && self.entry.todo.dueDate) {
+                        _panInitialValue = self.entry.todo.urgency;
+                    } else if (_panType == PanTypeFrostiness && self.entry.todo.startDate) {
+                        _panInitialValue = self.entry.todo.frostiness;
+                    } else {
+                        _panInitialValue = 0.0f;
+                    }
                 }
                 
-                static const CGFloat range = 34.0f;
-                CGFloat newTemperature = MAX(-1.0f, MIN(1.0f, ((_temperatureBeforePan * range) + offset.x) / range));
-                
-                if (newTemperature > -0.1 && newTemperature < 0.1)
-                    newTemperature = 0.0f;
-                
-                self.entry.todo.temperature = newTemperature;
+                //if (_panType == PanTypeFrostiness)
+                    //offset.x = -offset.x;
+            
+                CGFloat range = self.bounds.size.width / 4;
+                CGFloat newValue = MAX(0.0f, MIN(1.0f, ((_panInitialValue * range) + offset.x) / range));
+            
+                if (_panType == PanTypeFrostiness)
+                    self.entry.todo.frostiness = newValue;
+                else
+                    self.entry.todo.urgency = newValue;
+            
                 [self temperatureWasChanged];
             }
             break;
         
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
-            //self.temperatureView.hidden = YES;
+        case UIGestureRecognizerStatePossible:
+        case UIGestureRecognizerStateFailed:
+            _panType = PanTypeNone;
             break;
-            
-        default:
-            ;
     }
 }
 

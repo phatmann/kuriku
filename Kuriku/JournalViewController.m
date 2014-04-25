@@ -180,14 +180,14 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (void)showTodoActionSheet:(Entry *)entry {
     self.selectedEntry = entry;
-    NSString *completionActionName = (entry.todo.lastEntry.type == EntryTypeComplete) ?  @"Didn't do it :(" : @"Did it!";
+    NSString *completionActionName = (entry.todo.lastEntry.type == EntryTypeComplete) ?  @"No" : @"Yes";
     
     self.todoActionSheet = [[UIActionSheet alloc]
-                              initWithTitle:nil
+                              initWithTitle:@"Did you complete the todo?"
                               delegate:self
                               cancelButtonTitle:@"Cancel"
                               destructiveButtonTitle:nil
-                              otherButtonTitles:completionActionName, @"Did some of it", @"Do it again", nil];
+                              otherButtonTitles:completionActionName, @"Made progress", @"Repeat", nil];
     
     [self.todoActionSheet showInView:self.view];
 }
@@ -374,7 +374,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #endif
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-   // return UITableViewCellEditingStyleNone;
+    //return UITableViewCellEditingStyleNone;
     
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     return cell.editing ? UITableViewCellEditingStyleNone :  UITableViewCellEditingStyleDelete;
