@@ -1,6 +1,21 @@
 Kuriku
 The visual intelligent action journal
 
+
+Newest thoughts
+---------------
+* Tap and hold, drag up for urgency, right for frostiness
+* Cell always has some color, unless new as white
+* Tap to edit
+* Scroll down to show blank line in edit mode
+* Pinch to make importance high to normal (positive?). Pinch again to make it less committed.
+* Show a special shaded color when importance low, immune to staleness.
+* Stale color is brown, like parchment paper
+* Slide right to set action, 1/4, 1/2, 3/4 done. Keep sliding to complete. Keep sliding to repeat.
+* While dragging up/right, show days in bold white overlay. Final choice is "Choose Date",
+  if chosen show date dialog.
+
+
 Todo
 ----
 * Notch for normal importance

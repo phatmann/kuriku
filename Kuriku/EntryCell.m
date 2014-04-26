@@ -42,6 +42,7 @@
 
 typedef NS_ENUM(int, PanType) {
     PanTypeNone,
+    PanTypePending,
     PanTypeUrgency,
     PanTypeFrostiness
 };
@@ -61,7 +62,7 @@ typedef NS_ENUM(int, PanType) {
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasPanned:)];
     self.panGestureRecognizer.delegate = self;
     self.panGestureRecognizer.maximumNumberOfTouches = 1;
-    [self addGestureRecognizer:self.panGestureRecognizer];
+    [self.journalViewController.tableView addGestureRecognizer:self.panGestureRecognizer];
     
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasLongPressed:)];
     [self addGestureRecognizer:self.longPressGestureRecognizer];
@@ -140,40 +141,36 @@ typedef NS_ENUM(int, PanType) {
 //}
 
 - (void)cellWasPanned:(UIPanGestureRecognizer *)panGestureRecognizer {
+    if (_panType != PanTypePending)
+        return;
+    
     switch (panGestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
             break;
             
         case UIGestureRecognizerStateChanged:
             {
-                CGPoint offset = [panGestureRecognizer translationInView:self];
+                CGPoint translation = [panGestureRecognizer translationInView:self];
                 
-                if (_panType == PanTypeNone) {
-                    if (fabs(offset.x) < 5) {
-                        if (fabs(offset.y) > 5) {
-                            self.panGestureRecognizer.enabled = NO;
-                            self.panGestureRecognizer.enabled = YES;
-                        }
-                        return;
-                    }
-                    
-                    CGPoint pt = [panGestureRecognizer locationOfTouch:0 inView:self];
-                    _panType = (pt.x < self.bounds.size.width / 2) ? PanTypeUrgency : PanTypeFrostiness;
-                    
-                    if (_panType == PanTypeUrgency && self.entry.todo.dueDate) {
-                        _panInitialValue = self.entry.todo.urgency;
-                    } else if (_panType == PanTypeFrostiness && self.entry.todo.startDate) {
-                        _panInitialValue = self.entry.todo.frostiness;
-                    } else {
-                        _panInitialValue = 0.0f;
-                    }
+                if (fabs(translation.x) > 5)
+                    _panType = PanTypeFrostiness;
+                else if (fabs(translation.y) > 5)
+                    _panType = PanTypeUrgency;
+                else
+                    return;
+                
+                if (_panType == PanTypeUrgency && self.entry.todo.dueDate) {
+                    _panInitialValue = self.entry.todo.urgency;
+                } else if (_panType == PanTypeFrostiness && self.entry.todo.startDate) {
+                    _panInitialValue = self.entry.todo.frostiness;
+                } else {
+                    _panInitialValue = 0.0f;
                 }
                 
-                //if (_panType == PanTypeFrostiness)
-                    //offset.x = -offset.x;
+                CGFloat offset = (_panType == PanTypeFrostiness) ? translation.x : -translation.y;
             
-                CGFloat range = self.bounds.size.width / 4;
-                CGFloat newValue = MAX(0.0f, MIN(1.0f, ((_panInitialValue * range) + offset.x) / range));
+                CGFloat range = 20;
+                CGFloat newValue = MAX(0.0f, MIN(1.0f, ((_panInitialValue * range) + offset) / range));
             
                 if (_panType == PanTypeFrostiness)
                     self.entry.todo.frostiness = newValue;
@@ -195,6 +192,9 @@ typedef NS_ENUM(int, PanType) {
 
 - (void)cellWasLongPressed:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
     if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        _panType = PanTypePending;
+        return;
+        
         CGPoint pt = [longPressGestureRecognizer locationInView:self.titleTextView];
         
         if (CGRectContainsPoint(self.titleTextView.bounds, pt))
@@ -281,61 +281,60 @@ typedef NS_ENUM(int, PanType) {
 }
 
 - (void)updateStatusColor {
-    if (self.entry.todo.temperature > 0) {
-        if (self.entry.todo.dueDate) {
+    if (self.entry.todo.urgency > 0) {
+//        if (self.entry.todo.dueDate) {
             self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
             self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-        } else {
-            self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
-            self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
-        }
-    
-        self.urgencyBar.value = self.entry.todo.temperature;
+//        } else {
+//            self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+//            self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+//        }
+//    
+        self.urgencyBar.value = self.entry.todo.urgency;
     } else {
         self.urgencyBar.value = 0;
     }
     
-    if (self.entry.todo.temperature < 0)
-        self.frostinessBar.value = self.entry.todo.temperature;
+    if (self.entry.todo.frostiness > 0)
+        self.frostinessBar.value = self.entry.todo.frostiness;
     else
         self.frostinessBar.value = 0;
     
-    return;
-    
-    if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
-        if (self.entry.todo.temperature > 0) {
-            if (self.entry.todo.dueDate) {
-                static UIColor *warmColor, *hotColor;
-                if (!warmColor) {
-                    warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-                    hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-                }
-                
-                self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:warmColor toColor:hotColor];
-            } else {
-                static UIColor *oldColor, *veryOldColor;
-                if (!oldColor) {
-                    oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
-                    veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
-                }
-                
-                self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
-            }
-        } else if (self.entry.todo.temperature < 0) {
-            static UIColor *coolColor, *coldColor;
-            
-            if (!coolColor) {
-                coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
-                coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
-            }
-            
-            self.statusView.backgroundColor = [EntryCell scale:-self.entry.todo.temperature fromColor:coolColor toColor:coldColor];
-        } else {
-            self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
-        }
-    } else {
-        self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
-    }
+
+//    if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
+//        if (self.entry.todo.temperature > 0) {
+//            if (self.entry.todo.dueDate) {
+//                static UIColor *warmColor, *hotColor;
+//                if (!warmColor) {
+//                    warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+//                    hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+//                }
+//                
+//                self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:warmColor toColor:hotColor];
+//            } else {
+//                static UIColor *oldColor, *veryOldColor;
+//                if (!oldColor) {
+//                    oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+//                    veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+//                }
+//                
+//                self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
+//            }
+//        } else if (self.entry.todo.temperature < 0) {
+//            static UIColor *coolColor, *coldColor;
+//            
+//            if (!coolColor) {
+//                coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+//                coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+//            }
+//            
+//            self.statusView.backgroundColor = [EntryCell scale:-self.entry.todo.temperature fromColor:coolColor toColor:coldColor];
+//        } else {
+//            self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+//        }
+//    } else {
+//        self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+//    }
 }
 
 - (void)updateStatus {
