@@ -57,31 +57,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    Todo *todo = sender;
-    
-    if ([segue.identifier isEqualToString:@"Edit todo"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        EditTodoViewController *entryViewController = [navigationController.viewControllers firstObject];
-        entryViewController.delegate = self;
-        entryViewController.todo = todo;
-    } else if ([segue.identifier isEqualToString:@"Repeat todo"]) {
+    if ([segue.identifier isEqualToString:@"Repeat todo"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
         repeatViewController.delegate = self;
-    } else if ([segue.identifier isEqualToString:@"Choose start date"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        DatePickerViewController *datePickerViewController = [navigationController.viewControllers firstObject];
-        datePickerViewController.delegate = self;
-        datePickerViewController.tag = @"startDate";
-        datePickerViewController.date = self.activeCell.entry.todo.startDate;
-    } else if ([segue.identifier isEqualToString:@"Choose due date"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        DatePickerViewController *datePickerViewController = [navigationController.viewControllers firstObject];
-        datePickerViewController.delegate = self;
-        datePickerViewController.tag = @"dueDate";
-        datePickerViewController.date = self.activeCell.entry.todo.dueDate;
     }
-}
+ }
 
 - (void)setPriorityFilter:(float_t)priorityFilter {
     _priorityFilter = priorityFilter;
@@ -174,10 +155,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
 }
 
-- (void)statusWasTappedForCell:(EntryCell *)cell {
-    [self showEditTodoView:cell.entry.todo];
-}
-
 - (void)showTodoActionSheet:(Entry *)entry {
     self.selectedEntry = entry;
     NSString *completionActionName = (entry.todo.lastEntry.type == EntryTypeComplete) ?  @"No" : @"Yes";
@@ -203,10 +180,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                                 otherButtonTitles:@"Delete This Entry", nil];
     
     [self.deleteActionSheet showInView:self.view];
-}
-
-- (void)showEditTodoView:(Todo *)todo {
-    [self performSegueWithIdentifier:@"Edit todo" sender:todo];
 }
 
 - (void)showRepeatView:(Todo *)todo {
@@ -319,7 +292,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
     
     static const CGFloat margin =  21;
-    CGFloat width = 242;
+    CGFloat width = 280;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     
     return height + margin;
@@ -335,16 +308,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if (self.activeCell != [self.tableView cellForRowAtIndexPath:indexPath])
-        [self showTodoActionSheet:[self entryAtIndexPath:indexPath]];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell becomeFirstResponder];
 }
-
-//- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-//    if (!tableView.isEditing) {
-//        Entry *entry = [self entryAtIndexPath:indexPath];
-//        [self showEditTodoView:entry.todo];
-//    }
-//}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([[self.fetchedResultsController sections] count] > 0) {
@@ -363,21 +329,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     return nil;
 }
 
-#ifdef SHOW_INDEX
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [self.fetchedResultsController sectionIndexTitles];
-}
-    
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
-}
-#endif
-
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //return UITableViewCellEditingStyleNone;
-    
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    return cell.editing ? UITableViewCellEditingStyleNone :  UITableViewCellEditingStyleDelete;
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -391,29 +344,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
         }
     }
-}
-
-#pragma mark - Fetched Results Controller Delegate
-
-#ifdef SHOW_INDEX
-- (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
-    static NSDateFormatter *tinyDateFormatter;
-    
-    if (!tinyDateFormatter) {
-        tinyDateFormatter = [NSDateFormatter new];
-        [tinyDateFormatter setDateFormat:@"MMM d"];
-    }
-    
-    NSDate *date = [Entry journalDateFromString:sectionName];
-    return [tinyDateFormatter stringFromDate:date];
-}
-#endif
-
-
-#pragma mark - Edit Todo Controller Delegate
-
-- (void)todoWasEdited:(Todo *)todo {
-    [self.tableView reloadData];
 }
 
 #pragma mark - Repeat Controller Delegate
@@ -471,18 +401,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 - (void)cell:(EntryCell *)cell textViewDidEndEditing:(UITextView *)textView {
     self.navigationBarItem.rightBarButtonItem = self.addButton;
     [self updateRowHeights];
-}
-
-#pragma mark Date Picker View Delegate
-
-- (void)datePickerViewControllerDismissed:(DatePickerViewController *)dateViewController {
-    [self.activeCell.entry.todo setValue:dateViewController.date forKey:dateViewController.tag];
-    [self.activeCell becomeFirstResponder];
-    [self.activeCell temperatureWasChanged];
-}
-
-- (void)datePickerViewControllerCanceled:(DatePickerViewController *)dateViewController {
-     [self.activeCell becomeFirstResponder];
 }
 
 @end
