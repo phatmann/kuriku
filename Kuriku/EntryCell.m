@@ -49,6 +49,10 @@
     return [NSString stringWithFormat:@"Status%@:State%@", status, state];
 }
 
+- (void)awakeFromNib {
+    self.backgroundView = [UIView new];
+}
+
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
     [self refresh];
@@ -73,6 +77,22 @@
     [self updateStatus];
 }
 
+- (void)statusWasChanged {
+    [self updateStatus];
+}
+
+- (void)setDragging:(BOOL)dragging {
+    _dragging = dragging;
+    self.backgroundView.layer.borderWidth = 2.0;
+    self.backgroundView.layer.borderColor = dragging ? [UIColor blackColor].CGColor : [UIColor clearColor].CGColor;
+}
+
++ (CGFloat)fontSizeForImportance:(CGFloat)importance {
+    CGFloat lowImportanceFontSize  = [NUISettings getFloat:@"font-size" withClass:@"ImportanceLow"];
+    CGFloat highImportanceFontSize = [NUISettings getFloat:@"font-size" withClass:@"ImportanceHigh"];
+    
+    return lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * importance);
+}
 
 #pragma mark -
 
@@ -103,6 +123,7 @@
 - (void)updateStatus {
     [self updateDate];
     [self updateProgress];
+    [self updateBackground];
 }
 
 - (void)updateTitle {
@@ -124,11 +145,41 @@
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
 }
 
-+ (CGFloat)fontSizeForImportance:(CGFloat)importance {
-    CGFloat lowImportanceFontSize  = [NUISettings getFloat:@"font-size" withClass:@"ImportanceLow"];
-    CGFloat highImportanceFontSize = [NUISettings getFloat:@"font-size" withClass:@"ImportanceHigh"];
-    
-    return lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * importance);
+-(void) updateBackground {
+   //if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
+       if (self.entry.todo.urgency > 0) {
+//           if (self.entry.todo.dueDate) {
+               static UIColor *warmColor, *hotColor;
+               if (!warmColor) {
+                   warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+                   hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+               }
+
+               self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.urgency fromColor:warmColor toColor:hotColor];
+//           } else {
+//               static UIColor *oldColor, *veryOldColor;
+//               if (!oldColor) {
+//                   oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+//                   veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+//               }
+//
+//               self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
+//           }
+       } else if (self.entry.todo.frostiness > 0) {
+           static UIColor *coolColor, *coldColor;
+
+           if (!coolColor) {
+               coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+               coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+           }
+
+           self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.frostiness fromColor:coolColor toColor:coldColor];
+       } else {
+           self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+       }
+  // } else {
+       //self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+  // }
 }
 
 #pragma Text View Delegate
@@ -153,5 +204,23 @@
     else
         [self.entry.todo destroy];
 }
+
+#pragma mark -
+
++ (UIColor *)scale:(float_t)scale fromColor:(UIColor*)fromColor toColor:(UIColor *)toColor {
+    CGFloat fromHue, toHue, fromSaturation, toSaturation, fromBrightness, toBrightness;
+    [fromColor getHue:&fromHue saturation:&fromSaturation brightness:&fromBrightness alpha:nil];
+    [toColor getHue:&toHue saturation:&toSaturation brightness:&toBrightness alpha:nil];
+    
+    fromHue = fmod(fromHue, 1.0);
+    toHue   = fmod(toHue, 1.0);
+    
+    CGFloat hue         = fromHue        + ((toHue - fromHue) * scale);
+    CGFloat saturation  = fromSaturation + ((toSaturation - fromSaturation) * scale);
+    CGFloat brightness  = fromBrightness + ((toBrightness - fromBrightness) * scale);
+    
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0];
+}
+
 
 @end

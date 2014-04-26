@@ -14,9 +14,11 @@
 
 @property (strong, nonatomic) Entry *entry;
 @property (weak, nonatomic) JournalViewController *journalViewController;
+@property (nonatomic, getter=isDragging) BOOL dragging;
 
 - (void)refresh;
 - (void)importanceWasChanged;
+- (void)statusWasChanged;
 + (CGFloat)fontSizeForImportance:(CGFloat)importance;
 
 @end
