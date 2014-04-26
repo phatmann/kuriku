@@ -10,11 +10,18 @@
 
 @class JournalViewController;
 
+typedef NS_ENUM(int, EntryDragType) {
+    EntryDragTypeNone,
+    EntryDragTypePending,
+    EntryDragTypeUrgency,
+    EntryDragTypeFrostiness
+};
+
 @interface EntryCell : UITableViewCell <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) Entry *entry;
 @property (weak, nonatomic) JournalViewController *journalViewController;
-@property (nonatomic, getter=isDragging) BOOL dragging;
+@property (nonatomic) EntryDragType dragType;
 
 - (void)refresh;
 - (void)importanceWasChanged;

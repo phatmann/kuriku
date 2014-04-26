@@ -25,7 +25,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @property (nonatomic) CGFloat pinchInitialImportance;
 @property (nonatomic) float_t priorityFilter;
 @property (nonatomic) EntryCell *activeCell;
-@property (nonatomic) EntryCell *draggedCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 @property (strong, nonatomic) UIBarButtonItem *addButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
@@ -67,8 +66,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
     static CGPoint startPoint;
-    static CGFloat initialUrgency = -1;
-    static CGFloat initialFrostiness = -1;
+    static CGFloat initialUrgency;
+    static CGFloat initialFrostiness;
+    static EntryCell *draggedCell;
     
     CGPoint pt = [recognizer locationInView:self.tableView];
     
@@ -78,10 +78,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pt];
                 
                 if (indexPath) {
-                    self.draggedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    draggedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    draggedCell.dragType = EntryDragTypePending;
                     startPoint = pt;
-                    initialUrgency = -1;
-                    initialFrostiness = -1;
                 }
             }
             break;
@@ -91,31 +90,31 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 CGFloat offsetX = pt.x - startPoint.x;
                 CGFloat offsetY = pt.y - startPoint.y;
                 
-                if (self.draggedCell) {
-                    if (initialUrgency >= 0) {
+                if (draggedCell) {
+                    if (draggedCell.dragType == EntryDragTypeUrgency) {
                         CGFloat urgencyDelta = offsetY / 200.0;
-                        self.draggedCell.entry.todo.urgency    = MIN(1.0, MAX(0.0, initialUrgency - urgencyDelta));
-                        [self.draggedCell statusWasChanged];
-                    } else if (initialFrostiness >= 0) {
+                        draggedCell.entry.todo.urgency = MIN(1.0, MAX(0.0, initialUrgency - urgencyDelta));
+                        [draggedCell statusWasChanged];
+                    } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
                         CGFloat frostinessDelta = offsetX / 200.0;
-                        self.draggedCell.entry.todo.frostiness = MIN(1.0, MAX(0.0, initialFrostiness + frostinessDelta));
-                        [self.draggedCell statusWasChanged];
+                        draggedCell.entry.todo.frostiness = MIN(1.0, MAX(0.0, initialFrostiness + frostinessDelta));
+                        [draggedCell statusWasChanged];
                     } else if (fabs(offsetY) > 5) {
-                        initialUrgency = self.draggedCell.entry.todo.urgency;
+                        draggedCell.dragType = EntryDragTypeUrgency;
+                        initialUrgency = draggedCell.entry.todo.urgency;
                         startPoint = pt;
                     } else if (fabs(offsetX) > 5) {
-                        initialFrostiness = self.draggedCell.entry.todo.frostiness;
+                        draggedCell.dragType = EntryDragTypeFrostiness;
+                        initialFrostiness = draggedCell.entry.todo.frostiness;
                         startPoint = pt;
                     }
                 }
             }
             break;
             
-        case UIGestureRecognizerStateEnded:
-            self.draggedCell = nil;
-            break;
-            
         default:
+            draggedCell.dragType = EntryDragTypeNone;
+            draggedCell = nil;
             break;
     }
 }
@@ -128,15 +127,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self reloadData];
-}
-
-- (void)setDraggedCell:(EntryCell *)draggedCell {
-    if (self.draggedCell != draggedCell) {
-        self.draggedCell.dragging = NO;
-    }
-    
-    _draggedCell = draggedCell;
-    draggedCell.dragging = YES;
 }
 
 #pragma mark - Private

@@ -81,10 +81,11 @@
     [self updateStatus];
 }
 
-- (void)setDragging:(BOOL)dragging {
-    _dragging = dragging;
+- (void)setDragType:(EntryDragType)dragType {
+    _dragType = dragType;
     self.backgroundView.layer.borderWidth = 2.0;
-    self.backgroundView.layer.borderColor = dragging ? [UIColor blackColor].CGColor : [UIColor clearColor].CGColor;
+    self.backgroundView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor blackColor].CGColor;
+    [self updateBackground];
 }
 
 + (CGFloat)fontSizeForImportance:(CGFloat)importance {
@@ -147,7 +148,17 @@
 
 -(void) updateBackground {
    //if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
-       if (self.entry.todo.urgency > 0) {
+        if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
+            static UIColor *coolColor, *coldColor;
+        
+            if (!coolColor) {
+                coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+                coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+            }
+            
+            self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.frostiness fromColor:coolColor toColor:coldColor];
+
+        } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness) {
 //           if (self.entry.todo.dueDate) {
                static UIColor *warmColor, *hotColor;
                if (!warmColor) {
@@ -165,16 +176,7 @@
 //
 //               self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
 //           }
-       } else if (self.entry.todo.frostiness > 0) {
-           static UIColor *coolColor, *coldColor;
-
-           if (!coolColor) {
-               coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
-               coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
-           }
-
-           self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.frostiness fromColor:coolColor toColor:coldColor];
-       } else {
+        } else {
            self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
        }
   // } else {
