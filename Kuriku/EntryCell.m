@@ -116,6 +116,7 @@
 
 - (void)updateProgress {
     self.progressViewWidthConstraint.constant = self.entry.progress * self.statusViewWidthConstraint.constant;
+    _progressBarValue = self.entry.progress;
 }
 
 - (void)updateDate {
@@ -160,7 +161,7 @@
 }
 
 -(void) updateBackground {
-   //if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
+   if (self.entry.state == EntryStateActive) {
         if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
             static UIColor *coolColor, *coldColor;
         
@@ -192,9 +193,9 @@
         } else {
            self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
        }
-  // } else {
-       //self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
-  // }
+   } else {
+       self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+   }
 }
 
 #pragma Text View Delegate
