@@ -152,7 +152,18 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         
         case UIGestureRecognizerStateChanged:
             if (pannedCell) {
-                pannedCell.progressBarValue = MAX(0.0, initialProgressBarValue + ((offset.x / 100) *  (1.0 - initialProgressBarValue)));
+                CGPoint velocity = [recognizer velocityInView:self.tableView];
+                
+                if (velocity.x > 1000.0) {
+                    pannedCell.progressBarValue = 1.0;
+                    [pannedCell.entry.todo createEntry:EntryTypeComplete];
+                    [IBCoreDataStore save];
+                    [self reloadData];
+                    recognizer.enabled = NO;
+                    recognizer.enabled = YES;
+                } else {
+                    pannedCell.progressBarValue = MAX(0.0, initialProgressBarValue + ((offset.x / 100) *  (1.0 - initialProgressBarValue)));
+                }
             }
             break;
             
