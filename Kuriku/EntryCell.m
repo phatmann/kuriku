@@ -30,6 +30,10 @@
 
 @implementation EntryCell
 
+- (void)prepareForReuse {
+    self.repeatIcon.hidden = YES;
+}
+
 - (NSString *)styleClassForEntry:(Entry *)entry {
     NSString *state, *status = @"Normal";
     
