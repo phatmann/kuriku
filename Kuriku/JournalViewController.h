@@ -18,7 +18,8 @@
                                                       UITableViewDataSource,
                                                       UIActionSheetDelegate,
                                                       NSFetchedResultsControllerDelegate,
-                                                      RepeatViewControllerDelegate>
+                                                      RepeatViewControllerDelegate,
+                                                      UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

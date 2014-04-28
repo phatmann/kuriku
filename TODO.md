@@ -4,9 +4,7 @@ The visual intelligent action journal
 
 Newest thoughts
 ---------------
-* Tap and hold, drag up for urgency, right for frostiness
 * Cell always has some color, unless new as white
-* Tap to edit
 * Scroll down to show blank line in edit mode
 * Pinch to make importance high to normal (positive?). Pinch again to make it less committed.
 * Show a special shaded color when importance low, immune to staleness.
@@ -22,6 +20,7 @@ Todo
 
 Bugs
 -------------
+* Cannot pinch inactive cell
 * No highlighting when cell is tapped
 * Done button does not animate cell collapse
 * Do not allow actions on completed task

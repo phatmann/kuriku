@@ -36,7 +36,7 @@
                                     <action selector="filterSliderValueChanged:" destination="CZ4-MO-1fc" eventType="valueChanged" id="Abn-5i-Z0I"/>
                                 </connections>
                             </slider>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="30" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aKD-IV-7AV">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="30" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aKD-IV-7AV">
                                 <rect key="frame" x="0.0" y="110" width="320" height="450"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,18 +49,18 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaY-QM-H8E" userLabel="Date">
-                                                    <rect key="frame" x="217" y="1" width="25" height="11"/>
+                                                    <rect key="frame" x="239" y="1" width="25" height="11"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <color key="textColor" red="0.96862745100000003" green="0.25882352939999997" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvS-BL-gMe" userLabel="Status">
-                                                    <rect key="frame" x="247" y="2" width="20" height="9"/>
+                                                    <rect key="frame" x="10" y="15" width="30" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQr-Vf-hwZ" userLabel="Progress">
-                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="9"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.31794593978102192" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -71,8 +71,8 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="cQr-Vf-hwZ" secondAttribute="bottom" id="CIt-oI-7Lx"/>
-                                                        <constraint firstAttribute="width" constant="20" id="FSe-Yo-Y9s" userLabel="Status Width"/>
-                                                        <constraint firstAttribute="height" constant="9" id="M3C-BI-1cd"/>
+                                                        <constraint firstAttribute="width" constant="30" id="FSe-Yo-Y9s" userLabel="Status Width"/>
+                                                        <constraint firstAttribute="height" constant="20" id="M3C-BI-1cd"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="leading" id="My9-F0-bGY"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" id="br7-sv-UMY"/>
                                                     </constraints>
@@ -94,7 +94,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
-                                                    <rect key="frame" x="20" y="12" width="280" height="62"/>
+                                                    <rect key="frame" x="50" y="12" width="250" height="62"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -108,13 +108,13 @@
                                             <constraints>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="DaY-QM-H8E" secondAttribute="top" id="2Sn-AA-Sdx"/>
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="20" id="3fP-8F-uW2"/>
-                                                <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="5" id="AIn-cM-dRf"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="20" id="Glg-L2-gCx"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="50" id="Glg-L2-gCx"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
+                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="5" id="SSz-5E-ejE"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="1" id="Z9I-FS-4lD"/>
-                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="2" id="mne-EN-IX0"/>
-                                                <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" constant="-1" id="rem-ay-gj8"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" constant="-3" id="cVm-HD-ibR"/>
+                                                <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="10" id="dVm-oe-SEV"/>
                                                 <constraint firstAttribute="bottom" secondItem="wJy-G4-VdD" secondAttribute="bottom" constant="5" id="uNk-8U-WEs"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -152,13 +152,16 @@
                             <constraint firstAttribute="trailing" secondItem="GpR-5f-hes" secondAttribute="trailing" constant="10" id="xLd-e7-zls"/>
                         </constraints>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="zAN-02-a5i" appends="YES" id="ChT-qU-O15"/>
+                            <outletCollection property="gestureRecognizers" destination="zAN-02-a5i" appends="YES" id="fdM-ic-qoD"/>
+                            <outletCollection property="gestureRecognizers" destination="Y6X-fE-B5f" appends="YES" id="Fqk-PL-mVE"/>
                         </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="filterSlider" destination="GpR-5f-hes" id="zZk-pN-0rP"/>
+                        <outlet property="longPressGestureRecognizer" destination="zAN-02-a5i" id="74k-ga-dVN"/>
                         <outlet property="navigationBarItem" destination="9d1-2n-bCY" id="dB6-4C-pWa"/>
+                        <outlet property="panGestureRecognizer" destination="Y6X-fE-B5f" id="ZwE-lN-Din"/>
                         <outlet property="tableView" destination="aKD-IV-7AV" id="NrM-gl-Iga"/>
                         <segue destination="lbM-R3-zXO" kind="modal" identifier="Edit todo" id="bAK-oQ-oIW"/>
                         <segue destination="BLb-aQ-cLa" kind="modal" identifier="Repeat todo" id="ff9-5y-kUA"/>
@@ -168,8 +171,15 @@
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="zAN-02-a5i">
                     <connections>
                         <action selector="longPressGestureRecognizerWasChanged:" destination="CZ4-MO-1fc" id="3zl-Ap-MUz"/>
+                        <outlet property="delegate" destination="CZ4-MO-1fc" id="yHk-8v-dFF"/>
                     </connections>
                 </pongPressGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="Y6X-fE-B5f">
+                    <connections>
+                        <action selector="panGestureRecognizerWasChanged:" destination="CZ4-MO-1fc" id="bPv-1q-cWW"/>
+                        <outlet property="delegate" destination="CZ4-MO-1fc" id="R2p-t1-IxA"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="887" y="204"/>
         </scene>

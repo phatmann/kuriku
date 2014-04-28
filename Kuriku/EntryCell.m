@@ -58,6 +58,14 @@
     [self refresh];
 }
 
+- (CGFloat)progressBarValue {
+    return self.progressViewWidthConstraint.constant / self.statusViewWidthConstraint.constant;
+}
+
+- (void)setProgressBarValue:(CGFloat)progressBarValue {
+    self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant * progressBarValue;
+}
+
 - (BOOL)becomeFirstResponder {
     return [self.titleTextView becomeFirstResponder];
 }

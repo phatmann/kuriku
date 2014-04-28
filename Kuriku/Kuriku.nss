@@ -28,7 +28,7 @@ StartDate {
 }
 
 TemperatureNone {
-    background-color: rgb(228, 228, 228);
+    background-color: white; /*rgb(228, 228, 228)*/
 }
 
 TemperatureCold {

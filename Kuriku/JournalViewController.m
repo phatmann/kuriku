@@ -31,6 +31,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @property (strong, nonatomic) UIActionSheet *todoActionSheet;
 @property (strong, nonatomic) UIActionSheet *deleteActionSheet;
 @property (weak, nonatomic) IBOutlet UISlider *filterSlider;
+@property (weak, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 @end
 
@@ -69,45 +71,50 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     static CGFloat initialUrgency;
     static CGFloat initialFrostiness;
     static EntryCell *draggedCell;
+    NSIndexPath *indexPath;
+    Entry *entry;
     
     CGPoint pt = [recognizer locationInView:self.tableView];
     
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
-            {
-                NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pt];
-                
-                if (indexPath) {
+            indexPath = [self.tableView indexPathForRowAtPoint:pt];
+            draggedCell = nil;
+            
+            if (indexPath) {
+                entry = [self entryAtIndexPath:indexPath];
+                if (entry.state == EntryStateActive) {
                     draggedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
                     draggedCell.dragType = EntryDragTypePending;
                     startPoint = pt;
                 }
             }
+            
             break;
             
         case UIGestureRecognizerStateChanged:
-            {
+            if (draggedCell) {
                 CGFloat offsetX = pt.x - startPoint.x;
                 CGFloat offsetY = pt.y - startPoint.y;
                 
-                if (draggedCell) {
-                    if (draggedCell.dragType == EntryDragTypeUrgency) {
-                        CGFloat urgencyDelta = offsetY / 200.0;
-                        draggedCell.entry.todo.urgency = MIN(1.0, MAX(0.0, initialUrgency - urgencyDelta));
-                        [draggedCell statusWasChanged];
-                    } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
-                        CGFloat frostinessDelta = offsetX / 200.0;
-                        draggedCell.entry.todo.frostiness = MIN(1.0, MAX(0.0, initialFrostiness + frostinessDelta));
-                        [draggedCell statusWasChanged];
-                    } else if (fabs(offsetY) > 5) {
-                        draggedCell.dragType = EntryDragTypeUrgency;
-                        initialUrgency = draggedCell.entry.todo.urgency;
-                        startPoint = pt;
-                    } else if (fabs(offsetX) > 5) {
-                        draggedCell.dragType = EntryDragTypeFrostiness;
-                        initialFrostiness = draggedCell.entry.todo.frostiness;
-                        startPoint = pt;
-                    }
+                if (draggedCell.dragType == EntryDragTypeUrgency) {
+                    CGFloat urgencyDelta = offsetY / 200.0;
+                    draggedCell.entry.todo.urgency = MIN(1.0, MAX(0.0, initialUrgency - urgencyDelta));
+                    [IBCoreDataStore save];
+                    [draggedCell statusWasChanged];
+                } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
+                    CGFloat frostinessDelta = offsetX / 200.0;
+                    draggedCell.entry.todo.frostiness = MIN(1.0, MAX(0.0, initialFrostiness + frostinessDelta));
+                    [IBCoreDataStore save];
+                    [draggedCell statusWasChanged];
+                } else if (fabs(offsetY) > 5) {
+                    draggedCell.dragType = EntryDragTypeUrgency;
+                    initialUrgency = draggedCell.entry.todo.urgency;
+                    startPoint = pt;
+                } else if (fabs(offsetX) > 5) {
+                    draggedCell.dragType = EntryDragTypeFrostiness;
+                    initialFrostiness = draggedCell.entry.todo.frostiness;
+                    startPoint = pt;
                 }
             }
             break;
@@ -115,6 +122,61 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         default:
             draggedCell.dragType = EntryDragTypeNone;
             draggedCell = nil;
+    }
+}
+
+- (IBAction)panGestureRecognizerWasChanged:(UIPanGestureRecognizer *)recognizer {
+    static EntryCell *pannedCell;
+    static CGFloat initialProgressBarValue;
+    NSIndexPath *indexPath;
+    CGPoint pt;
+    Entry *entry;
+    
+    CGPoint offset = [recognizer translationInView:self.tableView];
+    
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            pt = [recognizer locationInView:self.tableView];
+            indexPath = [self.tableView indexPathForRowAtPoint:pt];
+            pannedCell = nil;
+            
+            if (indexPath) {
+                entry = [self entryAtIndexPath:indexPath];
+                
+                if (entry.state == EntryStateActive) {
+                    pannedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    initialProgressBarValue = pannedCell.progressBarValue;
+                }
+            }
+
+            break;
+        
+        case UIGestureRecognizerStateChanged:
+            if (pannedCell) {
+                pannedCell.progressBarValue = MAX(0.0, MIN(1.0, initialProgressBarValue + ((offset.x / 100) *  (1.0 - initialProgressBarValue))));
+            }
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            if (pannedCell) {
+                if (offset.x > 50) {
+                    [pannedCell.entry.todo createEntry:pannedCell.progressBarValue == 1.0 ? EntryTypeComplete : EntryTypeAction];
+                    [IBCoreDataStore save];
+                    [self reloadData];
+                    //indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                    //[self createFetchedResultsController];
+                    //[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                } else {
+                    pannedCell.progressBarValue = initialProgressBarValue;
+                    
+                    [UIView animateWithDuration:0.2 animations:^{
+                        [pannedCell layoutIfNeeded];
+                    }];
+                }
+            }
+            
+        default:
             break;
     }
 }
@@ -456,6 +518,21 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 - (void)cell:(EntryCell *)cell textViewDidEndEditing:(UITextView *)textView {
     self.navigationBarItem.rightBarButtonItem = self.addButton;
     [self updateRowHeights];
+}
+
+#pragma mark - Gesture Recognizer
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.panGestureRecognizer) {
+        UIPanGestureRecognizer *panGestureRecognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGPoint offset = [panGestureRecognizer translationInView:self.tableView];
+        
+        if (offset.x > 0)
+            return YES;
+        
+        return NO;
+    }
+    return YES;
 }
 
 @end
