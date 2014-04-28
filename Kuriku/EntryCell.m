@@ -61,14 +61,8 @@
 
 - (void)setProgressBarValue:(CGFloat)progressBarValue {
     _progressBarValue = progressBarValue;
-    
-    if (progressBarValue <= 1.0) {
-        self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant * progressBarValue;
-        self.repeatIcon.hidden = YES;
-    } else {
-        self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant;
-        self.repeatIcon.hidden = NO;
-    }
+    self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant * fminf(1.0, progressBarValue);
+    self.repeatIcon.hidden = (progressBarValue < 1.2);
 }
 
 - (BOOL)becomeFirstResponder {
@@ -172,7 +166,7 @@
             
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.frostiness fromColor:coolColor toColor:coldColor];
 
-        } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness) {
+        } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness && self.entry.type != EntryTypeComplete) {
 //           if (self.entry.todo.dueDate) {
                static UIColor *warmColor, *hotColor;
                if (!warmColor) {

@@ -159,11 +159,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         case UIGestureRecognizerStateEnded:
             if (pannedCell) {
                 if (offset.x > 50) {
-                    if (pannedCell.progressBarValue > 1.0) {
+                    // TODO: have entry and this use same repeat value (1.2)
+                    if (pannedCell.progressBarValue > 1.2) {
                         self.selectedEntry = pannedCell.entry;
                         [self showRepeatView:pannedCell.entry.todo];
                     } else {
-                        [pannedCell.entry.todo createEntry:pannedCell.progressBarValue == 1.0 ? EntryTypeComplete : EntryTypeAction];
+                        [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
                         [IBCoreDataStore save];
                         [self reloadData];
                     }

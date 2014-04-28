@@ -20,7 +20,8 @@ Todo
 
 Bugs
 -------------
-* Cannot pinch inactive cell
+* Swipe right causes repeat
+* Can pinch inactive cell
 * No highlighting when cell is tapped
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
