@@ -67,14 +67,25 @@
                                                                 <constraint firstAttribute="width" constant="10" id="kpv-1e-dp9" userLabel="Progress Width"/>
                                                             </constraints>
                                                         </view>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="repeat" translatesAutoresizingMaskIntoConstraints="NO" id="wbi-Q8-URX" userLabel="Repeat Icon">
+                                                            <rect key="frame" x="7" y="2" width="16" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="16" id="onc-DU-HMR"/>
+                                                                <constraint firstAttribute="width" constant="16" id="u9B-tT-w8Z"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="centerY" secondItem="wbi-Q8-URX" secondAttribute="centerY" id="3Lw-cq-g62"/>
                                                         <constraint firstAttribute="bottom" secondItem="cQr-Vf-hwZ" secondAttribute="bottom" id="CIt-oI-7Lx"/>
                                                         <constraint firstAttribute="width" constant="30" id="FSe-Yo-Y9s" userLabel="Status Width"/>
                                                         <constraint firstAttribute="height" constant="20" id="M3C-BI-1cd"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="leading" id="My9-F0-bGY"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" id="br7-sv-UMY"/>
+                                                        <constraint firstAttribute="centerX" secondItem="wbi-Q8-URX" secondAttribute="centerX" id="nCn-xj-f4d"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="nuiClass" value="Status"/>
@@ -108,7 +119,7 @@
                                             <constraints>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="DaY-QM-H8E" secondAttribute="top" id="2Sn-AA-Sdx"/>
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="20" id="3fP-8F-uW2"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="50" id="Glg-L2-gCx"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="10" id="GQV-Xs-kqq"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="5" id="SSz-5E-ejE"/>
@@ -123,6 +134,7 @@
                                             <outlet property="dateLabel" destination="DaY-QM-H8E" id="sI3-vb-bqw"/>
                                             <outlet property="progressView" destination="cQr-Vf-hwZ" id="Pyq-HF-Z9C"/>
                                             <outlet property="progressViewWidthConstraint" destination="kpv-1e-dp9" id="NJo-f9-pRi"/>
+                                            <outlet property="repeatIcon" destination="wbi-Q8-URX" id="Nyb-2X-kss"/>
                                             <outlet property="statusView" destination="rvS-BL-gMe" id="PGi-hQ-WNc"/>
                                             <outlet property="statusViewWidthConstraint" destination="FSe-Yo-Y9s" id="LP0-Cx-xss"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
@@ -831,6 +843,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <point key="canvasLocation" x="2623" y="619"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="repeat" width="30" height="26"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

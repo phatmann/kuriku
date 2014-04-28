@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
+@property (weak, nonatomic) IBOutlet UIImageView *repeatIcon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
 
@@ -58,12 +59,16 @@
     [self refresh];
 }
 
-- (CGFloat)progressBarValue {
-    return self.progressViewWidthConstraint.constant / self.statusViewWidthConstraint.constant;
-}
-
 - (void)setProgressBarValue:(CGFloat)progressBarValue {
-    self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant * progressBarValue;
+    _progressBarValue = progressBarValue;
+    
+    if (progressBarValue <= 1.0) {
+        self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant * progressBarValue;
+        self.repeatIcon.hidden = YES;
+    } else {
+        self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant;
+        self.repeatIcon.hidden = NO;
+    }
 }
 
 - (BOOL)becomeFirstResponder {

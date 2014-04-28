@@ -28,7 +28,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 @property (strong, nonatomic) UIBarButtonItem *addButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
-@property (strong, nonatomic) UIActionSheet *todoActionSheet;
 @property (strong, nonatomic) UIActionSheet *deleteActionSheet;
 @property (weak, nonatomic) IBOutlet UISlider *filterSlider;
 @property (weak, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
@@ -153,19 +152,22 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         
         case UIGestureRecognizerStateChanged:
             if (pannedCell) {
-                pannedCell.progressBarValue = MAX(0.0, MIN(1.0, initialProgressBarValue + ((offset.x / 100) *  (1.0 - initialProgressBarValue))));
+                pannedCell.progressBarValue = MAX(0.0, initialProgressBarValue + ((offset.x / 100) *  (1.0 - initialProgressBarValue)));
             }
             break;
             
         case UIGestureRecognizerStateEnded:
             if (pannedCell) {
                 if (offset.x > 50) {
-                    [pannedCell.entry.todo createEntry:pannedCell.progressBarValue == 1.0 ? EntryTypeComplete : EntryTypeAction];
-                    [IBCoreDataStore save];
-                    [self reloadData];
-                    //indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                    //[self createFetchedResultsController];
-                    //[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+                    if (pannedCell.progressBarValue > 1.0) {
+                        self.selectedEntry = pannedCell.entry;
+                        [self showRepeatView:pannedCell.entry.todo];
+                    } else {
+                        [pannedCell.entry.todo createEntry:pannedCell.progressBarValue == 1.0 ? EntryTypeComplete : EntryTypeAction];
+                        [IBCoreDataStore save];
+                        [self reloadData];
+                    }
+                    
                     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 } else {
                     pannedCell.progressBarValue = initialProgressBarValue;
@@ -272,20 +274,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
 }
 
-- (void)showTodoActionSheet:(Entry *)entry {
-    self.selectedEntry = entry;
-    NSString *completionActionName = (entry.todo.lastEntry.type == EntryTypeComplete) ?  @"No" : @"Yes";
-    
-    self.todoActionSheet = [[UIActionSheet alloc]
-                              initWithTitle:@"Did you complete the todo?"
-                              delegate:self
-                              cancelButtonTitle:@"Cancel"
-                              destructiveButtonTitle:nil
-                              otherButtonTitles:completionActionName, @"Made progress", @"Repeat", nil];
-    
-    [self.todoActionSheet showInView:self.view];
-}
-
 - (void)showDeleteActionSheet:(Entry *)entry {
     self.selectedEntry = entry;
     
@@ -343,31 +331,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #pragma mark - Action Sheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (actionSheet == self.todoActionSheet) {
-        [self todoActionSheetButtonClicked:buttonIndex];
-    } else if (actionSheet == self.deleteActionSheet) {
-        [self deleteActionSheetButtonClicked:buttonIndex];
-    }
-}
-
-- (void)todoActionSheetButtonClicked:(NSInteger)buttonIndex {
-    NSInteger markCompletedButtonIndex = self.todoActionSheet.firstOtherButtonIndex;
-    NSInteger takeActionButtonIndex    = markCompletedButtonIndex + 1;
-    NSInteger doAgainButtonIndex       = takeActionButtonIndex + 1;
-    
-    Todo *todo = self.selectedEntry.todo;
-    
-    if (buttonIndex == markCompletedButtonIndex) {
-        [todo createEntry:(todo.lastEntry.type == EntryTypeComplete) ? EntryTypeReady : EntryTypeComplete];
-        [[IBCoreDataStore mainStore] save];
-        [self reloadData];
-    } else if (buttonIndex == takeActionButtonIndex) {
-        [todo createEntry:EntryTypeAction];
-        [[IBCoreDataStore mainStore] save];
-        [self reloadData];
-    } else if (buttonIndex == doAgainButtonIndex) {
-        [self showRepeatView:todo];
-    }
+    [self deleteActionSheetButtonClicked:buttonIndex];
 }
 
 - (void)deleteActionSheetButtonClicked:(NSInteger)buttonIndex {
