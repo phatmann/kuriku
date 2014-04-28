@@ -154,7 +154,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             if (pannedCell) {
                 CGPoint velocity = [recognizer velocityInView:self.tableView];
                 
-                if (velocity.x > 1000.0) {
+                if (velocity.x > 1000.0 && offset.x > 100) {
                     pannedCell.progressBarValue = 1.0;
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
                     [IBCoreDataStore save];

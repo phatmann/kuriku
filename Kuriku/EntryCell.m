@@ -171,28 +171,28 @@
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.frostiness fromColor:coolColor toColor:coldColor];
 
         } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness && self.entry.type != EntryTypeComplete) {
-//           if (self.entry.todo.dueDate) {
-               static UIColor *warmColor, *hotColor;
-               if (!warmColor) {
-                   warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-                   hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-               }
+           static UIColor *warmColor, *hotColor;
+           if (!warmColor) {
+               warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+               hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+           }
 
-               self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.urgency fromColor:warmColor toColor:hotColor];
-//           } else {
-//               static UIColor *oldColor, *veryOldColor;
-//               if (!oldColor) {
-//                   oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
-//                   veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
-//               }
-//
-//               self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
-//           }
+           self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.urgency fromColor:warmColor toColor:hotColor];
+        } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
+           static UIColor *oldColor, *veryOldColor;
+           if (!oldColor) {
+               oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+               veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+           }
+
+           self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
+        } else if (self.entry.type == EntryTypeComplete) {
+           self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"EntryComplete"];
         } else {
            self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
-       }
+        }
    } else {
-       self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+       self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"EntryInactive"];
    }
 }
 

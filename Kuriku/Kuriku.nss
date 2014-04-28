@@ -10,6 +10,14 @@ Entry {
     font-color: black;
 }
 
+EntryInactive {
+    background-color: rgb(228, 228, 228);
+}
+
+EntryComplete {
+    background-color: rgb(228, 228, 228);
+}
+
 Status {
     border-width: 1;
     border-color: rgb(200, 200, 200);
@@ -28,7 +36,7 @@ StartDate {
 }
 
 TemperatureNone {
-    background-color: white; /*rgb(228, 228, 228)*/
+    background-color: white;
 }
 
 TemperatureCold {

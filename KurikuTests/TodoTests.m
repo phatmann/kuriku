@@ -337,6 +337,12 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.temperature, equalToFloat(0.5f));
 }
 
+- (void)test_remove_start_date_when_completed {
+    self.todo.startDate = [[NSDate today] dateByAddingDays:1];
+    [self.todo createEntry:EntryTypeComplete];
+    assertThat(self.todo.startDate, is(nilValue()));
+}
+
 - (void)test_update_urgency_from_due_date {
     
 }

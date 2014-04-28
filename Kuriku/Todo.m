@@ -73,9 +73,9 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
     if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"] || [keyPath isEqualToString:@"importance"]) {
         [self updatePriority];
     } else if ([keyPath isEqualToString:@"entries"]) {
-        NSArray *removedEntries = change[NSKeyValueChangeOldKey];
-        
         if (kind == NSKeyValueChangeRemoval) {
+            NSArray *removedEntries = change[NSKeyValueChangeOldKey];
+            
             if (self.entries.count == 0) {
                 [self destroy];
                 return;
@@ -108,6 +108,9 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
         
         if (self.lastEntry.state != EntryStateActive)
             self.lastEntry.state = EntryStateActive;
+        
+        if (self.lastEntry.type == EntryTypeComplete)
+            self.startDate = nil;
     }
 }
 
