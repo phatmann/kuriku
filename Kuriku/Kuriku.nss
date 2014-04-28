@@ -4,6 +4,8 @@
 @coldColor: hsl(0.6, 1.0, 1.0);
 @oldColor: hsl(0.3, 1.0, 0.5);
 @veryOldColor: hsl(0.3, 1.0, 1.0);
+@dateFontSize: 9;
+@dateDraggingFontSize: 14;
 
 Entry {
     font-name: Helvetica;
@@ -29,10 +31,22 @@ Time {
 
 DueDate {
     font-color: @hotColor;
+    font-size: @dateFontSize;
 }
 
 StartDate {
     font-color: @coldColor;
+    font-size: @dateFontSize;
+}
+
+DueDateDragging {
+    font-color: black;
+    font-size: @dateDraggingFontSize;
+}
+
+StartDateDragging {
+    font-color: black;
+    font-size: @dateDraggingFontSize;
 }
 
 TemperatureNone {

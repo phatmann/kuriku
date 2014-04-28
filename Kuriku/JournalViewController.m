@@ -97,7 +97,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 CGFloat offsetY = pt.y - startPoint.y;
                 
                 if (draggedCell.dragType == EntryDragTypeUrgency) {
-                    CGFloat urgencyDelta = offsetY / 200.0;
+                    CGFloat urgencyDelta = offsetY / 100.0;
                     draggedCell.entry.todo.urgency = MIN(1.0, MAX(0.0, initialUrgency - urgencyDelta));
                     [IBCoreDataStore save];
                     [draggedCell statusWasChanged];
@@ -385,7 +385,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
     
     static const CGFloat margin =  21;
-    CGFloat width = 280;
+    CGFloat width = 250;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     
     return height + margin;

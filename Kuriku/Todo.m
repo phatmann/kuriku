@@ -12,9 +12,9 @@
 #import "NSDate+Kuriku.h"
 
 const NSTimeInterval kUrgentDaysBeforeDueDate        = 14;
+const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
 const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 14;
-const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
 
 @implementation Todo
 

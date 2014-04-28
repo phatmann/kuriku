@@ -97,6 +97,7 @@
     self.backgroundView.layer.borderWidth = 2.0;
     self.backgroundView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor blackColor].CGColor;
     [self updateBackground];
+    [self updateDate];
 }
 
 + (CGFloat)fontSizeForImportance:(CGFloat)importance {
@@ -121,15 +122,62 @@
     self.dateLabel.text = nil;
     
     if (self.entry.state == EntryStateActive) {
-        if ([self.entry.todo.startDate daysFromToday] > kFrostyDaysBeforeStartDate) {
+        NSDate *date = nil;
+        BOOL alwaysShowDate = NO;
+        BOOL useStartDate;
+        NSString *prefix = @"";
+        
+        if (self.dragType == EntryDragTypeFrostiness) {
+            date = self.entry.todo.startDate;
+            prefix = @"START ";
+            useStartDate = YES;
+            alwaysShowDate = YES;
+            self.dateLabel.nuiClass = @"StartDateDragging";
+        } else if (self.dragType == EntryDragTypeUrgency) {
+            date = self.entry.todo.dueDate;
+            prefix = @"DUE ";
+            useStartDate = NO;
+            alwaysShowDate = YES;
+            self.dateLabel.nuiClass = @"DueDateDragging";
+        } else if (self.entry.todo.startDate) {
+            date = self.entry.todo.startDate;
+            useStartDate = YES;
             self.dateLabel.nuiClass = @"StartDate";
-            self.dateLabel.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
-        } else if ([self.entry.todo.dueDate daysFromToday] > kUrgentDaysBeforeDueDate) {
+        } else if (self.entry.todo.dueDate) {
+            date = self.entry.todo.dueDate;
+            useStartDate = NO;
             self.dateLabel.nuiClass = @"DueDate";
-            self.dateLabel.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
         }
         
-        [self.dateLabel applyNUI];
+        if (date) {
+            int days = [date daysFromToday];
+            
+            BOOL isDistantDate;
+            
+            if (useStartDate) {
+                isDistantDate = (days > kFrostyDaysBeforeStartDate);
+            } else {
+                isDistantDate = (days > kUrgentDaysBeforeDueDate);
+            }
+            
+            NSString *dateText;
+            
+            if (isDistantDate) {
+                dateText = [date formattedDatePattern:@"M/d"];
+            } else if (alwaysShowDate) {
+                if (days == 0)
+                    dateText = @"now";
+                else if (days == 1)
+                    dateText = @"1 day";
+                else
+                    dateText = [NSString stringWithFormat:@"%d days", days];
+            }
+            
+            if (dateText) {
+                self.dateLabel.text = [prefix stringByAppendingString:dateText];
+                [self.dateLabel applyNUI];
+            }
+        }
     }
 }
 
@@ -162,16 +210,16 @@
    if (self.entry.state == EntryStateActive) {
         if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
             static UIColor *coolColor, *coldColor;
-        
+            
             if (!coolColor) {
                 coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
                 coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
             }
             
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.frostiness fromColor:coolColor toColor:coldColor];
-
         } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness && self.entry.type != EntryTypeComplete) {
            static UIColor *warmColor, *hotColor;
+            
            if (!warmColor) {
                warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
                hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
@@ -180,6 +228,7 @@
            self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.urgency fromColor:warmColor toColor:hotColor];
         } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
            static UIColor *oldColor, *veryOldColor;
+            
            if (!oldColor) {
                oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
                veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
