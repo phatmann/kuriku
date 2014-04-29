@@ -16,6 +16,7 @@ Newest thoughts
 
 Todo
 ----
+* Fix problem where date pan does not start with "choose" with distant dates
 * Notch for normal importance
 
 Bugs

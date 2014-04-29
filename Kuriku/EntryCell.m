@@ -163,9 +163,9 @@
             BOOL isDistantDate;
             
             if (useStartDate) {
-                isDistantDate = (days > kFrostyDaysBeforeStartDate);
+                isDistantDate = self.entry.todo.frostiness > 1.0;
             } else {
-                isDistantDate = (days > kUrgentDaysBeforeDueDate);
+                isDistantDate = self.entry.todo.urgency < 0.0;
             }
             
             NSString *dateText;
@@ -279,6 +279,8 @@
 #pragma mark -
 
 + (UIColor *)scale:(float_t)scale fromColor:(UIColor*)fromColor toColor:(UIColor *)toColor {
+    scale = fratiof(scale);
+    
     CGFloat fromHue, toHue, fromSaturation, toSaturation, fromBrightness, toBrightness;
     [fromColor getHue:&fromHue saturation:&fromSaturation brightness:&fromBrightness alpha:nil];
     [toColor getHue:&toHue saturation:&toSaturation brightness:&toBrightness alpha:nil];

@@ -77,6 +77,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
  }
 
 - (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
+    static const CGFloat kWellSize = 0.1f;
+    static const CGFloat kRange = 100.0f;
+    static const CGFloat kMinMove = 5.0;
     static CGPoint startPoint;
     static CGFloat initialUrgency;
     static CGFloat initialFrostiness;
@@ -112,39 +115,57 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 chooseDate = NO;
                 
                 if (draggedCell.dragType == EntryDragTypeUrgency) {
-                    CGFloat urgency = initialUrgency - (offsetY / 100.0);
+                    CGFloat urgency = initialUrgency - (offsetY / kRange);
                     
-                    draggedCell.entry.todo.urgency = MIN(1.0, MAX(0.0, urgency));
-                    [IBCoreDataStore save];
-                    [draggedCell statusWasChanged];
-                    
-                    if (urgency < -0.1) {
+                    if (urgency < -kWellSize) {
                         chooseDate = YES;
                         draggedCell.datePrompt = @"Choose due date...";
+                    } else {
+                        draggedCell.entry.todo.urgency = fratiof(urgency);
+                        [draggedCell statusWasChanged];
                     }
                 } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
-                    CGFloat frostiness = initialFrostiness + (offsetX / 100.0);
-                    draggedCell.entry.todo.frostiness = MIN(1.0, MAX(0.0, frostiness));
-                    [IBCoreDataStore save];
-                    [draggedCell statusWasChanged];
                     
-                    if (frostiness > 1.1) {
+                    CGFloat frostiness = initialFrostiness + (offsetX / kRange);
+                    
+                    if (frostiness > 1.0 + kWellSize) {
                         chooseDate = YES;
                         draggedCell.datePrompt = @"Choose start date...";
+                    } else {
+                        draggedCell.entry.todo.frostiness = fratiof(frostiness);
+                        [draggedCell statusWasChanged];
                     }
-                } else if (fabs(offsetY) > 5) {
+                } else if (fabs(offsetY) > kMinMove) {
                     draggedCell.dragType = EntryDragTypeUrgency;
                     initialUrgency = draggedCell.entry.todo.urgency;
+                    
+                    if (initialUrgency < 0.0) {
+                        if (offsetY > 0)
+                            initialUrgency = 0.0;
+                        else
+                            initialUrgency = -kWellSize;
+                    }
+                    
                     startPoint = pt;
-                } else if (fabs(offsetX) > 5) {
+                } else if (fabs(offsetX) > kMinMove) {
                     draggedCell.dragType = EntryDragTypeFrostiness;
                     initialFrostiness = draggedCell.entry.todo.frostiness;
+                    
+                    if (initialFrostiness > 1.0) {
+                        if (offsetX < 0)
+                            initialFrostiness = 1.0;
+                        else
+                            initialFrostiness = 1.0 + kWellSize;
+                    }
+                    
                     startPoint = pt;
                 }
             }
             break;
             
         case UIGestureRecognizerStateEnded:
+            [IBCoreDataStore save];
+            
             if (chooseDate) {
                 self.activeCell = draggedCell;
                 [self performSegueWithIdentifier: draggedCell.dragType == EntryDragTypeFrostiness ? @"Choose start date" : @"Choose due date"
@@ -192,7 +213,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 if (velocity.x > 1000.0 && offset.x > 100) {
                     pannedCell.progressBarValue = 1.0;
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
-                    [IBCoreDataStore save];
                     [self reloadData];
                     recognizer.enabled = NO;
                     recognizer.enabled = YES;
@@ -211,7 +231,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                         [self showRepeatView:pannedCell.entry.todo];
                     } else {
                         [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
-                        [IBCoreDataStore save];
                         [self reloadData];
                     }
                     
@@ -223,6 +242,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                         [pannedCell layoutIfNeeded];
                     }];
                 }
+                
+                [IBCoreDataStore save];
             }
             
         default:
@@ -551,6 +572,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 - (void)datePickerViewControllerDismissed:(DatePickerViewController *)dateViewController {
     [self.activeCell.entry.todo setValue:[dateViewController.date dateAtStartOfDay] forKey:dateViewController.tag];
     [self.activeCell statusWasChanged];
+    [IBCoreDataStore save];
 }
 
 @end
