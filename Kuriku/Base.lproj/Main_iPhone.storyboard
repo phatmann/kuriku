@@ -175,7 +175,6 @@
                         <outlet property="navigationBarItem" destination="9d1-2n-bCY" id="dB6-4C-pWa"/>
                         <outlet property="panGestureRecognizer" destination="Y6X-fE-B5f" id="ZwE-lN-Din"/>
                         <outlet property="tableView" destination="aKD-IV-7AV" id="NrM-gl-Iga"/>
-                        <segue destination="lbM-R3-zXO" kind="modal" identifier="Edit todo" id="bAK-oQ-oIW"/>
                         <segue destination="BLb-aQ-cLa" kind="modal" identifier="Repeat todo" id="ff9-5y-kUA"/>
                         <segue destination="tat-4U-w4N" kind="modal" identifier="Choose due date" id="wJt-ec-nze"/>
                         <segue destination="tat-4U-w4N" kind="modal" identifier="Choose start date" id="iNr-Rr-IHL"/>
@@ -196,18 +195,6 @@
                 </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="887" y="204"/>
-        </scene>
-        <!--Edit Todo Navigation Controller-->
-        <scene sceneID="Nfv-gK-9C0">
-            <objects>
-                <navigationController definesPresentationContext="YES" id="lbM-R3-zXO" userLabel="Edit Todo Navigation Controller" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kWq-na-iaD">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h6r-mw-oRy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1498" y="209"/>
         </scene>
         <!--Repeat View Controller - Repeat Todo-->
         <scene sceneID="kyU-gN-bo1">
