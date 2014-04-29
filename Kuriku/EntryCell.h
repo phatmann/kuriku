@@ -23,6 +23,7 @@ typedef NS_ENUM(int, EntryDragType) {
 @property (weak, nonatomic) JournalViewController *journalViewController;
 @property (nonatomic) EntryDragType dragType;
 @property (nonatomic) CGFloat progressBarValue;
+@property (strong, nonatomic) NSString *datePrompt;
 
 - (void)refresh;
 - (void)importanceWasChanged;

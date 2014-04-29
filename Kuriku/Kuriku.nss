@@ -5,7 +5,7 @@
 @oldColor: hsl(0.3, 1.0, 0.5);
 @veryOldColor: hsl(0.3, 1.0, 1.0);
 @dateFontSize: 9;
-@dateDraggingFontSize: 14;
+@dateDraggingFontSize: 12;
 
 Entry {
     font-name: Helvetica;
@@ -45,6 +45,11 @@ DueDateDragging {
 }
 
 StartDateDragging {
+    font-color: black;
+    font-size: @dateDraggingFontSize;
+}
+
+DatePrompt {
     font-color: black;
     font-size: @dateDraggingFontSize;
 }

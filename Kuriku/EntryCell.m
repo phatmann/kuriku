@@ -19,12 +19,12 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet UIImageView *repeatIcon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
 @end
 
@@ -98,6 +98,14 @@
     self.backgroundView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor blackColor].CGColor;
     [self updateBackground];
     [self updateDate];
+}
+
+- (void)setDatePrompt:(NSString *)datePrompt {
+    _datePrompt = datePrompt;
+    
+    self.dateLabel.text = datePrompt;
+    self.dateLabel.nuiClass = @"DatePrompt";
+    [self.dateLabel applyNUI];
 }
 
 + (CGFloat)fontSizeForImportance:(CGFloat)importance {

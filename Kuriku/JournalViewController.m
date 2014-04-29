@@ -72,6 +72,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     static EntryCell *draggedCell;
     NSIndexPath *indexPath;
     Entry *entry;
+    BOOL chooseDate;
     
     CGPoint pt = [recognizer locationInView:self.tableView];
     
@@ -86,6 +87,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                     draggedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
                     draggedCell.dragType = EntryDragTypePending;
                     startPoint = pt;
+                    chooseDate = NO;
                 }
             }
             
@@ -96,16 +98,29 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 CGFloat offsetX = pt.x - startPoint.x;
                 CGFloat offsetY = pt.y - startPoint.y;
                 
+                chooseDate = NO;
+                
                 if (draggedCell.dragType == EntryDragTypeUrgency) {
-                    CGFloat urgencyDelta = offsetY / 100.0;
-                    draggedCell.entry.todo.urgency = MIN(1.0, MAX(0.0, initialUrgency - urgencyDelta));
+                    CGFloat urgency = initialUrgency - (offsetY / 100.0);
+                    
+                    draggedCell.entry.todo.urgency = MIN(1.0, MAX(0.0, urgency));
                     [IBCoreDataStore save];
                     [draggedCell statusWasChanged];
+                    
+                    if (urgency < -0.1) {
+                        chooseDate = YES;
+                        draggedCell.datePrompt = @"Choose due date...";
+                    }
                 } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
-                    CGFloat frostinessDelta = offsetX / 200.0;
-                    draggedCell.entry.todo.frostiness = MIN(1.0, MAX(0.0, initialFrostiness + frostinessDelta));
+                    CGFloat frostiness = initialFrostiness + (offsetX / 100.0);
+                    draggedCell.entry.todo.frostiness = MIN(1.0, MAX(0.0, frostiness));
                     [IBCoreDataStore save];
                     [draggedCell statusWasChanged];
+                    
+                    if (frostiness > 1.1) {
+                        chooseDate = YES;
+                        draggedCell.datePrompt = @"Choose start date...";
+                    }
                 } else if (fabs(offsetY) > 5) {
                     draggedCell.dragType = EntryDragTypeUrgency;
                     initialUrgency = draggedCell.entry.todo.urgency;
