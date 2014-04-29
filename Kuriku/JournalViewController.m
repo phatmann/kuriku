@@ -77,7 +77,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
  }
 
 - (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
-    static const CGFloat kWellSize = 0.1f;
+    static const CGFloat kWellSize = 0.3f;
     static const CGFloat kRange = 100.0f;
     static const CGFloat kMinMove = 5.0;
     static CGPoint startPoint;
@@ -125,7 +125,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                         [draggedCell statusWasChanged];
                     }
                 } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
-                    
                     CGFloat frostiness = initialFrostiness + (offsetX / kRange);
                     
                     if (frostiness > 1.0 + kWellSize) {

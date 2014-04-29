@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet GradientBar *urgencyBar;
+@property (weak, nonatomic) IBOutlet GradientBar *frostinessBar;
 
 @end
 
@@ -56,6 +58,14 @@
 
 - (void)awakeFromNib {
     self.backgroundView = [UIView new];
+    
+    self.urgencyBar.type = GradientBarTypeVertical;
+    self.urgencyBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+    self.urgencyBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+    
+    self.frostinessBar.type = GradientBarTypeHorizontal;
+    self.frostinessBar.startColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+    self.frostinessBar.endColor   = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
 }
 
 - (void)setEntry:(Entry *)entry {
@@ -96,7 +106,7 @@
     _dragType = dragType;
     self.backgroundView.layer.borderWidth = 2.0;
     self.backgroundView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor blackColor].CGColor;
-    [self updateBackground];
+    [self updateTemperatureBars];
     [self updateDate];
 }
 
@@ -192,7 +202,8 @@
 - (void)updateStatus {
     [self updateDate];
     [self updateProgress];
-    [self updateBackground];
+    //[self updateBackground];
+    [self updateTemperatureBars];
 }
 
 - (void)updateTitle {
@@ -212,6 +223,19 @@
     [self.titleTextView applyNUI];
     
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
+}
+
+- (void)updateTemperatureBars {
+    self.urgencyBar.hidden = YES;
+    self.frostinessBar.hidden = YES;
+    
+    if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
+        self.frostinessBar.hidden = NO;
+        self.frostinessBar.value = fratiof(self.entry.todo.frostiness);
+    } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness && self.entry.type != EntryTypeComplete) {
+        self.urgencyBar.hidden = NO;
+        self.urgencyBar.value = fratiof(self.entry.todo.urgency);
+    }
 }
 
 -(void) updateBackground {

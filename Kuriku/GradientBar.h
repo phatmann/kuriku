@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(int, GradientBarType) {
+    GradientBarTypeHorizontal,
+    GradientBarTypeVertical
+};
+
 @interface GradientBar : UIView
 @property (strong, nonatomic) UIColor *startColor;
 @property (strong, nonatomic) UIColor *endColor;
+@property (nonatomic) GradientBarType type;
 @property (nonatomic) CGFloat value;
 @end
