@@ -20,6 +20,7 @@ Todo
 
 Bugs
 -------------
+* Completing does not clear start date
 * Swipe right causes repeat
 * Can pinch inactive cell
 * No highlighting when cell is tapped

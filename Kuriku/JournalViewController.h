@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <InnerBand/InnerBand.h>
-#import "EditTodoViewController.h"
 #import "RepeatViewController.h"
 #import "DatePickerViewController.h"
 
@@ -19,7 +18,8 @@
                                                       UIActionSheetDelegate,
                                                       NSFetchedResultsControllerDelegate,
                                                       RepeatViewControllerDelegate,
-                                                      UIGestureRecognizerDelegate>
+                                                      UIGestureRecognizerDelegate,
+                                                      DatePickerViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

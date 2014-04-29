@@ -35,7 +35,7 @@ DueDate {
 }
 
 StartDate {
-    font-color: @coldColor;
+    font-color: white;
     font-size: @dateFontSize;
 }
 

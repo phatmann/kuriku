@@ -10,7 +10,6 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "EntryCell.h"
-#import "EditTodoViewController.h"
 #import <InnerBand.h>
 #import "TMGrowingTextView.h"
 
@@ -62,6 +61,18 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         UINavigationController *navigationController = segue.destinationViewController;
         RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
         repeatViewController.delegate = self;
+    } else {
+        UINavigationController *navigationController = segue.destinationViewController;
+        DatePickerViewController *datePickerViewController = [navigationController.viewControllers firstObject];
+        datePickerViewController.delegate = self;
+
+        if ([segue.identifier isEqualToString:@"Choose start date"]) {
+            datePickerViewController.tag = @"startDate";
+            datePickerViewController.date = self.activeCell.entry.todo.startDate;
+        } else if ([segue.identifier isEqualToString:@"Choose due date"]) {
+            datePickerViewController.tag = @"dueDate";
+            datePickerViewController.date = self.activeCell.entry.todo.dueDate;
+        }
     }
  }
 
@@ -70,9 +81,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     static CGFloat initialUrgency;
     static CGFloat initialFrostiness;
     static EntryCell *draggedCell;
+    static BOOL chooseDate;
     NSIndexPath *indexPath;
     Entry *entry;
-    BOOL chooseDate;
     
     CGPoint pt = [recognizer locationInView:self.tableView];
     
@@ -132,6 +143,15 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 }
             }
             break;
+            
+        case UIGestureRecognizerStateEnded:
+            if (chooseDate) {
+                self.activeCell = draggedCell;
+                [self performSegueWithIdentifier: draggedCell.dragType == EntryDragTypeFrostiness ? @"Choose start date" : @"Choose due date"
+                                          sender: nil];
+            }
+            
+            /* ... */
             
         default:
             draggedCell.dragType = EntryDragTypeNone;
@@ -524,6 +544,13 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         return NO;
     }
     return YES;
+}
+
+#pragma mark Date Picker View Delegate
+
+- (void)datePickerViewControllerDismissed:(DatePickerViewController *)dateViewController {
+    [self.activeCell.entry.todo setValue:[dateViewController.date dateAtStartOfDay] forKey:dateViewController.tag];
+    [self.activeCell statusWasChanged];
 }
 
 @end
