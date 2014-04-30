@@ -225,15 +225,23 @@ static NSDate *entryDate;
     assertThatInt(todo3.lastEntry.type, equalToInt(EntryTypeNew));
 }
 
-- (void)test_update_urgency_when_due_date_changes {
+- (void)test_urgency_due_today {
     self.todo.dueDate = [NSDate today];
     assertThatFloat(self.todo.urgency, equalToFloat(1.0));
 }
 
-- (void)test_clear_urgency_when_due_date_cleared {
-    self.todo.dueDate = [NSDate today];
-    self.todo.dueDate = nil;
+- (void)test_no_urgency_when_no_due_date {
     assertThatFloat(self.todo.urgency, equalToFloat(0));
+}
+
+- (void)test_urgency_with_distant_due_date {
+    self.todo.dueDate = [[NSDate today] dateByAddingDays:120];
+    assertThatFloat(self.todo.urgency, lessThan(@(0.0)));
+}
+
+- (void)test_urgency_with_past_due_date {
+    self.todo.dueDate = [[NSDate today] dateByAddingDays:-14];
+    assertThatFloat(self.todo.urgency, greaterThan(@(1.0)));
 }
 
 - (void)test_get_entries_by_date {
@@ -293,12 +301,12 @@ static NSDate *entryDate;
 }
 
 - (void)test_frostiness_for_frozen_todo {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:kFrostyDaysBeforeStartDate];
+    self.todo.startDate = [[NSDate today] dateByAddingDays:60];
     assertThatFloat(self.todo.frostiness, closeTo(1.0f, 0.1));
 }
 
 - (void)test_frostiness_for_thawing_todo {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:kFrostyDaysBeforeStartDate/4];
+    self.todo.startDate = [[NSDate today] dateByAddingDays:15];
     assertThatFloat(self.todo.frostiness, closeTo(0.2f, 0.2f));
 }
 
@@ -312,12 +320,22 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.frostiness, isNot(equalToFloat(0.0f)));
 }
 
+- (void)test_frostiness_with_past_start_date {
+    self.todo.startDate = [[NSDate today] dateByAddingDays:-10];
+    assertThatFloat(self.todo.frostiness, lessThan(@(0.0f)));
+}
+
+- (void)test_frostiness_with_distant_start_date {
+    self.todo.startDate = [[NSDate today] dateByAddingDays:120];
+    assertThatFloat(self.todo.frostiness, greaterThan(@(1.0f)));
+}
+
 - (void)test_temperature_for_new_todo {
     assertThatFloat(self.todo.temperature, equalToFloat(0.0f));
 }
 
 - (void)test_temperature_for_frozen_todo {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:kFrostyDaysBeforeStartDate];
+    self.todo.startDate = [[NSDate today] dateByAddingDays:60];
     assertThatFloat(self.todo.temperature, closeTo(-1.0f, 0.1f));
 }
 
@@ -333,8 +351,14 @@ static NSDate *entryDate;
 
 - (void)test_temperature_for_urgent_stale_todo {
     entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate / 2];
-    self.todo.dueDate = [[NSDate today] dateByAddingDays:kUrgentDaysBeforeDueDate / 2];
+    self.todo.dueDate = [[NSDate today] dateByAddingDays:7];
     assertThatFloat(self.todo.temperature, equalToFloat(0.5f));
+}
+
+- (void)test_remove_start_date_when_completed {
+    self.todo.startDate = [[NSDate today] dateByAddingDays:1];
+    [self.todo createEntry:EntryTypeComplete];
+    assertThat(self.todo.startDate, is(nilValue()));
 }
 
 - (void)test_update_urgency_from_due_date {

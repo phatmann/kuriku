@@ -2,24 +2,60 @@
 @hotColor:  hsl(0.0, 1.0, 1.0);
 @coolColor: hsl(0.5, 1.0, 1.0);
 @coldColor: hsl(0.6, 1.0, 1.0);
-@oldColor: hsl(0.3, 1.0, 0.5);
-@veryOldColor: hsl(0.3, 1.0, 1.0);
+@oldColor: hsl(0.07, 0.1, 0.75);
+@veryOldColor: hsl(0.07, 0.3, 0.75);
+@dateFontSize: 9;
+@dateDraggingFontSize: 11;
 
 Entry {
     font-name: Helvetica;
     font-color: black;
 }
 
+EntryInactive {
+    background-color: rgb(228, 228, 228);
+}
+
+EntryComplete {
+    background-color: rgb(228, 228, 228);
+}
+
+Status {
+    border-width: 1;
+    border-color: rgb(200, 200, 200);
+}
+
+Time {
+    font-color: rgb(170, 170, 170);
+}
+
 DueDate {
     font-color: @hotColor;
+    font-size: @dateFontSize;
 }
 
 StartDate {
     font-color: white;
+    font-size: @dateFontSize;
+}
+
+DueDateDragging {
+    font-color: black;
+    font-size: @dateDraggingFontSize;
+}
+
+StartDateDragging {
+    font-color: black;
+    font-size: @dateDraggingFontSize;
+}
+
+DatePrompt {
+    font-color: black;
+    font-size: @dateDraggingFontSize;
 }
 
 TemperatureNone {
-    background-color: rgb(228, 228, 228);
+    background-color: white;
 }
 
 TemperatureCold {
@@ -47,11 +83,11 @@ StalenessOld {
 }
 
 ImportanceLow {
-    font-size: 14;
+    font-size: 16;
 }
 
 ImportanceHigh {
-    font-size: 20;
+    font-size: 28;
 }
 
 StatusCompleted {

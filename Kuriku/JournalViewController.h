@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <InnerBand/InnerBand.h>
-#import "EditTodoViewController.h"
 #import "RepeatViewController.h"
 #import "DatePickerViewController.h"
 
@@ -18,14 +17,13 @@
                                                       UITableViewDataSource,
                                                       UIActionSheetDelegate,
                                                       NSFetchedResultsControllerDelegate,
-                                                      EditTodoViewControllerDelegate,
                                                       RepeatViewControllerDelegate,
+                                                      UIGestureRecognizerDelegate,
                                                       DatePickerViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
-- (void)statusWasTappedForCell:(EntryCell *)cell;
 - (void)cell:(EntryCell *)cell textViewDidBeginEditing:(UITextView *)textView;
 - (void)cell:(EntryCell *)cell textViewDidEndEditing:(UITextView *)textView;
 - (void)cell:(EntryCell *)cell textViewDidChange:(UITextView *)textView;

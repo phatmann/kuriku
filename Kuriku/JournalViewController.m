@@ -10,7 +10,6 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "EntryCell.h"
-#import "EditTodoViewController.h"
 #import <InnerBand.h>
 #import "TMGrowingTextView.h"
 
@@ -28,9 +27,10 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 @property (strong, nonatomic) UIBarButtonItem *addButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
-@property (strong, nonatomic) UIActionSheet *todoActionSheet;
 @property (strong, nonatomic) UIActionSheet *deleteActionSheet;
 @property (weak, nonatomic) IBOutlet UISlider *filterSlider;
+@property (weak, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 @end
 
@@ -57,29 +57,199 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    Todo *todo = sender;
-    
-    if ([segue.identifier isEqualToString:@"Edit todo"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        EditTodoViewController *entryViewController = [navigationController.viewControllers firstObject];
-        entryViewController.delegate = self;
-        entryViewController.todo = todo;
-    } else if ([segue.identifier isEqualToString:@"Repeat todo"]) {
+    if ([segue.identifier isEqualToString:@"Repeat todo"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
         repeatViewController.delegate = self;
-    } else if ([segue.identifier isEqualToString:@"Choose start date"]) {
+    } else {
         UINavigationController *navigationController = segue.destinationViewController;
         DatePickerViewController *datePickerViewController = [navigationController.viewControllers firstObject];
         datePickerViewController.delegate = self;
-        datePickerViewController.tag = @"startDate";
-        datePickerViewController.date = self.activeCell.entry.todo.startDate;
-    } else if ([segue.identifier isEqualToString:@"Choose due date"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        DatePickerViewController *datePickerViewController = [navigationController.viewControllers firstObject];
-        datePickerViewController.delegate = self;
-        datePickerViewController.tag = @"dueDate";
-        datePickerViewController.date = self.activeCell.entry.todo.dueDate;
+
+        if ([segue.identifier isEqualToString:@"Choose start date"]) {
+            datePickerViewController.tag = @"startDate";
+            datePickerViewController.date = self.activeCell.entry.todo.startDate;
+        } else if ([segue.identifier isEqualToString:@"Choose due date"]) {
+            datePickerViewController.tag = @"dueDate";
+            datePickerViewController.date = self.activeCell.entry.todo.dueDate;
+        }
+    }
+ }
+
+- (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
+    static const CGFloat kWellSize = 0.1f;
+    static const CGFloat kMinMove = 5.0;
+    static CGPoint startPoint;
+    static CGFloat initialUrgency;
+    static CGFloat initialFrostiness;
+    static EntryCell *draggedCell;
+    static BOOL chooseDate;
+    NSIndexPath *indexPath;
+    Entry *entry;
+    
+    CGPoint pt = [recognizer locationInView:self.tableView];
+    
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            indexPath = [self.tableView indexPathForRowAtPoint:pt];
+            draggedCell = nil;
+            
+            if (indexPath) {
+                entry = [self entryAtIndexPath:indexPath];
+                if (entry.state == EntryStateActive) {
+                    draggedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    draggedCell.dragType = EntryDragTypePending;
+                    startPoint = pt;
+                    chooseDate = NO;
+                }
+            }
+            
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            if (draggedCell) {
+                CGFloat offsetX = pt.x - startPoint.x;
+                CGFloat offsetY = pt.y - startPoint.y;
+                
+                chooseDate = NO;
+                
+                if (draggedCell.dragType == EntryDragTypeUrgency) {
+                    CGFloat range = draggedCell.titleTextView.frame.size.height;
+                    range -= kWellSize * range;
+                    CGFloat urgency = initialUrgency - (offsetY / range);
+                    
+                    if (urgency < -kWellSize) {
+                        chooseDate = YES;
+                        draggedCell.datePrompt = @"Choose due date...";
+                    } else {
+                        draggedCell.entry.todo.urgency = fratiof(urgency);
+                        [draggedCell statusWasChanged];
+                    }
+                } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
+                    CGFloat range = draggedCell.titleTextView.frame.size.width;
+                    range -= kWellSize * range;
+                    CGFloat frostiness = initialFrostiness + (offsetX / range);
+                    
+                    if (frostiness > 1.0 + kWellSize) {
+                        chooseDate = YES;
+                        draggedCell.datePrompt = @"Choose start date...";
+                    } else {
+                        draggedCell.entry.todo.frostiness = fratiof(frostiness);
+                        [draggedCell statusWasChanged];
+                    }
+                } else if (fabs(offsetY) > kMinMove) {
+                    draggedCell.dragType = EntryDragTypeUrgency;
+                    initialUrgency = draggedCell.entry.todo.urgency;
+                    
+                    if (initialUrgency < 0.0) {
+                        if (offsetY > 0)
+                            initialUrgency = 0.0;
+                        else
+                            initialUrgency = -kWellSize;
+                    }
+                    
+                    startPoint = pt;
+                } else if (fabs(offsetX) > kMinMove) {
+                    draggedCell.dragType = EntryDragTypeFrostiness;
+                    initialFrostiness = draggedCell.entry.todo.frostiness;
+                    
+                    if (initialFrostiness > 1.0) {
+                        if (offsetX < 0)
+                            initialFrostiness = 1.0;
+                        else
+                            initialFrostiness = 1.0 + kWellSize;
+                    }
+                    
+                    startPoint = pt;
+                }
+            }
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            [IBCoreDataStore save];
+            
+            if (chooseDate) {
+                self.activeCell = draggedCell;
+                [self performSegueWithIdentifier: draggedCell.dragType == EntryDragTypeFrostiness ? @"Choose start date" : @"Choose due date"
+                                          sender: nil];
+            }
+            
+            /* ... */
+            
+        default:
+            draggedCell.dragType = EntryDragTypeNone;
+            draggedCell = nil;
+    }
+}
+
+- (IBAction)panGestureRecognizerWasChanged:(UIPanGestureRecognizer *)recognizer {
+    static EntryCell *pannedCell;
+    static CGFloat initialProgressBarValue;
+    NSIndexPath *indexPath;
+    CGPoint pt;
+    Entry *entry;
+    
+    CGPoint offset = [recognizer translationInView:self.tableView];
+    
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            pt = [recognizer locationInView:self.tableView];
+            indexPath = [self.tableView indexPathForRowAtPoint:pt];
+            pannedCell = nil;
+            
+            if (indexPath) {
+                entry = [self entryAtIndexPath:indexPath];
+                
+                if (entry.state == EntryStateActive) {
+                    pannedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    initialProgressBarValue = pannedCell.progressBarValue;
+                }
+            }
+
+            break;
+        
+        case UIGestureRecognizerStateChanged:
+            if (pannedCell) {
+                CGPoint velocity = [recognizer velocityInView:self.tableView];
+                
+                if (velocity.x > 1000.0 && offset.x > 100) {
+                    pannedCell.progressBarValue = 1.0;
+                    [pannedCell.entry.todo createEntry:EntryTypeComplete];
+                    [self reloadData];
+                    recognizer.enabled = NO;
+                    recognizer.enabled = YES;
+                } else {
+                    pannedCell.progressBarValue = MAX(0.0, initialProgressBarValue + ((offset.x / 100) *  (1.0 - initialProgressBarValue)));
+                }
+            }
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            if (pannedCell) {
+                if (offset.x > 50) {
+                    // TODO: have entry and this use same repeat value (1.2)
+                    if (pannedCell.progressBarValue > 1.2) {
+                        self.selectedEntry = pannedCell.entry;
+                        [self showRepeatView:pannedCell.entry.todo];
+                    } else {
+                        [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
+                        [self reloadData];
+                    }
+                    
+                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                } else {
+                    pannedCell.progressBarValue = initialProgressBarValue;
+                    
+                    [UIView animateWithDuration:0.2 animations:^{
+                        [pannedCell layoutIfNeeded];
+                    }];
+                }
+                
+                [IBCoreDataStore save];
+            }
+            
+        default:
+            break;
     }
 }
 
@@ -174,24 +344,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
 }
 
-- (void)statusWasTappedForCell:(EntryCell *)cell {
-    [self showEditTodoView:cell.entry.todo];
-}
-
-- (void)showTodoActionSheet:(Entry *)entry {
-    self.selectedEntry = entry;
-    NSString *completionActionName = (entry.todo.lastEntry.type == EntryTypeComplete) ?  @"Didn't do it :(" : @"Did it!";
-    
-    self.todoActionSheet = [[UIActionSheet alloc]
-                              initWithTitle:nil
-                              delegate:self
-                              cancelButtonTitle:@"Cancel"
-                              destructiveButtonTitle:nil
-                              otherButtonTitles:completionActionName, @"Did some of it", @"Do it again", nil];
-    
-    [self.todoActionSheet showInView:self.view];
-}
-
 - (void)showDeleteActionSheet:(Entry *)entry {
     self.selectedEntry = entry;
     
@@ -203,10 +355,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                                 otherButtonTitles:@"Delete This Entry", nil];
     
     [self.deleteActionSheet showInView:self.view];
-}
-
-- (void)showEditTodoView:(Todo *)todo {
-    [self performSegueWithIdentifier:@"Edit todo" sender:todo];
 }
 
 - (void)showRepeatView:(Todo *)todo {
@@ -253,31 +401,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #pragma mark - Action Sheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (actionSheet == self.todoActionSheet) {
-        [self todoActionSheetButtonClicked:buttonIndex];
-    } else if (actionSheet == self.deleteActionSheet) {
-        [self deleteActionSheetButtonClicked:buttonIndex];
-    }
-}
-
-- (void)todoActionSheetButtonClicked:(NSInteger)buttonIndex {
-    NSInteger markCompletedButtonIndex = self.todoActionSheet.firstOtherButtonIndex;
-    NSInteger takeActionButtonIndex    = markCompletedButtonIndex + 1;
-    NSInteger doAgainButtonIndex       = takeActionButtonIndex + 1;
-    
-    Todo *todo = self.selectedEntry.todo;
-    
-    if (buttonIndex == markCompletedButtonIndex) {
-        [todo createEntry:(todo.lastEntry.type == EntryTypeComplete) ? EntryTypeReady : EntryTypeComplete];
-        [[IBCoreDataStore mainStore] save];
-        [self reloadData];
-    } else if (buttonIndex == takeActionButtonIndex) {
-        [todo createEntry:EntryTypeAction];
-        [[IBCoreDataStore mainStore] save];
-        [self reloadData];
-    } else if (buttonIndex == doAgainButtonIndex) {
-        [self showRepeatView:todo];
-    }
+    [self deleteActionSheetButtonClicked:buttonIndex];
 }
 
 - (void)deleteActionSheetButtonClicked:(NSInteger)buttonIndex {
@@ -319,7 +443,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
     
     static const CGFloat margin =  21;
-    CGFloat width = self.tableView.bounds.size.width - 49;
+    CGFloat width = 250;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     
     return height + margin;
@@ -335,16 +459,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if (self.activeCell != [self.tableView cellForRowAtIndexPath:indexPath])
-        [self showTodoActionSheet:[self entryAtIndexPath:indexPath]];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell becomeFirstResponder];
 }
-
-//- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-//    if (!tableView.isEditing) {
-//        Entry *entry = [self entryAtIndexPath:indexPath];
-//        [self showEditTodoView:entry.todo];
-//    }
-//}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([[self.fetchedResultsController sections] count] > 0) {
@@ -363,20 +480,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     return nil;
 }
 
-#ifdef SHOW_INDEX
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [self.fetchedResultsController sectionIndexTitles];
-}
-    
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
-}
-#endif
-
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    return cell.editing ? UITableViewCellEditingStyleNone :  UITableViewCellEditingStyleDelete;
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -390,29 +495,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
         }
     }
-}
-
-#pragma mark - Fetched Results Controller Delegate
-
-#ifdef SHOW_INDEX
-- (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
-    static NSDateFormatter *tinyDateFormatter;
-    
-    if (!tinyDateFormatter) {
-        tinyDateFormatter = [NSDateFormatter new];
-        [tinyDateFormatter setDateFormat:@"MMM d"];
-    }
-    
-    NSDate *date = [Entry journalDateFromString:sectionName];
-    return [tinyDateFormatter stringFromDate:date];
-}
-#endif
-
-
-#pragma mark - Edit Todo Controller Delegate
-
-- (void)todoWasEdited:(Todo *)todo {
-    [self.tableView reloadData];
 }
 
 #pragma mark - Repeat Controller Delegate
@@ -472,16 +554,27 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [self updateRowHeights];
 }
 
-#pragma mark Date Picker View Delegate
+#pragma mark - Gesture Recognizer
 
-- (void)datePickerViewControllerDateChanged:(DatePickerViewController *)dateViewController {
-    [self.activeCell.entry.todo setValue:dateViewController.date forKey:dateViewController.tag];
-    [self.activeCell becomeFirstResponder];
-    [self.activeCell temperatureWasChanged];
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.panGestureRecognizer) {
+        UIPanGestureRecognizer *panGestureRecognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGPoint offset = [panGestureRecognizer translationInView:self.tableView];
+        
+        if (offset.x > 0)
+            return YES;
+        
+        return NO;
+    }
+    return YES;
 }
 
-- (void)datePickerViewControllerCanceled:(DatePickerViewController *)dateViewController {
-     [self.activeCell becomeFirstResponder];
+#pragma mark Date Picker View Delegate
+
+- (void)datePickerViewControllerDismissed:(DatePickerViewController *)dateViewController {
+    [self.activeCell.entry.todo setValue:[dateViewController.date dateAtStartOfDay] forKey:dateViewController.tag];
+    [self.activeCell statusWasChanged];
+    [IBCoreDataStore save];
 }
 
 @end

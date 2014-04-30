@@ -10,55 +10,32 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "JournalViewController.h"
+#import "GradientBar.h"
 #import <InnerBand/InnerBand.h>
 #import <NUI/UITextView+NUI.h>
 #import "NSDate+Kuriku.h"
 
 @interface EntryCell ()
+{
+    UIColor *_warmColor, *_hotColor, *_coolColor, *_coldColor;
+}
 
-@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabelInStatusView;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabelInProgressView;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
-@property (weak, nonatomic) IBOutlet UIView *temperatureView;
-@property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
-@property (weak, nonatomic) IBOutlet UIButton *startDateButton;
-@property (weak, nonatomic) IBOutlet UIButton *dueDateButton;
-@property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *temperatureViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *repeatIcon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
-
-@property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
-@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet GradientBar *urgencyBar;
+@property (weak, nonatomic) IBOutlet GradientBar *frostinessBar;
 
 @end
 
 @implementation EntryCell
-{
-    CGFloat _temperatureBeforePan;
-}
-
-- (void)awakeFromNib {
-    UIImage *thumbImage = [UIImage imageNamed:@"slider-thumb"];
-    [self.temperatureSlider setThumbImage:thumbImage forState:UIControlStateNormal];
-    [self.temperatureSlider setThumbImage:thumbImage forState:UIControlStateHighlighted];
-    self.temperatureViewHeightConstraint.constant = 0;
-    
-    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasPanned:)];
-    self.panGestureRecognizer.delegate = self;
-    self.panGestureRecognizer.maximumNumberOfTouches = 1;
-    [self addGestureRecognizer:self.panGestureRecognizer];
-    
-    self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellWasLongPressed:)];
-    [self addGestureRecognizer:self.longPressGestureRecognizer];
-}
 
 - (void)prepareForReuse {
-    self.temperatureViewHeightConstraint.constant = 0;
+    self.repeatIcon.hidden = YES;
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
@@ -81,9 +58,32 @@
     return [NSString stringWithFormat:@"Status%@:State%@", status, state];
 }
 
+- (void)awakeFromNib {
+    self.backgroundView = [UIView new];
+    
+    _warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+    _hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+    _coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+    _coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+
+    self.urgencyBar.type = GradientBarTypeVertical;
+    self.urgencyBar.startColor = _warmColor;
+    self.urgencyBar.endColor   = _hotColor;
+    
+    self.frostinessBar.type = GradientBarTypeHorizontal;
+    self.frostinessBar.startColor = _coolColor;
+    self.frostinessBar.endColor   = _coldColor;
+}
+
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
     [self refresh];
+}
+
+- (void)setProgressBarValue:(CGFloat)progressBarValue {
+    _progressBarValue = progressBarValue;
+    self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant * fminf(1.0, progressBarValue);
+    self.repeatIcon.hidden = (progressBarValue < 1.2);
 }
 
 - (BOOL)becomeFirstResponder {
@@ -98,14 +98,7 @@
     [self updateTime];
     [self updateTitle];
     [self updateStatus];
-    [self updateDateButtons];
-    [self updateTemperatureSlider];
-}
-
-- (void)temperatureWasChanged {
-    [self updateStatus];
-    [self updateDateButtons];
-    [self updateTemperatureSlider];
+    [self updateBackground];
 }
 
 - (void)importanceWasChanged {
@@ -113,118 +106,35 @@
     [self updateStatus];
 }
 
-- (IBAction)statusButtonWasTapped {
-    //[self.journalViewController statusWasTappedForCell:self];
+- (void)statusWasChanged {
+    [self updateStatus];
 }
 
-//- (IBAction)temperatureSliderWasChanged {
-//    if (self.temperatureSlider.value > -0.02 && self.temperatureSlider.value < 0.02)
-//        self.temperatureSlider.value = 0;
-//    
-//    self.entry.todo.temperature = self.temperatureSlider.value;
-//    [self updateDateButtons];
-//    [self updateStatus];
-//}
-
-- (void)cellWasPanned:(UIPanGestureRecognizer *)panGestureRecognizer {
-    switch (panGestureRecognizer.state) {
-        case UIGestureRecognizerStateBegan:
-            //self.temperatureView.hidden = NO;
-            
-            if (self.entry.todo.dueDate || self.entry.todo.startDate) {
-                _temperatureBeforePan = self.entry.todo.temperature;
-            } else {
-                _temperatureBeforePan = 0.0f;
-            }
-            break;
-            
-        case UIGestureRecognizerStateChanged:
-            {
-                CGFloat offset = [panGestureRecognizer translationInView:self].x;
-                
-                static const CGFloat range = 100.0f;
-                CGFloat newTemperature = MAX(-1.0f, MIN(1.0f, ((_temperatureBeforePan * range) + offset) / range));
-                
-                if (newTemperature > -0.1 && newTemperature < 0.1)
-                    newTemperature = 0.0f;
-                
-                self.entry.todo.temperature = newTemperature;
-                [self temperatureWasChanged];
-            }
-            break;
-        
-        case UIGestureRecognizerStateEnded:
-        case UIGestureRecognizerStateCancelled:
-            //self.temperatureView.hidden = YES;
-            break;
-            
-        default:
-            ;
-    }
+- (void)setDragType:(EntryDragType)dragType {
+    _dragType = dragType;
+    self.backgroundView.layer.borderWidth = 2.0;
+    self.backgroundView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor lightGrayColor].CGColor;
+    [self updateTemperatureBars];
+    [self updateDate];
+    [self updateTitle];
 }
 
-- (void)cellWasLongPressed:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint pt = [longPressGestureRecognizer locationInView:self.titleTextView];
-        
-        if (CGRectContainsPoint(self.titleTextView.bounds, pt))
-            [self.titleTextView becomeFirstResponder];
-        else
-            [self.journalViewController statusWasTappedForCell:self];
-    }
+- (void)setDatePrompt:(NSString *)datePrompt {
+    _datePrompt = datePrompt;
+    
+    self.dateLabel.text = datePrompt;
+    self.dateLabel.nuiClass = @"DatePrompt";
+    [self.dateLabel applyNUI];
+}
+
++ (CGFloat)fontSizeForImportance:(CGFloat)importance {
+    CGFloat lowImportanceFontSize  = [NUISettings getFloat:@"font-size" withClass:@"ImportanceLow"];
+    CGFloat highImportanceFontSize = [NUISettings getFloat:@"font-size" withClass:@"ImportanceHigh"];
+    
+    return lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * importance);
 }
 
 #pragma mark -
-
-- (void)updateTemperatureSlider {
-    if (self.entry.todo.dueDate)
-        self.temperatureSlider.value = self.entry.todo.urgency;
-    else if (self.entry.todo.startDate)
-        self.temperatureSlider.value = -self.entry.todo.frostiness;
-    else
-        self.temperatureSlider.value = 0;
-}
-
-- (void)updateDateButtons {
-    // TODO: factor out common code
-    
-    if (self.entry.todo.startDate) {
-        self.startDateButton.hidden = NO;
-        self.startDateLabel.hidden  = NO;
-        int days = [self.entry.todo.startDate daysFromToday];
-        
-        if (days == 0)
-            [self.startDateButton setTitle:@"now" forState:UIControlStateNormal];
-        else if (days == 1)
-            [self.startDateButton setTitle:@"1 day" forState:UIControlStateNormal];
-        else if (days <= kFrostyDaysBeforeStartDate)
-            [self.startDateButton setTitle:[NSString stringWithFormat:@"%d days", days] forState:UIControlStateNormal];
-        else
-            [self.startDateButton setTitle:[self.entry.todo.startDate formattedDatePattern:@"M/d"] forState:UIControlStateNormal];
-    } else {
-        self.startDateButton.hidden = YES;
-        self.startDateLabel.hidden  = YES;
-    }
-    
-    if (self.entry.todo.dueDate) {
-        self.dueDateButton.hidden = NO;
-        self.dueDateLabel.hidden  = NO;
-        int days = [self.entry.todo.dueDate daysFromToday];
-        
-        if (days == 0)
-            [self.dueDateButton setTitle:@"now" forState:UIControlStateNormal];
-        else if (days == 1)
-            [self.dueDateButton setTitle:@"1 day" forState:UIControlStateNormal];
-        else if (days <= kUrgentDaysBeforeDueDate)
-            [self.dueDateButton setTitle:[NSString stringWithFormat:@"%d days", days] forState:UIControlStateNormal];
-        else
-            [self.dueDateButton setTitle:[self.entry.todo.dueDate formattedDatePattern:@"M/d"] forState:UIControlStateNormal];
-    } else {
-        self.dueDateButton.hidden = YES;
-        self.dueDateLabel.hidden  = YES;
-        [self.dueDateButton setTitle:nil forState:UIControlStateNormal];
-    }
-}
 
 - (void)updateTime {
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
@@ -232,67 +142,78 @@
 
 - (void)updateProgress {
     self.progressViewWidthConstraint.constant = self.entry.progress * self.statusViewWidthConstraint.constant;
+    _progressBarValue = self.entry.progress;
 }
 
-- (void)updateStatusDate {
-    self.dateLabelInStatusView.text = nil;
+- (void)updateDate {
+    self.dateLabel.text = nil;
     
     if (self.entry.state == EntryStateActive) {
-        if ([self.entry.todo.startDate daysFromToday] > kFrostyDaysBeforeStartDate) {
-            self.dateLabelInStatusView.nuiClass = @"StartDate";
-            self.dateLabelInStatusView.text = [self.entry.todo.startDate formattedDatePattern:@"M/d"];
-        } else if ([self.entry.todo.dueDate daysFromToday] > kUrgentDaysBeforeDueDate) {
-            self.dateLabelInStatusView.nuiClass = @"DueDate";
-            self.dateLabelInStatusView.text = [self.entry.todo.dueDate formattedDatePattern:@"M/d"];
+        NSDate *date = nil;
+        BOOL alwaysShowDate = NO;
+        BOOL useStartDate;
+        NSString *prefix = @"";
+        
+        if (self.dragType == EntryDragTypeFrostiness) {
+            date = self.entry.todo.startDate;
+            prefix = @"START ";
+            useStartDate = YES;
+            alwaysShowDate = YES;
+            self.dateLabel.nuiClass = @"StartDateDragging";
+        } else if (self.dragType == EntryDragTypeUrgency) {
+            date = self.entry.todo.dueDate;
+            prefix = @"DUE ";
+            useStartDate = NO;
+            alwaysShowDate = YES;
+            self.dateLabel.nuiClass = @"DueDateDragging";
+        } else if (self.entry.todo.startDate) {
+            date = self.entry.todo.startDate;
+            useStartDate = YES;
+            self.dateLabel.nuiClass = @"StartDate";
+        } else if (self.entry.todo.dueDate) {
+            date = self.entry.todo.dueDate;
+            useStartDate = NO;
+            self.dateLabel.nuiClass = @"DueDate";
         }
         
-        [self.dateLabelInStatusView applyNUI];
-    }
-    
-    self.dateLabelInProgressView.text = self.dateLabelInStatusView.text;
-}
-
-- (void)updateStatusColor {
-    if (self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete) {
-        if (self.entry.todo.temperature > 0) {
-            if (self.entry.todo.dueDate) {
-                static UIColor *warmColor, *hotColor;
-                if (!warmColor) {
-                    warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-                    hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-                }
-                
-                self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:warmColor toColor:hotColor];
+        if (date) {
+            int days = [date daysFromToday];
+            
+            BOOL isDistantDate;
+            
+            if (useStartDate) {
+                isDistantDate = self.entry.todo.frostiness > 1.0;
             } else {
-                static UIColor *oldColor, *veryOldColor;
-                if (!oldColor) {
-                    oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
-                    veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+                isDistantDate = self.entry.todo.urgency < 0.0;
+            }
+            
+            NSString *dateText;
+            
+            if (isDistantDate) {
+                dateText = [date formattedDatePattern:@"M/d"];
+            } else if (alwaysShowDate) {
+                if (days == 0) {
+                    //dateText = @"now";
+                } else if (days == 1) {
+                    //dateText = @"1 day";
+                } else {
+                    //dateText = [NSString stringWithFormat:@"%d days", days];
                 }
-                
-                self.statusView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
-            }
-        } else if (self.entry.todo.temperature < 0) {
-            static UIColor *coolColor, *coldColor;
-            
-            if (!coolColor) {
-                coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
-                coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
             }
             
-            self.statusView.backgroundColor = [EntryCell scale:-self.entry.todo.temperature fromColor:coolColor toColor:coldColor];
-        } else {
-            self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+            if (dateText) {
+                self.dateLabel.text = [prefix stringByAppendingString:dateText];
+                [self.dateLabel applyNUI];
+            }
         }
-    } else {
-        self.statusView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
     }
 }
 
 - (void)updateStatus {
-    [self updateStatusDate];
+    [self updateDate];
     [self updateProgress];
-    [self updateStatusColor];
+    [self updateTitle];
+    [self updateTemperatureBars];
 }
 
 - (void)updateTitle {
@@ -304,7 +225,22 @@
     NSUnderlineStyle strikethroughStyle = [decoration isEqualToString:@"line-through"] ?
         NSUnderlineStyleSingle : NSUnderlineStyleNone;
     
-    NSDictionary *attributes = @{NSStrikethroughStyleAttributeName: @(strikethroughStyle)};
+    CGFloat temp = [self displayTemperature];
+    
+    NSShadow *shadow = [NSShadow new];
+    shadow.shadowBlurRadius = 0;
+    shadow.shadowOffset = CGSizeMake(0, 0);
+    
+    if (temp > 0) {
+        shadow.shadowBlurRadius = 5;
+        shadow.shadowColor = [EntryCell scale:temp fromColor:_warmColor toColor:_hotColor];
+    } else if (temp < 0) {
+        shadow.shadowBlurRadius = 5;
+        shadow.shadowColor = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor];
+    }
+    
+    NSDictionary *attributes = @{NSStrikethroughStyleAttributeName: @(strikethroughStyle), NSShadowAttributeName:shadow};
+    
     
     self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:title
                                                                         attributes:attributes];
@@ -314,26 +250,45 @@
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
 }
 
-+ (CGFloat)fontSizeForImportance:(CGFloat)importance {
-    CGFloat lowImportanceFontSize  = [NUISettings getFloat:@"font-size" withClass:@"ImportanceLow"];
-    CGFloat highImportanceFontSize = [NUISettings getFloat:@"font-size" withClass:@"ImportanceHigh"];
+- (void)updateTemperatureBars {
+    self.urgencyBar.hidden = YES;
+    self.frostinessBar.hidden = YES;
+    CGFloat temp = [self displayTemperature];
     
-    return lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * importance);
+    if (temp > 0) {
+        //self.urgencyBar.hidden = NO;
+        self.urgencyBar.value = temp;
+    } else if (temp < 0) {
+        //self.frostinessBar.hidden = NO;
+        self.frostinessBar.value = -temp;
+    }
 }
 
-+ (UIColor *)scale:(float_t)scale fromColor:(UIColor*)fromColor toColor:(UIColor *)toColor {
-    CGFloat fromHue, toHue, fromSaturation, toSaturation, fromBrightness, toBrightness;
-    [fromColor getHue:&fromHue saturation:&fromSaturation brightness:&fromBrightness alpha:nil];
-    [toColor getHue:&toHue saturation:&toSaturation brightness:&toBrightness alpha:nil];
-    
-    fromHue = fmod(fromHue, 1.0);
-    toHue   = fmod(toHue, 1.0);
-    
-    CGFloat hue         = fromHue        + ((toHue - fromHue) * scale);
-    CGFloat saturation  = fromSaturation + ((toSaturation - fromSaturation) * scale);
-    CGFloat brightness  = fromBrightness + ((toBrightness - fromBrightness) * scale);
-    
-    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0];
+-(void) updateBackground {
+    if (self.entry.state == EntryStateActive) {
+        CGFloat temp = [self displayTemperature];
+        
+        if (temp > 0) {
+            //self.backgroundView.backgroundColor = [EntryCell scale:temp fromColor:_warmColor toColor:_hotColor];
+        } else if (temp < 0) {
+            //self.backgroundView.backgroundColor = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor];
+        } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
+            static UIColor *oldColor, *veryOldColor;
+            
+            if (!oldColor) {
+                oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+                veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+            }
+            
+            self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
+        } else if (self.entry.type == EntryTypeComplete) {
+            self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"EntryComplete"];
+        } else {
+            self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+        }
+    } else {
+        self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"EntryInactive"];
+    }
 }
 
 #pragma Text View Delegate
@@ -344,24 +299,12 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    //self.editing = YES;
-    self.longPressGestureRecognizer.enabled = NO;
     self.titleTextView.userInteractionEnabled = YES;
-    //self.timeLabel.hidden = YES;
-    //self.temperatureView.hidden = NO;
-    //self.temperatureViewHeightConstraint.constant = 30;
-    //[self updateStatus];
     [self.journalViewController cell:self textViewDidBeginEditing:textView];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    //self.editing = NO;
-    self.longPressGestureRecognizer.enabled = YES;
     self.titleTextView.userInteractionEnabled = NO;
-    //self.timeLabel.hidden = NO;
-    //self.temperatureView.hidden = YES;
-    //self.temperatureViewHeightConstraint.constant = 0;
-    //[self updateStatus];
     
     [self.journalViewController cell:self textViewDidEndEditing:textView];
     
@@ -371,11 +314,36 @@
         [self.entry.todo destroy];
 }
 
-#pragma mark - Gesture Recognizer Delegate
+#pragma mark -
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return YES;
+- (CGFloat)displayTemperature {
+    if (self.entry.state == EntryStateActive) {
+        if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
+            return -fratiof(self.entry.todo.frostiness);
+        } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness && self.entry.type != EntryTypeComplete) {
+            return fratiof(self.entry.todo.urgency);
+        }
+    }
+    
+    return 0;
 }
+
++ (UIColor *)scale:(float_t)scale fromColor:(UIColor*)fromColor toColor:(UIColor *)toColor {
+    scale = fratiof(scale);
+    
+    CGFloat fromHue, toHue, fromSaturation, toSaturation, fromBrightness, toBrightness;
+    [fromColor getHue:&fromHue saturation:&fromSaturation brightness:&fromBrightness alpha:nil];
+    [toColor getHue:&toHue saturation:&toSaturation brightness:&toBrightness alpha:nil];
+    
+    fromHue = fmodf(fromHue, 1.0);
+    toHue   = fmodf(toHue, 1.0);
+    
+    CGFloat hue         = fromHue        + ((toHue - fromHue) * scale);
+    CGFloat saturation  = fromSaturation + ((toSaturation - fromSaturation) * scale);
+    CGFloat brightness  = fromBrightness + ((toBrightness - fromBrightness) * scale);
+    
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0];
+}
+
 
 @end

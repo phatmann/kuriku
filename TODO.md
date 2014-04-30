@@ -1,12 +1,30 @@
 Kuriku
 The visual intelligent action journal
 
+
+Newest thoughts
+---------------
+* Cell always has some color, unless new as white
+* Scroll down to show blank line in edit mode
+* Pinch to make importance high to normal (positive?). Pinch again to make it less committed.
+* Show a special shaded color when importance low, immune to staleness.
+* Stale color is brown, like parchment paper
+* Slide right to set action, 1/4, 1/2, 3/4 done. Keep sliding to complete. Keep sliding to repeat.
+* While dragging up/right, show days in bold white overlay. Final choice is "Choose Date",
+  if chosen show date dialog.
+
+
 Todo
 ----
+* Fix problem where date pan does not start with "choose" with distant dates
 * Notch for normal importance
 
 Bugs
 -------------
+=======
+* Completing does not clear start date
+* Swipe right causes repeat
+* Can pinch inactive cell
 * No highlighting when cell is tapped
 * Done button does not animate cell collapse
 * Do not allow actions on completed task

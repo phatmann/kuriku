@@ -11,10 +11,11 @@
 #import <InnerBand/InnerBand.h>
 #import "NSDate+Kuriku.h"
 
-const NSTimeInterval kUrgentDaysBeforeDueDate        = 14;
+static const NSTimeInterval kUrgentDaysBeforeDueDate   = 14;
+static const NSTimeInterval kFrostyDaysBeforeStartDate = 60;
+
 const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 14;
-const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
 
 @implementation Todo
 
@@ -73,9 +74,9 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
     if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"] || [keyPath isEqualToString:@"importance"]) {
         [self updatePriority];
     } else if ([keyPath isEqualToString:@"entries"]) {
-        NSArray *removedEntries = change[NSKeyValueChangeOldKey];
-        
         if (kind == NSKeyValueChangeRemoval) {
+            NSArray *removedEntries = change[NSKeyValueChangeOldKey];
+            
             if (self.entries.count == 0) {
                 [self destroy];
                 return;
@@ -108,11 +109,18 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
         
         if (self.lastEntry.state != EntryStateActive)
             self.lastEntry.state = EntryStateActive;
+        
+        if (self.lastEntry.type == EntryTypeComplete)
+            self.startDate = nil;
     }
 }
 
 + (NSSet *)keyPathsForValuesAffectingUrgency {
     return [NSSet setWithObjects:@"dueDate", nil];
+}
+
++ (NSSet *)keyPathsForValuesAffectingTemperature {
+    return [NSSet setWithObjects:@"urgency", @"staleness", @"frostiness", @"importance", nil];
 }
 
 - (Entry *)lastEntry {
@@ -165,10 +173,10 @@ const NSTimeInterval kFrostyDaysBeforeStartDate      = 60;
 
 - (float_t)temperature {
     if (self.startDate)
-        return -self.frostiness;
+        return -fratiof(self.frostiness);
 
     if (self.dueDate)
-        return self.urgency;
+        return fratiof(self.urgency);
     
     return self.staleness * self.importance;
 }
@@ -179,15 +187,7 @@ float_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)
         return 0;
         
-    int daysUntilDue = [dueDate daysFromToday];
-    
-    if (daysUntilDue <= 0) {
-        return 1.0f;
-    } else if (daysUntilDue >= kUrgentDaysBeforeDueDate) {
-        return 0.0f;
-    } else {
-        return (kUrgentDaysBeforeDueDate - daysUntilDue) / kUrgentDaysBeforeDueDate;
-    }
+    return (kUrgentDaysBeforeDueDate - [dueDate daysFromToday]) / kUrgentDaysBeforeDueDate;
 }
 
 NSDate *dueDateFromUrgency(float_t urgency) {
@@ -203,15 +203,7 @@ float_t frostinessFromStartDate(NSDate *startDate) {
     if (!startDate)
         return 0;
 
-    int daysUntilThawed = [startDate daysFromToday];
-
-    if (daysUntilThawed <= 0) {
-        return 0.0f;
-    } else if (daysUntilThawed >= kFrostyDaysBeforeStartDate) {
-        return 1.0f;
-    } else {
-        return 1.0f - (kFrostyDaysBeforeStartDate - daysUntilThawed) / kFrostyDaysBeforeStartDate;
-    }
+    return 1.0f - (kFrostyDaysBeforeStartDate - [startDate daysFromToday]) / kFrostyDaysBeforeStartDate;
 }
 
 NSDate *startDateFromFrostiness(float_t frostiness) {
