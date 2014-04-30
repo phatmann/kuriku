@@ -5,7 +5,7 @@
 @oldColor: hsl(0.3, 1.0, 0.5);
 @veryOldColor: hsl(0.3, 1.0, 1.0);
 @dateFontSize: 9;
-@dateDraggingFontSize: 12;
+@dateDraggingFontSize: 11;
 
 Entry {
     font-name: Helvetica;

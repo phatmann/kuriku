@@ -17,7 +17,6 @@
 
 @interface EntryCell ()
 
-@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
@@ -105,7 +104,7 @@
 - (void)setDragType:(EntryDragType)dragType {
     _dragType = dragType;
     self.backgroundView.layer.borderWidth = 2.0;
-    self.backgroundView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor blackColor].CGColor;
+    self.backgroundView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor lightGrayColor].CGColor;
     [self updateTemperatureBars];
     [self updateDate];
 }
@@ -229,12 +228,14 @@
     self.urgencyBar.hidden = YES;
     self.frostinessBar.hidden = YES;
     
-    if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
-        self.frostinessBar.hidden = NO;
-        self.frostinessBar.value = fratiof(self.entry.todo.frostiness);
-    } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness && self.entry.type != EntryTypeComplete) {
-        self.urgencyBar.hidden = NO;
-        self.urgencyBar.value = fratiof(self.entry.todo.urgency);
+    if (self.entry.state == EntryStateActive) {
+        if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
+            self.frostinessBar.hidden = NO;
+            self.frostinessBar.value = fratiof(self.entry.todo.frostiness);
+        } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness && self.entry.type != EntryTypeComplete) {
+            self.urgencyBar.hidden = NO;
+            self.urgencyBar.value = fratiof(self.entry.todo.urgency);
+        }
     }
 }
 

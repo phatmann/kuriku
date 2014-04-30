@@ -19,6 +19,7 @@ typedef NS_ENUM(int, EntryDragType) {
 
 @interface EntryCell : UITableViewCell <UIGestureRecognizerDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (strong, nonatomic) Entry *entry;
 @property (weak, nonatomic) JournalViewController *journalViewController;
 @property (nonatomic) EntryDragType dragType;
