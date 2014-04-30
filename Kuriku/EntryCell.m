@@ -90,6 +90,7 @@
     [self updateTime];
     [self updateTitle];
     [self updateStatus];
+    [self updateBackground];
 }
 
 - (void)importanceWasChanged {
@@ -201,7 +202,6 @@
 - (void)updateStatus {
     [self updateDate];
     [self updateProgress];
-    //[self updateBackground];
     [self updateTemperatureBars];
 }
 
@@ -241,7 +241,7 @@
 
 -(void) updateBackground {
    if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
+        /*if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
             static UIColor *coolColor, *coldColor;
             
             if (!coolColor) {
@@ -259,7 +259,7 @@
            }
 
            self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.urgency fromColor:warmColor toColor:hotColor];
-        } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
+        } else*/ if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
            static UIColor *oldColor, *veryOldColor;
             
            if (!oldColor) {
@@ -310,8 +310,8 @@
     [fromColor getHue:&fromHue saturation:&fromSaturation brightness:&fromBrightness alpha:nil];
     [toColor getHue:&toHue saturation:&toSaturation brightness:&toBrightness alpha:nil];
     
-    fromHue = fmod(fromHue, 1.0);
-    toHue   = fmod(toHue, 1.0);
+    fromHue = fmodf(fromHue, 1.0);
+    toHue   = fmodf(toHue, 1.0);
     
     CGFloat hue         = fromHue        + ((toHue - fromHue) * scale);
     CGFloat saturation  = fromSaturation + ((toSaturation - fromSaturation) * scale);
