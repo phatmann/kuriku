@@ -25,7 +25,7 @@ Status {
 }
 
 Progress {
-    background-color: rgb(0.84, 1.000, 0.911);
+    background-color: rgb(0.74, 1.000, 0.811);
 }
 
 Time {

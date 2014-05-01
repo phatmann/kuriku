@@ -77,7 +77,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
  }
 
 - (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
-    static const CGFloat kWellSize = 0.1f;
+    static const CGFloat kWellSize = 0.5f;
     static const CGFloat kMinMove = 5.0;
     static CGPoint startPoint;
     static CGFloat initialUrgency;
@@ -114,7 +114,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 chooseDate = NO;
                 
                 if (draggedCell.dragType == EntryDragTypeUrgency) {
-                    CGFloat range = draggedCell.titleTextView.frame.size.height;
+                    CGFloat range = draggedCell.titleTextView.frame.size.height * 2;
                     range -= kWellSize * range;
                     CGFloat urgency = initialUrgency - (offsetY / range);
                     

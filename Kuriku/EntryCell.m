@@ -60,6 +60,7 @@
 
 - (void)awakeFromNib {
     self.backgroundView = [UIView new];
+    self.backgroundView.backgroundColor = [UIColor whiteColor];
     
     _warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
     _hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
@@ -112,11 +113,19 @@
 
 - (void)setDragType:(EntryDragType)dragType {
     _dragType = dragType;
-    self.backgroundView.layer.borderWidth = 2.0;
-    self.backgroundView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor lightGrayColor].CGColor;
+    
+    self.backgroundView.layer.shadowColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor grayColor].CGColor;
+    self.backgroundView.layer.shadowRadius = 3.0;
+    self.backgroundView.layer.shadowOffset = CGSizeMake(-3, 3);
+    self.backgroundView.layer.shadowOpacity = 0.8;
+    CGRect shadowFrame = self.backgroundView.layer.bounds;
+    CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:shadowFrame].CGPath;
+    self.backgroundView.layer.shadowPath = shadowPath;
+    
     [self updateTemperatureBars];
     [self updateDate];
     [self updateTitle];
+    [self updateGlow];
 }
 
 - (void)setDatePrompt:(NSString *)datePrompt {
@@ -214,6 +223,7 @@
     [self updateProgress];
     [self updateTitle];
     [self updateTemperatureBars];
+    [self updateGlow];
 }
 
 - (void)updateTitle {
@@ -232,7 +242,7 @@
     shadow.shadowOffset = CGSizeMake(0, 0);
     
     if (temp > 0) {
-        //shadow.shadowBlurRadius = 5;
+        shadow.shadowBlurRadius = 5;
         shadow.shadowColor = [EntryCell scale:temp fromColor:_warmColor toColor:_hotColor];
     } else if (temp < 0) {
         //shadow.shadowBlurRadius = 5;
@@ -248,6 +258,22 @@
     [self.titleTextView applyNUI];
     
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
+}
+
+- (void)updateGlow {
+    CGFloat temp = [self displayTemperature];
+    
+    if (temp < 0) {
+        self.contentView.layer.shadowRadius = 10.0;
+        self.contentView.layer.shadowOffset = CGSizeMake(0, 0);
+        self.contentView.layer.shadowOpacity = 1.0;
+        CGRect shadowFrame = self.contentView.layer.bounds;
+        CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:shadowFrame].CGPath;
+        self.contentView.layer.shadowColor = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor].CGColor;
+        self.contentView.layer.shadowPath = shadowPath;
+    } else {
+        self.contentView.layer.shadowOpacity = 0;
+    }
 }
 
 - (void)updateTemperatureBars {
