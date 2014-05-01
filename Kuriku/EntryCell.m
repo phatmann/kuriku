@@ -11,6 +11,7 @@
 #import "Todo.h"
 #import "JournalViewController.h"
 #import "GradientBar.h"
+#import "GlowView.h"
 #import <InnerBand/InnerBand.h>
 #import <NUI/UITextView+NUI.h>
 #import "NSDate+Kuriku.h"
@@ -18,6 +19,7 @@
 @interface EntryCell ()
 {
     UIColor *_warmColor, *_hotColor, *_coolColor, *_coldColor;
+    GlowView *_glowView;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -59,7 +61,9 @@
 }
 
 - (void)awakeFromNib {
-    self.backgroundView = [UIView new];
+    _glowView = [GlowView new];
+    
+    self.backgroundView = _glowView;
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     
     _warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
@@ -264,15 +268,10 @@
     CGFloat temp = [self displayTemperature];
     
     if (temp < 0) {
-        self.contentView.layer.shadowRadius = 10.0;
-        self.contentView.layer.shadowOffset = CGSizeMake(0, 0);
-        self.contentView.layer.shadowOpacity = 1.0;
-        CGRect shadowFrame = self.contentView.layer.bounds;
-        CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:shadowFrame].CGPath;
-        self.contentView.layer.shadowColor = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor].CGColor;
-        self.contentView.layer.shadowPath = shadowPath;
+        _glowView.hidden = NO;
+        _glowView.color = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor];
     } else {
-        self.contentView.layer.shadowOpacity = 0;
+        _glowView.hidden = YES;
     }
 }
 

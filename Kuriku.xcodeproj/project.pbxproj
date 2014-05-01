@@ -39,6 +39,7 @@
 		EAAEEB1B187E1EE80098C4F0 /* Kuriku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAAEEB0E187E1EE80098C4F0 /* Kuriku.xcdatamodeld */; };
 		EAB280E619100EC5002DCA46 /* TMExtras.c in Sources */ = {isa = PBXBuildFile; fileRef = EAB280E519100EC5002DCA46 /* TMExtras.c */; };
 		EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */; };
+		EAC10B8E19130FF500ABBDB2 /* GlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC10B8D19130FF500ABBDB2 /* GlowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,8 @@
 		EAB280E519100EC5002DCA46 /* TMExtras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TMExtras.c; sourceTree = "<group>"; };
 		EABAAC92186B702D00F2FBE6 /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
 		EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
+		EAC10B8C19130FF500ABBDB2 /* GlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlowView.h; sourceTree = "<group>"; };
+		EAC10B8D19130FF500ABBDB2 /* GlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlowView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +200,8 @@
 				EAAC95681858F7D400E8BAB5 /* JournalViewController.m */,
 				EA116BB019098FE7005EA252 /* GradientBar.h */,
 				EA116BB119098FE7005EA252 /* GradientBar.m */,
+				EAC10B8C19130FF500ABBDB2 /* GlowView.h */,
+				EAC10B8D19130FF500ABBDB2 /* GlowView.m */,
 			);
 			name = Journal;
 			sourceTree = "<group>";
@@ -473,6 +478,7 @@
 				EAAC9594185936A400E8BAB5 /* Entry.m in Sources */,
 				EA5386AC1900A37F00D6266A /* NSDate+Kuriku.m in Sources */,
 				EAB280E619100EC5002DCA46 /* TMExtras.c in Sources */,
+				EAC10B8E19130FF500ABBDB2 /* GlowView.m in Sources */,
 				EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */,
 				EAAC95601858F7D400E8BAB5 /* KurikuAppDelegate.m in Sources */,
 				EAAC95691858F7D400E8BAB5 /* JournalViewController.m in Sources */,

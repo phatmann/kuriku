@@ -213,14 +213,14 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 CGFloat range = pannedCell.frame.size.width;
                 CGPoint velocity = [recognizer velocityInView:self.tableView];
                 
-                if (velocity.x > 1000.0 && offset.x > range * 0.3) {
+                if (velocity.x > 1500.0 && offset.x > range * 0.3) {
                     pannedCell.progressBarValue = 1.0;
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
                     [self reloadData];
                     recognizer.enabled = NO;
                     recognizer.enabled = YES;
                 } else {
-                    pannedCell.progressBarValue = fratiof(initialProgressBarValue + (offset.x / range));
+                    pannedCell.progressBarValue = fmaxf(0.0, initialProgressBarValue + (offset.x / range));
                 }
             }
             break;

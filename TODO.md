@@ -13,19 +13,18 @@ Newest thoughts
 * While dragging up/right, show days in bold white overlay. Final choice is "Choose Date",
   if chosen show date dialog.
 
-
 Todo
 ----
-* Fix problem where date pan does not start with "choose" with distant dates
 * Notch for normal importance
 
 Bugs
--------------
-=======
-* Completing does not clear start date
-* Swipe right causes repeat
+----
+* Show glow and text burn at the same time
+* Too easy to bring up due date dialog
+* Cannot repeat task
+* Panning out of cell during long press ends the gesture
+* Hard to set start date
 * Can pinch inactive cell
-* No highlighting when cell is tapped
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
@@ -38,7 +37,7 @@ Missing Features
 * Jump around to different dates in journal
 * Search
 * Scroll to new entry after taking action?
-* Let user change settings for stale, urgent, and frosty days
+* Let user change settings for number of stale, urgent, and frosty days
 
 New Thoughts
 ------------
