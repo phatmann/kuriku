@@ -130,7 +130,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                     range -= kWellSize * range;
                     CGFloat frostiness = initialFrostiness + (offsetX / range);
                     
-                    if (frostiness > 1.0 + kWellSize) {
+                    if (frostiness < -kWellSize) {
                         chooseDate = YES;
                         draggedCell.datePrompt = @"Choose start date...";
                     } else {
