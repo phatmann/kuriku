@@ -210,23 +210,27 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         
         case UIGestureRecognizerStateChanged:
             if (pannedCell) {
+                CGFloat range = pannedCell.frame.size.width;
                 CGPoint velocity = [recognizer velocityInView:self.tableView];
                 
-                if (velocity.x > 1000.0 && offset.x > 100) {
+                if (velocity.x > 1000.0 && offset.x > range * 0.3) {
                     pannedCell.progressBarValue = 1.0;
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
                     [self reloadData];
                     recognizer.enabled = NO;
                     recognizer.enabled = YES;
                 } else {
-                    pannedCell.progressBarValue = MAX(0.0, initialProgressBarValue + ((offset.x / 100) *  (1.0 - initialProgressBarValue)));
+                    pannedCell.progressBarValue = fratiof(initialProgressBarValue + (offset.x / range));
                 }
             }
             break;
             
         case UIGestureRecognizerStateEnded:
             if (pannedCell) {
-                if (offset.x > 50) {
+                CGFloat delta = pannedCell.progressBarValue - initialProgressBarValue;
+                CGFloat remaining = 1.0 - initialProgressBarValue;
+                
+                if (delta >= remaining / 2) {
                     // TODO: have entry and this use same repeat value (1.2)
                     if (pannedCell.progressBarValue > 1.2) {
                         self.selectedEntry = pannedCell.entry;

@@ -56,19 +56,22 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvS-BL-gMe" userLabel="Status">
-                                                    <rect key="frame" x="10" y="15" width="30" height="20"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQr-Vf-hwZ" userLabel="Progress">
-                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="10" height="59"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" white="0.31794593978102192" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="10" id="kpv-1e-dp9" userLabel="Progress Width"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="nuiClass" value="Progress"/>
+                                                            </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="repeat" translatesAutoresizingMaskIntoConstraints="NO" id="wbi-Q8-URX" userLabel="Repeat Icon">
-                                                            <rect key="frame" x="7" y="2" width="16" height="16"/>
+                                                            <rect key="frame" x="152" y="22" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -81,8 +84,6 @@
                                                     <constraints>
                                                         <constraint firstAttribute="centerY" secondItem="wbi-Q8-URX" secondAttribute="centerY" id="3Lw-cq-g62"/>
                                                         <constraint firstAttribute="bottom" secondItem="cQr-Vf-hwZ" secondAttribute="bottom" id="CIt-oI-7Lx"/>
-                                                        <constraint firstAttribute="width" constant="30" id="FSe-Yo-Y9s" userLabel="Status Width"/>
-                                                        <constraint firstAttribute="height" constant="20" id="M3C-BI-1cd"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="leading" id="My9-F0-bGY"/>
                                                         <constraint firstItem="cQr-Vf-hwZ" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" id="br7-sv-UMY"/>
                                                         <constraint firstAttribute="centerX" secondItem="wbi-Q8-URX" secondAttribute="centerX" id="nCn-xj-f4d"/>
@@ -105,17 +106,17 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTh-8r-kSY" userLabel="Frostiness Bar" customClass="GradientBar">
-                                                    <rect key="frame" x="50" y="12" width="250" height="42"/>
+                                                    <rect key="frame" x="10" y="12" width="290" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w9B-Vf-HXe" userLabel="Urgency Bar" customClass="GradientBar">
-                                                    <rect key="frame" x="50" y="12" width="250" height="42"/>
+                                                    <rect key="frame" x="10" y="12" width="290" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
-                                                    <rect key="frame" x="50" y="12" width="250" height="42"/>
+                                                    <rect key="frame" x="10" y="12" width="290" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -132,19 +133,21 @@
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="trailing" secondItem="w9B-Vf-HXe" secondAttribute="trailing" id="9Ks-qd-OgA"/>
                                                 <constraint firstItem="TTh-8r-kSY" firstAttribute="leading" secondItem="wJy-G4-VdD" secondAttribute="leading" id="Ebm-Pl-Tu4"/>
                                                 <constraint firstItem="TTh-8r-kSY" firstAttribute="bottom" secondItem="wJy-G4-VdD" secondAttribute="bottom" id="F78-ng-vrT"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="rvS-BL-gMe" secondAttribute="trailing" constant="10" id="GQV-Xs-kqq"/>
+                                                <constraint firstItem="rvS-BL-gMe" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" id="Iwr-FE-e7w"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="bottom" secondItem="w9B-Vf-HXe" secondAttribute="bottom" id="JRc-W8-Kqf"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="5" id="SSz-5E-ejE"/>
                                                 <constraint firstItem="TTh-8r-kSY" firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" id="WKK-xj-lmo"/>
+                                                <constraint firstAttribute="trailing" secondItem="rvS-BL-gMe" secondAttribute="trailing" id="Wry-Sh-OIS"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="1" id="Z9I-FS-4lD"/>
+                                                <constraint firstAttribute="bottom" secondItem="rvS-BL-gMe" secondAttribute="bottom" id="bmk-a5-Zrd"/>
                                                 <constraint firstItem="TTh-8r-kSY" firstAttribute="top" secondItem="wJy-G4-VdD" secondAttribute="top" id="c62-Hf-64l"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="rvS-BL-gMe" secondAttribute="top" constant="-3" id="cVm-HD-ibR"/>
-                                                <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="10" id="dVm-oe-SEV"/>
+                                                <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" id="dVm-oe-SEV"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="w9B-Vf-HXe" secondAttribute="leading" id="u9I-Nk-3XA"/>
                                                 <constraint firstAttribute="bottom" secondItem="wJy-G4-VdD" secondAttribute="bottom" constant="5" id="uNk-8U-WEs"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="w9B-Vf-HXe" secondAttribute="top" id="vKz-fn-kEI"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="10" id="zEe-bg-4MD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -155,7 +158,6 @@
                                             <outlet property="progressViewWidthConstraint" destination="kpv-1e-dp9" id="NJo-f9-pRi"/>
                                             <outlet property="repeatIcon" destination="wbi-Q8-URX" id="Nyb-2X-kss"/>
                                             <outlet property="statusView" destination="rvS-BL-gMe" id="PGi-hQ-WNc"/>
-                                            <outlet property="statusViewWidthConstraint" destination="FSe-Yo-Y9s" id="LP0-Cx-xss"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
                                             <outlet property="titleTextView" destination="wJy-G4-VdD" id="HkB-1m-qm6"/>
                                             <outlet property="urgencyBar" destination="w9B-Vf-HXe" id="p3q-UC-w2K"/>

@@ -13,16 +13,19 @@ Entry {
 }
 
 EntryInactive {
-    background-color: rgb(228, 228, 228);
+    background-color: white;
 }
 
 EntryComplete {
-    background-color: rgb(228, 228, 228);
+    background-color: white;
 }
 
 Status {
-    border-width: 1;
-    border-color: rgb(200, 200, 200);
+
+}
+
+Progress {
+    background-color: rgb(0.84, 1.000, 0.911);
 }
 
 Time {

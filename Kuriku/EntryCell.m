@@ -82,7 +82,7 @@
 
 - (void)setProgressBarValue:(CGFloat)progressBarValue {
     _progressBarValue = progressBarValue;
-    self.progressViewWidthConstraint.constant = self.statusViewWidthConstraint.constant * fminf(1.0, progressBarValue);
+    self.progressViewWidthConstraint.constant = self.statusView.frame.size.width * fminf(1.0, progressBarValue);
     self.repeatIcon.hidden = (progressBarValue < 1.2);
 }
 
@@ -141,7 +141,7 @@
 }
 
 - (void)updateProgress {
-    self.progressViewWidthConstraint.constant = self.entry.progress * self.statusViewWidthConstraint.constant;
+    self.progressViewWidthConstraint.constant = self.entry.progress * self.statusView.frame.size.width;
     _progressBarValue = self.entry.progress;
 }
 
@@ -232,10 +232,10 @@
     shadow.shadowOffset = CGSizeMake(0, 0);
     
     if (temp > 0) {
-        shadow.shadowBlurRadius = 5;
+        //shadow.shadowBlurRadius = 5;
         shadow.shadowColor = [EntryCell scale:temp fromColor:_warmColor toColor:_hotColor];
     } else if (temp < 0) {
-        shadow.shadowBlurRadius = 5;
+        //shadow.shadowBlurRadius = 5;
         shadow.shadowColor = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor];
     }
     
