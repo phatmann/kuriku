@@ -18,7 +18,7 @@
 
 @interface EntryCell ()
 {
-    UIColor *_warmColor, *_hotColor, *_coolColor, *_coldColor;
+    UIColor *_warmColor, *_hotColor, *_coolColor, *_coldColor, *_oldColor, *_veryOldColor;
     GlowView *_glowView;
 }
 
@@ -31,6 +31,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet GradientBar *urgencyBar;
 @property (weak, nonatomic) IBOutlet GradientBar *frostinessBar;
+
+@property (strong, nonatomic) IBOutlet UIColor *textGlowColor;
+@property (strong, nonatomic) IBOutlet UIColor *cellGlowColor;
 
 @end
 
@@ -66,10 +69,12 @@
     self.backgroundView = _glowView;
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     
-    _warmColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-    _hotColor  = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-    _coolColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
-    _coldColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+    _warmColor    = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+    _hotColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+    _coolColor    = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+    _coldColor    = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+    _oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+    _veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
 
     self.urgencyBar.type = GradientBarTypeVertical;
     self.urgencyBar.startColor = _warmColor;
@@ -117,19 +122,10 @@
 
 - (void)setDragType:(EntryDragType)dragType {
     _dragType = dragType;
+    self.contentView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor lightGrayColor].CGColor;
+    self.contentView.layer.borderWidth = 2;
     
-    self.backgroundView.layer.shadowColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor grayColor].CGColor;
-    self.backgroundView.layer.shadowRadius = 3.0;
-    self.backgroundView.layer.shadowOffset = CGSizeMake(-3, 3);
-    self.backgroundView.layer.shadowOpacity = 0.8;
-    CGRect shadowFrame = self.backgroundView.layer.bounds;
-    CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:shadowFrame].CGPath;
-    self.backgroundView.layer.shadowPath = shadowPath;
-    
-    [self updateTemperatureBars];
-    [self updateDate];
-    [self updateTitle];
-    [self updateGlow];
+    [self updateStatus];
 }
 
 - (void)setDatePrompt:(NSString *)datePrompt {
@@ -138,6 +134,14 @@
     self.dateLabel.text = datePrompt;
     self.dateLabel.nuiClass = @"DatePrompt";
     [self.dateLabel applyNUI];
+}
+
+- (UIColor *)cellGlowColor {
+    return _glowView.glowColor;
+}
+
+- (void)setCellGlowColor:(UIColor *)cellGlowColor {
+    _glowView.glowColor = cellGlowColor;
 }
 
 + (CGFloat)fontSizeForImportance:(CGFloat)importance {
@@ -171,13 +175,13 @@
             date = self.entry.todo.startDate;
             prefix = @"START ";
             useStartDate = YES;
-            alwaysShowDate = YES;
+            //alwaysShowDate = YES;
             self.dateLabel.nuiClass = @"StartDateDragging";
         } else if (self.dragType == EntryDragTypeUrgency) {
             date = self.entry.todo.dueDate;
             prefix = @"DUE ";
             useStartDate = NO;
-            alwaysShowDate = YES;
+            //alwaysShowDate = YES;
             self.dateLabel.nuiClass = @"DueDateDragging";
         } else if (self.entry.todo.startDate) {
             date = self.entry.todo.startDate;
@@ -206,11 +210,11 @@
                 dateText = [date formattedDatePattern:@"M/d"];
             } else if (alwaysShowDate) {
                 if (days == 0) {
-                    //dateText = @"now";
+                    dateText = @"now";
                 } else if (days == 1) {
-                    //dateText = @"1 day";
+                    dateText = @"1 day";
                 } else {
-                    //dateText = [NSString stringWithFormat:@"%d days", days];
+                    dateText = [NSString stringWithFormat:@"%d days", days];
                 }
             }
             
@@ -224,10 +228,14 @@
 
 - (void)updateStatus {
     [self updateDate];
-    [self updateProgress];
-    [self updateTitle];
-    [self updateTemperatureBars];
-    [self updateGlow];
+    
+    if (self.cold > 0) {
+        self.cellGlowColor = [EntryCell scale:self.cold fromColor:_coolColor toColor:_coldColor];
+    } else if (self.heat > 0) {
+        self.cellGlowColor = [EntryCell scale:self.heat fromColor:_warmColor toColor:_hotColor];
+    } else {
+        self.cellGlowColor = nil;
+    }
 }
 
 - (void)updateTitle {
@@ -239,22 +247,16 @@
     NSUnderlineStyle strikethroughStyle = [decoration isEqualToString:@"line-through"] ?
         NSUnderlineStyleSingle : NSUnderlineStyleNone;
     
-    CGFloat temp = [self displayTemperature];
+    NSMutableDictionary *attributes = [@{NSStrikethroughStyleAttributeName: @(strikethroughStyle)} mutableCopy];
     
-    NSShadow *shadow = [NSShadow new];
-    shadow.shadowBlurRadius = 0;
-    shadow.shadowOffset = CGSizeMake(0, 0);
-    
-    if (temp > 0) {
+    if (self.textGlowColor) {
+        NSShadow *shadow = [NSShadow new];
+        shadow.shadowOffset = CGSizeMake(0, 0);
+        shadow.shadowBlurRadius = 0;
         shadow.shadowBlurRadius = 5;
-        shadow.shadowColor = [EntryCell scale:temp fromColor:_warmColor toColor:_hotColor];
-    } else if (temp < 0) {
-        //shadow.shadowBlurRadius = 5;
-        shadow.shadowColor = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor];
+        shadow.shadowColor = self.textGlowColor;
+        attributes[NSShadowAttributeName] = shadow;
     }
-    
-    NSDictionary *attributes = @{NSStrikethroughStyleAttributeName: @(strikethroughStyle), NSShadowAttributeName:shadow};
-    
     
     self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:title
                                                                         attributes:attributes];
@@ -264,48 +266,28 @@
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
 }
 
-- (void)updateGlow {
-    CGFloat temp = [self displayTemperature];
-    
-    if (temp < 0) {
-        _glowView.hidden = NO;
-        _glowView.color = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor];
-    } else {
-        _glowView.hidden = YES;
-    }
-}
-
 - (void)updateTemperatureBars {
-    self.urgencyBar.hidden = YES;
-    self.frostinessBar.hidden = YES;
-    CGFloat temp = [self displayTemperature];
+    if (self.cold > 0) {
+        self.frostinessBar.hidden = NO;
+        self.frostinessBar.value = self.cold;
+    }
     
-    if (temp > 0) {
-        //self.urgencyBar.hidden = NO;
-        self.urgencyBar.value = temp;
-    } else if (temp < 0) {
-        //self.frostinessBar.hidden = NO;
-        self.frostinessBar.value = -temp;
+    if (self.heat > 0) {
+        self.urgencyBar.hidden = NO;
+        self.urgencyBar.value = self.heat;
     }
 }
 
 -(void) updateBackground {
     if (self.entry.state == EntryStateActive) {
-        CGFloat temp = [self displayTemperature];
+        /*if (self.cold > 0) {
+            //self.backgroundView.backgroundColor = [EntryCell scale:self.cold fromColor:_coolColor toColor:_coldColor];
+        } else if (self.heat > 0) {
+            //self.backgroundView.backgroundColor = [EntryCell scale:self.heat fromColor:_warmColor toColor:_hotColor];
+        } else*/
         
-        if (temp > 0) {
-            //self.backgroundView.backgroundColor = [EntryCell scale:temp fromColor:_warmColor toColor:_hotColor];
-        } else if (temp < 0) {
-            //self.backgroundView.backgroundColor = [EntryCell scale:-temp fromColor:_coolColor toColor:_coldColor];
-        } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
-            static UIColor *oldColor, *veryOldColor;
-            
-            if (!oldColor) {
-                oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
-                veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
-            }
-            
-            self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:oldColor toColor:veryOldColor];
+        if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
+            self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:_oldColor toColor:_veryOldColor];
         } else if (self.entry.type == EntryTypeComplete) {
             self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"EntryComplete"];
         } else {
@@ -341,13 +323,24 @@
 
 #pragma mark -
 
-- (CGFloat)displayTemperature {
-    if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.frostiness > 0 && self.dragType != EntryDragTypeUrgency) {
-            return -fratiof(self.entry.todo.frostiness);
-        } else if (self.entry.todo.urgency > 0 && self.dragType != EntryDragTypeFrostiness && self.entry.type != EntryTypeComplete) {
-            return fratiof(self.entry.todo.urgency);
-        }
+- (CGFloat)cold {
+    BOOL entryActive   = self.entry.state == EntryStateActive;
+    BOOL hasFrostiness = self.entry.todo.frostiness > 0;
+
+    if (entryActive && hasFrostiness) {
+        return fratiof(self.entry.todo.frostiness);
+    }
+    
+    return 0;
+}
+
+- (CGFloat)heat {
+    BOOL entryActive = self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete;
+    BOOL hasUrgency  = self.entry.todo.urgency > 0;
+    BOOL notCold     = self.cold == 0 || self.dragType == EntryDragTypeUrgency;
+    
+    if (entryActive && hasUrgency && notCold) {
+        return fratiof(self.entry.todo.urgency);
     }
     
     return 0;

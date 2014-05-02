@@ -13,12 +13,15 @@
 static const CGFloat kBlurRadius   = 20.0f;
 static const CGSize  kShadowOffset = {0, 0};
 
-- (void)setColor:(UIColor *)color {
-    _color = color;
+- (void)setGlowColor:(UIColor *)color {
+    _glowColor = color;
     [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect {
+    if (!self.glowColor)
+        return;
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGRect glowRect = self.bounds;
@@ -35,7 +38,7 @@ static const CGSize  kShadowOffset = {0, 0};
     CGContextSaveGState(context);
     CGFloat xOffset = kShadowOffset.width + round(borderRect.size.width);
     CGFloat yOffset = kShadowOffset.height;
-    CGContextSetShadowWithColor(context, CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)), kBlurRadius, self.color.CGColor);
+    CGContextSetShadowWithColor(context, CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)), kBlurRadius, self.glowColor.CGColor);
  
     [path addClip];
     CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(borderRect.size.width), 0);

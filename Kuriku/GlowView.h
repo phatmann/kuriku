@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GlowView : UIView
-@property (strong, nonatomic) UIColor *color;
+@property (strong, nonatomic) UIColor *glowColor;
 @end

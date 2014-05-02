@@ -106,17 +106,17 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTh-8r-kSY" userLabel="Frostiness Bar" customClass="GradientBar">
-                                                    <rect key="frame" x="10" y="12" width="290" height="42"/>
+                                                    <rect key="frame" x="20" y="12" width="280" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w9B-Vf-HXe" userLabel="Urgency Bar" customClass="GradientBar">
-                                                    <rect key="frame" x="10" y="12" width="290" height="42"/>
+                                                    <rect key="frame" x="20" y="12" width="280" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
-                                                    <rect key="frame" x="10" y="12" width="290" height="42"/>
+                                                    <rect key="frame" x="20" y="12" width="280" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -147,7 +147,7 @@
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="w9B-Vf-HXe" secondAttribute="leading" id="u9I-Nk-3XA"/>
                                                 <constraint firstAttribute="bottom" secondItem="wJy-G4-VdD" secondAttribute="bottom" constant="5" id="uNk-8U-WEs"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="w9B-Vf-HXe" secondAttribute="top" id="vKz-fn-kEI"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="10" id="zEe-bg-4MD"/>
+                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="20" id="zEe-bg-4MD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
