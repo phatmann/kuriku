@@ -27,13 +27,10 @@
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet UIImageView *repeatIcon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet GradientBar *urgencyBar;
-@property (weak, nonatomic) IBOutlet GradientBar *frostinessBar;
 
-@property (strong, nonatomic) IBOutlet UIColor *textGlowColor;
-@property (strong, nonatomic) IBOutlet UIColor *cellGlowColor;
+@property (strong, nonatomic) UIColor *textGlowColor;
+@property (strong, nonatomic) UIColor *cellGlowColor;
 
 @end
 
@@ -66,7 +63,6 @@
 
 - (void)awakeFromNib {
     _glowView = [GlowView new];
-    
     self.backgroundView = _glowView;
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     
@@ -76,14 +72,6 @@
     _coldColor    = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
     _oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
     _veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
-
-    self.urgencyBar.type = GradientBarTypeVertical;
-    self.urgencyBar.startColor = _warmColor;
-    self.urgencyBar.endColor   = _hotColor;
-    
-    self.frostinessBar.type = GradientBarTypeHorizontal;
-    self.frostinessBar.startColor = _coolColor;
-    self.frostinessBar.endColor   = _coldColor;
     
     self.progressViewWidthConstraint.constant = 0;
 }
@@ -123,20 +111,6 @@
     [self updateTemperature];
 }
 
-- (void)setDragType:(EntryDragType)dragType {
-    _dragType = dragType;
-    self.contentView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor lightGrayColor].CGColor;
-    self.contentView.layer.borderWidth = 2;
-}
-
-- (void)setDatePrompt:(NSString *)datePrompt {
-    _datePrompt = datePrompt;
-    
-    self.dateLabel.text = datePrompt;
-    self.dateLabel.nuiClass = @"DatePrompt";
-    [self.dateLabel applyNUI];
-}
-
 - (UIColor *)cellGlowColor {
     return _glowView.glowColor;
 }
@@ -172,19 +146,7 @@
         BOOL useStartDate;
         NSString *prefix = @"";
         
-        if (self.dragType == EntryDragTypeFrostiness) {
-            date = self.entry.todo.startDate;
-            prefix = @"START ";
-            useStartDate = YES;
-            //alwaysShowDate = YES;
-            self.dateLabel.nuiClass = @"StartDateDragging";
-        } else if (self.dragType == EntryDragTypeUrgency) {
-            date = self.entry.todo.dueDate;
-            prefix = @"DUE ";
-            useStartDate = NO;
-            //alwaysShowDate = YES;
-            self.dateLabel.nuiClass = @"DueDateDragging";
-        } else if (self.entry.todo.startDate) {
+        if (self.entry.todo.startDate) {
             date = self.entry.todo.startDate;
             useStartDate = YES;
             self.dateLabel.nuiClass = @"StartDate";
@@ -230,10 +192,12 @@
 - (void)updateTemperature {
     [self updateDate];
     
-    if (self.cold > 0) {
-        self.cellGlowColor = [EntryCell scale:self.cold fromColor:_coolColor toColor:_coldColor];
-    } else if (self.heat > 0) {
-        self.cellGlowColor = [EntryCell scale:self.heat fromColor:_warmColor toColor:_hotColor];
+    if (self.entry.state == EntryStateActive) {
+        if (self.entry.todo.frostiness > 0) {
+            self.cellGlowColor = [EntryCell scale:fratiof(self.entry.todo.frostiness) fromColor:_coolColor toColor:_coldColor];
+        } else if (self.entry.todo.urgency > 0 && self.entry.type != EntryTypeComplete) {
+            self.cellGlowColor = [EntryCell scale:fratiof(self.entry.todo.urgency) fromColor:_warmColor toColor:_hotColor];
+        }
     } else {
         self.cellGlowColor = nil;
     }
@@ -267,26 +231,8 @@
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
 }
 
-- (void)updateTemperatureBars {
-    if (self.cold > 0) {
-        self.frostinessBar.hidden = NO;
-        self.frostinessBar.value = self.cold;
-    }
-    
-    if (self.heat > 0) {
-        self.urgencyBar.hidden = NO;
-        self.urgencyBar.value = self.heat;
-    }
-}
-
 -(void) updateBackground {
     if (self.entry.state == EntryStateActive) {
-        /*if (self.cold > 0) {
-            //self.backgroundView.backgroundColor = [EntryCell scale:self.cold fromColor:_coolColor toColor:_coldColor];
-        } else if (self.heat > 0) {
-            //self.backgroundView.backgroundColor = [EntryCell scale:self.heat fromColor:_warmColor toColor:_hotColor];
-        } else*/
-        
         if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:_oldColor toColor:_veryOldColor];
         } else if (self.entry.type == EntryTypeComplete) {
@@ -323,29 +269,6 @@
 }
 
 #pragma mark -
-
-- (CGFloat)cold {
-    BOOL entryActive   = self.entry.state == EntryStateActive;
-    BOOL hasFrostiness = self.entry.todo.frostiness > 0;
-
-    if (entryActive && hasFrostiness) {
-        return fratiof(self.entry.todo.frostiness);
-    }
-    
-    return 0;
-}
-
-- (CGFloat)heat {
-    BOOL entryActive = self.entry.state == EntryStateActive && self.entry.type != EntryTypeComplete;
-    BOOL hasUrgency  = self.entry.todo.urgency > 0;
-    BOOL notCold     = self.cold == 0 || self.dragType == EntryDragTypeUrgency;
-    
-    if (entryActive && hasUrgency && notCold) {
-        return fratiof(self.entry.todo.urgency);
-    }
-    
-    return 0;
-}
 
 + (UIColor *)scale:(float_t)scale fromColor:(UIColor*)fromColor toColor:(UIColor *)toColor {
     scale = fratiof(scale);

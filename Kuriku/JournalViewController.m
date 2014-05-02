@@ -59,125 +59,10 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         UINavigationController *navigationController = segue.destinationViewController;
         RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
         repeatViewController.delegate = self;
-    } else {
-        UINavigationController *navigationController = segue.destinationViewController;
-        DatePickerViewController *datePickerViewController = [navigationController.viewControllers firstObject];
-        datePickerViewController.delegate = self;
-
-        if ([segue.identifier isEqualToString:@"Choose start date"]) {
-            datePickerViewController.tag = @"startDate";
-            datePickerViewController.date = self.activeCell.entry.todo.startDate;
-        } else if ([segue.identifier isEqualToString:@"Choose due date"]) {
-            datePickerViewController.tag = @"dueDate";
-            datePickerViewController.date = self.activeCell.entry.todo.dueDate;
-        }
     }
  }
 
 - (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
-    static const CGFloat kWellSize = 0.5f;
-    static const CGFloat kMinMove = 5.0;
-    static CGPoint startPoint;
-    static CGFloat initialUrgency;
-    static CGFloat initialFrostiness;
-    static EntryCell *draggedCell;
-    static BOOL chooseDate;
-    NSIndexPath *indexPath;
-    Entry *entry;
-    
-    CGPoint pt = [recognizer locationInView:self.tableView];
-    
-    switch (recognizer.state) {
-        case UIGestureRecognizerStateBegan:
-            indexPath = [self.tableView indexPathForRowAtPoint:pt];
-            draggedCell = nil;
-            
-            if (indexPath) {
-                entry = [self entryAtIndexPath:indexPath];
-                if (entry.state == EntryStateActive) {
-                    draggedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    draggedCell.dragType = EntryDragTypePending;
-                    startPoint = pt;
-                    chooseDate = NO;
-                }
-            }
-            
-            break;
-            
-        case UIGestureRecognizerStateChanged:
-            if (draggedCell) {
-                CGFloat offsetX = pt.x - startPoint.x;
-                CGFloat offsetY = pt.y - startPoint.y;
-                
-                chooseDate = NO;
-                
-                if (draggedCell.dragType == EntryDragTypeUrgency) {
-                    CGFloat range = draggedCell.titleTextView.frame.size.height * 2;
-                    range -= kWellSize * range;
-                    CGFloat urgency = initialUrgency - (offsetY / range);
-                    
-                    if (urgency < -kWellSize) {
-                        chooseDate = YES;
-                        draggedCell.datePrompt = @"Choose due date...";
-                    } else {
-                        draggedCell.entry.todo.urgency = fratiof(urgency);
-                        [draggedCell temperatureWasChanged];
-                    }
-                } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
-                    CGFloat range = draggedCell.titleTextView.frame.size.width;
-                    range -= kWellSize * range;
-                    CGFloat frostiness = initialFrostiness + (offsetX / range);
-                    
-                    if (frostiness < -kWellSize) {
-                        chooseDate = YES;
-                        draggedCell.datePrompt = @"Choose start date...";
-                    } else {
-                        draggedCell.entry.todo.frostiness = fratiof(frostiness);
-                        [draggedCell temperatureWasChanged];
-                    }
-                } else if (fabs(offsetY) > kMinMove) {
-                    draggedCell.dragType = EntryDragTypeUrgency;
-                    initialUrgency = draggedCell.entry.todo.urgency;
-                    
-                    if (initialUrgency < 0.0) {
-                        if (offsetY > 0)
-                            initialUrgency = 0.0;
-                        else
-                            initialUrgency = -kWellSize;
-                    }
-                    
-                    startPoint = pt;
-                } else if (fabs(offsetX) > kMinMove) {
-                    draggedCell.dragType = EntryDragTypeFrostiness;
-                    initialFrostiness = draggedCell.entry.todo.frostiness;
-                    
-                    if (initialFrostiness > 1.0) {
-                        if (offsetX < 0)
-                            initialFrostiness = 1.0;
-                        else
-                            initialFrostiness = 1.0 + kWellSize;
-                    }
-                    
-                    startPoint = pt;
-                }
-            }
-            break;
-            
-        case UIGestureRecognizerStateEnded:
-            [IBCoreDataStore save];
-            
-            if (chooseDate) {
-                self.activeCell = draggedCell;
-                [self performSegueWithIdentifier: draggedCell.dragType == EntryDragTypeFrostiness ? @"Choose start date" : @"Choose due date"
-                                          sender: nil];
-            }
-            
-            /* ... */
-            
-        default:
-            draggedCell.dragType = EntryDragTypeNone;
-            draggedCell = nil;
-    }
 }
 
 - (IBAction)panGestureRecognizerWasChanged:(UIPanGestureRecognizer *)recognizer {
@@ -635,14 +520,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         return NO;
     }
     return YES;
-}
-
-#pragma mark Date Picker View Delegate
-
-- (void)datePickerViewControllerDismissed:(DatePickerViewController *)dateViewController {
-    [self.activeCell.entry.todo setValue:[dateViewController.date dateAtStartOfDay] forKey:dateViewController.tag];
-    [self.activeCell temperatureWasChanged];
-    [IBCoreDataStore save];
 }
 
 @end

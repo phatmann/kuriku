@@ -105,16 +105,6 @@
                                                         <userDefinedRuntimeAttribute type="string" keyPath="nuiClass" value="Time"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTh-8r-kSY" userLabel="Frostiness Bar" customClass="GradientBar">
-                                                    <rect key="frame" x="20" y="12" width="280" height="42"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w9B-Vf-HXe" userLabel="Urgency Bar" customClass="GradientBar">
-                                                    <rect key="frame" x="20" y="12" width="280" height="42"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="24" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-G4-VdD" userLabel="Title" customClass="TMGrowingTextView">
                                                     <rect key="frame" x="20" y="12" width="280" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -130,37 +120,27 @@
                                             <constraints>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="DaY-QM-H8E" secondAttribute="top" id="2Sn-AA-Sdx"/>
                                                 <constraint firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" constant="20" id="3fP-8F-uW2"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="trailing" secondItem="w9B-Vf-HXe" secondAttribute="trailing" id="9Ks-qd-OgA"/>
-                                                <constraint firstItem="TTh-8r-kSY" firstAttribute="leading" secondItem="wJy-G4-VdD" secondAttribute="leading" id="Ebm-Pl-Tu4"/>
-                                                <constraint firstItem="TTh-8r-kSY" firstAttribute="bottom" secondItem="wJy-G4-VdD" secondAttribute="bottom" id="F78-ng-vrT"/>
                                                 <constraint firstItem="rvS-BL-gMe" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" id="Iwr-FE-e7w"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="bottom" secondItem="w9B-Vf-HXe" secondAttribute="bottom" id="JRc-W8-Kqf"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="Kf5-IE-ktF" secondAttribute="bottom" id="KP9-hM-QDC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kf5-IE-ktF" secondAttribute="trailing" constant="10" id="M29-DX-clJ"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="leading" secondItem="DaY-QM-H8E" secondAttribute="trailing" constant="5" id="SSz-5E-ejE"/>
-                                                <constraint firstItem="TTh-8r-kSY" firstAttribute="trailing" secondItem="wJy-G4-VdD" secondAttribute="trailing" id="WKK-xj-lmo"/>
                                                 <constraint firstAttribute="trailing" secondItem="rvS-BL-gMe" secondAttribute="trailing" id="Wry-Sh-OIS"/>
                                                 <constraint firstItem="Kf5-IE-ktF" firstAttribute="top" secondItem="gjI-eT-jYN" secondAttribute="top" constant="1" id="Z9I-FS-4lD"/>
                                                 <constraint firstAttribute="bottom" secondItem="rvS-BL-gMe" secondAttribute="bottom" id="bmk-a5-Zrd"/>
-                                                <constraint firstItem="TTh-8r-kSY" firstAttribute="top" secondItem="wJy-G4-VdD" secondAttribute="top" id="c62-Hf-64l"/>
                                                 <constraint firstItem="rvS-BL-gMe" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" id="dVm-oe-SEV"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="w9B-Vf-HXe" secondAttribute="leading" id="u9I-Nk-3XA"/>
                                                 <constraint firstAttribute="bottom" secondItem="wJy-G4-VdD" secondAttribute="bottom" constant="5" id="uNk-8U-WEs"/>
-                                                <constraint firstItem="wJy-G4-VdD" firstAttribute="top" secondItem="w9B-Vf-HXe" secondAttribute="top" id="vKz-fn-kEI"/>
                                                 <constraint firstItem="wJy-G4-VdD" firstAttribute="leading" secondItem="gjI-eT-jYN" secondAttribute="leading" constant="20" id="zEe-bg-4MD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="dateLabel" destination="DaY-QM-H8E" id="sI3-vb-bqw"/>
-                                            <outlet property="frostinessBar" destination="TTh-8r-kSY" id="cWc-mS-tCT"/>
                                             <outlet property="progressView" destination="cQr-Vf-hwZ" id="Pyq-HF-Z9C"/>
                                             <outlet property="progressViewWidthConstraint" destination="kpv-1e-dp9" id="NJo-f9-pRi"/>
                                             <outlet property="repeatIcon" destination="wbi-Q8-URX" id="Nyb-2X-kss"/>
                                             <outlet property="statusView" destination="rvS-BL-gMe" id="PGi-hQ-WNc"/>
                                             <outlet property="timeLabel" destination="Kf5-IE-ktF" id="bbz-qN-HOQ"/>
                                             <outlet property="titleTextView" destination="wJy-G4-VdD" id="HkB-1m-qm6"/>
-                                            <outlet property="urgencyBar" destination="w9B-Vf-HXe" id="p3q-UC-w2K"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -202,8 +182,6 @@
                         <outlet property="rotationGestureRecognizer" destination="V1I-nL-YKt" id="Vix-lq-D2H"/>
                         <outlet property="tableView" destination="aKD-IV-7AV" id="NrM-gl-Iga"/>
                         <segue destination="BLb-aQ-cLa" kind="modal" identifier="Repeat todo" id="ff9-5y-kUA"/>
-                        <segue destination="tat-4U-w4N" kind="modal" identifier="Choose due date" id="wJt-ec-nze"/>
-                        <segue destination="tat-4U-w4N" kind="modal" identifier="Choose start date" id="iNr-Rr-IHL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
@@ -405,7 +383,7 @@
         <!--Date Picker View Controller-->
         <scene sceneID="SfG-QX-S8B">
             <objects>
-                <tableViewController id="khI-gR-KO2" customClass="DatePickerViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="DatePicker" id="khI-gR-KO2" customClass="DatePickerViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="cbP-gO-Fdd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -414,7 +392,7 @@
                             <tableViewSection id="yhX-BK-Wet">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="MdD-Qb-J73">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="35" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MdD-Qb-J73" id="pJf-s2-Zex">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -440,7 +418,7 @@
                             <tableViewSection id="T1c-eH-ylx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="AGm-fA-Lmf">
-                                        <rect key="frame" x="0.0" y="163" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AGm-fA-Lmf" id="C0L-Wk-6x2">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -465,7 +443,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="220" id="42Z-K2-aGw">
-                                        <rect key="frame" x="0.0" y="207" width="320" height="220"/>
+                                        <rect key="frame" x="0.0" y="143" width="320" height="220"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="42Z-K2-aGw" id="Fic-B6-HBX">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="219"/>
@@ -560,25 +538,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="2606" y="-148"/>
         </scene>
-        <!--Date Picker Navigation Controller-->
-        <scene sceneID="vfX-8s-Pow">
-            <objects>
-                <navigationController storyboardIdentifier="DatePicker" automaticallyAdjustsScrollViewInsets="NO" id="tat-4U-w4N" userLabel="Date Picker Navigation Controller" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="5il-Od-7zm"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NSg-0a-3j7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="khI-gR-KO2" kind="relationship" relationship="rootViewController" id="FCS-1a-Ymf"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AbY-DB-Sdu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2623" y="619"/>
-        </scene>
     </scenes>
     <resources>
         <image name="repeat" width="30" height="26"/>
@@ -588,7 +547,4 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="iNr-Rr-IHL"/>
-    </inferredMetricsTieBreakers>
 </document>

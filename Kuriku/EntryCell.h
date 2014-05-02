@@ -10,21 +10,12 @@
 
 @class JournalViewController;
 
-typedef NS_ENUM(int, EntryDragType) {
-    EntryDragTypeNone,
-    EntryDragTypePending,
-    EntryDragTypeUrgency,
-    EntryDragTypeFrostiness
-};
-
 @interface EntryCell : UITableViewCell <UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (strong, nonatomic) Entry *entry;
 @property (weak, nonatomic) JournalViewController *journalViewController;
-@property (nonatomic) EntryDragType dragType;
 @property (nonatomic) CGFloat progressBarValue;
-@property (strong, nonatomic) NSString *datePrompt;
 
 - (void)refresh;
 - (void)importanceWasChanged;
