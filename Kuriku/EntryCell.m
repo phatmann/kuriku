@@ -41,6 +41,7 @@
 
 - (void)prepareForReuse {
     self.repeatIcon.hidden = YES;
+    self.progressViewWidthConstraint.constant = 0;
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {
@@ -83,6 +84,8 @@
     self.frostinessBar.type = GradientBarTypeHorizontal;
     self.frostinessBar.startColor = _coolColor;
     self.frostinessBar.endColor   = _coldColor;
+    
+    self.progressViewWidthConstraint.constant = 0;
 }
 
 - (void)setEntry:(Entry *)entry {
@@ -107,25 +110,23 @@
 - (void)refresh {
     [self updateTime];
     [self updateTitle];
-    [self updateStatus];
+    [self updateTemperature];
     [self updateBackground];
 }
 
 - (void)importanceWasChanged {
     [self updateTitle];
-    [self updateStatus];
+    [self updateTemperature];
 }
 
-- (void)statusWasChanged {
-    [self updateStatus];
+- (void)temperatureWasChanged {
+    [self updateTemperature];
 }
 
 - (void)setDragType:(EntryDragType)dragType {
     _dragType = dragType;
     self.contentView.layer.borderColor = _dragType == EntryDragTypeNone ? [UIColor clearColor].CGColor : [UIColor lightGrayColor].CGColor;
     self.contentView.layer.borderWidth = 2;
-    
-    [self updateStatus];
 }
 
 - (void)setDatePrompt:(NSString *)datePrompt {
@@ -226,7 +227,7 @@
     }
 }
 
-- (void)updateStatus {
+- (void)updateTemperature {
     [self updateDate];
     
     if (self.cold > 0) {

@@ -28,7 +28,7 @@ typedef NS_ENUM(int, EntryDragType) {
 
 - (void)refresh;
 - (void)importanceWasChanged;
-- (void)statusWasChanged;
+- (void)temperatureWasChanged;
 + (CGFloat)fontSizeForImportance:(CGFloat)importance;
 
 @end

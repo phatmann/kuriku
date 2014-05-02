@@ -55,8 +55,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         [self reloadData];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Repeat todo"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
@@ -123,7 +122,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                         draggedCell.datePrompt = @"Choose due date...";
                     } else {
                         draggedCell.entry.todo.urgency = fratiof(urgency);
-                        [draggedCell statusWasChanged];
+                        [draggedCell temperatureWasChanged];
                     }
                 } else if (draggedCell.dragType == EntryDragTypeFrostiness) {
                     CGFloat range = draggedCell.titleTextView.frame.size.width;
@@ -135,7 +134,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                         draggedCell.datePrompt = @"Choose start date...";
                     } else {
                         draggedCell.entry.todo.frostiness = fratiof(frostiness);
-                        [draggedCell statusWasChanged];
+                        [draggedCell temperatureWasChanged];
                     }
                 } else if (fabs(offsetY) > kMinMove) {
                     draggedCell.dragType = EntryDragTypeUrgency;
@@ -249,6 +248,66 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                     }];
                 }
                 
+                [IBCoreDataStore save];
+            }
+            
+        default:
+            break;
+    }
+}
+
+- (IBAction)rotationGestureRecognizerWasChanged:(UIRotationGestureRecognizer *)recognizer {
+    static const CGFloat kWellSize = 0.1f;
+    
+    static EntryCell *rotatedCell;
+    static CGFloat initialTemperature;
+    
+    NSIndexPath *indexPath;
+    CGPoint pt;
+    Entry *entry;
+    
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            pt = [recognizer locationInView:self.tableView];
+            indexPath = [self.tableView indexPathForRowAtPoint:pt];
+            rotatedCell = nil;
+            
+            if (indexPath) {
+                entry = [self entryAtIndexPath:indexPath];
+                
+                if (entry.state == EntryStateActive) {
+                    rotatedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    initialTemperature = entry.todo.temperature;
+                }
+            }
+            
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            if (rotatedCell) {
+                CGFloat range = M_PI_4 / 2;
+                CGFloat angle = recognizer.rotation;
+                
+                if (angle >= M_PI - range) {
+                    angle = angle - M_PI;
+                } else if (angle >= range) {
+                    angle = range;
+                }
+                
+                CGFloat temperature = fclampf(initialTemperature + (angle / range), -1.0, 1.0);
+                
+                // TODO: compensate for well size
+                
+                if (fabsf(temperature) < kWellSize)
+                    temperature = 0;
+            
+                rotatedCell.entry.todo.temperature = temperature;
+                [rotatedCell temperatureWasChanged];
+            }
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            if (rotatedCell) {
                 [IBCoreDataStore save];
             }
             
@@ -577,7 +636,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (void)datePickerViewControllerDismissed:(DatePickerViewController *)dateViewController {
     [self.activeCell.entry.todo setValue:[dateViewController.date dateAtStartOfDay] forKey:dateViewController.tag];
-    [self.activeCell statusWasChanged];
+    [self.activeCell temperatureWasChanged];
     [IBCoreDataStore save];
 }
 

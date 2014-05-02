@@ -188,6 +188,7 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="zAN-02-a5i" appends="YES" id="fdM-ic-qoD"/>
                             <outletCollection property="gestureRecognizers" destination="Y6X-fE-B5f" appends="YES" id="Fqk-PL-mVE"/>
+                            <outletCollection property="gestureRecognizers" destination="V1I-nL-YKt" appends="YES" id="Rfo-TP-Q9M"/>
                         </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -215,6 +216,11 @@
                         <outlet property="delegate" destination="CZ4-MO-1fc" id="R2p-t1-IxA"/>
                     </connections>
                 </panGestureRecognizer>
+                <rotationGestureRecognizer id="V1I-nL-YKt">
+                    <connections>
+                        <action selector="rotationGestureRecognizerWasChanged:" destination="CZ4-MO-1fc" id="sXh-DV-I1Y"/>
+                    </connections>
+                </rotationGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="887" y="204"/>
         </scene>
