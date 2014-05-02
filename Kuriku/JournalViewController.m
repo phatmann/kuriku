@@ -31,6 +31,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @property (weak, nonatomic) IBOutlet UISlider *filterSlider;
 @property (weak, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UIRotationGestureRecognizer *rotationGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
 
 @end
 
@@ -43,9 +45,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     self.tableView.estimatedRowHeight = 44;
-    
-    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewWasPinched:)];
-	[self.tableView addGestureRecognizer:pinchRecognizer];
     
     float_t savedPriorityFilter = [[NSUserDefaults standardUserDefaults] floatForKey:@"priorityFilter"];
     
@@ -256,8 +255,26 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
 }
 
+- (IBAction)pinchGestureRecognizerWasChanged:(UIPinchGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint pinchLocation = [recognizer locationInView:self.tableView];
+        self.pinchIndexPath = [self.tableView indexPathForRowAtPoint:pinchLocation];
+        Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
+        self.pinchInitialImportance = entry.todo.importance;
+        [self updateImportanceForPinchScale:recognizer.scale];
+    }
+    else {
+        if (recognizer.state == UIGestureRecognizerStateChanged) {
+            [self updateImportanceForPinchScale:recognizer.scale];
+        }
+        else if ((recognizer.state == UIGestureRecognizerStateCancelled) || (recognizer.state == UIGestureRecognizerStateEnded)) {
+            self.pinchIndexPath = nil;
+        }
+    }
+}
+
 - (IBAction)rotationGestureRecognizerWasChanged:(UIRotationGestureRecognizer *)recognizer {
-    static const CGFloat kWellSize = 0.1f;
+    static const CGFloat kWellSize = 0.3f;
     
     static EntryCell *rotatedCell;
     static CGFloat initialTemperature;
@@ -294,14 +311,13 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                     angle = range;
                 }
                 
-                CGFloat temperature = fclampf(initialTemperature + (angle / range), -1.0, 1.0);
-                
-                // TODO: compensate for well size
+                CGFloat temperature = fclampf(initialTemperature + (angle / range), -1.0 - kWellSize, 1.0 + kWellSize);
                 
                 if (fabsf(temperature) < kWellSize)
-                    temperature = 0;
-            
-                rotatedCell.entry.todo.temperature = temperature;
+                    rotatedCell.entry.todo.temperature = 0;
+                else
+                    rotatedCell.entry.todo.temperature = temperature - copysignf(kWellSize, temperature);
+                
                 [rotatedCell temperatureWasChanged];
             }
             break;
@@ -369,24 +385,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
     [self.tableView reloadData];
-}
-
-- (void)tableViewWasPinched:(UIPinchGestureRecognizer *)pinchRecognizer {
-    if (pinchRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint pinchLocation = [pinchRecognizer locationInView:self.tableView];
-        self.pinchIndexPath = [self.tableView indexPathForRowAtPoint:pinchLocation];
-        Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
-        self.pinchInitialImportance = entry.todo.importance;
-        [self updateImportanceForPinchScale:pinchRecognizer.scale];
-    }
-    else {
-        if (pinchRecognizer.state == UIGestureRecognizerStateChanged) {
-            [self updateImportanceForPinchScale:pinchRecognizer.scale];
-        }
-        else if ((pinchRecognizer.state == UIGestureRecognizerStateCancelled) || (pinchRecognizer.state == UIGestureRecognizerStateEnded)) {
-            self.pinchIndexPath = nil;
-        }
-    }
 }
 
 - (void)updateRowHeights {
@@ -618,6 +616,13 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 #pragma mark - Gesture Recognizer
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if (gestureRecognizer == self.pinchGestureRecognizer && otherGestureRecognizer == self.rotationGestureRecognizer)
+        return YES;
+    
+    return NO;
+}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer == self.panGestureRecognizer) {

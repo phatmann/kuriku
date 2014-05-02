@@ -19,11 +19,8 @@ Todo
 
 Bugs
 ----
-* Show glow and text burn at the same time
-* Too easy to bring up due date dialog
 * Cannot repeat task
-* Panning out of cell during long press ends the gesture
-* Hard to set start date
+* Panning out of cell ends the gesture
 * Can pinch inactive cell
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
@@ -32,6 +29,7 @@ Bugs
 
 Missing Features
 ----------------
+* Long press brings up edit dialog
 * Allow multiple todos to be entered
 * Tap inactive task goes to active task
 * Jump around to different dates in journal
