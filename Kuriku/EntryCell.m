@@ -39,6 +39,8 @@
 - (void)prepareForReuse {
     self.repeatIcon.hidden = YES;
     self.progressViewWidthConstraint.constant = 0;
+    self.cellGlowColor = nil;
+    self.textGlowColor = nil;
 }
 
 - (NSString *)styleClassForEntry:(Entry *)entry {

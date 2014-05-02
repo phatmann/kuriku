@@ -40,6 +40,7 @@
 		EAB280E619100EC5002DCA46 /* TMExtras.c in Sources */ = {isa = PBXBuildFile; fileRef = EAB280E519100EC5002DCA46 /* TMExtras.c */; };
 		EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */; };
 		EAC10B8E19130FF500ABBDB2 /* GlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC10B8D19130FF500ABBDB2 /* GlowView.m */; };
+		EAC10B9219144AE300ABBDB2 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC10B9119144AE300ABBDB2 /* EditTodoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,8 @@
 		EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
 		EAC10B8C19130FF500ABBDB2 /* GlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlowView.h; sourceTree = "<group>"; };
 		EAC10B8D19130FF500ABBDB2 /* GlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlowView.m; sourceTree = "<group>"; };
+		EAC10B9019144AE300ABBDB2 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
+		EAC10B9119144AE300ABBDB2 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +212,8 @@
 		EA61241A18EED67700DE8E75 /* Edit Todo */ = {
 			isa = PBXGroup;
 			children = (
+				EAC10B9019144AE300ABBDB2 /* EditTodoViewController.h */,
+				EAC10B9119144AE300ABBDB2 /* EditTodoViewController.m */,
 				EABAAC92186B702D00F2FBE6 /* DatePickerViewController.h */,
 				EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */,
 				EA3C0C09187029BF00EF1DAC /* RepeatViewController.h */,
@@ -486,6 +491,7 @@
 				EA048CBF1860C93600990957 /* EntryCell.m in Sources */,
 				EAAC955C1858F7D400E8BAB5 /* main.m in Sources */,
 				EA116BB219098FE7005EA252 /* GradientBar.m in Sources */,
+				EAC10B9219144AE300ABBDB2 /* EditTodoViewController.m in Sources */,
 				EA048CAA1860832500990957 /* Todo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

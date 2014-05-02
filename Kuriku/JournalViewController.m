@@ -59,10 +59,25 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         UINavigationController *navigationController = segue.destinationViewController;
         RepeatViewController *repeatViewController = [navigationController.viewControllers firstObject];
         repeatViewController.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"Edit todo"]) {
+        Todo *todo = sender;
+        UINavigationController *navigationController = segue.destinationViewController;
+        EditTodoViewController *editTodoViewController = [navigationController.viewControllers firstObject];
+        editTodoViewController.delegate = self;
+        editTodoViewController.todo = todo;
     }
  }
 
 - (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint pt = [recognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pt];
+        
+        if (indexPath) {
+            Entry *entry = [self entryAtIndexPath:indexPath];
+            [self performSegueWithIdentifier:@"Edit todo" sender:entry.todo];
+        }
+    }
 }
 
 - (IBAction)panGestureRecognizerWasChanged:(UIPanGestureRecognizer *)recognizer {
@@ -521,5 +536,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
     return YES;
 }
+
+#pragma mark - Edit Todo Controller Delegate
+
+- (void)todoWasEdited:(Todo *)todo {
+    [self.tableView reloadData];
+}
+
 
 @end
