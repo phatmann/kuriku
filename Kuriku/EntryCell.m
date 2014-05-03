@@ -102,6 +102,7 @@
     [self updateTitle];
     [self updateTemperature];
     [self updateBackground];
+    [self updateProgress];
 }
 
 - (void)importanceWasChanged {
@@ -135,8 +136,7 @@
 }
 
 - (void)updateProgress {
-    self.progressViewWidthConstraint.constant = self.entry.progress * self.statusView.frame.size.width;
-    _progressBarValue = self.entry.progress;
+    self.progressBarValue = self.entry.progress;
 }
 
 - (void)updateDate {

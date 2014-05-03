@@ -13,12 +13,20 @@ Newest thoughts
 * While dragging up/right, show days in bold white overlay. Final choice is "Choose Date",
   if chosen show date dialog.
 
-Todo
-----
+Improvements
+------------
 * Notch for normal importance
+* Better progress UX, especially with filters. Animate completion.
+* Darker progress bar
+* Better staleness effect
+* Enhance edit dialog to use temperature, show tips
 
 Bugs
 ----
+* Pinching task causes scrolling
+* Deleting task causes animation issues
+* Should scroll to new item when + button tapped
+* Rotation well not working
 * Cannot repeat task
 * Panning out of cell ends the gesture
 * Can pinch inactive cell
@@ -29,7 +37,6 @@ Bugs
 
 Missing Features
 ----------------
-* Long press brings up edit dialog
 * Allow multiple todos to be entered
 * Tap inactive task goes to active task
 * Jump around to different dates in journal
