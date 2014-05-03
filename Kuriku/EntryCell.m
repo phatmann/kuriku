@@ -37,6 +37,8 @@
 @implementation EntryCell
 
 - (void)prepareForReuse {
+    [super prepareForReuse];
+    
     self.repeatIcon.hidden = YES;
     self.progressViewWidthConstraint.constant = 0;
     self.cellGlowColor = nil;

@@ -280,10 +280,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 - (void)reloadData {
-    [self createFetchedResultsController];
-    self.fetchedResultsController.delegate = self;
-    NSError *error;
-    [self.fetchedResultsController performFetch:&error];
+    [self fetchData];
     [self.tableView reloadData];
 }
 
@@ -322,7 +319,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [self performSegueWithIdentifier:@"Repeat todo" sender:todo];
 }
 
-- (void)createFetchedResultsController {
+- (void)fetchData {
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
@@ -334,6 +331,9 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                                      managedObjectContext:context
                                      sectionNameKeyPath:@"journalDateString"
                                      cacheName:nil];
+    self.fetchedResultsController.delegate = self;
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
 }
 
 - (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
@@ -441,17 +441,20 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     return nil;
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete;
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Entry *entry = [self entryAtIndexPath:indexPath];
         
         if (entry.type == EntryTypeNew) {
+            NSUInteger sectionCount = [self.tableView numberOfRowsInSection:indexPath.section];
             [entry.todo destroy];
-            [self reloadData];
+            [IBCoreDataStore save];
+            [self fetchData];
+            
+            if (sectionCount == 1)
+                [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+            else
+                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         } else {
             [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
         }
