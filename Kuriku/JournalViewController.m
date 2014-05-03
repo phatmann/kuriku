@@ -64,9 +64,19 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         editTodoViewController.delegate = self;
         editTodoViewController.todo = todo;
     }
- }
+}
 
-#pragma Gesture Handling
+- (void)setPriorityFilter:(float_t)priorityFilter {
+    _priorityFilter = priorityFilter;
+    self.filterSlider.value = priorityFilter;
+    
+    [[NSUserDefaults standardUserDefaults] setFloat:priorityFilter forKey:@"priorityFilter"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self reloadData];
+}
+
+#pragma mark - Gesture Handling
 
 - (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
@@ -259,126 +269,24 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
 }
 
-- (void)setPriorityFilter:(float_t)priorityFilter {
-    _priorityFilter = priorityFilter;
-    self.filterSlider.value = priorityFilter;
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if (gestureRecognizer == self.pinchGestureRecognizer && otherGestureRecognizer == self.rotationGestureRecognizer)
+        return YES;
     
-    [[NSUserDefaults standardUserDefaults] setFloat:priorityFilter forKey:@"priorityFilter"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [self reloadData];
+    return NO;
 }
 
-#pragma mark - Private
-
-- (void)keyboardWillShow:(NSNotification*)notification {
-    NSDictionary *userInfo = notification.userInfo;
-    
-    CGRect keyboardRect = [self.tableView convertRect:[userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:[userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
-    [UIView setAnimationDuration:[userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue]];
-    
-    UIEdgeInsets newInset = self.tableView.contentInset;
-    newInset.bottom = keyboardRect.size.height - (CGRectGetMaxY(keyboardRect) - CGRectGetMaxY(self.tableView.bounds));
-    self.tableView.contentInset = newInset;
-    self.tableView.scrollIndicatorInsets = newInset;
-    
-    [UIView commitAnimations];
-}
-
-- (void)keyboardWillHide:(NSNotification*)notification {
-    NSDictionary *userInfo = notification.userInfo;
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:[userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
-    [UIView setAnimationDuration:[userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue]];
-    
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
-    
-    [UIView commitAnimations];
-}
-
-
-- (Entry *)entryAtIndexPath:(NSIndexPath *)indexPath {
-    return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-}
-
-- (void)reloadData {
-    [self fetchData];
-    [self.tableView reloadData];
-}
-
-- (void)updateRowHeights {
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
-}
-
-- (void)updateImportanceForPinchScale:(CGFloat)scale {
-    
-
-}
-
-- (void)showDeleteActionSheet:(Entry *)entry {
-    self.selectedEntry = entry;
-    
-    self.deleteActionSheet = [[UIActionSheet alloc]
-                                initWithTitle:nil
-                                delegate:self
-                                cancelButtonTitle:@"Cancel"
-                                destructiveButtonTitle:@"Delete Todo"
-                                otherButtonTitles:@"Delete This Entry", nil];
-    
-    [self.deleteActionSheet showInView:self.view];
-}
-
-- (void)showRepeatView:(Todo *)todo {
-    [self performSegueWithIdentifier:@"Repeat todo" sender:todo];
-}
-
-- (void)fetchData {
-    NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [fetchRequest setSortDescriptors:@[sortDescriptor]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
-    [fetchRequest setPredicate:predicate];
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                     initWithFetchRequest:fetchRequest
-                                     managedObjectContext:context
-                                     sectionNameKeyPath:@"journalDateString"
-                                     cacheName:nil];
-    self.fetchedResultsController.delegate = self;
-    NSError *error;
-    [self.fetchedResultsController performFetch:&error];
-}
-
-- (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
-    self.priorityFilter = filterSlider.value;
-}
-
-- (IBAction)addButtonTapped {
-    if (self.priorityFilter > PriorityFilterShowActive) {
-        self.priorityFilter = PriorityFilterShowActive;
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.panGestureRecognizer) {
+        UIPanGestureRecognizer *panGestureRecognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGPoint offset = [panGestureRecognizer translationInView:self.tableView];
+        
+        if (offset.x > 0)
+            return YES;
+        
+        return NO;
     }
-    
-    [Todo create];
-    [self reloadData];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    [cell becomeFirstResponder];
-}
-
-- (void)doneButtonTapped {
-    self.filterSlider.enabled = YES;
-    [self.activeCell resignFirstResponder];
-    self.activeCell = nil;
-    [self reloadData];
+    return YES;
 }
 
 #pragma mark - Action Sheet Delegate
@@ -546,33 +454,119 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [self updateRowHeights];
 }
 
-#pragma mark - Gesture Recognizer
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (gestureRecognizer == self.pinchGestureRecognizer && otherGestureRecognizer == self.rotationGestureRecognizer)
-        return YES;
-    
-    return NO;
-}
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer == self.panGestureRecognizer) {
-        UIPanGestureRecognizer *panGestureRecognizer = (UIPanGestureRecognizer *)gestureRecognizer;
-        CGPoint offset = [panGestureRecognizer translationInView:self.tableView];
-        
-        if (offset.x > 0)
-            return YES;
-        
-        return NO;
-    }
-    return YES;
-}
-
 #pragma mark - Edit Todo Controller Delegate
 
 - (void)todoWasEdited:(Todo *)todo {
     [self.tableView reloadData];
 }
 
+#pragma mark - Action Handlers
+
+- (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
+    self.priorityFilter = filterSlider.value;
+}
+
+- (IBAction)addButtonTapped {
+    if (self.priorityFilter > PriorityFilterShowActive) {
+        self.priorityFilter = PriorityFilterShowActive;
+    }
+    
+    [Todo create];
+    [self reloadData];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [cell becomeFirstResponder];
+}
+
+- (void)doneButtonTapped {
+    self.filterSlider.enabled = YES;
+    [self.activeCell resignFirstResponder];
+    self.activeCell = nil;
+    [self reloadData];
+}
+
+#pragma mark - Private
+
+- (void)keyboardWillShow:(NSNotification*)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    
+    CGRect keyboardRect = [self.tableView convertRect:[userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    
+    UIEdgeInsets newInset = self.tableView.contentInset;
+    newInset.bottom = keyboardRect.size.height - (CGRectGetMaxY(keyboardRect) - CGRectGetMaxY(self.tableView.bounds));
+    self.tableView.contentInset = newInset;
+    self.tableView.scrollIndicatorInsets = newInset;
+    
+    [UIView commitAnimations];
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+    
+    [UIView commitAnimations];
+}
+
+
+- (Entry *)entryAtIndexPath:(NSIndexPath *)indexPath {
+    return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+}
+
+- (void)reloadData {
+    [self fetchData];
+    [self.tableView reloadData];
+}
+
+- (void)updateRowHeights {
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
+- (void)showDeleteActionSheet:(Entry *)entry {
+    self.selectedEntry = entry;
+    
+    self.deleteActionSheet = [[UIActionSheet alloc]
+                              initWithTitle:nil
+                              delegate:self
+                              cancelButtonTitle:@"Cancel"
+                              destructiveButtonTitle:@"Delete Todo"
+                              otherButtonTitles:@"Delete This Entry", nil];
+    
+    [self.deleteActionSheet showInView:self.view];
+}
+
+- (void)showRepeatView:(Todo *)todo {
+    [self performSegueWithIdentifier:@"Repeat todo" sender:todo];
+}
+
+- (void)fetchData {
+    NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
+    [fetchRequest setPredicate:predicate];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:fetchRequest
+                                     managedObjectContext:context
+                                     sectionNameKeyPath:@"journalDateString"
+                                     cacheName:nil];
+    self.fetchedResultsController.delegate = self;
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+}
 
 @end
