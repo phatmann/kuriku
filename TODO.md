@@ -19,7 +19,6 @@ Improvements
 Bugs
 ----
 * Rotation well size not working
-* Should scroll to new item when + button tapped
 * Cannot repeat task
 * Sometimes pinching happens when trying to rotate
 * Panning out of cell ends the gesture

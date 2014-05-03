@@ -147,6 +147,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 
                 [IBCoreDataStore save];
             }
+            break;
             
         default:
             ;
@@ -249,9 +250,10 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             if (rotatedCell) {
                 [IBCoreDataStore save];
             }
+            break;
             
         default:
-            break;
+            ;
     }
 }
 
@@ -363,7 +365,10 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     [Todo create];
     [self reloadData];
     
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     [cell becomeFirstResponder];
 }
 
