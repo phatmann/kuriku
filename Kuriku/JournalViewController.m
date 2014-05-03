@@ -469,14 +469,20 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         
         if (entry.type == EntryTypeNew) {
             NSUInteger sectionCount = [self.tableView numberOfRowsInSection:indexPath.section];
+            NSUInteger entryCount = entry.todo.entries.count;
             [entry.todo destroy];
             [IBCoreDataStore save];
             [self fetchData];
             
-            if (sectionCount == 1)
-                [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
-            else
-                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            if (entryCount == 1) {
+                if (sectionCount == 1) {
+                    [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+                } else {
+                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                }
+            } else {
+                [self.tableView reloadData];
+            }
         } else {
             [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
         }

@@ -15,6 +15,7 @@ Improvements
 * Darker progress bar
 * Better staleness effect
 * Enhance edit dialog to use temperature, show tips
+* Animate row deletion when multiple entries for deleted todo
 
 Bugs
 ----
