@@ -1,17 +1,12 @@
 Kuriku
 The visual intelligent action journal
 
-
 Newest thoughts
 ---------------
-* Cell always has some color, unless new as white
 * Scroll down to show blank line in edit mode
 * Pinch to make importance high to normal (positive?). Pinch again to make it less committed.
 * Show a special shaded color when importance low, immune to staleness.
 * Stale color is brown, like parchment paper
-* Slide right to set action, 1/4, 1/2, 3/4 done. Keep sliding to complete. Keep sliding to repeat.
-* While dragging up/right, show days in bold white overlay. Final choice is "Choose Date",
-  if chosen show date dialog.
 
 Improvements
 ------------
@@ -23,10 +18,10 @@ Improvements
 
 Bugs
 ----
+* Sometimes pinching happens when trying to rotate
 * Pinching task causes scrolling
-* Deleting task causes animation issues
 * Should scroll to new item when + button tapped
-* Rotation well not working
+* Rotation well size not working
 * Cannot repeat task
 * Panning out of cell ends the gesture
 * Can pinch inactive cell
