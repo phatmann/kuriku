@@ -10,6 +10,7 @@ Newest thoughts
 
 Improvements
 ------------
+* Cancel repeat
 * Notch for normal importance
 * Better progress UX, especially with filters. Animate completion.
 * Darker progress bar
@@ -19,7 +20,6 @@ Improvements
 
 Bugs
 ----
-* Cannot repeat task
 * Swipe recognition not reliable
 * Sometimes pinching happens when trying to rotate
 * Panning out of cell ends the gesture
@@ -36,6 +36,7 @@ Missing Features
 * Search
 * Scroll to new entry after taking action?
 * Let user change settings for number of stale, urgent, and frosty days
+* Repeat icon on frozen completed todos?
 
 New Thoughts
 ------------

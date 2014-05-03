@@ -25,10 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
-@property (weak, nonatomic) IBOutlet UIImageView *repeatIcon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-
 @property (strong, nonatomic) UIColor *textGlowColor;
 @property (strong, nonatomic) UIColor *cellGlowColor;
 
@@ -88,7 +86,6 @@
 - (void)setProgressBarValue:(CGFloat)progressBarValue {
     _progressBarValue = progressBarValue;
     self.progressViewWidthConstraint.constant = self.statusView.frame.size.width * fminf(1.0, progressBarValue);
-    self.repeatIcon.hidden = (progressBarValue < 1.2);
 }
 
 - (BOOL)becomeFirstResponder {

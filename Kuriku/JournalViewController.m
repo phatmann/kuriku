@@ -93,6 +93,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 - (IBAction)panGestureRecognizerWasChanged:(UIPanGestureRecognizer *)recognizer {
     static EntryCell *pannedCell;
     static CGFloat initialProgressBarValue;
+    static BOOL shouldRepeat;
+    
     NSIndexPath *indexPath;
     CGPoint pt;
     Entry *entry;
@@ -104,6 +106,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             pt = [recognizer locationInView:self.tableView];
             indexPath = [self.tableView indexPathForRowAtPoint:pt];
             pannedCell = nil;
+            shouldRepeat = NO;
             
             if (indexPath) {
                 entry = [self entryAtIndexPath:indexPath];
@@ -121,7 +124,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 CGFloat range = pannedCell.frame.size.width;
                 CGPoint velocity = [recognizer velocityInView:self.tableView];
                 
-                if (velocity.x > 1500.0 && offset.x > range * 0.3) {
+                if (velocity.x > 1500 && offset.x > 100) {
                     pannedCell.progressBarValue = 1.0;
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
                     [self reloadData];
@@ -129,35 +132,35 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                     recognizer.enabled = YES;
                 } else {
                     pannedCell.progressBarValue = fmaxf(0.0, initialProgressBarValue + (offset.x / range));
+                    shouldRepeat = fabsf(offset.y) > 50;
+                    pannedCell.repeatIcon.hidden = !shouldRepeat;
                 }
             }
             break;
             
         case UIGestureRecognizerStateEnded:
             if (pannedCell) {
-                CGFloat delta = pannedCell.progressBarValue - initialProgressBarValue;
-                CGFloat remaining = 1.0 - initialProgressBarValue;
-                
-                if (delta >= remaining / 2) {
-                    // DO: have entry and this use same repeat value (1.2)
-                    if (pannedCell.progressBarValue > 1.2) {
-                        self.selectedEntry = pannedCell.entry;
-                        [self showRepeatView:pannedCell.entry.todo];
-                    } else {
+                if (shouldRepeat) {
+                    self.selectedEntry = pannedCell.entry;
+                    [self showRepeatView:pannedCell.entry.todo];
+                    pannedCell.progressBarValue = initialProgressBarValue;
+                } else {
+                    CGFloat delta = pannedCell.progressBarValue - initialProgressBarValue;
+                    CGFloat remaining = 1.0 - initialProgressBarValue;
+                    
+                    if (delta >= remaining / 4) {
                         [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
                         [self reloadData];
+                    } else {
+                        pannedCell.progressBarValue = initialProgressBarValue;
+                        
+                        [UIView animateWithDuration:0.2 animations:^{
+                            [pannedCell layoutIfNeeded];
+                        }];
                     }
-                    
-                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                } else {
-                    pannedCell.progressBarValue = initialProgressBarValue;
-                    
-                    [UIView animateWithDuration:0.2 animations:^{
-                        [pannedCell layoutIfNeeded];
-                    }];
-                }
                 
-                [IBCoreDataStore save];
+                    [IBCoreDataStore save];
+                }
             }
             break;
             
