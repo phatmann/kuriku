@@ -18,8 +18,8 @@ Improvements
 
 Bugs
 ----
-* Rotation well size not working
 * Cannot repeat task
+* Swipe recognition not reliable
 * Sometimes pinching happens when trying to rotate
 * Panning out of cell ends the gesture
 * Done button does not animate cell collapse

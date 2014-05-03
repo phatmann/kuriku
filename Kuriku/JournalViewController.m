@@ -66,6 +66,8 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
  }
 
+#pragma Gesture Handling
+
 - (IBAction)longPressGestureRecognizerWasChanged:(UILongPressGestureRecognizer *)recognizer {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         CGPoint pt = [recognizer locationInView:self.tableView];

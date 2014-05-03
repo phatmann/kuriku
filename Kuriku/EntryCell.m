@@ -195,6 +195,7 @@
 
 - (void)updateTemperature {
     [self updateDate];
+    self.cellGlowColor = nil;
     
     if (self.entry.state == EntryStateActive) {
         if (self.entry.todo.frostiness > 0) {
@@ -202,8 +203,6 @@
         } else if (self.entry.todo.urgency > 0 && self.entry.type != EntryTypeComplete) {
             self.cellGlowColor = [EntryCell scale:fratiof(self.entry.todo.urgency) fromColor:_warmColor toColor:_hotColor];
         }
-    } else {
-        self.cellGlowColor = nil;
     }
 }
 
