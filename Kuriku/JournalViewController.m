@@ -20,8 +20,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 @interface JournalViewController ()
 
 @property (strong, nonatomic) Entry *selectedEntry;
-@property (strong, nonatomic) NSIndexPath *pinchIndexPath;
-@property (nonatomic) CGFloat pinchInitialImportance;
 @property (nonatomic) float_t priorityFilter;
 @property (nonatomic) EntryCell *activeCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
@@ -129,7 +127,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 CGFloat remaining = 1.0 - initialProgressBarValue;
                 
                 if (delta >= remaining / 2) {
-                    // TODO: have entry and this use same repeat value (1.2)
+                    // DO: have entry and this use same repeat value (1.2)
                     if (pannedCell.progressBarValue > 1.2) {
                         self.selectedEntry = pannedCell.entry;
                         [self showRepeatView:pannedCell.entry.todo];
@@ -151,25 +149,50 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             }
             
         default:
-            break;
+            ;
     }
 }
 
 - (IBAction)pinchGestureRecognizerWasChanged:(UIPinchGestureRecognizer *)recognizer {
-    if (recognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint pinchLocation = [recognizer locationInView:self.tableView];
-        self.pinchIndexPath = [self.tableView indexPathForRowAtPoint:pinchLocation];
-        Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
-        self.pinchInitialImportance = entry.todo.importance;
-        [self updateImportanceForPinchScale:recognizer.scale];
-    }
-    else {
-        if (recognizer.state == UIGestureRecognizerStateChanged) {
-            [self updateImportanceForPinchScale:recognizer.scale];
-        }
-        else if ((recognizer.state == UIGestureRecognizerStateCancelled) || (recognizer.state == UIGestureRecognizerStateEnded)) {
-            self.pinchIndexPath = nil;
-        }
+    static EntryCell *pinchedCell;
+    static CGFloat initialImportance;
+    NSIndexPath *indexPath;
+    CGPoint pt;
+    Entry *entry;
+    
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            pt = [recognizer locationInView:self.tableView];
+            indexPath = [self.tableView indexPathForRowAtPoint:pt];
+            pinchedCell = nil;
+            
+            if (indexPath) {
+                entry =  [self entryAtIndexPath:indexPath];
+                
+                if (entry.state == EntryStateActive) {
+                    pinchedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    initialImportance = entry.todo.importance;
+                }
+            }
+            
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            if (pinchedCell) {
+                CGFloat notches = (initialImportance * 100) + 1;
+                notches = MAX(1.0, MIN(101.0, notches * recognizer.scale));
+                pinchedCell.entry.todo.importance = (notches - 1) / 100.0f;
+                [pinchedCell importanceWasChanged];
+            }
+
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            [self updateRowHeights];
+            break;
+            
+        default:
+            ;
     }
 }
 
@@ -213,7 +236,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 
                 CGFloat temperature = fclampf(initialTemperature + (angle / range), -1.0 - kWellSize, 1.0 + kWellSize);
                 
-                if (fabsf(temperature) < kWellSize)
+                if (fabsf(temperature) <= kWellSize)
                     rotatedCell.entry.todo.temperature = 0;
                 else
                     rotatedCell.entry.todo.temperature = temperature - copysignf(kWellSize, temperature);
@@ -291,15 +314,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 
 - (void)updateImportanceForPinchScale:(CGFloat)scale {
     
-    if (self.pinchIndexPath && (self.pinchIndexPath.section != NSNotFound) && (self.pinchIndexPath.row != NSNotFound)) {
-        Entry* entry =  [self entryAtIndexPath:self.pinchIndexPath];
-        CGFloat notches = (self.pinchInitialImportance * 100) + 1;
-		notches = MAX(1.0, MIN(101.0, notches * scale));
-        entry.todo.importance = (notches - 1) / 100.0f;
-        EntryCell *cell = (EntryCell *)[self.tableView cellForRowAtIndexPath:self.pinchIndexPath];
-        [cell importanceWasChanged];
-        [self updateRowHeights];
-    }
+
 }
 
 - (void)showDeleteActionSheet:(Entry *)entry {

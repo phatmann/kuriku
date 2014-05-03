@@ -18,13 +18,11 @@ Improvements
 
 Bugs
 ----
-* Sometimes pinching happens when trying to rotate
-* Pinching task causes scrolling
-* Should scroll to new item when + button tapped
 * Rotation well size not working
+* Should scroll to new item when + button tapped
 * Cannot repeat task
+* Sometimes pinching happens when trying to rotate
 * Panning out of cell ends the gesture
-* Can pinch inactive cell
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
