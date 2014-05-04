@@ -10,7 +10,6 @@ Newest thoughts
 
 Improvements
 ------------
-* Cancel repeat
 * Notch for normal importance
 * Better progress UX, especially with filters. Animate completion.
 * Darker progress bar
@@ -20,9 +19,9 @@ Improvements
 
 Bugs
 ----
-* Swipe recognition not reliable
 * Sometimes pinching happens when trying to rotate
 * Panning out of cell ends the gesture
+* Swipe recognition not reliable
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
 * Do not allow actions on inactive task

@@ -11,8 +11,6 @@
 
 extern float fclampf(float, float, float);
 extern float fratiof(float);
-
-#define RADIANS_TO_DEGREES(radians) ((radians) * (180.0 / M_PI))
-#define DEGREES_TO_RADIANS(angle)   ((angle) / 180.0 * M_PI)
+extern float fstretchf(float x, float y);
 
 #endif

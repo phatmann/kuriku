@@ -213,10 +213,10 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 - (IBAction)rotationGestureRecognizerWasChanged:(UIRotationGestureRecognizer *)recognizer {
-    static const CGFloat kWellSize = 0.3f;
+    static const CGFloat kWellSize = 0.4f;
     
     static EntryCell *rotatedCell;
-    static CGFloat initialTemperature;
+    static CGFloat initialValue;
     
     NSIndexPath *indexPath;
     CGPoint pt;
@@ -233,7 +233,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 
                 if (entry.state == EntryStateActive) {
                     rotatedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    initialTemperature = entry.todo.temperature;
+                    initialValue = entry.todo.temperature + copysign(kWellSize, recognizer.rotation);
                 }
             }
             
@@ -241,22 +241,14 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             
         case UIGestureRecognizerStateChanged:
             if (rotatedCell) {
-                CGFloat range = M_PI_4 / 2;
-                CGFloat angle = recognizer.rotation;
+                static const CGFloat range = M_PI_4 / 2;
+                CGFloat value = (recognizer.rotation / range) + initialValue;
                 
-                if (angle >= M_PI - range) {
-                    angle = angle - M_PI;
-                } else if (angle >= range) {
-                    angle = range;
-                }
-                
-                CGFloat temperature = fclampf(initialTemperature + (angle / range), -1.0 - kWellSize, 1.0 + kWellSize);
-                
-                if (fabsf(temperature) <= kWellSize)
+                if (fabsf(value) < kWellSize / 2)
                     rotatedCell.entry.todo.temperature = 0;
                 else
-                    rotatedCell.entry.todo.temperature = temperature - copysignf(kWellSize, temperature);
-                
+                    rotatedCell.entry.todo.temperature = fclampf(fstretchf(value, -kWellSize / 2), -1.0, 1.0);
+
                 [rotatedCell temperatureWasChanged];
             }
             break;

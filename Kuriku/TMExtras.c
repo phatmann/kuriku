@@ -18,3 +18,8 @@ float fratiof(float x)
 {
     return fclampf(x, 0.0, 1.0);
 }
+
+float fstretchf(float x, float y)
+{
+    return x + copysignf(y, x);
+}
