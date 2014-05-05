@@ -11,6 +11,5 @@
 
 extern float fclampf(float, float, float);
 extern float fratiof(float);
-extern float fstretchf(float x, float y);
 
 #endif

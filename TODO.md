@@ -23,14 +23,13 @@ Improvements
 
 Bugs
 ----
-* Tapping Select crashes app
-* Rotation still awkward
 * Often cell gets selected during a gesture
 * Sometimes pinching happens when trying to rotate
 * Panning out of cell ends the gesture (simulator only?)
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
+* Text view in edit todo view not resizing
 
 Missing Features
 ----------------

@@ -216,6 +216,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     
     static EntryCell *rotatedCell;
     static CGFloat initialValue;
+    static const CGFloat range = M_PI_4 / 2;
     
     NSIndexPath *indexPath;
     CGPoint pt;
@@ -232,7 +233,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
                 
                 if (entry.state == EntryStateActive) {
                     rotatedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    initialValue = entry.todo.temperature + copysign(kWellSize, recognizer.rotation);
+                    initialValue = entry.todo.temperature + copysign(kWellSize / 2, recognizer.rotation);
                 }
             }
             
@@ -240,13 +241,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             
         case UIGestureRecognizerStateChanged:
             if (rotatedCell) {
-                static const CGFloat range = M_PI_4 / 2;
                 CGFloat value = (recognizer.rotation / range) + initialValue;
                 
                 if (fabsf(value) < kWellSize / 2)
                     rotatedCell.entry.todo.temperature = 0;
                 else
-                    rotatedCell.entry.todo.temperature = fclampf(fstretchf(value, -kWellSize / 2), -1.0, 1.0);
+                    rotatedCell.entry.todo.temperature = fclampf(value - copysign(kWellSize / 2, value), -1.0, 1.0);
 
                 [rotatedCell temperatureWasChanged];
             }
@@ -263,12 +263,12 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     }
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (gestureRecognizer == self.pinchGestureRecognizer && otherGestureRecognizer == self.rotationGestureRecognizer)
-        return YES;
-    
-    return NO;
-}
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//    if (gestureRecognizer == self.pinchGestureRecognizer && otherGestureRecognizer == self.rotationGestureRecognizer)
+//        return YES;
+//    
+//    return NO;
+//}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer == self.panGestureRecognizer) {
@@ -280,6 +280,25 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
         
         return NO;
     }
+    
+//    if (gestureRecognizer == self.pinchGestureRecognizer) {
+//        UIPinchGestureRecognizer *pinchGestureRecognizer = (UIPinchGestureRecognizer *)gestureRecognizer;
+//        
+//        if (fabsf(pinchGestureRecognizer.scale - 1.0) > 0.1)
+//            return YES;
+//        
+//        return NO;
+//    }
+    
+//    if (gestureRecognizer == self.rotationGestureRecognizer) {
+//        UIRotationGestureRecognizer *rotationGestureRecognizer = (UIRotationGestureRecognizer *)gestureRecognizer;
+//        
+//        if (fabsf(rotationGestureRecognizer.rotation) > M_PI / 32)
+//            return YES;
+//        
+//        return NO;
+//    }
+    
     return YES;
 }
 
