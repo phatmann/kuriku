@@ -86,11 +86,11 @@ StalenessOld {
 }
 
 ImportanceLow {
-    font-size: 16;
+    font-size: 14;
 }
 
 ImportanceHigh {
-    font-size: 28;
+    font-size: 26;
 }
 
 StatusCompleted {

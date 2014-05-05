@@ -10,13 +10,11 @@ Newest thoughts
 
 Improvements
 ------------
+* Better staleness effect
 * Notch for normal importance
 * Better progress UX, especially with filters. Animate completion.
-* Darker progress bar
-* Better staleness effect
 * Enhance edit dialog to use temperature, show tips
 * Animate row deletion when multiple entries for deleted todo
-* Smaller fonts?
 * Filter slider has stops: all, hide inactive, hide complete, hide cold
 * If start date in past applied, ignore it
 * Swipe recognition not reliable
@@ -25,11 +23,9 @@ Bugs
 ----
 * Often cell gets selected during a gesture
 * Sometimes pinching happens when trying to rotate
-* Panning out of cell ends the gesture (simulator only?)
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
-* Text view in edit todo view not resizing
 
 Missing Features
 ----------------
