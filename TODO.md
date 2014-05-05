@@ -16,16 +16,21 @@ Improvements
 * Better staleness effect
 * Enhance edit dialog to use temperature, show tips
 * Animate row deletion when multiple entries for deleted todo
+* Smaller fonts?
+* Filter slider has stops: all, hide inactive, hide complete, hide cold
+* If start date in past applied, ignore it
+* Swipe recognition not reliable
 
 Bugs
 ----
+* Tapping Select crashes app
+* Rotation still awkward
+* Often cell gets selected during a gesture
 * Sometimes pinching happens when trying to rotate
-* Panning out of cell ends the gesture
-* Swipe recognition not reliable
+* Panning out of cell ends the gesture (simulator only?)
 * Done button does not animate cell collapse
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
-* If start date in past applied, ignore it
 
 Missing Features
 ----------------
@@ -42,11 +47,8 @@ New Thoughts
 * Add notes by embedding return
 * Don't unmark todo completed, instead delete completion entry. Needed for accurate progress measurement.
 * Change repeat names?
-* Glide to set temperature, via start date or due date
 * How do we handle urgency and importance changes with filter? Adjust filter?
-* Slide to take action, set complete, or repeat
 * Remove start date when action taken?
-* Filter slider has stops: all, hide inactive, hide complete, hide cold
 * Check priority calcs
 * Glide left to make more icy (start date) or right to make more urgent (due date)
 * Slide left to see "bar" partial complete, more left check, more left repeat
@@ -146,19 +148,13 @@ Advanced Features
 
 In Box
 ------
-* indicate stale actions
 * Autofocus: move pending todos to end of journal
-* Decide if all entries for completed todod should be crossed out
+* Decide if all entries for completed todos should be crossed out
 * Sort up/down
-* Remember Todos filter setting
-* Consider star for Today items instead of bold
 * Consider segmented controls to replace sliders
 * Consider more randomness in priority
-* Commitment sort
 * Intl date format
 * Edit title field should use correct font based on settings
-* Hide urgency slider if due date is set
-* Show urgent maybe todos properly (or disallow)
 
 Old Notes
 ==========================

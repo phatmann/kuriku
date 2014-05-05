@@ -11,7 +11,6 @@
 #import "Todo.h"
 #import "EntryCell.h"
 #import <InnerBand.h>
-#import "TMGrowingTextView.h"
 
 static const float_t PriorityFilterShowAll __unused     = 0.0;
 static const float_t PriorityFilterShowActive           = 0.1;
@@ -317,10 +316,11 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static TMGrowingTextView *sizingTextView;
+    static UITextView *sizingTextView;
     
     if (!sizingTextView) {
-        sizingTextView = [TMGrowingTextView new];
+        sizingTextView = [UITextView new];
+        sizingTextView.textContainerInset = UIEdgeInsetsZero;
     }
     
     Entry *entry = [self entryAtIndexPath:indexPath];
@@ -328,7 +328,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     sizingTextView.text = entry.todo.title;
     sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
     
-    static const CGFloat margin =  21;
+    static const CGFloat margin = 21;
     CGFloat width = 280;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     
@@ -440,7 +440,6 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     
     self.navigationBarItem.rightBarButtonItem = self.doneButton;
     
-    [self updateRowHeights];
     [self scrollCaretIntoView:textView];
 }
 

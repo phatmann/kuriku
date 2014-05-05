@@ -67,6 +67,7 @@
     _glowView = [GlowView new];
     self.backgroundView = _glowView;
     self.backgroundView.backgroundColor = [UIColor whiteColor];
+    self.titleTextView.textContainerInset = UIEdgeInsetsZero;
     
     _warmColor    = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
     _hotColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
