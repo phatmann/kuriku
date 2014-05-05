@@ -4,26 +4,23 @@ The visual intelligent action journal
 Newest thoughts
 ---------------
 * Scroll down to show blank line in edit mode
-* Pinch to make importance high to normal (positive?). Pinch again to make it less committed.
-* Show a special shaded color when importance low, immune to staleness.
-* Stale color is brown, like parchment paper
 
 Improvements
 ------------
-* Better staleness effect
-* Notch for normal importance
+* Pinch to make importance high to normal (positive?). Pinch again to make it less committed.
+* Show a special shaded color when importance low, immune to staleness.
 * Better progress UX, especially with filters. Animate completion.
 * Enhance edit dialog to use temperature, show tips
 * Animate row deletion when multiple entries for deleted todo
 * Filter slider has stops: all, hide inactive, hide complete, hide cold
 * If start date in past applied, ignore it
-* Swipe recognition not reliable
 
 Bugs
 ----
 * Often cell gets selected during a gesture
 * Sometimes pinching happens when trying to rotate
 * Done button does not animate cell collapse
+* Swipe recognition not reliable
 * Do not allow actions on completed task
 * Do not allow actions on inactive task
 

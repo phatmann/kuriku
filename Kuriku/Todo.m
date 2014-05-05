@@ -15,7 +15,7 @@ static const NSTimeInterval kUrgentDaysBeforeDueDate   = 14;
 static const NSTimeInterval kFrostyDaysBeforeStartDate = 60;
 
 const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
-const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 14;
+const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 7;
 
 @implementation Todo
 
@@ -128,6 +128,8 @@ const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 14;
 }
 
 - (float_t)staleness {
+    //return arc4random_uniform(100) / 100.0;
+    
     if (!self.lastEntry)
         return 0.0f;
     

@@ -2,8 +2,8 @@
 @hotColor:  hsl(0.0, 1.0, 1.0);
 @coolColor: hsl(0.5, 1.0, 1.0);
 @coldColor: hsl(0.6, 1.0, 1.0);
-@oldColor: hsl(0.07, 0.1, 0.75);
-@veryOldColor: hsl(0.07, 0.3, 0.75);
+@oldColor: hsl(0.09, 0.04, 1.0);
+@veryOldColor: hsl(0.09, 0.11, 0.95); /*[UIColor colorWithRed:0.970 green:0.933 blue:0.858 alpha:1.000]*/
 @dateFontSize: 9;
 @dateDraggingFontSize: 11;
 

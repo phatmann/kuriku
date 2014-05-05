@@ -235,7 +235,7 @@
 -(void) updateBackground {
     if (self.entry.state == EntryStateActive) {
         if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
-            self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.temperature fromColor:_oldColor toColor:_veryOldColor];
+            self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];
         } else if (self.entry.type == EntryTypeComplete) {
             self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"EntryComplete"];
         } else {
