@@ -14,14 +14,15 @@
 const float_t  TodoImportanceDefaultValue = 0.5f;
 const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
-const int TodoPriorityVersion = 8;
+const int TodoPriorityVersion = 9;
 const NSTimeInterval kUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval kFrostyDaysBeforeStartDate = 60;
 
 const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 7;
 
-const float_t TodoColdMaxPriority = 0.1;
+const float_t TodoWarmMinPriority = 0.9;
+const float_t TodoColdMaxPriority = 1.0 - TodoWarmMinPriority;
 
 @implementation Todo
 
@@ -307,13 +308,12 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 #pragma mark - Private
 
 - (void)updatePriority {
-    static const float_t warmPriorityRange = 1.0 - TodoColdMaxPriority;
     CGFloat priority = 0;
     
     if (!self.startDate)
-        priority += TodoColdMaxPriority;
+        priority += TodoWarmMinPriority;
     
-    priority += (self.importance * (warmPriorityRange / 2)) + (self.temperature * (warmPriorityRange / 2));
+    priority += (self.importance * (TodoColdMaxPriority / 2)) + (self.temperature * (TodoColdMaxPriority / 2));
     self.priority = fratiof(priority);
 }
 

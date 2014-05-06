@@ -42,10 +42,12 @@
     
     float_t savedPriorityFilter = [[NSUserDefaults standardUserDefaults] floatForKey:@"priorityFilter"];
     
-    if (savedPriorityFilter > 0)
+    if (savedPriorityFilter > 0) {
         self.priorityFilter = savedPriorityFilter;
-    else
+        self.filterSlider.value = self.priorityFilter;
+    } else {
         [self reloadData];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
