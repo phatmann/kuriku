@@ -12,7 +12,6 @@ Improvements
 * Better progress UX, especially with filters. Animate completion.
 * Enhance edit dialog to use temperature, show tips
 * Animate row deletion when multiple entries for deleted todo
-* Filter slider has stops: all, hide inactive, hide complete, hide cold
 * If start date in past applied, ignore it
 
 Bugs

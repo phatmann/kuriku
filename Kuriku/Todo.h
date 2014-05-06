@@ -50,7 +50,7 @@ extern const int TodoPriorityVersion;
 extern const NSTimeInterval kMinStaleDaysAfterLastEntryDate;
 extern const NSTimeInterval kMaxStaleDaysAfterLastEntryDate;
 
-extern const float_t kColdMaxPriority;
+extern const float_t TodoColdMaxPriority;
 
 @end
 

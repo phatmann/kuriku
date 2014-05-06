@@ -13,10 +13,6 @@
 #import <NUI/NUISettings.h>
 #import <InnerBand.h>
 
-static const float_t PriorityFilterShowAll __unused     = 0.0;
-static const float_t PriorityFilterShowActive           = 0.1;
-static const float_t PriorityFilterShowHigh __unused    = 1.0;
-
 @interface JournalViewController ()
 
 @property (strong, nonatomic) Entry *selectedEntry;
@@ -67,8 +63,10 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 }
 
 - (void)setPriorityFilter:(float_t)priorityFilter {
+    if (_priorityFilter == priorityFilter)
+        return;
+    
     _priorityFilter = priorityFilter;
-    self.filterSlider.value = priorityFilter;
     
     [[NSUserDefaults standardUserDefaults] setFloat:priorityFilter forKey:@"priorityFilter"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -486,12 +484,31 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
 #pragma mark - Action Handlers
 
 - (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
-    self.priorityFilter = filterSlider.value;
+    static const CGFloat notchSize = 0.03;
+    
+    if (filterSlider.value < notchSize)
+        filterSlider.value = 0;
+    else if (fabsf(filterSlider.value - EntryActiveMinPriority) < notchSize)
+        filterSlider.value = EntryActiveMinPriority;
+    else if (fabsf(filterSlider.value - EntryCompletedPriority) < notchSize)
+        filterSlider.value = EntryCompletedPriority;
+    else if (fabsf(filterSlider.value - EntryColdMaxPriority) < notchSize)
+        filterSlider.value = EntryColdMaxPriority;
+    
+    if (filterSlider.value < EntryActiveMinPriority)
+        self.priorityFilter = 0;
+    else if (filterSlider.value < EntryCompletedPriority)
+        self.priorityFilter = EntryActiveMinPriority;
+    else if (filterSlider.value == EntryCompletedPriority)
+        self.priorityFilter = EntryCompletedPriority + 0.01;
+    else
+        self.priorityFilter = filterSlider.value;
 }
 
 - (IBAction)addButtonTapped {
-    if (self.priorityFilter > PriorityFilterShowActive) {
-        self.priorityFilter = PriorityFilterShowActive;
+    if (self.priorityFilter > EntryActiveMinPriority) {
+        self.priorityFilter = EntryActiveMinPriority;
+        self.filterSlider.value = self.priorityFilter;
     }
     
     [Todo create];
@@ -580,6 +597,7 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
     [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]

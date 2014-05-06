@@ -11,9 +11,11 @@
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
-const float_t kInactivePriority  = 0;
-const float_t kCompletedPriority = 0.1;
-const float_t kActiveMinPriority = 0.2;
+const float_t EntryInactivePriority  = 0;
+const float_t EntryActiveMinPriority = 0.1;
+const float_t EntryCompletedPriority = 0.2;
+const float_t EntryNormalMinPriority = 0.3;
+const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
 
 @implementation Entry
 @dynamic priority;
@@ -106,12 +108,11 @@ const float_t kActiveMinPriority = 0.2;
 
 - (void)updatePriority {
     if (self.state == EntryStateInactive) {
-        self.priority = kInactivePriority;
+        self.priority = EntryInactivePriority;
     } else if (self.type == EntryTypeComplete) {
-        self.priority = kCompletedPriority;
+        self.priority = EntryCompletedPriority;
     } else {
-        static const float_t activePriorityRange = 1.0 - kActiveMinPriority;
-        self.priority = fratiof(kActiveMinPriority + (self.todo.priority * activePriorityRange));
+        self.priority = fratiof(EntryNormalMinPriority + (self.todo.priority * EntryNormalPriorityRange));
     }
 }
 
