@@ -11,11 +11,17 @@
 #import <InnerBand/InnerBand.h>
 #import "NSDate+Kuriku.h"
 
-static const NSTimeInterval kUrgentDaysBeforeDueDate   = 14;
-static const NSTimeInterval kFrostyDaysBeforeStartDate = 60;
+const float_t  TodoImportanceDefaultValue = 0.5f;
+const float_t  TodoUrgencyDefaultValue    = 0.0f;
+
+const int TodoPriorityVersion = 7;
+const NSTimeInterval kUrgentDaysBeforeDueDate   = 14;
+const NSTimeInterval kFrostyDaysBeforeStartDate = 60;
 
 const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 7;
+
+const float_t kColdMaxPriority = 0.3;
 
 @implementation Todo
 
@@ -221,6 +227,10 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     for (Todo *todo in [Todo all]) {
         [todo updatePriority];
     }
+    
+    for (Entry *entry in [Entry all]) {
+        [entry updatePriority];
+    }
 }
 
 + (void)updatePrioritiesFromDueDate {
@@ -297,12 +307,14 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 #pragma mark - Private
 
 - (void)updatePriority {
-    if (self.startDate) {
-        self.priority = 0;
-        return;
-    }
+    static const float_t warmPriorityRange = 1.0 - kColdMaxPriority;
+    CGFloat priority = 0;
     
-    self.priority = (self.importance * 0.5) + (self.temperature * 0.5);
+    if (!self.startDate)
+        priority += kColdMaxPriority;
+    
+    priority += (self.importance * (warmPriorityRange / 2)) + (self.temperature * (warmPriorityRange / 2));
+    self.priority = fratiof(priority);
 }
 
 @end

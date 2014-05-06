@@ -38,5 +38,9 @@ typedef enum {
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString;
 + (void)migrate;
+- (void)updatePriority;
+
+extern const float_t kInactivePriority;
+extern const float_t kCompletedPriority;
 
 @end

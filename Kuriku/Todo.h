@@ -12,11 +12,6 @@
 
 @class Journal;
 
-static const float_t  TodoImportanceDefaultValue = 0.5f;
-static const float_t  TodoUrgencyDefaultValue    = 0.0f;
-
-static const int TodoPriorityVersion = 6;
-
 @interface Todo : NSManagedObject
 
 @property (nonatomic, strong) NSString *title;
@@ -47,8 +42,15 @@ NSDate *dueDateFromUrgency(float_t urgency);
 float_t frostinessFromStartDate(NSDate *startDate);
 NSDate *startDateFromFrostiness(float_t frostiness);
 
+extern const float_t  TodoImportanceDefaultValue;
+extern const float_t  TodoUrgencyDefaultValue;
+
+extern const int TodoPriorityVersion;
+
 extern const NSTimeInterval kMinStaleDaysAfterLastEntryDate;
 extern const NSTimeInterval kMaxStaleDaysAfterLastEntryDate;
+
+extern const float_t kColdMaxPriority;
 
 @end
 

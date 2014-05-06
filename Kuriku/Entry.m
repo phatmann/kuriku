@@ -11,9 +11,9 @@
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
-@interface Entry ()
-
-@end
+const float_t kInactivePriority  = 0;
+const float_t kCompletedPriority = 0.1;
+const float_t kActiveMinPriority = 0.2;
 
 @implementation Entry
 @dynamic priority;
@@ -101,14 +101,18 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    [self updatePriorityFromTodo];
+    [self updatePriority];
 }
 
-- (void)updatePriorityFromTodo {
-    if (self.state == EntryStateInactive || self.type == EntryTypeComplete)
-        self.priority = 0;
-    else
-        self.priority = self.todo.priority;
+- (void)updatePriority {
+    if (self.state == EntryStateInactive) {
+        self.priority = kInactivePriority;
+    } else if (self.type == EntryTypeComplete) {
+        self.priority = kCompletedPriority;
+    } else {
+        static const float_t activePriorityRange = 1.0 - kActiveMinPriority;
+        self.priority = fratiof(kActiveMinPriority + (self.todo.priority * activePriorityRange));
+    }
 }
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString {
