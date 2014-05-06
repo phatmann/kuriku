@@ -3,13 +3,15 @@
 @coolColor: hsl(0.5, 1.0, 1.0);
 @coldColor: hsl(0.6, 1.0, 1.0);
 @oldColor: hsl(0.09, 0.04, 1.0);
-@veryOldColor: hsl(0.09, 0.11, 0.95); /*[UIColor colorWithRed:0.970 green:0.933 blue:0.858 alpha:1.000]*/
+@veryOldColor: hsl(0.09, 0.11, 0.95);
 @dateFontSize: 9;
 @dateDraggingFontSize: 11;
 @completedTextColor: rgb(164, 164, 164);
 @inactiveTextColor: white;
-@normalFont: Helvetica;
-@boldFont: Helvetica-Bold;
+@normalFont: AvenirNext-Regular;
+@boldFont: AvenirNext-Bold;
+@italicFont: AvenirNext-UltraLightItalic;
+@timeFont: AvenirNext-Medium;
 
 Entry {
     font-name: @normalFont;
@@ -25,17 +27,17 @@ Progress {
 }
 
 Time {
-    font-name:  @normalFont;
+    font-name:  @timeFont;
     font-color: rgb(170, 170, 170);
 }
 
 TimeInactive {
-    font-name:  @boldFont;
+    font-name:  @timeFont;
     font-color: @inactiveTextColor;
 }
 
 TimeCompleted {
-    font-name:  @normalFont;
+    font-name:  @timeFont;
     font-color: @completedTextColor;
 }
 
@@ -106,6 +108,11 @@ StatusCompleted {
 }
 
 StateInactive {
-    font-name: Helvetica;
     font-color: @inactiveTextColor;
+}
+
+JournalSectionHeader {
+    font-name: @italicFont;
+    font-color: black;
+    background-color: white;
 }

@@ -10,6 +10,7 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "EntryCell.h"
+#import <NUI/NUISettings.h>
 #import <InnerBand.h>
 
 static const float_t PriorityFilterShowAll __unused     = 0.0;
@@ -409,6 +410,15 @@ static const float_t PriorityFilterShowHigh __unused    = 1.0;
             [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
         }
     }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    static NSString *nuiClass = @"JournalSectionHeader";
+    
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.font      = [NUISettings getFontWithClass:nuiClass baseFont:header.textLabel.font];
+    header.textLabel.textColor = [NUISettings getColor:@"font-color" withClass:nuiClass];
+    header.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:nuiClass];
 }
 
 #pragma mark - Repeat Controller Delegate
