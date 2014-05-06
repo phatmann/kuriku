@@ -44,26 +44,6 @@
     self.textGlowColor = nil;
 }
 
-- (NSString *)styleClassForEntry:(Entry *)entry {
-    NSString *state, *status = @"Normal";
-    
-    switch (entry.state) {
-        case EntryStateActive:
-            state = @"Active";
-            break;
-            
-        case EntryStateInactive:
-            state = @"Inactive";
-            break;
-    }
-    
-    if (entry.type == EntryTypeComplete) {
-        status = @"Completed";
-    }
-    
-    return [NSString stringWithFormat:@"Status%@:State%@", status, state];
-}
-
 - (void)awakeFromNib {
     _glowView = [GlowView new];
     self.backgroundView = _glowView;
@@ -74,11 +54,11 @@
     _hotColor         = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
     _coolColor        = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
     _coldColor        = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
-    _oldColor         = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
-    _veryOldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
-    _activeColor      = [NUISettings getColor:@"background-color" withClass:@"EntryActive"];
-    _inactiveColor    = [NUISettings getColor:@"background-color" withClass:@"EntryInactive"];
-    _uncommittedColor = [NUISettings getColor:@"background-color" withClass:@"Uncommitted"];
+    _oldColor         = [NUISettings getColor:@"background-color" withClass:@"EntryCellStalenessOld"];
+    _veryOldColor     = [NUISettings getColor:@"background-color" withClass:@"EntryCellStalenessVeryOld"];
+    _activeColor      = [NUISettings getColor:@"background-color" withClass:@"EntryCellActive"];
+    _inactiveColor    = [NUISettings getColor:@"background-color" withClass:@"EntryCellInactive"];
+    _uncommittedColor = [NUISettings getColor:@"background-color" withClass:@"EntryCellUncommitted"];
     
     self.progressViewWidthConstraint.constant = 0;
 }
@@ -104,7 +84,8 @@
 - (void)refresh {
     [self updateTime];
     [self updateTitle];
-    [self updateTemperature];
+    [self updateCellGlow];
+    [self updateDate];
     [self updateBackground];
     [self updateProgress];
 }
@@ -115,7 +96,8 @@
 }
 
 - (void)temperatureWasChanged {
-    [self updateTemperature];
+    [self updateCellGlow];
+    [self updateDate];
 }
 
 - (UIColor *)cellGlowColor {
@@ -127,10 +109,14 @@
 }
 
 + (CGFloat)fontSizeForImportance:(CGFloat)importance {
-    CGFloat lowImportanceFontSize  = [NUISettings getFloat:@"font-size" withClass:@"ImportanceLow"];
-    CGFloat highImportanceFontSize = [NUISettings getFloat:@"font-size" withClass:@"ImportanceHigh"];
+    static CGFloat fontSizeImportanceLow, fontSizeImportanceHigh;
     
-    return lowImportanceFontSize + ((highImportanceFontSize - lowImportanceFontSize ) * importance);
+    if (!fontSizeImportanceLow) {
+        fontSizeImportanceLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceLow"];
+        fontSizeImportanceHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceHigh"];
+    }
+    
+    return fontSizeImportanceLow + ((fontSizeImportanceHigh - fontSizeImportanceLow ) * importance);
 }
 
 #pragma mark -
@@ -205,8 +191,7 @@
     }
 }
 
-- (void)updateTemperature {
-    [self updateDate];
+- (void)updateCellGlow {
     self.cellGlowColor = nil;
     
     if (self.entry.state == EntryStateActive) {
@@ -219,26 +204,21 @@
 }
 
 - (void)updateTitle {
-    self.titleTextView.nuiClass = [NSString stringWithFormat:@"Entry:%@", [self styleClassForEntry:self.entry]];
-
-    NSString *title = self.entry.todo.title ? self.entry.todo.title : @"";
-    
-    NSString *decoration = [NUISettings get:@"text-decoration" withClass:self.titleTextView.nuiClass];
-    NSUnderlineStyle strikethroughStyle = [decoration isEqualToString:@"line-through"] ?
-        NSUnderlineStyleSingle : NSUnderlineStyleNone;
-    
-    NSMutableDictionary *attributes = [@{NSStrikethroughStyleAttributeName: @(strikethroughStyle)} mutableCopy];
-    
-    if (self.textGlowColor) {
-        NSShadow *shadow = [NSShadow new];
-        shadow.shadowOffset = CGSizeMake(0, 0);
-        shadow.shadowBlurRadius = 0;
-        shadow.shadowBlurRadius = 5;
-        shadow.shadowColor = self.textGlowColor;
-        attributes[NSShadowAttributeName] = shadow;
+    if (self.entry.type == EntryTypeComplete) {
+        self.titleTextView.nuiClass = @"EntryLabelCompleted";
+    } else if (self.entry.state == EntryStateInactive) {
+        self.titleTextView.nuiClass = @"EntryLabelInactive";
+    } else {
+        self.titleTextView.nuiClass = @"EntryLabel";
     }
     
-    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:title
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    
+    [self addStrikethroughAttribute:attributes];
+    
+    [self addTextGlowAttribute:attributes];
+    
+    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:self.entry.todo.title ? self.entry.todo.title : @""
                                                                         attributes:attributes];
     self.titleTextView.typingAttributes = attributes;
     [self.titleTextView applyNUI];
@@ -302,5 +282,21 @@
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0];
 }
 
+- (void)addTextGlowAttribute:(NSMutableDictionary *)attributes {
+    if (self.textGlowColor) {
+        NSShadow *shadow = [NSShadow new];
+        shadow.shadowOffset = CGSizeMake(0, 0);
+        shadow.shadowBlurRadius = 0;
+        shadow.shadowBlurRadius = 5;
+        shadow.shadowColor = self.textGlowColor;
+        attributes[NSShadowAttributeName] = shadow;
+    }
+}
+
+- (void)addStrikethroughAttribute:(NSMutableDictionary *)attributes {
+    NSString *decoration = [NUISettings get:@"text-decoration" withClass:self.titleTextView.nuiClass];
+    NSUnderlineStyle strikethroughStyle = [decoration isEqualToString:@"line-through"] ? NSUnderlineStyleSingle : NSUnderlineStyleNone;
+    attributes[NSStrikethroughStyleAttributeName] = @(strikethroughStyle);
+}
 
 @end

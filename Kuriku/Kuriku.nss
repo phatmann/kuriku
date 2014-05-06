@@ -4,70 +4,42 @@
 @coldColor: hsl(0.6, 1.0, 1.0);
 @oldColor: hsl(0.09, 0.04, 1.0);
 @veryOldColor: hsl(0.09, 0.11, 0.95);
-@dateFontSize: 9;
-@dateDraggingFontSize: 11;
 @completedTextColor: rgb(164, 164, 164);
 @inactiveTextColor: white;
 @normalFont: AvenirNext-Regular;
 @boldFont: AvenirNext-Bold;
 @italicFont: AvenirNext-UltraLightItalic;
+@timeFontSize: 9;
 @timeFont: AvenirNext-Medium;
 
-Entry {
-    font-name: @normalFont;
-    font-color: black;
+/* Computed styles */
+
+EntryLabelImportanceLow {
+    font-size: 14;
 }
 
-EntryInactive {
+EntryLabelImportanceHigh {
+    font-size: 26;
+}
+
+EntryCellInactive {
     background-color: rgb(228, 228, 228);
 }
 
-EntryActive {
+EntryCellActive {
     background-color: white;
 }
 
-Progress {
-    background-color: rgb(0.74, 1.000, 0.811);
+EntryCellUncommitted {
+    background-color: rgb(0.85, 0.95, 1.0);
 }
 
-Time {
-    font-name:  @timeFont;
-    font-color: rgb(170, 170, 170);
+EntryCellStalenessVeryOld {
+    background-color: @veryOldColor;
 }
 
-TimeInactive {
-    font-name:  @timeFont;
-    font-color: @inactiveTextColor;
-}
-
-TimeCompleted {
-    font-name:  @timeFont;
-    font-color: @completedTextColor;
-}
-
-DueDate {
-    font-color: @hotColor;
-    font-size: @dateFontSize;
-}
-
-StartDate {
-    font-color: white;
-    font-size: @dateFontSize;
-}
-
-DueDateDragging {
-    font-color: black;
-    font-size: @dateDraggingFontSize;
-}
-
-StartDateDragging {
-    font-color: black;
-    font-size: @dateDraggingFontSize;
-}
-
-DatePrompt {
-    font-color: black;
-    font-size: @dateDraggingFontSize;
+EntryCellStalenessOld {
+    background-color: @oldColor;
 }
 
 TemperatureCold {
@@ -86,37 +58,63 @@ TemperatureHot {
     background-color: @hotColor;
 }
 
-StalenessVeryOld {
-    background-color: @veryOldColor;
-}
-
-StalenessOld {
-    background-color: @oldColor;
-}
-
-ImportanceLow {
-    font-size: 14;
-}
-
-ImportanceHigh {
-    font-size: 26;
-}
-
-Uncommitted {
-    background-color: rgb(0.85, 0.95, 1.0);
-}
-
-StatusCompleted {
-    text-decoration: line-through;
-    font-color: @completedTextColor;
-}
-
-StateInactive {
-    font-color: @inactiveTextColor;
-}
+/* Normal styles */
 
 JournalSectionHeader {
     font-name: @italicFont;
     font-color: black;
     background-color: white;
 }
+
+EntryLabel {
+    font-name: @normalFont;
+    font-color: black;
+}
+
+EntryLabelCompleted {
+    font-name: @normalFont;
+    font-color: @completedTextColor;
+    text-decoration: line-through;
+}
+
+EntryLabelInactive {
+    font-name: @normalFont;
+    font-color: @inactiveTextColor;
+}
+
+Progress {
+    background-color: rgb(0.74, 1.000, 0.811);
+}
+
+Time {
+    font-name:  @timeFont;
+    font-color: rgb(170, 170, 170);
+    font-size: @timeFontSize;
+}
+
+TimeInactive {
+    font-name:  @timeFont;
+    font-color: @inactiveTextColor;
+    font-size: @timeFontSize;
+}
+
+TimeCompleted {
+    font-name:  @timeFont;
+    font-color: @completedTextColor;
+    font-size: @timeFontSize;
+}
+
+DueDate {
+    font-name: @timeFont;
+    font-color: @hotColor;
+    font-size: @timeFontSize;
+}
+
+StartDate {
+    font-name: @timeFont;
+    font-color: white;
+    font-size: @timeFontSize;
+}
+
+
+

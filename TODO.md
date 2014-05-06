@@ -1,24 +1,18 @@
 Kuriku
 The visual intelligent action journal
 
-Newest thoughts
----------------
-* Scroll down to show blank line in edit mode
-
 Improvements
 ------------
-* Pinch to make importance high to normal (positive?). Pinch again to make it less committed.
-* Show a special shaded color when importance low, immune to staleness.
 * Better progress UX, especially with filters. Animate completion.
 * Enhance edit dialog to use temperature, show tips
 * Animate row deletion when multiple entries for deleted todo
-* If start date in past applied, ignore it
 
 Bugs
 ----
 * Time should be white behind glow
 * Double check cold priority calcs
 * Often cell gets selected during a gesture
+* If start date in past applied, ignore it
 * Sometimes pinching happens when trying to rotate
 * Done button does not animate cell collapse
 * Swipe recognition not reliable
@@ -27,6 +21,7 @@ Bugs
 
 Missing Features
 ----------------
+* Scroll down to show blank line in edit mode
 * Allow multiple todos to be entered
 * Tap inactive task goes to active task
 * Jump around to different dates in journal
