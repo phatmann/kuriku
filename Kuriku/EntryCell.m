@@ -19,7 +19,7 @@
 @interface EntryCell ()
 {
     UIColor *_warmColor, *_hotColor, *_coolColor, *_coldColor, *_oldColor, *_veryOldColor;
-    UIColor *_activeColor, *_inactiveColor;
+    UIColor *_activeColor, *_inactiveColor, *_uncommittedColor;
     GlowView *_glowView;
 }
 
@@ -70,14 +70,15 @@
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     self.titleTextView.textContainerInset = UIEdgeInsetsZero;
     
-    _warmColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-    _hotColor      = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-    _coolColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
-    _coldColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
-    _oldColor      = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
-    _veryOldColor  = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
-    _activeColor   = [NUISettings getColor:@"background-color" withClass:@"EntryActive"];
-    _inactiveColor = [NUISettings getColor:@"background-color" withClass:@"EntryInactive"];
+    _warmColor        = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+    _hotColor         = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+    _coolColor        = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+    _coldColor        = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+    _oldColor         = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+    _veryOldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+    _activeColor      = [NUISettings getColor:@"background-color" withClass:@"EntryActive"];
+    _inactiveColor    = [NUISettings getColor:@"background-color" withClass:@"EntryInactive"];
+    _uncommittedColor = [NUISettings getColor:@"background-color" withClass:@"Uncommitted"];
     
     self.progressViewWidthConstraint.constant = 0;
 }
@@ -110,7 +111,7 @@
 
 - (void)importanceWasChanged {
     [self updateTitle];
-    [self updateTemperature];
+    [self updateBackground];
 }
 
 - (void)temperatureWasChanged {
@@ -247,7 +248,9 @@
 
 -(void) updateBackground {
     if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
+        if (self.entry.todo.importance < TodoImportanceCommitted) {
+            self.backgroundView.backgroundColor = _uncommittedColor;
+        } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];
         } else {
             self.backgroundView.backgroundColor = _activeColor;

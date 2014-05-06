@@ -188,6 +188,12 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.priority, equalToFloat(0.75));
 }
 
+- (void)test_priority_for_stale_todo {
+    entryDate = [NSDate dateFromTodayWithDays:-TodoMaxStaleDaysAfterLastEntryDate];
+    [self.todo updatePriority];
+    assertThatFloat(self.todo.priority, equalToFloat(0.75f));
+}
+
 - (void)test_update_all_priorities_when_priority_version_changes {
     Todo *todo1 = self.todo;
     Todo *todo2 = [self createTodo];
@@ -265,9 +271,8 @@ static NSDate *entryDate;
 }
 
 - (void)test_priority_zero_when_start_date {
-    assertThatFloat(self.todo.priority, isNot(equalToFloat(0)));
-    self.todo.startDate = [[NSDate today] dateByAddingDays:1];
-    assertThatFloat(self.todo.priority, equalToFloat(0.0f));
+    self.todo.startDate = [NSDate dateFromTodayWithDays:1];
+    assertThatFloat(self.todo.priority, closeTo(0.241, 0.001));
 }
 
 - (void)test_priority_with_distant_due_date {
@@ -276,12 +281,12 @@ static NSDate *entryDate;
 }
 
 - (void)test_staleness_for_old_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate];
+    entryDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastEntryDate];
     assertThatFloat(self.todo.staleness, equalToFloat(1.0f));
 }
 
 - (void)test_staleness_for_aging_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate/2];
+    entryDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastEntryDate/2];
     assertThatFloat(self.todo.staleness, closeTo(0.5f, 0.1f));
 }
 
@@ -295,7 +300,7 @@ static NSDate *entryDate;
 }
 
 - (void)test_temperature_for_old_unimportant_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate];
+    entryDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastEntryDate];
     self.todo.importance = 0.0;
     assertThatFloat(self.todo.temperature, equalToFloat(0.0f));
 }
@@ -344,13 +349,8 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.temperature, equalToFloat(1.0f));
 }
 
-- (void)test_temperature_for_stale_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate];
-    assertThatFloat(self.todo.temperature, equalToFloat(0.5f));
-}
-
 - (void)test_temperature_for_urgent_stale_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-kMaxStaleDaysAfterLastEntryDate / 2];
+    entryDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastEntryDate / 2];
     self.todo.dueDate = [[NSDate today] dateByAddingDays:7];
     assertThatFloat(self.todo.temperature, equalToFloat(0.5f));
 }

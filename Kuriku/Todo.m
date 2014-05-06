@@ -14,14 +14,15 @@
 const float_t  TodoImportanceDefaultValue = 0.5f;
 const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
-const int TodoPriorityVersion = 12;
-const NSTimeInterval kUrgentDaysBeforeDueDate   = 14;
-const NSTimeInterval kFrostyDaysBeforeStartDate = 60;
+const int TodoPriorityVersion = 13;
+const NSTimeInterval TodoUrgentDaysBeforeDueDate   = 14;
+const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
 
-const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
-const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 7;
+const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate = 60;
+const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 7;
 
 const float_t TodoColdMaxPriority = 0.5;
+const float_t TodoImportanceCommitted = 0.5;
 
 @implementation Todo
 
@@ -141,12 +142,12 @@ const float_t TodoColdMaxPriority = 0.5;
     
     int daysAfterLastEntryDate = -[self.lastEntry.timestamp daysFromToday];
     
-    if (daysAfterLastEntryDate < kMinStaleDaysAfterLastEntryDate) {
+    if (daysAfterLastEntryDate < TodoMinStaleDaysAfterLastEntryDate) {
         return 0.0f;
-    } else if (daysAfterLastEntryDate >= kMaxStaleDaysAfterLastEntryDate) {
+    } else if (daysAfterLastEntryDate >= TodoMaxStaleDaysAfterLastEntryDate) {
         return 1.0f;
     } else {
-        return 1.0f - ((kMaxStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / kMaxStaleDaysAfterLastEntryDate);
+        return 1.0f - ((TodoMaxStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / TodoMaxStaleDaysAfterLastEntryDate);
     }
 }
 
@@ -186,7 +187,7 @@ const float_t TodoColdMaxPriority = 0.5;
     if (self.dueDate)
         return fratiof(self.urgency);
     
-    return self.staleness;
+    return 0;
 }
 
 #pragma mark -
@@ -195,14 +196,14 @@ float_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)
         return 0;
         
-    return (kUrgentDaysBeforeDueDate - [dueDate daysFromToday]) / kUrgentDaysBeforeDueDate;
+    return (TodoUrgentDaysBeforeDueDate - [dueDate daysFromToday]) / TodoUrgentDaysBeforeDueDate;
 }
 
 NSDate *dueDateFromUrgency(float_t urgency) {
     if (urgency == 0) {
         return nil;
     } else {
-        int daysUntilDue = roundf(kUrgentDaysBeforeDueDate - (urgency * kUrgentDaysBeforeDueDate));
+        int daysUntilDue = roundf(TodoUrgentDaysBeforeDueDate - (urgency * TodoUrgentDaysBeforeDueDate));
         return [[NSDate today] dateByAddingDays:daysUntilDue];
     }
 }
@@ -211,14 +212,14 @@ float_t frostinessFromStartDate(NSDate *startDate) {
     if (!startDate)
         return 0;
 
-    return 1.0f - (kFrostyDaysBeforeStartDate - [startDate daysFromToday]) / kFrostyDaysBeforeStartDate;
+    return 1.0f - (TodoFrostyDaysBeforeStartDate - [startDate daysFromToday]) / TodoFrostyDaysBeforeStartDate;
 }
 
 NSDate *startDateFromFrostiness(float_t frostiness) {
     if (frostiness == 0) {
         return nil;
     } else {
-        int daysUntilThawed = roundf(frostiness * kFrostyDaysBeforeStartDate);
+        int daysUntilThawed = roundf(frostiness * TodoFrostyDaysBeforeStartDate);
         return [[NSDate today] dateByAddingDays:daysUntilThawed];
     }
 }
@@ -234,7 +235,7 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 }
 
 + (void)updatePrioritiesFromDueDate {
-    NSDate *dateUrgentDaysFromNow = [NSDate dateFromTodayWithDays:kUrgentDaysBeforeDueDate];
+    NSDate *dateUrgentDaysFromNow = [NSDate dateFromTodayWithDays:TodoUrgentDaysBeforeDueDate];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@", dateUrgentDaysFromNow];
     NSArray *todos = [Todo allForPredicate:predicate];
     
@@ -307,7 +308,18 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 #pragma mark - Private
 
 - (void)updatePriority {
-    self.priority = fratiof((self.importance * TodoColdMaxPriority) + (self.temperature * (1.0 - TodoColdMaxPriority)));
+    CGFloat attention;
+    
+    if (self.temperature == 0) {
+        if (self.importance < TodoImportanceCommitted)
+            attention = 0;
+        else
+            attention = self.staleness;
+    } else {
+        attention = self.temperature;
+    }
+    
+    self.priority = fratiof((self.importance * TodoColdMaxPriority) + (attention * (1.0 - TodoColdMaxPriority)));
 }
 
 @end

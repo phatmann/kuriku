@@ -33,12 +33,12 @@
 }
 
 - (void)test_priority_set_when_new {
-    assertThatFloat(self.todo.lastEntry.priority, equalToFloat(self.todo.priority));
+    assertThatFloat(self.todo.lastEntry.priority, closeTo(0.475, 0.001));
 }
 
 - (void)test_priority_updated_when_todo_priority_changes {
     self.todo.importance = 1.0;
-    assertThatFloat(self.todo.lastEntry.priority, equalToFloat(self.todo.priority));
+    assertThatFloat(self.todo.lastEntry.priority, closeTo(0.65, 0.001));
 }
 
 - (void)test_priority_zero_when_inactive {
@@ -51,7 +51,7 @@
 - (void)test_priority_zero_for_completed {
     assertThatFloat(self.todo.priority, isNot(equalToFloat(0)));
     Entry *entry = [self.todo createEntry:EntryTypeComplete];
-    assertThatFloat(entry.priority, equalToFloat(0));
+    assertThatFloat(entry.priority, equalToFloat(EntryCompletedPriority));
 }
 
 - (Todo *)createTodo {

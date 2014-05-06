@@ -47,10 +47,11 @@ extern const float_t  TodoUrgencyDefaultValue;
 
 extern const int TodoPriorityVersion;
 
-extern const NSTimeInterval kMinStaleDaysAfterLastEntryDate;
-extern const NSTimeInterval kMaxStaleDaysAfterLastEntryDate;
+extern const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate;
+extern const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate;
 
 extern const float_t TodoColdMaxPriority;
+extern const float_t TodoImportanceCommitted;
 
 @end
 

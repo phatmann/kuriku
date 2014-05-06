@@ -487,6 +487,7 @@
 
 - (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
     static const CGFloat notchSize = 0.03;
+    CGFloat coldMaxPriority = [Entry normalPriorityFromTodoPriority:TodoColdMaxPriority];
     
     if (filterSlider.value < notchSize)
         filterSlider.value = 0;
@@ -494,8 +495,8 @@
         filterSlider.value = EntryActiveMinPriority;
     else if (fabsf(filterSlider.value - EntryCompletedPriority) < notchSize)
         filterSlider.value = EntryCompletedPriority;
-    else if (fabsf(filterSlider.value - EntryColdMaxPriority) < notchSize)
-        filterSlider.value = EntryColdMaxPriority;
+    else if (fabsf(filterSlider.value - coldMaxPriority) < notchSize)
+        filterSlider.value = coldMaxPriority;
     
     if (filterSlider.value < EntryActiveMinPriority)
         self.priorityFilter = 0;

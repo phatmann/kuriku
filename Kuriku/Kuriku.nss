@@ -102,6 +102,10 @@ ImportanceHigh {
     font-size: 26;
 }
 
+Uncommitted {
+    background-color: rgb(0.85, 0.95, 1.0);
+}
+
 StatusCompleted {
     text-decoration: line-through;
     font-color: @completedTextColor;

@@ -15,7 +15,7 @@ const float_t EntryInactivePriority  = 0;
 const float_t EntryActiveMinPriority = 0.1;
 const float_t EntryCompletedPriority = 0.2;
 const float_t EntryNormalMinPriority = 0.3;
-const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
+static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
 
 @implementation Entry
 @dynamic priority;
@@ -66,6 +66,10 @@ const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
     return [Entry journalDateFromString:self.journalDateString];
 }
 
++ (CGFloat)normalPriorityFromTodoPriority:(CGFloat)todoPriority {
+    return fratiof((EntryNormalMinPriority + (EntryNormalPriorityRange * todoPriority)));
+}
+
 - (CGFloat)progress {
     // TODO: cache entry progress
     
@@ -112,7 +116,7 @@ const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
     } else if (self.type == EntryTypeComplete) {
         self.priority = EntryCompletedPriority;
     } else {
-        self.priority = fratiof(EntryNormalMinPriority + (self.todo.priority * EntryNormalPriorityRange));
+        self.priority = [Entry normalPriorityFromTodoPriority:self.todo.priority];
     }
 }
 

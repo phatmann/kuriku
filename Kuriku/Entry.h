@@ -37,6 +37,7 @@ typedef enum {
 @property (nonatomic) NSDate *journalDate;
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString;
++ (CGFloat)normalPriorityFromTodoPriority:(CGFloat)todoPriority;
 + (void)migrate;
 - (void)updatePriority;
 
@@ -44,9 +45,6 @@ extern const float_t EntryInactivePriority;
 extern const float_t EntryActiveMinPriority ;
 extern const float_t EntryCompletedPriority;
 extern const float_t EntryNormalMinPriority;
-extern const float_t EntryNormalPriorityRange;
 
 @end
-
-#define EntryColdMaxPriority (EntryNormalMinPriority + (EntryNormalPriorityRange * TodoColdMaxPriority))
 
