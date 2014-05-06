@@ -14,7 +14,7 @@
 const float_t  TodoImportanceDefaultValue = 0.5f;
 const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
-const int TodoPriorityVersion = 11;
+const int TodoPriorityVersion = 12;
 const NSTimeInterval kUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval kFrostyDaysBeforeStartDate = 60;
 
@@ -186,7 +186,7 @@ const float_t TodoColdMaxPriority = 0.5;
     if (self.dueDate)
         return fratiof(self.urgency);
     
-    return self.staleness * self.importance;
+    return self.staleness;
 }
 
 #pragma mark -
