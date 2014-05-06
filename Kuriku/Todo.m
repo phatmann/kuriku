@@ -14,14 +14,14 @@
 const float_t  TodoImportanceDefaultValue = 0.5f;
 const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
-const int TodoPriorityVersion = 9;
+const int TodoPriorityVersion = 10;
 const NSTimeInterval kUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval kFrostyDaysBeforeStartDate = 60;
 
 const NSTimeInterval kMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval kMinStaleDaysAfterLastEntryDate = 7;
 
-const float_t TodoWarmMinPriority = 0.9;
+const float_t TodoWarmMinPriority = 0.5;
 const float_t TodoColdMaxPriority = 1.0 - TodoWarmMinPriority;
 
 @implementation Todo

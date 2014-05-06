@@ -16,6 +16,8 @@ Improvements
 
 Bugs
 ----
+* Time should be white behind glow
+* Double check cold priority calcs
 * Often cell gets selected during a gesture
 * Sometimes pinching happens when trying to rotate
 * Done button does not animate cell collapse
