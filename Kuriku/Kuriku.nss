@@ -6,22 +6,18 @@
 @veryOldColor: hsl(0.09, 0.11, 0.95); /*[UIColor colorWithRed:0.970 green:0.933 blue:0.858 alpha:1.000]*/
 @dateFontSize: 9;
 @dateDraggingFontSize: 11;
+@completedTextColor: rgb(164, 164, 164);
+@inactiveTextColor: white;
+@normalFont: Helvetica;
+@boldFont: Helvetica-Bold;
 
 Entry {
-    font-name: Helvetica;
+    font-name: @normalFont;
     font-color: black;
 }
 
 EntryInactive {
-    background-color: white;
-}
-
-EntryComplete {
-    background-color: white;
-}
-
-Status {
-
+    background-color: rgb(228, 228, 228);
 }
 
 Progress {
@@ -29,7 +25,18 @@ Progress {
 }
 
 Time {
+    font-name:  @normalFont;
     font-color: rgb(170, 170, 170);
+}
+
+TimeInactive {
+    font-name:  @boldFont;
+    font-color: @inactiveTextColor;
+}
+
+TimeCompleted {
+    font-name:  @normalFont;
+    font-color: @completedTextColor;
 }
 
 DueDate {
@@ -95,11 +102,10 @@ ImportanceHigh {
 
 StatusCompleted {
     text-decoration: line-through;
-    font-color: black;
-    font-color: #D8D9DC;
+    font-color: @completedTextColor;
 }
 
 StateInactive {
     font-name: Helvetica;
-    font-color: #D8D9DC;
+    font-color: @inactiveTextColor;
 }

@@ -14,6 +14,7 @@ Improvements
 * Animate row deletion when multiple entries for deleted todo
 * Filter slider has stops: all, hide inactive, hide complete, hide cold
 * If start date in past applied, ignore it
+* Background color for inactive and complete
 
 Bugs
 ----

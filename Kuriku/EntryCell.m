@@ -133,6 +133,16 @@
 
 - (void)updateTime {
     self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
+    
+    if (self.entry.type == EntryTypeComplete) {
+        self.timeLabel.nuiClass = @"TimeCompleted";
+    } else if (self.entry.state == EntryStateInactive) {
+        self.timeLabel.nuiClass = @"TimeInactive";
+    } else {
+        self.timeLabel.nuiClass = @"Time";
+    }
+    
+    [self.timeLabel applyNUI];
 }
 
 - (void)updateProgress {
@@ -236,8 +246,6 @@
     if (self.entry.state == EntryStateActive) {
         if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];
-        } else if (self.entry.type == EntryTypeComplete) {
-            self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"EntryComplete"];
         } else {
             self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
         }
