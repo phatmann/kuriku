@@ -22,6 +22,10 @@ EntryInactive {
     background-color: rgb(228, 228, 228);
 }
 
+EntryActive {
+    background-color: white;
+}
+
 Progress {
     background-color: rgb(0.74, 1.000, 0.811);
 }
@@ -64,10 +68,6 @@ StartDateDragging {
 DatePrompt {
     font-color: black;
     font-size: @dateDraggingFontSize;
-}
-
-TemperatureNone {
-    background-color: white;
 }
 
 TemperatureCold {

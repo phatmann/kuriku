@@ -19,6 +19,7 @@
 @interface EntryCell ()
 {
     UIColor *_warmColor, *_hotColor, *_coolColor, *_coldColor, *_oldColor, *_veryOldColor;
+    UIColor *_activeColor, *_inactiveColor;
     GlowView *_glowView;
 }
 
@@ -69,12 +70,14 @@
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     self.titleTextView.textContainerInset = UIEdgeInsetsZero;
     
-    _warmColor    = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-    _hotColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-    _coolColor    = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
-    _coldColor    = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
-    _oldColor     = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
-    _veryOldColor = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+    _warmColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
+    _hotColor      = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
+    _coolColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
+    _coldColor     = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
+    _oldColor      = [NUISettings getColor:@"background-color" withClass:@"StalenessOld"];
+    _veryOldColor  = [NUISettings getColor:@"background-color" withClass:@"StalenessVeryOld"];
+    _activeColor   = [NUISettings getColor:@"background-color" withClass:@"EntryActive"];
+    _inactiveColor = [NUISettings getColor:@"background-color" withClass:@"EntryInactive"];
     
     self.progressViewWidthConstraint.constant = 0;
 }
@@ -247,10 +250,10 @@
         if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];
         } else {
-            self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"TemperatureNone"];
+            self.backgroundView.backgroundColor = _activeColor;
         }
     } else {
-        self.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:@"EntryInactive"];
+        self.backgroundView.backgroundColor = _inactiveColor;
     }
 }
 
