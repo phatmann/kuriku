@@ -10,6 +10,7 @@
 #import "Entry.h"
 #import "Todo.h"
 #import "EntryCell.h"
+#import "GlowingTextView.h"
 #import <NUI/NUISettings.h>
 #import <InnerBand.h>
 
@@ -336,11 +337,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static UITextView *sizingTextView;
+    static GlowingTextView *sizingTextView;
     
     if (!sizingTextView) {
-        sizingTextView = [UITextView new];
-        sizingTextView.textContainerInset = UIEdgeInsetsZero;
+        sizingTextView = [GlowingTextView new];
     }
     
     Entry *entry = [self entryAtIndexPath:indexPath];

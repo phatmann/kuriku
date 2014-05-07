@@ -11,6 +11,8 @@
 @italicFont: AvenirNext-UltraLightItalic;
 @timeFontSize: 9;
 @timeFont: AvenirNext-Medium;
+@coolBlur: 20.0;
+@warmBlur: 12.0;
 
 /* Computed styles */
 
@@ -23,39 +25,43 @@ EntryLabelImportanceHigh {
 }
 
 EntryCellInactive {
-    background-color: rgb(228, 228, 228);
+    color: rgb(228, 228, 228);
 }
 
 EntryCellActive {
-    background-color: white;
+    color: white;
 }
 
 EntryCellUncommitted {
-    background-color: rgb(0.85, 0.95, 1.0);
+    color: rgb(0.85, 0.95, 1.0);
 }
 
 EntryCellStalenessVeryOld {
-    background-color: @veryOldColor;
+    color: @veryOldColor;
 }
 
 EntryCellStalenessOld {
-    background-color: @oldColor;
+    color: @oldColor;
 }
 
 TemperatureCold {
-    background-color: @coldColor;
+    blur:  @coolBlur;
+    color: @coldColor;
 }
 
 TemperatureCool {
-    background-color: @coolColor;
+    blur:  @coolBlur;
+    color: @coolColor;
 }
 
 TemperatureWarm {
-    background-color: @warmColor;
+    blur:  @warmBlur;
+    color: @warmColor;
 }
 
 TemperatureHot {
-    background-color: @hotColor;
+    blur:  @warmBlur;
+    color: @hotColor;
 }
 
 /* Normal styles */
@@ -69,6 +75,11 @@ JournalSectionHeader {
 EntryLabel {
     font-name: @normalFont;
     font-color: black;
+}
+
+EntryLabelCool {
+    font-name: @normalFont;
+    font-color: @completedTextColor;
 }
 
 EntryLabelCompleted {

@@ -11,7 +11,7 @@
 #import "Todo.h"
 #import "JournalViewController.h"
 #import "GradientBar.h"
-#import "GlowView.h"
+#import "GlowingTextView.h"
 #import <InnerBand/InnerBand.h>
 #import <NUI/UITextView+NUI.h>
 #import "NSDate+Kuriku.h"
@@ -20,7 +20,7 @@
 {
     UIColor *_warmColor, *_hotColor, *_coolColor, *_coldColor, *_oldColor, *_veryOldColor;
     UIColor *_activeColor, *_inactiveColor, *_uncommittedColor;
-    GlowView *_glowView;
+    CGFloat _coolBlur, _warmBlur;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -28,8 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet GlowingTextView *titleTextView;
 @property (strong, nonatomic) UIColor *textGlowColor;
-@property (strong, nonatomic) UIColor *cellGlowColor;
 
 @end
 
@@ -40,25 +40,25 @@
     
     self.repeatIcon.hidden = YES;
     self.progressViewWidthConstraint.constant = 0;
-    self.cellGlowColor = nil;
     self.textGlowColor = nil;
+    self.titleTextView.attributedText = nil;
 }
 
 - (void)awakeFromNib {
-    _glowView = [GlowView new];
-    self.backgroundView = _glowView;
+    self.backgroundView = [UIView new];
     self.backgroundView.backgroundColor = [UIColor whiteColor];
-    self.titleTextView.textContainerInset = UIEdgeInsetsZero;
     
-    _warmColor        = [NUISettings getColor:@"background-color" withClass:@"TemperatureWarm"];
-    _hotColor         = [NUISettings getColor:@"background-color" withClass:@"TemperatureHot"];
-    _coolColor        = [NUISettings getColor:@"background-color" withClass:@"TemperatureCool"];
-    _coldColor        = [NUISettings getColor:@"background-color" withClass:@"TemperatureCold"];
-    _oldColor         = [NUISettings getColor:@"background-color" withClass:@"EntryCellStalenessOld"];
-    _veryOldColor     = [NUISettings getColor:@"background-color" withClass:@"EntryCellStalenessVeryOld"];
-    _activeColor      = [NUISettings getColor:@"background-color" withClass:@"EntryCellActive"];
-    _inactiveColor    = [NUISettings getColor:@"background-color" withClass:@"EntryCellInactive"];
-    _uncommittedColor = [NUISettings getColor:@"background-color" withClass:@"EntryCellUncommitted"];
+    _warmColor        = [NUISettings getColor:@"color" withClass:@"TemperatureWarm"];
+    _hotColor         = [NUISettings getColor:@"color" withClass:@"TemperatureHot"];
+    _coolColor        = [NUISettings getColor:@"color" withClass:@"TemperatureCool"];
+    _coldColor        = [NUISettings getColor:@"color" withClass:@"TemperatureCold"];
+    _oldColor         = [NUISettings getColor:@"color" withClass:@"EntryCellStalenessOld"];
+    _veryOldColor     = [NUISettings getColor:@"color" withClass:@"EntryCellStalenessVeryOld"];
+    _activeColor      = [NUISettings getColor:@"color" withClass:@"EntryCellActive"];
+    _inactiveColor    = [NUISettings getColor:@"color" withClass:@"EntryCellInactive"];
+    _uncommittedColor = [NUISettings getColor:@"color" withClass:@"EntryCellUncommitted"];
+    _warmBlur         = [NUISettings getFloat:@"blur"  withClass:@"TemperatureWarm"];
+    _coolBlur         = [NUISettings getFloat:@"blur"  withClass:@"TemperatureCool"];
     
     self.progressViewWidthConstraint.constant = 0;
 }
@@ -98,14 +98,6 @@
 - (void)temperatureWasChanged {
     [self updateCellGlow];
     [self updateDate];
-}
-
-- (UIColor *)cellGlowColor {
-    return _glowView.glowColor;
-}
-
-- (void)setCellGlowColor:(UIColor *)cellGlowColor {
-    _glowView.glowColor = cellGlowColor;
 }
 
 + (UIFont *)fontForEntry:(Entry *)entry {
@@ -187,26 +179,30 @@
 }
 
 - (void)updateCellGlow {
-    self.cellGlowColor = nil;
+    self.titleTextView.glowColor = nil;
     
     if (self.entry.state == EntryStateActive) {
         if (self.entry.todo.frostiness > 0) {
-            self.cellGlowColor = [EntryCell scale:fratiof(self.entry.todo.frostiness) fromColor:_coolColor toColor:_coldColor];
+            self.titleTextView.glowColor = [EntryCell scale:fratiof(self.entry.todo.frostiness) fromColor:_coolColor toColor:_coldColor];
+            self.titleTextView.glowBlur = _coolBlur;
         } else if (self.entry.todo.urgency > 0 && self.entry.type != EntryTypeComplete) {
-            self.cellGlowColor = [EntryCell scale:fratiof(self.entry.todo.urgency) fromColor:_warmColor toColor:_hotColor];
+            self.titleTextView.glowColor = [EntryCell scale:fratiof(self.entry.todo.urgency) fromColor:_warmColor toColor:_hotColor];
+            self.titleTextView.glowBlur = _warmBlur;
         }
     }
 }
 
 - (void)updateTitle {
+    self.titleTextView.nuiClass = [EntryCell titleStyleClassForEntry:self.entry];
+    
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     [self addStrikethroughAttribute:attributes];
     [self addTextGlowAttribute:attributes];
     
-    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:self.entry.todo.title ? self.entry.todo.title : @""                                                                    attributes:attributes];
+    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:self.entry.todo.title ? self.entry.todo.title : @""
+                                                                        attributes:attributes];
     self.titleTextView.typingAttributes = attributes;
     
-    self.titleTextView.nuiClass = [EntryCell titleStyleClassForEntry:self.entry];
     [self.titleTextView applyNUI];
     
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
@@ -292,6 +288,10 @@
     
     if (entry.state == EntryStateInactive) {
         return @"EntryLabelInactive";
+    }
+    
+    if (entry.todo.frostiness > 0) {
+        return @"EntryLabelCool";
     }
     
     return @"EntryLabel";

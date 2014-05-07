@@ -12,7 +12,6 @@
 
 @interface EntryCell : UITableViewCell <UIGestureRecognizerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *repeatIcon;
 @property (strong, nonatomic) Entry *entry;
 @property (weak, nonatomic) JournalViewController *journalViewController;
