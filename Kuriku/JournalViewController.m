@@ -206,6 +206,7 @@
             
         case UIGestureRecognizerStateEnded:
             [self updateRowHeights];
+            [IBCoreDataStore save];
             break;
             
         default:
@@ -349,7 +350,7 @@
     sizingTextView.font = [EntryCell fontForEntry:entry];
     
     static const CGFloat margin = 21;
-    CGFloat width = 280;
+    CGFloat width = 300;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     
     return height + margin;

@@ -44,7 +44,7 @@ static const CGFloat  kCornerRadius = 3;
 }
 
 - (void)setup {
-    self.textContainerInset = UIEdgeInsetsMake(1, 1, -1, -1);
+    self.textContainerInset = UIEdgeInsetsMake(4, 4, -4, -4);
 }
 
 - (void)setGlowColor:(UIColor *)color {
@@ -88,6 +88,15 @@ static const CGFloat  kCornerRadius = 3;
     [negativePath fill];
     
     CGContextRestoreGState(context);
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+    CGSize contentSize = [super sizeThatFits:size];
+    
+    contentSize.width  += self.textContainerInset.left - self.textContainerInset.right;
+    contentSize.height += self.textContainerInset.top - self.textContainerInset.bottom;
+    
+    return contentSize;
 }
 
 @end

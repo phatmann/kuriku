@@ -19,7 +19,7 @@ const NSTimeInterval TodoUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
 
 const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate = 60;
-const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 7;
+const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 14;
 
 const float_t TodoColdMaxPriority = 0.5;
 const float_t TodoImportanceCommitted = 0.5;
