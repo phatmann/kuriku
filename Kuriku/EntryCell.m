@@ -108,15 +108,10 @@
     _glowView.glowColor = cellGlowColor;
 }
 
-+ (CGFloat)fontSizeForImportance:(CGFloat)importance {
-    static CGFloat fontSizeImportanceLow, fontSizeImportanceHigh;
-    
-    if (!fontSizeImportanceLow) {
-        fontSizeImportanceLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceLow"];
-        fontSizeImportanceHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceHigh"];
-    }
-    
-    return fontSizeImportanceLow + ((fontSizeImportanceHigh - fontSizeImportanceLow ) * importance);
++ (UIFont *)fontForEntry:(Entry *)entry {
+    CGFloat fontSize = [self fontSizeForImportance:entry.todo.importance];
+    NSString *nuiClass = [EntryCell titleStyleClassForEntry:entry];
+    return [[NUISettings getFontWithClass:nuiClass] fontWithSize:fontSize];
 }
 
 #pragma mark -
@@ -204,23 +199,14 @@
 }
 
 - (void)updateTitle {
-    if (self.entry.type == EntryTypeComplete) {
-        self.titleTextView.nuiClass = @"EntryLabelCompleted";
-    } else if (self.entry.state == EntryStateInactive) {
-        self.titleTextView.nuiClass = @"EntryLabelInactive";
-    } else {
-        self.titleTextView.nuiClass = @"EntryLabel";
-    }
-    
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-    
     [self addStrikethroughAttribute:attributes];
-    
     [self addTextGlowAttribute:attributes];
     
-    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:self.entry.todo.title ? self.entry.todo.title : @""
-                                                                        attributes:attributes];
+    self.titleTextView.attributedText = [[NSAttributedString alloc] initWithString:self.entry.todo.title ? self.entry.todo.title : @""                                                                    attributes:attributes];
     self.titleTextView.typingAttributes = attributes;
+    
+    self.titleTextView.nuiClass = [EntryCell titleStyleClassForEntry:self.entry];
     [self.titleTextView applyNUI];
     
     self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
@@ -297,6 +283,29 @@
     NSString *decoration = [NUISettings get:@"text-decoration" withClass:self.titleTextView.nuiClass];
     NSUnderlineStyle strikethroughStyle = [decoration isEqualToString:@"line-through"] ? NSUnderlineStyleSingle : NSUnderlineStyleNone;
     attributes[NSStrikethroughStyleAttributeName] = @(strikethroughStyle);
+}
+
++ (NSString *)titleStyleClassForEntry:(Entry *)entry {
+    if (entry.type == EntryTypeComplete) {
+        return @"EntryLabelCompleted";
+    }
+    
+    if (entry.state == EntryStateInactive) {
+        return @"EntryLabelInactive";
+    }
+    
+    return @"EntryLabel";
+}
+
++ (CGFloat)fontSizeForImportance:(CGFloat)importance {
+    static CGFloat fontSizeImportanceLow, fontSizeImportanceHigh;
+    
+    if (!fontSizeImportanceLow) {
+        fontSizeImportanceLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceLow"];
+        fontSizeImportanceHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceHigh"];
+    }
+    
+    return fontSizeImportanceLow + ((fontSizeImportanceHigh - fontSizeImportanceLow ) * importance);
 }
 
 @end

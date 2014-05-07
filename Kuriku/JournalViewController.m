@@ -346,7 +346,7 @@
     Entry *entry = [self entryAtIndexPath:indexPath];
     
     sizingTextView.text = entry.todo.title;
-    sizingTextView.font = [UIFont systemFontOfSize:[EntryCell fontSizeForImportance:entry.todo.importance]];
+    sizingTextView.font = [EntryCell fontForEntry:entry];
     
     static const CGFloat margin = 21;
     CGFloat width = 280;
@@ -493,24 +493,22 @@
         filterSlider.value = 0;
     else if (fabsf(filterSlider.value - EntryActiveMinPriority) < notchSize)
         filterSlider.value = EntryActiveMinPriority;
-    else if (fabsf(filterSlider.value - EntryCompletedPriority) < notchSize)
-        filterSlider.value = EntryCompletedPriority;
+    else if (fabsf(filterSlider.value - EntryNormalMinPriority) < notchSize)
+        filterSlider.value = EntryNormalMinPriority;
     else if (fabsf(filterSlider.value - coldMaxPriority) < notchSize)
         filterSlider.value = coldMaxPriority;
     
     if (filterSlider.value < EntryActiveMinPriority)
         self.priorityFilter = 0;
-    else if (filterSlider.value < EntryCompletedPriority)
+    else if (filterSlider.value < EntryNormalMinPriority)
         self.priorityFilter = EntryActiveMinPriority;
-    else if (filterSlider.value == EntryCompletedPriority)
-        self.priorityFilter = EntryCompletedPriority + 0.01;
     else
         self.priorityFilter = filterSlider.value;
 }
 
 - (IBAction)addButtonTapped {
-    if (self.priorityFilter > EntryActiveMinPriority) {
-        self.priorityFilter = EntryActiveMinPriority;
+    if (self.priorityFilter > EntryNormalMinPriority) {
+        self.priorityFilter = EntryNormalMinPriority;
         self.filterSlider.value = self.priorityFilter;
     }
     

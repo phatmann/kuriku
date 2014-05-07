@@ -10,8 +10,11 @@
 
 @implementation GlowView
 
-static const CGFloat kBlurRadius   = 20.0f;
-static const CGSize  kShadowOffset = {0, 0};
+static const CGFloat  kBlurRadius   = 13.0f;
+static const CGSize   kShadowOffset = {0, 0};
+static const CGFloat  kCornerRadius = 3;
+static const CGFloat  kInset        = 8;
+static const CGSize   kOffset       = {0, 5};
 
 - (void)setGlowColor:(UIColor *)color {
     _glowColor = color;
@@ -24,8 +27,8 @@ static const CGSize  kShadowOffset = {0, 0};
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGRect glowRect = self.bounds;
-    UIBezierPath* path = [UIBezierPath bezierPathWithRoundedRect:glowRect cornerRadius:1];
+    CGRect glowRect = CGRectOffset(CGRectInset(self.bounds, kInset, kInset), kOffset.width, kOffset.height);
+    UIBezierPath* path = [UIBezierPath bezierPathWithRoundedRect:glowRect cornerRadius:kCornerRadius];
  
     CGRect borderRect = CGRectInset(path.bounds, -kBlurRadius, -kBlurRadius);
     borderRect = CGRectOffset(borderRect, -kShadowOffset.width, -kShadowOffset.height);

@@ -9,8 +9,10 @@ Improvements
 
 Bugs
 ----
-* Time should be white behind glow
-* Double check cold priority calcs
+* Section needs separator lines
+* Text wrapping when resizing is off
+* Cell should resize during pinch without scrolling
+* Glow should hug text properly
 * Often cell gets selected during a gesture
 * If start date in past applied, ignore it
 * Sometimes pinching happens when trying to rotate

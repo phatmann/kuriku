@@ -21,6 +21,6 @@
 - (void)refresh;
 - (void)importanceWasChanged;
 - (void)temperatureWasChanged;
-+ (CGFloat)fontSizeForImportance:(CGFloat)importance;
++ (UIFont *)fontForEntry:(Entry *)entry;
 
 @end
