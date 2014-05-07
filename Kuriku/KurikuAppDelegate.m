@@ -12,6 +12,7 @@
 
 #import "Journal.h"
 #import "Todo.h"
+#import "HockeySDK.h"
 
 @implementation KurikuAppDelegate
 
@@ -26,6 +27,10 @@
         [[IBCoreDataStore mainStore] save];
         //[journal createSampleItems];
     }
+    
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"811b078db1c7c1d33759b2a6a806c34d"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     
     return YES;
 }

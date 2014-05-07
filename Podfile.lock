@@ -1,5 +1,6 @@
 PODS:
   - CoreParse (1.1)
+  - HockeySDK (3.5.5)
   - InnerBand (1.0.7)
   - KIF (3.0.3):
     - KIF/XCTest
@@ -13,6 +14,7 @@ PODS:
 
 DEPENDENCIES:
   - CoreParse (from `git@github.com:phatmann/CoreParse.git`, branch `pod`)
+  - HockeySDK (~> 3.5.5)
   - InnerBand (from `git@github.com:phatmann/InnerBand.git`)
   - KIF
   - NUI (from `git@github.com:phatmann/nui.git`)
@@ -32,6 +34,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CoreParse: c8da33c94916683f2448e3cbc51ced058aa68c45
+  HockeySDK: 350ef1cf18d2fc9a13801ad077c307cece8c6c64
   InnerBand: a1dce796b91d7e89035a03fbe0437f025ff0c9d1
   KIF: 908d9a64faa939ad96581c90f9cc256649a2014a
   NUI: 888ab639871c9c0bb7a64d08c204a1f97feb37d1
@@ -40,4 +43,4 @@ SPEC CHECKSUMS:
   SAMTextView: f0dae9662a7cc45e890eb2b24aa1769148ea2933
   TPKeyboardAvoiding: 17995aaa6db26ac2a9fa8714a86509c5888f0392
 
-COCOAPODS: 0.31.1
+COCOAPODS: 0.32.1

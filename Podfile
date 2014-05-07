@@ -6,6 +6,7 @@ target "Kuriku" do
     pod "CoreParse", :git => 'git@github.com:phatmann/CoreParse.git', :branch => 'pod'
     pod "NUI", :git => 'git@github.com:phatmann/nui.git'
     pod "SAMTextView"
+    pod "HockeySDK", "~> 3.5.5"
 end
 
 target "KurikuTests" do
