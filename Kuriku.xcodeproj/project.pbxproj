@@ -41,6 +41,7 @@
 		EABAAC94186B702D00F2FBE6 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EABAAC93186B702D00F2FBE6 /* DatePickerViewController.m */; };
 		EAC10B8E19130FF500ABBDB2 /* GlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC10B8D19130FF500ABBDB2 /* GlowView.m */; };
 		EAC10B9219144AE300ABBDB2 /* EditTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC10B9119144AE300ABBDB2 /* EditTodoViewController.m */; };
+		EAC8767A191AF46E00F6CA62 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = EAC87679191AF46E00F6CA62 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,7 @@
 		EAC10B8D19130FF500ABBDB2 /* GlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlowView.m; sourceTree = "<group>"; };
 		EAC10B9019144AE300ABBDB2 /* EditTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTodoViewController.h; sourceTree = "<group>"; };
 		EAC10B9119144AE300ABBDB2 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
+		EAC87679191AF46E00F6CA62 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; wrapsLines = 1; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 				EAAC954E1858F7D400E8BAB5 /* Frameworks */,
 				EAAC954D1858F7D400E8BAB5 /* Products */,
 				EA10F1261861B2FF0084F6C8 /* TODO.md */,
+				EAC87679191AF46E00F6CA62 /* README.md */,
 				21929118DB794CAF90B0487F /* Pods-Kuriku.xcconfig */,
 				8472E83811B44911987F73B3 /* Pods-KurikuTests.xcconfig */,
 			);
@@ -392,6 +395,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAC8767A191AF46E00F6CA62 /* README.md in Resources */,
 				EA7307311889F0F5008C8F39 /* Kuriku.nss in Resources */,
 				EAAC956E1858F7D400E8BAB5 /* Images.xcassets in Resources */,
 				EAAC95631858F7D400E8BAB5 /* Main_iPhone.storyboard in Resources */,
