@@ -14,20 +14,24 @@
 #import <NUI/NUISettings.h>
 #import <InnerBand.h>
 
+static const CGFloat kEstimatedRowHeight = 57.0f;
+
 @interface JournalViewController ()
 
-@property (strong, nonatomic) Entry *selectedEntry;
-@property (nonatomic) float_t priorityFilter;
-@property (nonatomic) EntryCell *activeCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
-@property (strong, nonatomic) UIBarButtonItem *addButton;
-@property (strong, nonatomic) UIBarButtonItem *doneButton;
-@property (strong, nonatomic) UIActionSheet *deleteActionSheet;
 @property (weak, nonatomic) IBOutlet UISlider *filterSlider;
 @property (weak, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UIRotationGestureRecognizer *rotationGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
+
+@property (strong, nonatomic) Entry *selectedEntry;
+@property (nonatomic) float_t priorityFilter;
+@property (nonatomic) EntryCell *activeCell;
+@property (strong, nonatomic) UIBarButtonItem *addButton;
+@property (strong, nonatomic) UIBarButtonItem *doneButton;
+@property (strong, nonatomic) UIActionSheet *deleteActionSheet;
+@property (strong, nonatomic) NSMutableArray *addedEntries;
 
 @end
 
@@ -39,7 +43,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
-    self.tableView.estimatedRowHeight = 44;
+    self.tableView.estimatedRowHeight = kEstimatedRowHeight;
     
     float_t savedPriorityFilter = [[NSUserDefaults standardUserDefaults] floatForKey:@"priorityFilter"];
     
@@ -47,7 +51,8 @@
         self.priorityFilter = savedPriorityFilter;
         self.filterSlider.value = self.priorityFilter;
     } else {
-        [self reloadData];
+        [self fetchData];
+        [self.tableView reloadData];
     }
 }
 
@@ -74,7 +79,8 @@
     [[NSUserDefaults standardUserDefaults] setFloat:priorityFilter forKey:@"priorityFilter"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self reloadData];
+    [self fetchData];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Gesture Handling
@@ -128,7 +134,8 @@
                 if (velocity.x > 1500 && offset.x > 100) {
                     pannedCell.progressBarValue = 1.0;
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
-                    [self reloadData];
+                    [self fetchData];
+                    [self.tableView reloadData];
                     recognizer.enabled = NO;
                     recognizer.enabled = YES;
                 } else {
@@ -151,7 +158,8 @@
                     
                     if (delta >= remaining / 4) {
                         [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
-                        [self reloadData];
+                        [self fetchData];
+                        [self.tableView reloadData];
                     } else {
                         pannedCell.progressBarValue = initialProgressBarValue;
                         
@@ -319,8 +327,9 @@
     }
     
     [IBCoreDataStore save];
-    [self reloadData];
-}   
+    [self fetchData];
+    [self.tableView reloadData];
+}
 
 #pragma mark - Table View Delegate
 
@@ -331,7 +340,12 @@
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
     if (self.fetchedResultsController.sections.count > 0) {
         id <NSFetchedResultsSectionInfo> sectionInfo = self.fetchedResultsController.sections[section];
-        return [sectionInfo numberOfObjects];
+        NSUInteger count = [sectionInfo numberOfObjects];
+        
+        if (section == 0)
+            count += self.addedEntries.count;
+        
+        return count;
     }
     
     return 0;
@@ -442,9 +456,10 @@
     }
     
     [IBCoreDataStore save];
-    [self reloadData];
+    [self fetchData];
+    [self.tableView reloadData];
 }
-    
+
 #pragma Text View Delegate
     
 - (void)scrollCaretIntoView:(UITextView *)textView {
@@ -508,16 +523,17 @@
 }
 
 - (IBAction)addButtonTapped {
-    if (self.priorityFilter > EntryNormalMinPriority) {
-        self.priorityFilter = EntryNormalMinPriority;
-        self.filterSlider.value = self.priorityFilter;
+    Todo *todo = [Todo create];
+    
+    if (!self.addedEntries) {
+        self.addedEntries = [NSMutableArray array];
     }
     
-    [Todo create];
-    [self reloadData];
+    [self.addedEntries insertObject:todo.lastEntry atIndex:0];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     [cell becomeFirstResponder];
@@ -527,7 +543,6 @@
     self.filterSlider.enabled = YES;
     [self.activeCell resignFirstResponder];
     self.activeCell = nil;
-    [self reloadData];
 }
 
 #pragma mark - Private
@@ -564,12 +579,15 @@
 
 
 - (Entry *)entryAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && self.addedEntries) {
+        if (indexPath.row < self.addedEntries.count) {
+            return self.addedEntries[indexPath.row];
+        }
+        
+        indexPath = [NSIndexPath indexPathForRow:indexPath.row - self.addedEntries.count inSection:indexPath.section];
+    }
+    
     return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-}
-
-- (void)reloadData {
-    [self fetchData];
-    [self.tableView reloadData];
 }
 
 - (void)updateRowHeights {
@@ -610,6 +628,7 @@
     self.fetchedResultsController.delegate = self;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
+    self.addedEntries = nil;
 }
 
 @end

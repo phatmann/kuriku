@@ -10,16 +10,12 @@ Improvements
 Bugs
 ----
 * Section needs separator lines
-* Text wrapping when resizing is off
+* Adding entries around midnight might not work since one could have added entries in section 1
 * Cell should resize during pinch without scrolling
-* Glow should hug text properly
 * Often cell gets selected during a gesture
 * If start date in past applied, ignore it
 * Sometimes pinching happens when trying to rotate
-* Done button does not animate cell collapse
 * Swipe recognition not reliable
-* Do not allow actions on completed task
-* Do not allow actions on inactive task
 
 Missing Features
 ----------------
@@ -28,7 +24,6 @@ Missing Features
 * Tap inactive task goes to active task
 * Jump around to different dates in journal
 * Search
-* Scroll to new entry after taking action?
 * Let user change settings for number of stale, urgent, and frosty days
 * Repeat icon on frozen completed todos?
 
