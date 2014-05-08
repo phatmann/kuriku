@@ -109,7 +109,7 @@
 #pragma mark -
 
 - (void)updateTime {
-    self.timeLabel.text = [self.entry.timestamp formattedTimeStyle:NSDateFormatterShortStyle];
+    self.timeLabel.text = [self.entry.createDate formattedTimeStyle:NSDateFormatterShortStyle];
     
     if (self.entry.type == EntryTypeComplete) {
         self.timeLabel.nuiClass = @"TimeCompleted";
@@ -238,11 +238,6 @@
     self.titleTextView.userInteractionEnabled = NO;
     
     [self.journalViewController cell:self textViewDidEndEditing:textView];
-    
-    if (self.entry.todo.title.length > 0)
-        [IBCoreDataStore save];
-    else
-        [self.entry.todo destroy];
 }
 
 #pragma mark -

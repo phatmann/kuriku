@@ -30,7 +30,7 @@ typedef enum {
 @property (nonatomic) float_t priority;
 @property (nonatomic, strong) Todo *todo;
 @property (nonatomic) NSString *journalDateString;
-@property (nonatomic, strong) NSDate *timestamp;
+@property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) Journal *journal;
 
 @property (nonatomic, readonly) CGFloat progress;

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="0.20" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="0.21" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Entry" representedClassName="Entry" syncable="YES">
+        <attribute name="createDate" attributeType="Date" indexed="YES" elementID="createDate" syncable="YES"/>
         <attribute name="journalDateString" attributeType="String" syncable="YES"/>
         <attribute name="priority" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="state" attributeType="Integer 16" defaultValueString="0" elementID="state" syncable="YES"/>
-        <attribute name="timestamp" attributeType="Date" indexed="YES" elementID="createDate" syncable="YES"/>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="journal" maxCount="1" deletionRule="Nullify" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
         <relationship name="todo" maxCount="1" deletionRule="Nullify" destinationEntity="Todo" inverseName="entries" inverseEntity="Todo" syncable="YES"/>

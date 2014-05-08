@@ -12,11 +12,15 @@
 #import "EntryCell.h"
 #import "GlowingTextView.h"
 #import <NUI/NUISettings.h>
+#import <NUI/UILabel+NUI.h>
 #import <InnerBand.h>
 
 static const CGFloat kEstimatedRowHeight = 57.0f;
 
 @interface JournalViewController ()
+{
+    BOOL _isAdding;
+}
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
 @property (weak, nonatomic) IBOutlet UISlider *filterSlider;
@@ -28,10 +32,10 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 @property (strong, nonatomic) Entry *selectedEntry;
 @property (nonatomic) float_t priorityFilter;
 @property (nonatomic) EntryCell *activeCell;
+@property (nonatomic) NSIndexPath *insertedIndexPath;
 @property (strong, nonatomic) UIBarButtonItem *addButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) UIActionSheet *deleteActionSheet;
-@property (strong, nonatomic) NSMutableArray *addedEntries;
 
 @end
 
@@ -134,8 +138,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 if (velocity.x > 1500 && offset.x > 100) {
                     pannedCell.progressBarValue = 1.0;
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
-                    [self fetchData];
-                    [self.tableView reloadData];
                     recognizer.enabled = NO;
                     recognizer.enabled = YES;
                 } else {
@@ -158,8 +160,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                     
                     if (delta >= remaining / 4) {
                         [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
-                        [self fetchData];
-                        [self.tableView reloadData];
                     } else {
                         pannedCell.progressBarValue = initialProgressBarValue;
                         
@@ -327,8 +327,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     }
     
     [IBCoreDataStore save];
-    [self fetchData];
-    [self.tableView reloadData];
 }
 
 #pragma mark - Table View Delegate
@@ -340,12 +338,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
     if (self.fetchedResultsController.sections.count > 0) {
         id <NSFetchedResultsSectionInfo> sectionInfo = self.fetchedResultsController.sections[section];
-        NSUInteger count = [sectionInfo numberOfObjects];
-        
-        if (section == 0)
-            count += self.addedEntries.count;
-        
-        return count;
+        return [sectionInfo numberOfObjects];
     }
     
     return 0;
@@ -384,56 +377,39 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     [cell becomeFirstResponder];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if ([[self.fetchedResultsController sections] count] > 0) {
-        static NSDateFormatter *longDateFormatter;
-        
-        if (!longDateFormatter) {
-            longDateFormatter = [NSDateFormatter new];
-            [longDateFormatter setDateFormat:@"E MMM d"];
-        }
-        
-        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-        NSDate *date = [Entry journalDateFromString:sectionInfo.name];
-        return [longDateFormatter stringFromDate:date];
-    }
-    
-    return nil;
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Entry *entry = [self entryAtIndexPath:indexPath];
         
         if (entry.type == EntryTypeNew) {
-            NSUInteger sectionCount = [self.tableView numberOfRowsInSection:indexPath.section];
-            NSUInteger entryCount = entry.todo.entries.count;
             [entry.todo destroy];
             [IBCoreDataStore save];
-            [self fetchData];
-            
-            if (entryCount == 1) {
-                if (sectionCount == 1) {
-                    [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
-                } else {
-                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                }
-            } else {
-                [self.tableView reloadData];
-            }
         } else {
             [self showDeleteActionSheet:[self entryAtIndexPath:indexPath]];
         }
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    static NSString *nuiClass = @"JournalSectionHeader";
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 35;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UILabel *label = [UILabel new];
+    label.nuiClass = @"JournalSectionHeader";
     
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    header.textLabel.font      = [NUISettings getFontWithClass:nuiClass baseFont:header.textLabel.font];
-    header.textLabel.textColor = [NUISettings getColor:@"font-color" withClass:nuiClass];
-    header.backgroundView.backgroundColor = [NUISettings getColor:@"background-color" withClass:nuiClass];
+    static NSDateFormatter *longDateFormatter;
+    
+    if (!longDateFormatter) {
+        longDateFormatter = [NSDateFormatter new];
+        [longDateFormatter setDateFormat:@"   E MMM d"];
+    }
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    NSDate *date = [Entry journalDateFromString:sectionInfo.name];
+    label.text = [longDateFormatter stringFromDate:date];
+
+    return label;
 }
 
 #pragma mark - Repeat Controller Delegate
@@ -490,7 +466,14 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 
 - (void)cell:(EntryCell *)cell textViewDidEndEditing:(UITextView *)textView {
     self.navigationBarItem.rightBarButtonItem = self.addButton;
+    
+    if (self.activeCell.entry.todo.title.length > 0)
+        [IBCoreDataStore save];
+    else
+        [self.activeCell.entry.todo destroy];
+    
     [self updateRowHeights];
+    self.activeCell = nil;
 }
 
 #pragma mark - Edit Todo Controller Delegate
@@ -523,27 +506,77 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 }
 
 - (IBAction)addButtonTapped {
-    Todo *todo = [Todo create];
-    
-    if (!self.addedEntries) {
-        self.addedEntries = [NSMutableArray array];
-    }
-    
-    [self.addedEntries insertObject:todo.lastEntry atIndex:0];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    [cell becomeFirstResponder];
+    _isAdding = YES;
+    [Todo create];
 }
 
 - (void)doneButtonTapped {
     self.filterSlider.enabled = YES;
     [self.activeCell resignFirstResponder];
-    self.activeCell = nil;
 }
+
+#pragma mark - Fetched Results Delegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    self.insertedIndexPath = nil;
+    [self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    EntryCell *entryCell;
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            self.insertedIndexPath = newIndexPath;
+            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            entryCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            [entryCell refresh];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    if (self.insertedIndexPath) {
+        [self.tableView scrollToRowAtIndexPath:self.insertedIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
+    
+    [self.tableView endUpdates];
+    
+    if (_isAdding) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.insertedIndexPath];
+        [cell becomeFirstResponder];
+        _isAdding = NO;
+    }
+    
+    self.insertedIndexPath = nil;
+}
+
 
 #pragma mark - Private
 
@@ -579,14 +612,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 
 
 - (Entry *)entryAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0 && self.addedEntries) {
-        if (indexPath.row < self.addedEntries.count) {
-            return self.addedEntries[indexPath.row];
-        }
-        
-        indexPath = [NSIndexPath indexPathForRow:indexPath.row - self.addedEntries.count inSection:indexPath.section];
-    }
-    
     return (Entry *)[self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
@@ -615,10 +640,10 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 - (void)fetchData {
     NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createDate" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f", self.priorityFilter];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f OR createDate > %@", self.priorityFilter, [NSDate date]];
     [fetchRequest setPredicate:predicate];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:fetchRequest
@@ -628,7 +653,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     self.fetchedResultsController.delegate = self;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
-    self.addedEntries = nil;
 }
 
 @end

@@ -20,7 +20,7 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
 @implementation Entry
 @dynamic priority;
 @dynamic journalDateString;
-@dynamic timestamp;
+@dynamic createDate;
 @dynamic todo;
 @dynamic journal;
 @dynamic type;
@@ -34,8 +34,8 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
 - (void)awakeFromInsert {
     [super awakeFromInsert];
 
-    self.timestamp = [NSDate date];
-    self.journalDate = [self.timestamp dateAtStartOfDay];
+    self.createDate = [NSDate date];
+    self.journalDate = [self.createDate dateAtStartOfDay];
     self.journal = [Journal first];
     
     [self setUp];

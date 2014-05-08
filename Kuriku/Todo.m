@@ -140,7 +140,7 @@ const float_t TodoImportanceCommitted = 0.5;
     if (!self.lastEntry)
         return 0.0f;
     
-    int daysAfterLastEntryDate = -[self.lastEntry.timestamp daysFromToday];
+    int daysAfterLastEntryDate = -[self.lastEntry.createDate daysFromToday];
     
     if (daysAfterLastEntryDate < TodoMinStaleDaysAfterLastEntryDate) {
         return 0.0f;
