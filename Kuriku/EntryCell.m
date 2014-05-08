@@ -61,6 +61,7 @@
     _coolBlur         = [NUISettings getFloat:@"blur"  withClass:@"TemperatureCool"];
     
     self.progressViewWidthConstraint.constant = 0;
+    self.repeatIcon.hidden = YES;
 }
 
 - (void)setEntry:(Entry *)entry {

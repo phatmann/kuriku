@@ -20,6 +20,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 @interface JournalViewController ()
 {
     BOOL _isAdding;
+    BOOL _scrollToTopAfterCellInserted;
 }
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
@@ -32,7 +33,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 @property (strong, nonatomic) Entry *selectedEntry;
 @property (nonatomic) float_t priorityFilter;
 @property (nonatomic) EntryCell *activeCell;
-@property (nonatomic) NSIndexPath *insertedIndexPath;
 @property (strong, nonatomic) UIBarButtonItem *addButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) UIActionSheet *deleteActionSheet;
@@ -137,6 +137,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 
                 if (velocity.x > 1500 && offset.x > 100) {
                     pannedCell.progressBarValue = 1.0;
+                    _scrollToTopAfterCellInserted = YES;
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
                     recognizer.enabled = NO;
                     recognizer.enabled = YES;
@@ -159,6 +160,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                     CGFloat remaining = 1.0 - initialProgressBarValue;
                     
                     if (delta >= remaining / 4) {
+                        _scrollToTopAfterCellInserted = YES;
                         [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
                     } else {
                         pannedCell.progressBarValue = initialProgressBarValue;
@@ -394,6 +396,10 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     return 35;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
+    return 35;
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *label = [UILabel new];
     label.nuiClass = @"JournalSectionHeader";
@@ -415,6 +421,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 #pragma mark - Repeat Controller Delegate
 
 - (void)repeatViewControllerDaysChanged:(RepeatViewController *)repeatViewController {
+    _scrollToTopAfterCellInserted = YES;
     [self.selectedEntry.todo createEntry:EntryTypeComplete];
     
     switch (repeatViewController.days) {
@@ -432,8 +439,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     }
     
     [IBCoreDataStore save];
-    [self fetchData];
-    [self.tableView reloadData];
 }
 
 #pragma Text View Delegate
@@ -518,7 +523,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 #pragma mark - Fetched Results Delegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    self.insertedIndexPath = nil;
     [self.tableView beginUpdates];
 }
 
@@ -542,7 +546,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
-            self.insertedIndexPath = newIndexPath;
             [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
@@ -562,19 +565,23 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    if (self.insertedIndexPath) {
-        [self.tableView scrollToRowAtIndexPath:self.insertedIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    static NSIndexPath *kTopRowIndexPath;
+    
+    if (!kTopRowIndexPath)
+        kTopRowIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+    if (_scrollToTopAfterCellInserted) {
+        [self.tableView scrollToRowAtIndexPath:kTopRowIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        _scrollToTopAfterCellInserted = NO;
     }
     
     [self.tableView endUpdates];
     
     if (_isAdding) {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.insertedIndexPath];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:kTopRowIndexPath];
         [cell becomeFirstResponder];
         _isAdding = NO;
     }
-    
-    self.insertedIndexPath = nil;
 }
 
 

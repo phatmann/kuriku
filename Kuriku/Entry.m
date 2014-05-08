@@ -46,6 +46,11 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
     [self setUp];
 }
 
+- (void)willTurnIntoFault {
+    [super willTurnIntoFault];
+    [self tearDown];
+}
+
 - (void)setUp {
     [self addObserver:self forKeyPath:@"todo.priority" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionInitial context:nil];
