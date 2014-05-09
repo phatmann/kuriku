@@ -25,7 +25,7 @@
     if (!journal) {
         journal = [Journal create];
         [[IBCoreDataStore mainStore] save];
-        //[journal createSampleItems];
+        [journal createSampleItems];
     }
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"811b078db1c7c1d33759b2a6a806c34d"];

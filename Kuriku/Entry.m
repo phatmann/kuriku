@@ -21,6 +21,7 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
 @dynamic priority;
 @dynamic journalDateString;
 @dynamic createDate;
+@dynamic updateDate;
 @dynamic todo;
 @dynamic journal;
 @dynamic type;
@@ -35,6 +36,7 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
     [super awakeFromInsert];
 
     self.createDate = [NSDate date];
+    self.updateDate = self.createDate;
     self.journalDate = [self.createDate dateAtStartOfDay];
     self.journal = [Journal first];
     
@@ -113,6 +115,7 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     [self updatePriority];
+    self.updateDate = [NSDate date];
 }
 
 - (void)updatePriority {

@@ -668,7 +668,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
         self.fetchedResultsController.delegate = self;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f OR createDate > %@", self.priorityFilter, [NSDate date]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f OR updateDate > %@", self.priorityFilter, [NSDate date]];
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
     
     NSError *error;

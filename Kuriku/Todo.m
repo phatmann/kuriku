@@ -29,6 +29,7 @@ const float_t TodoImportanceCommitted = 0.5;
 @dynamic title;
 @dynamic importance;
 @dynamic createDate;
+@dynamic updateDate;
 @dynamic dueDate;
 @dynamic startDate;
 @dynamic priority;
@@ -39,6 +40,7 @@ const float_t TodoImportanceCommitted = 0.5;
 - (void)awakeFromInsert {
     [super awakeFromInsert];
     self.createDate = [NSDate date];
+    self.updateDate = self.createDate;
     [self createEntry:EntryTypeNew];
     self.journal = [Journal first];
     [self setUp];
@@ -76,6 +78,7 @@ const float_t TodoImportanceCommitted = 0.5;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    self.updateDate = [NSDate date];
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
     if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"] || [keyPath isEqualToString:@"importance"]) {

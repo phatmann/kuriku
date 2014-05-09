@@ -16,6 +16,14 @@
 @dynamic name;
 @dynamic entries;
 @dynamic todos;
+@dynamic createDate;
+@dynamic updateDate;
+
+- (void)awakeFromInsert {
+    [super awakeFromInsert];
+    self.createDate = [NSDate date];
+    self.updateDate = self.createDate;
+}
 
 - (void)createSampleItems {
 //    for (int importance = 0; importance <= TodoRangeMaxValue; ++importance) {

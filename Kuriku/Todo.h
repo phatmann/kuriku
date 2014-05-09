@@ -18,6 +18,7 @@
 @property (nonatomic) float_t importance;
 @property (nonatomic) float_t priority;
 @property (nonatomic, strong) NSDate *createDate;
+@property (nonatomic, strong) NSDate *updateDate;
 @property (nonatomic, strong) NSDate *dueDate;
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSString *notes;

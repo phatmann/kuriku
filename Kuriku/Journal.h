@@ -9,27 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
 @interface Journal : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *entries;
 @property (nonatomic, retain) NSSet *todos;
+@property (nonatomic, strong) NSDate *createDate;
+@property (nonatomic, strong) NSDate *updateDate;
 
 - (void)createSampleItems;
-
-@end
-
-@interface Journal (CoreDataGeneratedAccessors)
-
-- (void)addEntriesObject:(NSManagedObject *)value;
-- (void)removeEntriesObject:(NSManagedObject *)value;
-- (void)addEntries:(NSSet *)values;
-- (void)removeEntries:(NSSet *)values;
-
-- (void)addTodosObject:(NSManagedObject *)value;
-- (void)removeTodosObject:(NSManagedObject *)value;
-- (void)addTodos:(NSSet *)values;
-- (void)removeTodos:(NSSet *)values;
 
 @end

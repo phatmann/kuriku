@@ -3,14 +3,11 @@ The visual intelligent action journal
 
 Improvements
 ------------
-* Better progress UX, especially with filters. Animate completion.
-* Enhance edit dialog to use temperature, show tips
-* Animate row deletion when multiple entries for deleted todo
+* Enhance edit dialog to use temperature, show gesture tips
 
 Bugs
 ----
 * Section needs separator lines
-* Adding entries around midnight might not work since one could have added entries in section 1
 * Cell should resize during pinch without scrolling
 * Often cell gets selected during a gesture
 * If start date in past applied, ignore it
@@ -30,27 +27,12 @@ Missing Features
 New Thoughts
 ------------
 * Add notes by embedding return
-* Don't unmark todo completed, instead delete completion entry. Needed for accurate progress measurement.
-* Change repeat names?
-* How do we handle urgency and importance changes with filter? Adjust filter?
 * Remove start date when action taken?
-* Check priority calcs
-* Glide left to make more icy (start date) or right to make more urgent (due date)
-* Slide left to see "bar" partial complete, more left check, more left repeat
-* Tap and drag: up more prominent, down less prominent remove start date, left blue, right red
-* One line entry: type icon on left, time on right
-* Tap and drag up/down to glow more/less. If not glowing, down to set due date.
-* Tap and drag right/left to put on hold, yellow color
-* If not yellow, tap and drag left to put place start date in past, blue glow.
-* "Importance" -> "prominence"
-* "Urgency" -> "glow"
-* No start date == no commitment
 * Commitment icons: none (maybe), hollow star (must), filled in star (today), jogger (habit)
 * Can make a todo a "habit". Separate them to reduce noise.
 * Multiple journals chosen from nav bar
 * Journals are hierarchical, can use for projects
 * When there is a note, show below todo, tap to edit
-* In Edit dialog mention gestures for each property
 
 Performance
 -----------
