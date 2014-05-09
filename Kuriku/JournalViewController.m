@@ -20,7 +20,8 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 @interface JournalViewController ()
 {
     BOOL _isAdding;
-    BOOL _scrollToTopAfterCellInserted;
+    BOOL _isScrollingToTop;
+    BOOL _updateTableAfterScrolling;
 }
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarItem;
@@ -137,7 +138,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 
                 if (velocity.x > 1500 && offset.x > 100) {
                     pannedCell.progressBarValue = 1.0;
-                    _scrollToTopAfterCellInserted = YES;
+                    [self scrollToTop];
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
                     recognizer.enabled = NO;
                     recognizer.enabled = YES;
@@ -160,7 +161,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                     CGFloat remaining = 1.0 - initialProgressBarValue;
                     
                     if (delta >= remaining / 4) {
-                        _scrollToTopAfterCellInserted = YES;
+                        [self scrollToTop];
                         [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
                     } else {
                         pannedCell.progressBarValue = initialProgressBarValue;
@@ -418,10 +419,19 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     return label;
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    _isScrollingToTop = NO;
+    
+    if (_updateTableAfterScrolling) {
+        [self.tableView endUpdates];
+        _updateTableAfterScrolling = NO;
+    }
+}
+
 #pragma mark - Repeat Controller Delegate
 
 - (void)repeatViewControllerDaysChanged:(RepeatViewController *)repeatViewController {
-    _scrollToTopAfterCellInserted = YES;
+    [self scrollToTop];
     [self.selectedEntry.todo createEntry:EntryTypeComplete];
     
     switch (repeatViewController.days) {
@@ -570,12 +580,11 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     if (!kTopRowIndexPath)
         kTopRowIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
-    if (_scrollToTopAfterCellInserted) {
-        [self.tableView scrollToRowAtIndexPath:kTopRowIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-        _scrollToTopAfterCellInserted = NO;
+    if (_isScrollingToTop) {
+        _updateTableAfterScrolling = YES;
+    } else {
+        [self.tableView endUpdates];
     }
-    
-    [self.tableView endUpdates];
     
     if (_isAdding) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:kTopRowIndexPath];
@@ -660,6 +669,11 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     self.fetchedResultsController.delegate = self;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
+}
+
+- (void)scrollToTop {
+    _isScrollingToTop = YES;
+    [self.tableView setContentOffset:CGPointZero animated:YES];
 }
 
 @end
