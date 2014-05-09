@@ -654,19 +654,23 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 }
 
 - (void)fetchData {
-    NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createDate" ascending:NO];
-    [fetchRequest setSortDescriptors:@[sortDescriptor]];
-
+    if (!self.fetchedResultsController) {
+        NSManagedObjectContext *context = [[IBCoreDataStore mainStore] context];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Entry"];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createDate" ascending:NO];
+        [fetchRequest setSortDescriptors:@[sortDescriptor]];
+        
+        self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                         initWithFetchRequest:fetchRequest
+                                         managedObjectContext:context
+                                         sectionNameKeyPath:@"journalDateString"
+                                         cacheName:nil];
+        self.fetchedResultsController.delegate = self;
+    }
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority >= %f OR createDate > %@", self.priorityFilter, [NSDate date]];
-    [fetchRequest setPredicate:predicate];
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                     initWithFetchRequest:fetchRequest
-                                     managedObjectContext:context
-                                     sectionNameKeyPath:@"journalDateString"
-                                     cacheName:nil];
-    self.fetchedResultsController.delegate = self;
+    [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+    
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
 }
