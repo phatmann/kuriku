@@ -672,8 +672,10 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 }
 
 - (void)scrollToTop {
-    _isScrollingToTop = YES;
-    [self.tableView setContentOffset:CGPointZero animated:YES];
+    if (self.tableView.contentOffset.y > 0) {
+        _isScrollingToTop = YES;
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    }
 }
 
 @end
