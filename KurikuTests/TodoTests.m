@@ -23,7 +23,7 @@ static NSDate *entryDate;
 @end
 
 @implementation Entry(Testing)
-- (NSDate *)timestamp {return entryDate ?  entryDate : [self primitiveValueForKey:@"timestamp"];}
+- (NSDate *)createDate {return entryDate ?  entryDate : [self primitiveValueForKey:@"createDate"];}
 @end
 
 @interface TodoTests : XCTestCase
