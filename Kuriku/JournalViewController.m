@@ -208,13 +208,13 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
             if (pinchedCell) {
                 CGFloat notches = (initialImportance * 100) + 1;
                 notches = MAX(1.0, MIN(101.0, notches * recognizer.scale));
-                pinchedCell.entry.todo.importance = (notches - 1) / 100.0f;
-                [pinchedCell importanceWasChanged];
+                pinchedCell.importance = (notches - 1) / 100.0f;
             }
 
             break;
             
         case UIGestureRecognizerStateEnded:
+            pinchedCell.entry.todo.importance = pinchedCell.importance;
             [self updateRowHeights];
             [IBCoreDataStore save];
             break;
@@ -358,7 +358,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     sizingTextView.text = entry.todo.title;
     sizingTextView.font = [EntryCell fontForEntry:entry];
     
-    static const CGFloat margin = 21;
+    static const CGFloat margin = 16;
     CGFloat width = 300;
     CGFloat height = [sizingTextView sizeThatFits:CGSizeMake(width, 0)].height;
     

@@ -65,6 +65,7 @@
 
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
+    _importance = entry.todo.importance;
     [self refresh];
 }
 
@@ -90,7 +91,9 @@
     [self updateProgress];
 }
 
-- (void)importanceWasChanged {
+- (void)setImportance:(CGFloat)importance
+{
+    _importance = importance;
     [self updateTitle];
     [self updateBackground];
 }
@@ -205,12 +208,12 @@
     
     [self.titleTextView applyNUI];
     
-    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.entry.todo.importance]];
+    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.importance]];
 }
 
 -(void) updateBackground {
     if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.importance < TodoImportanceCommitted) {
+        if (_importance < TodoImportanceCommitted) {
             self.backgroundView.backgroundColor = _uncommittedColor;
         } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];

@@ -112,6 +112,7 @@ Advanced Features
 * Journal reference entries
 * Urgency window based on size of todo
 * Show todo count
+* URLs in notes field
 
 In Box
 ------
