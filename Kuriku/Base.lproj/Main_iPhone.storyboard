@@ -148,6 +148,10 @@
                                 <connections>
                                     <outlet property="dataSource" destination="CZ4-MO-1fc" id="Rbh-2U-xO8"/>
                                     <outlet property="delegate" destination="CZ4-MO-1fc" id="GvJ-wC-xXd"/>
+                                    <outletCollection property="gestureRecognizers" destination="zAN-02-a5i" appends="YES" id="pSw-oG-q8O"/>
+                                    <outletCollection property="gestureRecognizers" destination="Y6X-fE-B5f" appends="YES" id="33a-OA-Bbx"/>
+                                    <outletCollection property="gestureRecognizers" destination="V1I-nL-YKt" appends="YES" id="i8o-Ji-LMD"/>
+                                    <outletCollection property="gestureRecognizers" destination="r7n-Bx-xwa" appends="YES" id="gGu-nE-v8Q"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -165,12 +169,6 @@
                             <constraint firstItem="aKD-IV-7AV" firstAttribute="leading" secondItem="2VE-Yg-loa" secondAttribute="leading" id="sJp-bZ-rTL"/>
                             <constraint firstAttribute="trailing" secondItem="GpR-5f-hes" secondAttribute="trailing" constant="10" id="xLd-e7-zls"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="zAN-02-a5i" appends="YES" id="fdM-ic-qoD"/>
-                            <outletCollection property="gestureRecognizers" destination="Y6X-fE-B5f" appends="YES" id="Fqk-PL-mVE"/>
-                            <outletCollection property="gestureRecognizers" destination="V1I-nL-YKt" appends="YES" id="Rfo-TP-Q9M"/>
-                            <outletCollection property="gestureRecognizers" destination="r7n-Bx-xwa" appends="YES" id="IA3-9H-OGR"/>
-                        </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
