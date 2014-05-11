@@ -21,7 +21,7 @@ EntryLabelVolumeLow {
 }
 
 EntryLabelVolumeHigh {
-    font-size: 26;
+    font-size: 24;
 }
 
 EntryCellInactive {

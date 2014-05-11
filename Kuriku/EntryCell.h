@@ -15,11 +15,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *repeatIcon;
 @property (strong, nonatomic) Entry *entry;
 @property (weak, nonatomic) JournalViewController *journalViewController;
-@property (nonatomic) CGFloat progressBarValue;
+@property (nonatomic) CGFloat progress;
 @property (nonatomic) CGFloat volume;
+@property (nonatomic) CGFloat temperature;
 
 - (void)refresh;
-- (void)temperatureWasChanged;
 + (UIFont *)fontForEntry:(Entry *)entry;
 
 @end

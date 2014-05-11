@@ -102,7 +102,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 
 - (IBAction)panGestureRecognizerWasChanged:(UIPanGestureRecognizer *)recognizer {
     static EntryCell *pannedCell;
-    static CGFloat initialProgressBarValue;
+    static CGFloat initialProgress;
     static BOOL shouldRepeat;
     
     NSIndexPath *indexPath;
@@ -123,7 +123,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 
                 if (entry.state == EntryStateActive) {
                     pannedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    initialProgressBarValue = pannedCell.progressBarValue;
+                    initialProgress = pannedCell.progress;
                 }
             }
 
@@ -135,13 +135,13 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 CGPoint velocity = [recognizer velocityInView:self.tableView];
                 
                 if (velocity.x > 1500 && offset.x > 100) {
-                    pannedCell.progressBarValue = 1.0;
+                    pannedCell.progress = 1.0;
                     [self scrollToTop];
                     [pannedCell.entry.todo createEntry:EntryTypeComplete];
                     recognizer.enabled = NO;
                     recognizer.enabled = YES;
                 } else {
-                    pannedCell.progressBarValue = fmaxf(0.0, initialProgressBarValue + (offset.x / range));
+                    pannedCell.progress = fmaxf(0.0, initialProgress + (offset.x / range));
                     shouldRepeat = fabsf(offset.y) > 50;
                     pannedCell.repeatIcon.hidden = !shouldRepeat;
                 }
@@ -154,23 +154,22 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                     pannedCell.repeatIcon.hidden = YES;
                     self.selectedEntry = pannedCell.entry;
                     [self showRepeatView:pannedCell.entry.todo];
-                    pannedCell.progressBarValue = initialProgressBarValue;
+                    pannedCell.progress = initialProgress;
                 } else {
-                    CGFloat delta = pannedCell.progressBarValue - initialProgressBarValue;
-                    CGFloat remaining = 1.0 - initialProgressBarValue;
+                    CGFloat delta = pannedCell.progress - initialProgress;
+                    CGFloat remaining = 1.0 - initialProgress;
                     
                     if (delta >= remaining / 4) {
                         [self scrollToTop];
-                        [pannedCell.entry.todo createEntry:pannedCell.progressBarValue >= 1.0 ? EntryTypeComplete : EntryTypeAction];
-                    } else {
-                        pannedCell.progressBarValue = initialProgressBarValue;
-                        
-                        [UIView animateWithDuration:0.2 animations:^{
-                            [pannedCell layoutIfNeeded];
-                        }];
+                        [pannedCell.entry.todo createEntry:pannedCell.progress >= 1.0 ? EntryTypeComplete : EntryTypeAction];
+                        [IBCoreDataStore save];
                     }
-                
-                    [IBCoreDataStore save];
+                    
+                    pannedCell.progress = initialProgress;
+                    
+                    [UIView animateWithDuration:0.2 animations:^{
+                        [pannedCell layoutIfNeeded];
+                    }];
                 }
             }
             break;
@@ -215,7 +214,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
             
         case UIGestureRecognizerStateEnded:
             pinchedCell.entry.todo.volume = pinchedCell.volume;
-            [self updateRowHeights];
             [IBCoreDataStore save];
             break;
             
@@ -257,16 +255,15 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 CGFloat value = (recognizer.rotation / range) + initialValue;
                 
                 if (fabsf(value) < kWellSize / 2)
-                    rotatedCell.entry.todo.temperature = 0;
+                    rotatedCell.temperature = 0;
                 else
-                    rotatedCell.entry.todo.temperature = fclampf(value - copysign(kWellSize / 2, value), -1.0, 1.0);
-
-                [rotatedCell temperatureWasChanged];
+                    rotatedCell.temperature = fclampf(value - copysign(kWellSize / 2, value), -1.0, 1.0);
             }
             break;
             
         case UIGestureRecognizerStateEnded:
             if (rotatedCell) {
+                rotatedCell.entry.todo.temperature = rotatedCell.temperature;
                 [IBCoreDataStore save];
             }
             break;
@@ -314,6 +311,41 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     
     return YES;
 }
+
+#pragma mark - Action Handlers
+
+- (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
+    static const CGFloat notchSize = 0.03;
+    CGFloat coldMaxPriority = [Entry normalVolumeFromTodoVolume:TodoColdMaxVolume];
+    
+    if (filterSlider.value < notchSize)
+        filterSlider.value = 0;
+    else if (fabsf(filterSlider.value - EntryActiveMinVolume) < notchSize)
+        filterSlider.value = EntryActiveMinVolume;
+    else if (fabsf(filterSlider.value - EntryNormalMinVolume) < notchSize)
+        filterSlider.value = EntryNormalMinVolume;
+    else if (fabsf(filterSlider.value - coldMaxPriority) < notchSize)
+        filterSlider.value = coldMaxPriority;
+    
+    if (filterSlider.value < EntryActiveMinVolume)
+        self.volumeFilter = 0;
+    else if (filterSlider.value < EntryNormalMinVolume)
+        self.volumeFilter = EntryActiveMinVolume;
+    else
+        self.volumeFilter = filterSlider.value;
+}
+
+- (IBAction)addButtonTapped {
+    _isAdding = YES;
+    [self scrollToTop];
+    [Todo create];
+}
+
+- (void)doneButtonTapped {
+    self.filterSlider.enabled = YES;
+    [self.activeCell resignFirstResponder];
+}
+
 
 #pragma mark - Action Sheet Delegate
 
@@ -441,7 +473,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     [IBCoreDataStore save];
 }
 
-#pragma Text View Delegate
+#pragma mark - Text View Delegate
     
 - (void)scrollCaretIntoView:(UITextView *)textView {
     CGRect caretRect = [textView caretRectForPosition:textView.selectedTextRange.start];
@@ -485,40 +517,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 
 - (void)todoWasEdited:(Todo *)todo {
     [self.tableView reloadData];
-}
-
-#pragma mark - Action Handlers
-
-- (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
-    static const CGFloat notchSize = 0.03;
-    CGFloat coldMaxPriority = [Entry normalVolumeFromTodoVolume:TodoColdMaxVolume];
-    
-    if (filterSlider.value < notchSize)
-        filterSlider.value = 0;
-    else if (fabsf(filterSlider.value - EntryActiveMinVolume) < notchSize)
-        filterSlider.value = EntryActiveMinVolume;
-    else if (fabsf(filterSlider.value - EntryNormalMinVolume) < notchSize)
-        filterSlider.value = EntryNormalMinVolume;
-    else if (fabsf(filterSlider.value - coldMaxPriority) < notchSize)
-        filterSlider.value = coldMaxPriority;
-    
-    if (filterSlider.value < EntryActiveMinVolume)
-        self.volumeFilter = 0;
-    else if (filterSlider.value < EntryNormalMinVolume)
-        self.volumeFilter = EntryActiveMinVolume;
-    else
-        self.volumeFilter = filterSlider.value;
-}
-
-- (IBAction)addButtonTapped {
-    _isAdding = YES;
-    [self scrollToTop];
-    [Todo create];
-}
-
-- (void)doneButtonTapped {
-    self.filterSlider.enabled = YES;
-    [self.activeCell resignFirstResponder];
 }
 
 #pragma mark - Fetched Results Delegate

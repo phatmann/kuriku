@@ -11,18 +11,18 @@
 #import <InnerBand/InnerBand.h>
 #import "NSDate+Kuriku.h"
 
-const float_t  TodoVolumeDefaultValue = 0.5f;
+const float_t  TodoVolumeDefaultValue     = 0.5f;
 const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
-const int TodoVolumeVersion = 14;
+const int TodoVolumeVersion = 15;
 const NSTimeInterval TodoUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
 
 const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 14;
 
-const float_t TodoColdMaxVolume = 0.75;
-static const float_t TodoVolumeLockMax = 0.5;
+const float_t TodoColdMaxVolume = 0.5;
+static const float_t TodoVolumeLockMax = 0.25;
 
 @implementation Todo
 

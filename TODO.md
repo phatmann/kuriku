@@ -7,6 +7,7 @@ Improvements
 
 Bugs
 ----
+* Default volume wrong
 * Make model date's non-optional
 * Font not changing with temperature
 * When todo is cold volume gets locked
@@ -20,6 +21,7 @@ Bugs
 Missing Features
 ----------------
 * Scroll down to show blank line in edit mode
+* Normal volume notch
 * Allow multiple todos to be entered
 * Tap inactive task goes to active task
 * Jump around to different dates in journal

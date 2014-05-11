@@ -65,13 +65,7 @@
 
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
-    _volume = entry.todo.volume;
     [self refresh];
-}
-
-- (void)setProgressBarValue:(CGFloat)progressBarValue {
-    _progressBarValue = progressBarValue;
-    self.progressViewWidthConstraint.constant = self.statusView.frame.size.width * fminf(1.0, progressBarValue);
 }
 
 - (BOOL)becomeFirstResponder {
@@ -83,6 +77,10 @@
 }
 
 - (void)refresh {
+    _volume      = self.entry.todo.volume;
+    _progress    = self.entry.progress;
+    _temperature = self.entry.todo.temperature;
+
     [self updateTime];
     [self updateTitle];
     [self updateCellGlow];
@@ -91,19 +89,20 @@
     [self updateProgress];
 }
 
-- (void)setVolume:(CGFloat)volume
-{
+- (void)setProgress:(CGFloat)progress {
+    _progress = progress;
+    [self updateProgress];
+}
+
+- (void)setVolume:(CGFloat)volume {
     _volume = volume;
     [self updateTitle];
     [self updateBackground];
 }
 
-- (void)temperatureWasChanged {
-    _volume = self.entry.todo.volume;
-    
+- (void)setTemperature:(CGFloat)temperature {
+    _temperature = temperature;
     [self updateCellGlow];
-    [self updateDate];
-    [self updateTitle];
 }
 
 + (UIFont *)fontForEntry:(Entry *)entry {
@@ -129,7 +128,7 @@
 }
 
 - (void)updateProgress {
-    self.progressBarValue = self.entry.progress;
+    self.progressViewWidthConstraint.constant = self.statusView.frame.size.width * fminf(1.0, self.progress);
 }
 
 - (void)updateDate {
@@ -188,11 +187,11 @@
     self.titleTextView.glowColor = nil;
     
     if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.frostiness > 0) {
-            self.titleTextView.glowColor = [EntryCell scale:fratiof(self.entry.todo.frostiness) fromColor:_coolColor toColor:_coldColor];
+        if (self.temperature < 0) {
+            self.titleTextView.glowColor = [EntryCell scale:-self.temperature fromColor:_coolColor toColor:_coldColor];
             self.titleTextView.glowBlur = _coolBlur;
-        } else if (self.entry.todo.urgency > 0 && self.entry.type != EntryTypeComplete) {
-            self.titleTextView.glowColor = [EntryCell scale:fratiof(self.entry.todo.urgency) fromColor:_warmColor toColor:_hotColor];
+        } else if (self.temperature > 0 && self.entry.type != EntryTypeComplete) {
+            self.titleTextView.glowColor = [EntryCell scale:self.temperature fromColor:_warmColor toColor:_hotColor];
             self.titleTextView.glowBlur = _warmBlur;
         }
     }
