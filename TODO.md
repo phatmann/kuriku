@@ -7,7 +7,6 @@ Improvements
 
 Bugs
 ----
-* Default volume wrong
 * Make model date's non-optional
 * Font not changing with temperature
 * When todo is cold volume gets locked

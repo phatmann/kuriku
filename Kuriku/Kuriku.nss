@@ -17,11 +17,11 @@
 /* Computed styles */
 
 EntryLabelVolumeLow {
-    font-size: 14;
+    font-size: 16;
 }
 
 EntryLabelVolumeHigh {
-    font-size: 26;
+    font-size: 24;
 }
 
 EntryCellInactive {

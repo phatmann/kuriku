@@ -180,8 +180,9 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 }
 
 - (IBAction)pinchGestureRecognizerWasChanged:(UIPinchGestureRecognizer *)recognizer {
+    const static CGFloat range = 100.0f;
     static EntryCell *pinchedCell;
-    static CGFloat initialVolume;
+    static CGFloat initialValue;
     NSIndexPath *indexPath;
     CGPoint pt;
     Entry *entry;
@@ -195,9 +196,9 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
             if (indexPath) {
                 entry =  [self entryAtIndexPath:indexPath];
                 
-                if (entry.state == EntryStateActive) {
+                if (entry.state == EntryStateActive && entry.todo.temperature == 0) {
                     pinchedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    initialVolume = entry.todo.volume;
+                    initialValue = entry.todo.volume * range + 1;
                 }
             }
             
@@ -205,9 +206,10 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
             
         case UIGestureRecognizerStateChanged:
             if (pinchedCell) {
-                CGFloat notches = (initialVolume * 100) + 1;
-                notches = MAX(1.0, MIN(101.0, notches * recognizer.scale));
-                pinchedCell.volume = (notches - 1) / 100.0f;
+                static const CGFloat multiplier = 2.5f;
+                CGFloat scale = powf(recognizer.scale, multiplier);
+                CGFloat value = fclampf(initialValue * scale, 1.0, range + 1.0);
+                pinchedCell.volume = fratiof((value - 1) / range);
             }
 
             break;
