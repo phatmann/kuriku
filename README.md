@@ -33,7 +33,11 @@ Tapping a todo allows user to edit text.
 
 Edit todo info
 --------------
-A long press on a todo brings up an edit dialog.
+A long press on a todo brings up an edit dialog where you can set start date and due date.
+
+If you set a start date that is more than 60 days away, that date will be shown in blue in top right of todo. For closer dates the todo will glow an appropriate shade of blue and will not show the date.
+
+If you set a due date that is more than 14 days away, that date will be shown in red in top right of todo. For closer dates the todo will glow an appropriate shade of red and will not show the date.
 
 Heat up or cool off a todo
 --------------------------
