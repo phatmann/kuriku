@@ -19,7 +19,7 @@
 static NSDate *entryDate;
 
 @interface Todo(Testing)
-- (void)updatePriority;
+- (void)updateVolume;
 @end
 
 @implementation Entry(Testing)
@@ -132,85 +132,55 @@ static NSDate *entryDate;
     assertThatBool([IBCoreDataStore save], equalToBool(NO));
 }
 
-- (void)test_update_priority_when_importance_changes {
-    float oldPriority = self.todo.priority;
-    assertThatFloat(oldPriority, isNot(equalToFloat(0)));
-    self.todo.importance = 0;
-    assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
-}
-
-- (void)test_update_priority_when_urgency_changes {
-    float oldPriority = self.todo.priority;
+- (void)test_update_volume_when_urgency_changes {
+    float oldVolume = self.todo.volume;
     self.todo.urgency = 1;
-    assertThatFloat(self.todo.priority, isNot(equalToFloat(oldPriority)));
+    assertThatFloat(self.todo.volume, isNot(equalToFloat(oldVolume)));
 }
 
-- (void)test_priority1 {
-    self.todo.importance = 0;
-    self.todo.urgency    = 0;
-    assertThatFloat(self.todo.priority, equalToFloat(0));
+- (void)test_initial_volume {
+    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
 }
 
-- (void)test_priority2 {
-    self.todo.importance = 0.5;
-    self.todo.urgency    = 0;
-    assertThatFloat(self.todo.priority, equalToFloat(0.25));
+- (void)test_warm_volume {
+    self.todo.urgency = 0.5;
+    assertThatFloat(self.todo.volume, equalToFloat(0.75f));
 }
 
-- (void)test_priority3 {
-    self.todo.importance = 0;
-    self.todo.urgency    = 0.5;
-    assertThatFloat(self.todo.priority, equalToFloat(self.todo.urgency * 0.5));
+- (void)test_hot_volume {
+    self.todo.urgency = 1.0;
+    assertThatFloat(self.todo.volume, equalToFloat(1.0f));
 }
 
-- (void)test_priority4 {
-    self.todo.importance = 0.5;
-    self.todo.urgency    = 0.5;
-    assertThatFloat(self.todo.priority, equalToFloat(0.25 + self.todo.urgency * 0.5));
-}
-
-- (void)test_priority5 {
-    self.todo.importance = 1.0;
-    self.todo.urgency    = 1.0;
-    assertThatFloat(self.todo.priority, equalToFloat(1.0));
-}
-
-- (void)test_priority6 {
-    self.todo.importance = 0.5;
+- (void)test_fresh_volume {
     entryDate = [[NSDate today] dateByAddingDays:-1];
-    [self.todo updatePriority];
-    assertThatFloat(self.todo.priority, closeTo(0.25, 0.2));
+    [self.todo updateVolume];
+    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
 }
 
-- (void)test_priority7 {
-    self.todo.importance = 0.5;
-    self.todo.urgency    = 1.0;
-    assertThatFloat(self.todo.priority, equalToFloat(0.75));
-}
-
-- (void)test_priority_for_stale_todo {
+- (void)test_stale_volume{
     entryDate = [NSDate dateFromTodayWithDays:-TodoMaxStaleDaysAfterLastEntryDate];
-    [self.todo updatePriority];
-    assertThatFloat(self.todo.priority, equalToFloat(0.75f));
+    [self.todo updateVolume];
+    assertThatFloat(self.todo.volume, equalToFloat(1.0f));
 }
 
-- (void)test_update_all_priorities_when_priority_version_changes {
+- (void)test_update_all_volumes_when_volume_version_changes {
     Todo *todo1 = self.todo;
     Todo *todo2 = [self createTodo];
-    float oldPriority1 = todo1.priority;
-    float oldPriority2 = todo2.priority;
+    float oldVolume1 = todo1.volume;
+    float oldVolume2 = todo2.volume;
     
-    assertThatFloat(oldPriority1, isNot(equalToFloat(0)));
-    assertThatFloat(oldPriority2, isNot(equalToFloat(0)));
+    assertThatFloat(oldVolume1, isNot(equalToFloat(0)));
+    assertThatFloat(oldVolume2, isNot(equalToFloat(0)));
     
-    todo1.priority = 0;
-    todo2.priority = 0;
+    todo1.volume = 0;
+    todo2.volume = 0;
     
-    [[IBCoreDataStore mainStore] setMetadataObject:@(0) forKey:@"PriorityVersion"];
-    [Todo updateAllPrioritiesIfNeeded];
+    [[IBCoreDataStore mainStore] setMetadataObject:@(0) forKey:@"TodoVolumeVersion"];
+    [Todo updateVolumeForAllTodosIfNeeded];
     
-    assertThatFloat(todo1.priority, equalToFloat(oldPriority1));
-    assertThatFloat(todo2.priority, equalToFloat(oldPriority2));
+    assertThatFloat(todo1.volume, equalToFloat(oldVolume1));
+    assertThatFloat(todo2.volume, equalToFloat(oldVolume2));
 }
 
 - (void)test_update_todos_ready_to_start {
@@ -222,7 +192,7 @@ static NSDate *entryDate;
     
     Todo *todo3 = [self createTodo];
     
-    [Todo updateTodosReadyToStart];
+    [Todo updateAllTodosReadyToStart];
     
     assertThatInt(todo.lastEntry.type, equalToInt(EntryTypeReady));
     assertThat(todo.startDate, is(nilValue()));
@@ -270,14 +240,14 @@ static NSDate *entryDate;
     assertThat(self.todo.entries.array, is(@[createEntry, entry1, entry2]));
 }
 
-- (void)test_priority_zero_when_start_date {
+- (void)test_volume_zero_when_start_date {
     self.todo.startDate = [NSDate dateFromTodayWithDays:1];
-    assertThatFloat(self.todo.priority, closeTo(0.241, 0.001));
+    assertThatFloat(self.todo.volume, closeTo(0.5f, 0.1f));
 }
 
-- (void)test_priority_with_distant_due_date {
+- (void)test_volume_with_distant_due_date {
     self.todo.dueDate = [[NSDate today] dateByAddingDays:365];
-    assertThatFloat(self.todo.priority, equalToFloat(0.25f));
+    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
 }
 
 - (void)test_staleness_for_old_todo {
@@ -297,12 +267,6 @@ static NSDate *entryDate;
 
 - (void)test_staleness_for_new_todo {
     assertThatFloat(self.todo.staleness, equalToFloat(0.0f));
-}
-
-- (void)test_temperature_for_old_unimportant_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastEntryDate];
-    self.todo.importance = 0.0;
-    assertThatFloat(self.todo.temperature, equalToFloat(0.0f));
 }
 
 - (void)test_frostiness_for_frozen_todo {

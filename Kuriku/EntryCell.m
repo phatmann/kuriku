@@ -65,7 +65,7 @@
 
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
-    _importance = entry.todo.importance;
+    _volume = entry.todo.volume;
     [self refresh];
 }
 
@@ -91,9 +91,9 @@
     [self updateProgress];
 }
 
-- (void)setImportance:(CGFloat)importance
+- (void)setVolume:(CGFloat)volume
 {
-    _importance = importance;
+    _volume = volume;
     [self updateTitle];
     [self updateBackground];
 }
@@ -101,10 +101,11 @@
 - (void)temperatureWasChanged {
     [self updateCellGlow];
     [self updateDate];
+    [self updateTitle];
 }
 
 + (UIFont *)fontForEntry:(Entry *)entry {
-    CGFloat fontSize = [self fontSizeForImportance:entry.todo.importance];
+    CGFloat fontSize = [self fontSizeForVolume:entry.todo.volume];
     NSString *nuiClass = [EntryCell titleStyleClassForEntry:entry];
     return [[NUISettings getFontWithClass:nuiClass] fontWithSize:fontSize];
 }
@@ -208,12 +209,12 @@
     
     [self.titleTextView applyNUI];
     
-    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.importance]];
+    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForVolume:self.volume]];
 }
 
 -(void) updateBackground {
     if (self.entry.state == EntryStateActive) {
-        if (_importance < TodoImportanceCommitted) {
+        if ([Todo isVolumeLockedForVolume:self.volume]) {
             self.backgroundView.backgroundColor = _uncommittedColor;
         } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];
@@ -295,15 +296,15 @@
     return @"EntryLabel";
 }
 
-+ (CGFloat)fontSizeForImportance:(CGFloat)importance {
-    static CGFloat fontSizeImportanceLow, fontSizeImportanceHigh;
++ (CGFloat)fontSizeForVolume:(CGFloat)volume {
+    static CGFloat fontSizeVolumeLow, fontSizeVolumeHigh;
     
-    if (!fontSizeImportanceLow) {
-        fontSizeImportanceLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceLow"];
-        fontSizeImportanceHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceHigh"];
+    if (!fontSizeVolumeLow) {
+        fontSizeVolumeLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelVolumeLow"];
+        fontSizeVolumeHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelVolumeHigh"];
     }
     
-    return fontSizeImportanceLow + ((fontSizeImportanceHigh - fontSizeImportanceLow ) * importance);
+    return fontSizeVolumeLow + ((fontSizeVolumeHigh - fontSizeVolumeLow ) * volume);
 }
 
 @end

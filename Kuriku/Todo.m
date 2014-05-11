@@ -22,7 +22,7 @@ const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 14;
 
 const float_t TodoColdMaxVolume = 0.5;
-const float_t TodoVolumeLockMax = 0.5;
+static const float_t TodoVolumeLockMax = 0.5;
 
 @implementation Todo
 
@@ -41,6 +41,7 @@ const float_t TodoVolumeLockMax = 0.5;
     [super awakeFromInsert];
     self.createDate = [NSDate date];
     self.updateDate = self.createDate;
+    self.volume = TodoVolumeDefaultValue;
     [self createEntry:EntryTypeNew];
     self.journal = [Journal first];
     [self setUp];
@@ -81,7 +82,9 @@ const float_t TodoVolumeLockMax = 0.5;
     self.updateDate = [NSDate date];
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
-    if (!self.volumeLocked && ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"])) {
+    if ([keyPath isEqualToString:@"volume"]) {
+        self.volumeLocked = [Todo isVolumeLockedForVolume:self.volume];
+    } else if (!self.volumeLocked && ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"])) {
         [self updateVolume];
     } else if ([keyPath isEqualToString:@"entries"]) {
         if (kind == NSKeyValueChangeRemoval) {
@@ -194,6 +197,10 @@ const float_t TodoVolumeLockMax = 0.5;
 }
 
 #pragma mark -
+
++ (BOOL)isVolumeLockedForVolume:(float_t)volume {
+    return volume < TodoVolumeLockMax;
+}
 
 float_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)

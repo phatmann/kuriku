@@ -16,7 +16,7 @@
 @property (strong, nonatomic) Entry *entry;
 @property (weak, nonatomic) JournalViewController *journalViewController;
 @property (nonatomic) CGFloat progressBarValue;
-@property (nonatomic) CGFloat importance;
+@property (nonatomic) CGFloat volume;
 
 - (void)refresh;
 - (void)temperatureWasChanged;

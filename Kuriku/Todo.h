@@ -33,6 +33,7 @@
 
 - (Entry *)createEntry:(EntryType)type;
 
++ (BOOL)isVolumeLockedForVolume:(float_t)volume;
 + (void)updateVolumeForAllTodosIfNeeded;
 + (void)updateAllTodosReadyToStart;
 + (void)dailyUpdate;
@@ -52,7 +53,6 @@ extern const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate;
 extern const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate;
 
 extern const float_t TodoColdMaxVolume;
-extern const float_t TodoVolumeLockMax;
 
 @end
 

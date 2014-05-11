@@ -16,11 +16,11 @@
 
 /* Computed styles */
 
-EntryLabelImportanceLow {
+EntryLabelVolumeLow {
     font-size: 14;
 }
 
-EntryLabelImportanceHigh {
+EntryLabelVolumeHigh {
     font-size: 26;
 }
 
