@@ -47,6 +47,7 @@
 - (void)awakeFromNib {
     self.backgroundView = [UIView new];
     self.backgroundView.backgroundColor = [UIColor whiteColor];
+    self.backgroundView.alpha = 0.5;
     
     _warmColor        = [NUISettings getColor:@"color" withClass:@"TemperatureWarm"];
     _hotColor         = [NUISettings getColor:@"color" withClass:@"TemperatureHot"];
@@ -83,7 +84,7 @@
 
     [self updateTime];
     [self updateTitle];
-    [self updateCellGlow];
+    //[self updateCellGlow];
     [self updateDate];
     [self updateBackground];
     [self updateProgress];
@@ -102,7 +103,8 @@
 
 - (void)setTemperature:(CGFloat)temperature {
     _temperature = temperature;
-    [self updateCellGlow];
+    [self updateBackground];
+    //[self updateCellGlow];
 }
 
 + (UIFont *)fontForEntry:(Entry *)entry {
@@ -215,7 +217,11 @@
 
 -(void) updateBackground {
     if (self.entry.state == EntryStateActive) {
-        if ([Todo isVolumeLockedForVolume:self.volume]) {
+        if (self.temperature < 0) {
+            self.backgroundView.backgroundColor = [EntryCell scale:-self.temperature fromColor:_coolColor toColor:_coldColor];
+        } else if (self.temperature > 0 && self.entry.type != EntryTypeComplete) {
+            self.backgroundView.backgroundColor = [EntryCell scale:self.temperature fromColor:_warmColor toColor:_hotColor];
+        } else if ([Todo isVolumeLockedForVolume:self.volume]) {
             self.backgroundView.backgroundColor = _uncommittedColor;
         } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];

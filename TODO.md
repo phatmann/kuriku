@@ -7,6 +7,8 @@ Improvements
 
 Bugs
 ----
+* Hard to see time on urgent items
+* No frostiness on complete items?
 * Make model date's non-optional
 * Font not changing with temperature
 * When todo is cold volume gets locked
