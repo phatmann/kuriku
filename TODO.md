@@ -7,6 +7,7 @@ Improvements
 
 Bugs
 ----
+* Make model date's non-optional
 * Font not changing with temperature
 * When todo is cold volume gets locked
 * Section needs separator lines
