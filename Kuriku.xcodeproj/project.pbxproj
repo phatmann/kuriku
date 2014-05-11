@@ -132,6 +132,7 @@
 		EAC10B9119144AE300ABBDB2 /* EditTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTodoViewController.m; sourceTree = "<group>"; };
 		EAC87679191AF46E00F6CA62 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; wrapsLines = 1; };
 		EAC8767E191C123100F6CA62 /* Kuriku21.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku21.xcdatamodel; sourceTree = "<group>"; };
+		EACFDCAC191F006D002340F4 /* Kuriku23.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku23.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -752,6 +753,7 @@
 		EAAEEB0E187E1EE80098C4F0 /* Kuriku.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EACFDCAC191F006D002340F4 /* Kuriku23.xcdatamodel */,
 				EAAF426A191D7297001CBEA2 /* Kuriku22.xcdatamodel */,
 				EAC8767E191C123100F6CA62 /* Kuriku21.xcdatamodel */,
 				EA44731E18FEF1B800231321 /* Kuriku20.xcdatamodel */,
@@ -775,7 +777,7 @@
 				EAAEEB19187E1EE80098C4F0 /* Kuriku08.xcdatamodel */,
 				EAAEEB1A187E1EE80098C4F0 /* Kuriku09.xcdatamodel */,
 			);
-			currentVersion = EAAF426A191D7297001CBEA2 /* Kuriku22.xcdatamodel */;
+			currentVersion = EACFDCAC191F006D002340F4 /* Kuriku23.xcdatamodel */;
 			path = Kuriku.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
