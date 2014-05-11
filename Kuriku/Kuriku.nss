@@ -100,19 +100,31 @@ Progress {
 Time {
     font-name:  @timeFont;
     font-color: rgb(170, 170, 170);
-    font-size: @timeFontSize;
+    font-size:  @timeFontSize;
 }
 
 TimeInactive {
     font-name:  @timeFont;
     font-color: @inactiveTextColor;
-    font-size: @timeFontSize;
+    font-size:  @timeFontSize;
 }
 
 TimeCompleted {
     font-name:  @timeFont;
     font-color: @completedTextColor;
-    font-size: @timeFontSize;
+    font-size:  @timeFontSize;
+}
+
+TimeWarm {
+    font-name:  @timeFont;
+    font-color: white;
+    font-size:  @timeFontSize;
+}
+
+TimeCool {
+    font-name:  @timeFont;
+    font-color: white;
+    font-size:  @timeFontSize;
 }
 
 DueDate {

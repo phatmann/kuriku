@@ -122,6 +122,10 @@
         self.timeLabel.nuiClass = @"TimeCompleted";
     } else if (self.entry.state == EntryStateInactive) {
         self.timeLabel.nuiClass = @"TimeInactive";
+    } else if (self.entry.todo.temperature > 0) {
+        self.timeLabel.nuiClass = @"TimeWarm";
+    } else if (self.entry.todo.temperature < 0) {
+        self.timeLabel.nuiClass = @"TimeCool";
     } else {
         self.timeLabel.nuiClass = @"Time";
     }
