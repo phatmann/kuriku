@@ -99,6 +99,8 @@
 }
 
 - (void)temperatureWasChanged {
+    _volume = self.entry.todo.volume;
+    
     [self updateCellGlow];
     [self updateDate];
     [self updateTitle];

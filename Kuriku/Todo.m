@@ -21,7 +21,7 @@ const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
 const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 14;
 
-const float_t TodoColdMaxVolume = 0.5;
+const float_t TodoColdMaxVolume = 0.75;
 static const float_t TodoVolumeLockMax = 0.5;
 
 @implementation Todo
@@ -321,7 +321,7 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     CGFloat volume;
     
     if (self.temperature < 0) {
-        volume = TodoColdMaxVolume * (1.0 + self.temperature);
+        volume = TodoVolumeLockMax + ((TodoColdMaxVolume - TodoVolumeLockMax) * (1.0 + self.temperature));
     } else if (self.temperature > 0) {
         volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * self.temperature);
     } else {

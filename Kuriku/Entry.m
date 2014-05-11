@@ -54,13 +54,13 @@ static const float_t EntryNormalVolumeRange = 1.0 - EntryNormalMinVolume;
 }
 
 - (void)setUp {
-    [self addObserver:self forKeyPath:@"todo.priority" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"todo.volume" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"type" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
 - (void)tearDown {
-    [self removeObserver:self forKeyPath:@"todo.priority"];
+    [self removeObserver:self forKeyPath:@"todo.volume"];
     [self removeObserver:self forKeyPath:@"state"];
     [self removeObserver:self forKeyPath:@"type"];
 }

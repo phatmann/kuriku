@@ -7,6 +7,8 @@ Improvements
 
 Bugs
 ----
+* Font not changing with temperature
+* When todo is cold volume gets locked
 * Section needs separator lines
 * Cell should resize during pinch without scrolling
 * Often cell gets selected during a gesture
