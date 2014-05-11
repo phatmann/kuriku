@@ -48,7 +48,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 
     self.tableView.estimatedRowHeight = kEstimatedRowHeight;
     
-    float_t savedVolumeFilter = [[NSUserDefaults standardUserDefaults] floatForKey:@"priorityFilter"];
+    float_t savedVolumeFilter = [[NSUserDefaults standardUserDefaults] floatForKey:@"volumeFilter"];
     
     if (savedVolumeFilter > 0) {
         self.volumeFilter = savedVolumeFilter;
