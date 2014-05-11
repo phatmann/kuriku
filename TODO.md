@@ -7,6 +7,11 @@ Improvements
 
 Bugs
 ----
+* Hard to see time on urgent items
+* No frostiness on complete items?
+* Make model date's non-optional
+* Font not changing with temperature
+* When todo is cold volume gets locked
 * Section needs separator lines
 * Cell should resize during pinch without scrolling
 * Often cell gets selected during a gesture
@@ -17,6 +22,7 @@ Bugs
 Missing Features
 ----------------
 * Scroll down to show blank line in edit mode
+* Normal volume notch
 * Allow multiple todos to be entered
 * Tap inactive task goes to active task
 * Jump around to different dates in journal

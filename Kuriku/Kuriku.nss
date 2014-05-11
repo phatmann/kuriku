@@ -16,12 +16,12 @@
 
 /* Computed styles */
 
-EntryLabelImportanceLow {
-    font-size: 14;
+EntryLabelVolumeLow {
+    font-size: 16;
 }
 
-EntryLabelImportanceHigh {
-    font-size: 26;
+EntryLabelVolumeHigh {
+    font-size: 24;
 }
 
 EntryCellInactive {

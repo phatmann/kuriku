@@ -11,28 +11,28 @@
 #import <InnerBand/InnerBand.h>
 #import "NSDate+Kuriku.h"
 
-const float_t  TodoImportanceDefaultValue = 0.5f;
+const float_t  TodoVolumeDefaultValue     = 0.5f;
 const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
-const int TodoPriorityVersion = 13;
+const int TodoVolumeVersion = 15;
 const NSTimeInterval TodoUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
 
 const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate = 60;
 const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 14;
 
-const float_t TodoColdMaxPriority = 0.5;
-const float_t TodoImportanceCommitted = 0.5;
+const float_t TodoColdMaxVolume = 0.5;
+static const float_t TodoVolumeLockMax = 0.25;
 
 @implementation Todo
 
 @dynamic title;
-@dynamic importance;
+@dynamic volume;
+@dynamic volumeLocked;
 @dynamic createDate;
 @dynamic updateDate;
 @dynamic dueDate;
 @dynamic startDate;
-@dynamic priority;
 @dynamic notes;
 @dynamic entries;
 @dynamic journal;
@@ -41,6 +41,7 @@ const float_t TodoImportanceCommitted = 0.5;
     [super awakeFromInsert];
     self.createDate = [NSDate date];
     self.updateDate = self.createDate;
+    self.volume = TodoVolumeDefaultValue;
     [self createEntry:EntryTypeNew];
     self.journal = [Journal first];
     [self setUp];
@@ -62,7 +63,7 @@ const float_t TodoImportanceCommitted = 0.5;
 }
 
 - (void)setUp {
-    [self addObserver:self forKeyPath:@"importance" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"volume" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"urgency" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"dueDate" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"startDate" options:NSKeyValueObservingOptionInitial context:nil];
@@ -70,7 +71,7 @@ const float_t TodoImportanceCommitted = 0.5;
 }
 
 - (void)tearDown {
-    [self removeObserver:self forKeyPath:@"importance"];
+    [self removeObserver:self forKeyPath:@"volume"];
     [self removeObserver:self forKeyPath:@"urgency"];
     [self removeObserver:self forKeyPath:@"dueDate"];
     [self removeObserver:self forKeyPath:@"startDate"];
@@ -81,8 +82,10 @@ const float_t TodoImportanceCommitted = 0.5;
     self.updateDate = [NSDate date];
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
-    if ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"] || [keyPath isEqualToString:@"importance"]) {
-        [self updatePriority];
+    if ([keyPath isEqualToString:@"volume"]) {
+        self.volumeLocked = [Todo isVolumeLockedForVolume:self.volume];
+    } else if (!self.volumeLocked && ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"])) {
+        [self updateVolume];
     } else if ([keyPath isEqualToString:@"entries"]) {
         if (kind == NSKeyValueChangeRemoval) {
             NSArray *removedEntries = change[NSKeyValueChangeOldKey];
@@ -130,7 +133,7 @@ const float_t TodoImportanceCommitted = 0.5;
 }
 
 + (NSSet *)keyPathsForValuesAffectingTemperature {
-    return [NSSet setWithObjects:@"urgency", @"staleness", @"frostiness", @"importance", nil];
+    return [NSSet setWithObjects:@"urgency", @"staleness", @"frostiness", nil];
 }
 
 - (Entry *)lastEntry {
@@ -195,6 +198,10 @@ const float_t TodoImportanceCommitted = 0.5;
 
 #pragma mark -
 
++ (BOOL)isVolumeLockedForVolume:(float_t)volume {
+    return volume < TodoVolumeLockMax;
+}
+
 float_t urgencyFromDueDate(NSDate *dueDate) {
     if (!dueDate)
         return 0;
@@ -227,24 +234,24 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     }
 }
 
-+ (void)updateAllPriorities {
++ (void)updateVolumeForAllTodos {
     for (Todo *todo in [Todo all]) {
-        [todo updatePriority];
+        [todo updateVolume];
     }
     
     for (Entry *entry in [Entry all]) {
-        [entry updatePriority];
+        [entry updateVolume];
     }
 }
 
-+ (void)updatePrioritiesFromDueDate {
++ (void)updateVolumeForAllTodosFromDueDate {
     NSDate *dateUrgentDaysFromNow = [NSDate dateFromTodayWithDays:TodoUrgentDaysBeforeDueDate];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@", dateUrgentDaysFromNow];
     NSArray *todos = [Todo allForPredicate:predicate];
     
     for (Todo *todo in todos) {
         if (todo.lastEntry.type != EntryTypeComplete)
-            [todo updatePriority];
+            [todo updateVolume];
     }
     
     [IBCoreDataStore save];
@@ -262,20 +269,20 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     return entry;
 }
 
-+ (void)updateAllPrioritiesIfNeeded {
-    static NSString *priorityVersionKey = @"PriorityVersion";
++ (void)updateVolumeForAllTodosIfNeeded {
+    static NSString *priorityVersionKey = @"TodoVolumeVersion";
     
     int priorityVersion = [[[IBCoreDataStore mainStore] metadataObjectForKey:priorityVersionKey] intValue];
     
-    if (priorityVersion < TodoPriorityVersion) {
-        [self updateAllPriorities];
+    if (priorityVersion < TodoVolumeVersion) {
+        [self updateVolumeForAllTodos];
         
-        [[IBCoreDataStore mainStore] setMetadataObject:@(TodoPriorityVersion) forKey:priorityVersionKey];
+        [[IBCoreDataStore mainStore] setMetadataObject:@(TodoVolumeVersion) forKey:priorityVersionKey];
         [[IBCoreDataStore mainStore] save];
     }
 }
 
-+ (void)updateTodosReadyToStart {
++ (void)updateAllTodosReadyToStart {
     NSArray *todos = [Todo all];
     NSDate *today = [NSDate today];
     
@@ -296,8 +303,8 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     NSDate *today = [NSDate today];
     
     if (!updateDate || ![updateDate isSameDay:today]) {
-        [self updatePrioritiesFromDueDate];
-        [self updateTodosReadyToStart];
+        [self updateVolumeForAllTodosFromDueDate];
+        [self updateAllTodosReadyToStart];
         
         [[IBCoreDataStore mainStore] setMetadataObject:today forKey:dailyUpdateKey];
         [[IBCoreDataStore mainStore] save];
@@ -310,19 +317,18 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 
 #pragma mark - Private
 
-- (void)updatePriority {
-    CGFloat attention;
+- (void)updateVolume {
+    CGFloat volume;
     
-    if (self.temperature == 0) {
-        if (self.importance < TodoImportanceCommitted)
-            attention = 0;
-        else
-            attention = self.staleness;
+    if (self.temperature < 0) {
+        volume = TodoVolumeLockMax + ((TodoColdMaxVolume - TodoVolumeLockMax) * (1.0 + self.temperature));
+    } else if (self.temperature > 0) {
+        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * self.temperature);
     } else {
-        attention = self.temperature;
+        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * self.staleness);
     }
     
-    self.priority = fratiof((self.importance * TodoColdMaxPriority) + (attention * (1.0 - TodoColdMaxPriority)));
+    self.volume = fratiof(volume);
 }
 
 @end

@@ -47,6 +47,7 @@
 - (void)awakeFromNib {
     self.backgroundView = [UIView new];
     self.backgroundView.backgroundColor = [UIColor whiteColor];
+    self.backgroundView.alpha = 0.5;
     
     _warmColor        = [NUISettings getColor:@"color" withClass:@"TemperatureWarm"];
     _hotColor         = [NUISettings getColor:@"color" withClass:@"TemperatureHot"];
@@ -65,13 +66,7 @@
 
 - (void)setEntry:(Entry *)entry {
     _entry = entry;
-    _importance = entry.todo.importance;
     [self refresh];
-}
-
-- (void)setProgressBarValue:(CGFloat)progressBarValue {
-    _progressBarValue = progressBarValue;
-    self.progressViewWidthConstraint.constant = self.statusView.frame.size.width * fminf(1.0, progressBarValue);
 }
 
 - (BOOL)becomeFirstResponder {
@@ -83,28 +78,37 @@
 }
 
 - (void)refresh {
+    _volume      = self.entry.todo.volume;
+    _progress    = self.entry.progress;
+    _temperature = self.entry.todo.temperature;
+
     [self updateTime];
     [self updateTitle];
-    [self updateCellGlow];
+    //[self updateCellGlow];
     [self updateDate];
     [self updateBackground];
     [self updateProgress];
 }
 
-- (void)setImportance:(CGFloat)importance
-{
-    _importance = importance;
+- (void)setProgress:(CGFloat)progress {
+    _progress = progress;
+    [self updateProgress];
+}
+
+- (void)setVolume:(CGFloat)volume {
+    _volume = volume;
     [self updateTitle];
     [self updateBackground];
 }
 
-- (void)temperatureWasChanged {
-    [self updateCellGlow];
-    [self updateDate];
+- (void)setTemperature:(CGFloat)temperature {
+    _temperature = temperature;
+    [self updateBackground];
+    //[self updateCellGlow];
 }
 
 + (UIFont *)fontForEntry:(Entry *)entry {
-    CGFloat fontSize = [self fontSizeForImportance:entry.todo.importance];
+    CGFloat fontSize = [self fontSizeForVolume:entry.todo.volume];
     NSString *nuiClass = [EntryCell titleStyleClassForEntry:entry];
     return [[NUISettings getFontWithClass:nuiClass] fontWithSize:fontSize];
 }
@@ -126,7 +130,7 @@
 }
 
 - (void)updateProgress {
-    self.progressBarValue = self.entry.progress;
+    self.progressViewWidthConstraint.constant = self.statusView.frame.size.width * fminf(1.0, self.progress);
 }
 
 - (void)updateDate {
@@ -185,11 +189,11 @@
     self.titleTextView.glowColor = nil;
     
     if (self.entry.state == EntryStateActive) {
-        if (self.entry.todo.frostiness > 0) {
-            self.titleTextView.glowColor = [EntryCell scale:fratiof(self.entry.todo.frostiness) fromColor:_coolColor toColor:_coldColor];
+        if (self.temperature < 0) {
+            self.titleTextView.glowColor = [EntryCell scale:-self.temperature fromColor:_coolColor toColor:_coldColor];
             self.titleTextView.glowBlur = _coolBlur;
-        } else if (self.entry.todo.urgency > 0 && self.entry.type != EntryTypeComplete) {
-            self.titleTextView.glowColor = [EntryCell scale:fratiof(self.entry.todo.urgency) fromColor:_warmColor toColor:_hotColor];
+        } else if (self.temperature > 0 && self.entry.type != EntryTypeComplete) {
+            self.titleTextView.glowColor = [EntryCell scale:self.temperature fromColor:_warmColor toColor:_hotColor];
             self.titleTextView.glowBlur = _warmBlur;
         }
     }
@@ -208,12 +212,16 @@
     
     [self.titleTextView applyNUI];
     
-    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForImportance:self.importance]];
+    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForVolume:self.volume]];
 }
 
 -(void) updateBackground {
     if (self.entry.state == EntryStateActive) {
-        if (_importance < TodoImportanceCommitted) {
+        if (self.temperature < 0) {
+            self.backgroundView.backgroundColor = [EntryCell scale:-self.temperature fromColor:_coolColor toColor:_coldColor];
+        } else if (self.temperature > 0 && self.entry.type != EntryTypeComplete) {
+            self.backgroundView.backgroundColor = [EntryCell scale:self.temperature fromColor:_warmColor toColor:_hotColor];
+        } else if ([Todo isVolumeLockedForVolume:self.volume]) {
             self.backgroundView.backgroundColor = _uncommittedColor;
         } else if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
             self.backgroundView.backgroundColor = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];
@@ -295,15 +303,15 @@
     return @"EntryLabel";
 }
 
-+ (CGFloat)fontSizeForImportance:(CGFloat)importance {
-    static CGFloat fontSizeImportanceLow, fontSizeImportanceHigh;
++ (CGFloat)fontSizeForVolume:(CGFloat)volume {
+    static CGFloat fontSizeVolumeLow, fontSizeVolumeHigh;
     
-    if (!fontSizeImportanceLow) {
-        fontSizeImportanceLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceLow"];
-        fontSizeImportanceHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelImportanceHigh"];
+    if (!fontSizeVolumeLow) {
+        fontSizeVolumeLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelVolumeLow"];
+        fontSizeVolumeHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelVolumeHigh"];
     }
     
-    return fontSizeImportanceLow + ((fontSizeImportanceHigh - fontSizeImportanceLow ) * importance);
+    return fontSizeVolumeLow + ((fontSizeVolumeHigh - fontSizeVolumeLow ) * volume);
 }
 
 @end

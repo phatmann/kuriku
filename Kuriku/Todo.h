@@ -15,8 +15,8 @@
 @interface Todo : NSManagedObject
 
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic) float_t importance;
-@property (nonatomic) float_t priority;
+@property (nonatomic) float_t volume;
+@property (nonatomic) BOOL volumeLocked;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *updateDate;
 @property (nonatomic, strong) NSDate *dueDate;
@@ -33,8 +33,9 @@
 
 - (Entry *)createEntry:(EntryType)type;
 
-+ (void)updateAllPrioritiesIfNeeded;
-+ (void)updateTodosReadyToStart;
++ (BOOL)isVolumeLockedForVolume:(float_t)volume;
++ (void)updateVolumeForAllTodosIfNeeded;
++ (void)updateAllTodosReadyToStart;
 + (void)dailyUpdate;
 + (void)migrate;
 
@@ -43,16 +44,15 @@ NSDate *dueDateFromUrgency(float_t urgency);
 float_t frostinessFromStartDate(NSDate *startDate);
 NSDate *startDateFromFrostiness(float_t frostiness);
 
-extern const float_t  TodoImportanceDefaultValue;
+extern const float_t  TodoVolumeDefaultValue;
 extern const float_t  TodoUrgencyDefaultValue;
 
-extern const int TodoPriorityVersion;
+extern const int TodoVolumeVersion;
 
 extern const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate;
 extern const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate;
 
-extern const float_t TodoColdMaxPriority;
-extern const float_t TodoImportanceCommitted;
+extern const float_t TodoColdMaxVolume;
 
 @end
 

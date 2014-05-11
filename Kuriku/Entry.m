@@ -11,14 +11,14 @@
 #import "Journal.h"
 #import <InnerBand/InnerBand.h>
 
-const float_t EntryInactivePriority  = 0;
-const float_t EntryActiveMinPriority = 0.1;
-const float_t EntryCompletedPriority = 0.2;
-const float_t EntryNormalMinPriority = 0.3;
-static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
+const float_t EntryInactiveVolume  = 0;
+const float_t EntryActiveMinVolume = 0.1;
+const float_t EntryCompletedVolume = 0.2;
+const float_t EntryNormalMinVolume = 0.3;
+static const float_t EntryNormalVolumeRange = 1.0 - EntryNormalMinVolume;
 
 @implementation Entry
-@dynamic priority;
+@dynamic volume;
 @dynamic journalDateString;
 @dynamic createDate;
 @dynamic updateDate;
@@ -54,13 +54,13 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
 }
 
 - (void)setUp {
-    [self addObserver:self forKeyPath:@"todo.priority" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"todo.volume" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"type" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
 - (void)tearDown {
-    [self removeObserver:self forKeyPath:@"todo.priority"];
+    [self removeObserver:self forKeyPath:@"todo.volume"];
     [self removeObserver:self forKeyPath:@"state"];
     [self removeObserver:self forKeyPath:@"type"];
 }
@@ -73,8 +73,8 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
     return [Entry journalDateFromString:self.journalDateString];
 }
 
-+ (CGFloat)normalPriorityFromTodoPriority:(CGFloat)todoPriority {
-    return fratiof((EntryNormalMinPriority + (EntryNormalPriorityRange * todoPriority)));
++ (CGFloat)normalVolumeFromTodoVolume:(CGFloat)todoVolume {
+    return fratiof((EntryNormalMinVolume + (EntryNormalVolumeRange * todoVolume)));
 }
 
 - (CGFloat)progress {
@@ -114,17 +114,17 @@ static const float_t EntryNormalPriorityRange = 1.0 - EntryNormalMinPriority;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    [self updatePriority];
+    [self updateVolume];
     self.updateDate = [NSDate date];
 }
 
-- (void)updatePriority {
+- (void)updateVolume {
     if (self.state == EntryStateInactive) {
-        self.priority = EntryInactivePriority;
+        self.volume = EntryInactiveVolume;
     } else if (self.type == EntryTypeComplete) {
-        self.priority = EntryCompletedPriority;
+        self.volume = EntryCompletedVolume;
     } else {
-        self.priority = [Entry normalPriorityFromTodoPriority:self.todo.priority];
+        self.volume = [Entry normalVolumeFromTodoVolume:self.todo.volume];
     }
 }
 

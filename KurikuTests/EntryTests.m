@@ -32,26 +32,21 @@
     [super tearDown];
 }
 
-- (void)test_priority_set_when_new {
-    assertThatFloat(self.todo.lastEntry.priority, closeTo(0.475, 0.001));
+- (void)test_volume_set_when_new {
+    assertThatFloat(self.todo.lastEntry.volume, equalToFloat(0.65f));
 }
 
-- (void)test_priority_updated_when_todo_priority_changes {
-    self.todo.importance = 1.0;
-    assertThatFloat(self.todo.lastEntry.priority, closeTo(0.65, 0.001));
-}
-
-- (void)test_priority_zero_when_inactive {
-    assertThatFloat(self.todo.priority, isNot(equalToFloat(0)));
+- (void)test_volume_zero_when_inactive {
+    assertThatFloat(self.todo.volume, isNot(equalToFloat(0)));
     Entry *entry = self.todo.lastEntry;
     [self.todo createEntry:EntryTypeAction];
-    assertThatFloat(entry.priority, equalToFloat(0));
+    assertThatFloat(entry.volume, equalToFloat(0));
 }
 
-- (void)test_priority_zero_for_completed {
-    assertThatFloat(self.todo.priority, isNot(equalToFloat(0)));
+- (void)test_volume_zero_for_completed {
+    assertThatFloat(self.todo.volume, isNot(equalToFloat(0)));
     Entry *entry = [self.todo createEntry:EntryTypeComplete];
-    assertThatFloat(entry.priority, equalToFloat(EntryCompletedPriority));
+    assertThatFloat(entry.volume, equalToFloat(EntryCompletedVolume));
 }
 
 - (Todo *)createTodo {
