@@ -7,11 +7,11 @@ Improvements
 
 Bugs
 ----
+* Overridden volume not preserved on stale items
+* Should scale automatic volume from overridden value onwards and allow pinching on items with temperature
 * Hard to see time
 * No frostiness on complete items?
 * Make model date's non-optional
-* Font not changing with temperature
-* When todo is cold volume gets locked
 * Section needs separator lines
 * Cell should resize during pinch without scrolling
 * Often cell gets selected during a gesture
