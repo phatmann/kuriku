@@ -362,6 +362,20 @@ static NSDate *mockUpdateDate;
     [todo stopMocking];
 }
 
+- (void)test_daily_update_later_volume_from_staleness {
+    mockUpdateDate = [NSDate dateFromTodayWithDays:-TodoMinStaleDaysAfterLastUpdate];
+    
+    NSDate *twoWeeksAgo = [NSDate dateFromTodayWithDays:-TodoMaxStaleDaysAfterLastUpdate];
+    id todo = [OCMockObject mockForClass:[Todo class]];
+    [[[todo stub] andReturn:twoWeeksAgo] dailyUpdatedOn];
+    
+    assertThatFloat(self.todo.volume, equalToFloat(0.5));
+    [Todo dailyUpdate];
+    assertThatFloat(self.todo.volume, equalToFloat(1.0));
+    
+    [todo stopMocking];
+}
+
 #pragma mark -
 
 - (Todo *)createTodo {
