@@ -7,11 +7,13 @@ Improvements
 
 Bugs
 ----
+* Update volume daily for stale todos
+* Update volume daily for frozen todos
 * Overridden volume not preserved on stale items
 * Should scale automatic volume from overridden value onwards and allow pinching on items with temperature
 * Hard to see time
-* No frostiness on complete items?
-* Make model date's non-optional
+* No frostiness on complete items. Instead make new item and freeze it.
+* Make model createDate's and updateDate's non-optional
 * Section needs separator lines
 * Cell should resize during pinch without scrolling
 * Often cell gets selected during a gesture
@@ -45,6 +47,7 @@ Performance
 * Use cache file for NSFetchedResultControllers
 * Cache lastEntry metadata
 * Cache entry progress
+* Change `createDate` to `createdOn` and `updateDate` to `updatedOn`
 
 PRE-JOURNAL-ONLY
 

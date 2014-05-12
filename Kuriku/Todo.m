@@ -246,14 +246,16 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     }
 }
 
-+ (void)updateVolumeForAllTodosFromDueDate {
++ (void)tickVolumeForAllTodosFromDueDate {
     NSDate *dateUrgentDaysFromNow = [NSDate dateFromTodayWithDays:TodoUrgentDaysBeforeDueDate];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@", dateUrgentDaysFromNow];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@ AND volume < 1.0", dateUrgentDaysFromNow];
     NSArray *todos = [Todo allForPredicate:predicate];
+    
+    static const CGFloat tick = (1.0 - TodoColdMaxVolume) / TodoUrgentDaysBeforeDueDate;
     
     for (Todo *todo in todos) {
         if (todo.lastEntry.type != EntryTypeComplete)
-            [todo updateVolume];
+            todo.volume = fratiof(todo.volume + tick);
     }
     
     [IBCoreDataStore save];
@@ -310,9 +312,8 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 
 + (void)dailyUpdate {
     if ([self needsVolumeUpdateToday]) {
-        [self updateVolumeForAllTodosFromDueDate];
+        [self tickVolumeForAllTodosFromDueDate];
         [self updateAllTodosReadyToStart];
-        
         [self setNeedsVolumeUpdateTomorrow];
     }
 }
