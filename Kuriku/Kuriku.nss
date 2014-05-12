@@ -79,7 +79,7 @@ EntryLabel {
 
 EntryLabelCool {
     font-name: @normalFont;
-    font-color: @completedTextColor;
+    font-color: white;
 }
 
 EntryLabelCompleted {
