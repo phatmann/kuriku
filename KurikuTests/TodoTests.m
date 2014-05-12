@@ -15,6 +15,9 @@
 #import "Entry.h"
 #import <OCHamcrest/OCHamcrest.h>
 #import <OCMock/OCMock.h>
+#import "NSDate+Kuriku.h"
+#import "NSObject+SupersequentImplementation.h"
+#import "NSDate+UnitTests.h"
 
 static NSDate *entryDate;
 
@@ -206,6 +209,11 @@ static NSDate *entryDate;
     assertThatFloat(self.todo.urgency, equalToFloat(1.0));
 }
 
+- (void)test_urgency_due_one_week {
+    self.todo.dueDate = [NSDate dateFromTodayWithDays:7];
+    assertThatFloat(self.todo.urgency, closeTo(0.5, 0.01));
+}
+
 - (void)test_no_urgency_when_no_due_date {
     assertThatFloat(self.todo.urgency, equalToFloat(0));
 }
@@ -325,12 +333,26 @@ static NSDate *entryDate;
     assertThat(self.todo.startDate, is(nilValue()));
 }
 
-- (void)test_update_urgency_from_due_date {
-    
+- (void)test_daily_update_later_volume_from_due_date {
+    NSDate *twoWeeks = [NSDate dateFromTodayWithDays:14];
+    self.todo.urgency = 0.1;
+    id date = [NSDate createNiceMockDate];
+    [[[date stub] andReturn:twoWeeks] today];
+    assertThatFloat(self.todo.volume, isNot(equalToFloat(1.0)));
+    [Todo dailyUpdate];
+    assertThatFloat(self.todo.volume, equalToFloat(1.0));
+    [NSDate releaseInstance];
 }
 
-- (void)test_daily_update_all_urgencies_from_due_date {
-    
+- (void)test_daily_update_soon_volume_from_due_date {
+    NSDate *tomorrow = [NSDate dateFromTodayWithDays:1];
+    self.todo.urgency = 0.5;
+    id date = [NSDate createNiceMockDate];
+    [[[date stub] andReturn:tomorrow] today];
+    assertThatFloat(self.todo.volume, equalToFloat(0.75));
+    [Todo dailyUpdate];
+    assertThatFloat(self.todo.volume, closeTo(0.78, 0.01));
+    [NSDate releaseInstance];
 }
 
 #pragma mark -

@@ -24,6 +24,8 @@ const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 14;
 const float_t TodoColdMaxVolume = 0.5;
 static const float_t TodoVolumeLockMax = 0.25;
 
+static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
+
 @implementation Todo
 
 @dynamic title;
@@ -296,18 +298,22 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     [IBCoreDataStore save];
 }
 
++ (BOOL)needsVolumeUpdateToday {
+    NSDate *updatedOn = [[IBCoreDataStore mainStore] metadataObjectForKey:TodoVolumeUpdatedOnKey];
+    return updatedOn || ![updatedOn isSameDay:[NSDate today]];
+}
+
++ (void)setNeedsVolumeUpdateTomorrow {
+    [[IBCoreDataStore mainStore] setMetadataObject:[NSDate today] forKey:TodoVolumeUpdatedOnKey];
+    [[IBCoreDataStore mainStore] save];
+}
+
 + (void)dailyUpdate {
-    static NSString *dailyUpdateKey = @"DailyUpdate";
-    
-    NSDate *updateDate = [[IBCoreDataStore mainStore] metadataObjectForKey:dailyUpdateKey];
-    NSDate *today = [NSDate today];
-    
-    if (!updateDate || ![updateDate isSameDay:today]) {
+    if ([self needsVolumeUpdateToday]) {
         [self updateVolumeForAllTodosFromDueDate];
         [self updateAllTodosReadyToStart];
         
-        [[IBCoreDataStore mainStore] setMetadataObject:today forKey:dailyUpdateKey];
-        [[IBCoreDataStore mainStore] save];
+        [self setNeedsVolumeUpdateTomorrow];
     }
 }
 
@@ -318,12 +324,13 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 #pragma mark - Private
 
 - (void)updateVolume {
+    CGFloat temperature = self.temperature;
     CGFloat volume;
     
-    if (self.temperature < 0) {
-        volume = TodoVolumeLockMax + ((TodoColdMaxVolume - TodoVolumeLockMax) * (1.0 + self.temperature));
-    } else if (self.temperature > 0) {
-        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * self.temperature);
+    if (temperature < 0) {
+        volume = TodoVolumeLockMax + ((TodoColdMaxVolume - TodoVolumeLockMax) * (1.0 + temperature));
+    } else if (temperature > 0) {
+        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * temperature);
     } else {
         volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * self.staleness);
     }
