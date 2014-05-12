@@ -10,5 +10,10 @@
 
 @interface NSDate (Kuriku)
 - (int)daysFromToday;
++ (NSDate *)today;
+- (NSDate *)dateAtStartOfDay;
 + (NSDate *)dateFromTodayWithDays:(int)days;
++ (NSDate *)dateFromString:(NSString *)dateString withFormat:(NSDateFormatterStyle)dateStyle;
++ (NSDate *)dateFromString:(NSString *)dateString withPattern:(NSString *)datePattern;
+
 @end
