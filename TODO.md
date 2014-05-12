@@ -32,6 +32,17 @@ Missing Features
 * Let user change settings for number of stale, urgent, and frosty days
 * Repeat icon on frozen completed todos?
 
+Newest Thoughts
+---------------
+* Volume and temperature merged.
+  * Frozen: no increment
+  * Cold: thaws out
+  * Room temp: only increments after sitting for a while
+  * Hot: gets hotter then boils
+  * Temperature change does not change start date or due date
+  * Setting due date causes todo to get hot when within urgent days
+  * Setting start date causes todo to be frozen and then start thawing when within defrost period
+
 New Thoughts
 ------------
 * Add notes by embedding return

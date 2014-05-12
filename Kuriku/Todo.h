@@ -49,8 +49,8 @@ extern const float_t  TodoUrgencyDefaultValue;
 
 extern const int TodoVolumeVersion;
 
-extern const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate;
-extern const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate;
+extern const NSTimeInterval TodoMinStaleDaysAfterLastUpdate;
+extern const NSTimeInterval TodoMaxStaleDaysAfterLastUpdate;
 
 extern const float_t TodoColdMaxVolume;
 

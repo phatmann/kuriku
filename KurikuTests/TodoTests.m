@@ -19,15 +19,15 @@
 #import "NSObject+SupersequentImplementation.h"
 #import "NSDate+UnitTests.h"
 
-static NSDate *entryDate;
+static NSDate *mockUpdateDate;
 
 @interface Todo(Testing)
 - (void)updateVolume;
 + (NSDate *)dailyUpdatedOn;
 @end
 
-@implementation Entry(Testing)
-- (NSDate *)createDate {return entryDate ?  entryDate : [self primitiveValueForKey:@"createDate"];}
+@implementation Todo(Mock)
+- (NSDate *)updateDate {return mockUpdateDate ?  mockUpdateDate : [self primitiveValueForKey:@"updateDate"];}
 @end
 
 @interface TodoTests : XCTestCase
@@ -40,7 +40,7 @@ static NSDate *entryDate;
     [super setUp];
     [IBCoreDataStore clearAllData];
     [Journal create];
-    entryDate = nil;
+    mockUpdateDate = nil;
     self.todo = [self createTodo];
 }
 
@@ -157,13 +157,13 @@ static NSDate *entryDate;
 }
 
 - (void)test_fresh_volume {
-    entryDate = [[NSDate today] dateByAddingDays:-1];
+    mockUpdateDate = [[NSDate today] dateByAddingDays:-1];
     [self.todo updateVolume];
     assertThatFloat(self.todo.volume, equalToFloat(0.5f));
 }
 
 - (void)test_stale_volume{
-    entryDate = [NSDate dateFromTodayWithDays:-TodoMaxStaleDaysAfterLastEntryDate];
+    mockUpdateDate = [NSDate dateFromTodayWithDays:-TodoMaxStaleDaysAfterLastUpdate];
     [self.todo updateVolume];
     assertThatFloat(self.todo.volume, equalToFloat(1.0f));
 }
@@ -260,17 +260,17 @@ static NSDate *entryDate;
 }
 
 - (void)test_staleness_for_old_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastEntryDate];
+    mockUpdateDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastUpdate];
     assertThatFloat(self.todo.staleness, equalToFloat(1.0f));
 }
 
 - (void)test_staleness_for_aging_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastEntryDate/2];
+    mockUpdateDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastUpdate/2];
     assertThatFloat(self.todo.staleness, closeTo(0.5f, 0.1f));
 }
 
 - (void)test_staleness_for_young_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-1];
+    mockUpdateDate = [[NSDate today] dateByAddingDays:-1];
     assertThatFloat(self.todo.staleness, equalToFloat(0.0f));
 }
 
@@ -323,7 +323,7 @@ static NSDate *entryDate;
 }
 
 - (void)test_temperature_for_urgent_stale_todo {
-    entryDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastEntryDate / 2];
+    mockUpdateDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastUpdate / 2];
     self.todo.dueDate = [[NSDate today] dateByAddingDays:7];
     assertThatFloat(self.todo.temperature, equalToFloat(0.5f));
 }

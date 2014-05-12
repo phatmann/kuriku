@@ -18,8 +18,8 @@ const int TodoVolumeVersion = 15;
 const NSTimeInterval TodoUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
 
-const NSTimeInterval TodoMaxStaleDaysAfterLastEntryDate = 60;
-const NSTimeInterval TodoMinStaleDaysAfterLastEntryDate = 14;
+const NSTimeInterval TodoMaxStaleDaysAfterLastUpdate = 60;
+const NSTimeInterval TodoMinStaleDaysAfterLastUpdate = 14;
 
 const float_t TodoColdMaxVolume = 0.5;
 static const float_t TodoVolumeLockMax = 0.25;
@@ -145,17 +145,14 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
 - (float_t)staleness {
     //return arc4random_uniform(100) / 100.0;
     
-    if (!self.lastEntry)
-        return 0.0f;
+    int daysSinceLastUpdate = [self daysSinceLastUpdate];
     
-    int daysAfterLastEntryDate = -[self.lastEntry.createDate daysFromToday];
-    
-    if (daysAfterLastEntryDate < TodoMinStaleDaysAfterLastEntryDate) {
+    if (daysSinceLastUpdate < TodoMinStaleDaysAfterLastUpdate) {
         return 0.0f;
-    } else if (daysAfterLastEntryDate >= TodoMaxStaleDaysAfterLastEntryDate) {
+    } else if (daysSinceLastUpdate >= TodoMaxStaleDaysAfterLastUpdate) {
         return 1.0f;
     } else {
-        return 1.0f - ((TodoMaxStaleDaysAfterLastEntryDate - daysAfterLastEntryDate) / TodoMaxStaleDaysAfterLastEntryDate);
+        return 1.0f - ((TodoMaxStaleDaysAfterLastUpdate - daysSinceLastUpdate) / TodoMaxStaleDaysAfterLastUpdate);
     }
 }
 
@@ -196,6 +193,10 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
         return fratiof(self.urgency);
     
     return 0;
+}
+
+- (int)daysSinceLastUpdate {
+    return -[self.updateDate daysFromToday];
 }
 
 #pragma mark -
@@ -246,7 +247,7 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     }
 }
 
-+ (void)tickVolumeForAllTodosFromDueDate:(NSDate *)updatedOn {
++ (void)tickVolumeForAllTodos:(NSDate *)updatedOn {
     static const CGFloat tick = (1.0 - TodoColdMaxVolume) / TodoUrgentDaysBeforeDueDate;
     
     NSDate *dateUrgentDaysFromNow = [NSDate dateFromTodayWithDays:TodoUrgentDaysBeforeDueDate];
@@ -316,7 +317,7 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     NSDate *today     = [NSDate today];
     
     if (updatedOn || ![updatedOn isSameDay:today]) {
-        [self tickVolumeForAllTodosFromDueDate:updatedOn];
+        [self tickVolumeForAllTodos:updatedOn];
         [self updateAllTodosReadyToStart];
         [self setDailyUpdatedOn:today];
     }
