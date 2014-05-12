@@ -246,16 +246,18 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     }
 }
 
-+ (void)tickVolumeForAllTodosFromDueDate {
++ (void)tickVolumeForAllTodosFromDueDate:(NSDate *)updatedOn {
+    static const CGFloat tick = (1.0 - TodoColdMaxVolume) / TodoUrgentDaysBeforeDueDate;
+    
     NSDate *dateUrgentDaysFromNow = [NSDate dateFromTodayWithDays:TodoUrgentDaysBeforeDueDate];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@ AND volume < 1.0", dateUrgentDaysFromNow];
     NSArray *todos = [Todo allForPredicate:predicate];
-    
-    static const CGFloat tick = (1.0 - TodoColdMaxVolume) / TodoUrgentDaysBeforeDueDate;
+    CGFloat daysSinceUpdate = [updatedOn daysFromToday];
+    CGFloat delta = -daysSinceUpdate * tick;
     
     for (Todo *todo in todos) {
         if (todo.lastEntry.type != EntryTypeComplete)
-            todo.volume = fratiof(todo.volume + tick);
+            todo.volume = fratiof(todo.volume + delta);
     }
     
     [IBCoreDataStore save];
@@ -300,21 +302,23 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     [IBCoreDataStore save];
 }
 
-+ (BOOL)needsVolumeUpdateToday {
-    NSDate *updatedOn = [[IBCoreDataStore mainStore] metadataObjectForKey:TodoVolumeUpdatedOnKey];
-    return updatedOn || ![updatedOn isSameDay:[NSDate today]];
++ (NSDate *)dailyUpdatedOn {
+    return [[IBCoreDataStore mainStore] metadataObjectForKey:TodoVolumeUpdatedOnKey];
 }
 
-+ (void)setNeedsVolumeUpdateTomorrow {
-    [[IBCoreDataStore mainStore] setMetadataObject:[NSDate today] forKey:TodoVolumeUpdatedOnKey];
++ (void)setDailyUpdatedOn:(NSDate *)date {
+    [[IBCoreDataStore mainStore] setMetadataObject:date forKey:TodoVolumeUpdatedOnKey];
     [[IBCoreDataStore mainStore] save];
 }
 
 + (void)dailyUpdate {
-    if ([self needsVolumeUpdateToday]) {
-        [self tickVolumeForAllTodosFromDueDate];
+    NSDate *updatedOn = [self dailyUpdatedOn];
+    NSDate *today     = [NSDate today];
+    
+    if (updatedOn || ![updatedOn isSameDay:today]) {
+        [self tickVolumeForAllTodosFromDueDate:updatedOn];
         [self updateAllTodosReadyToStart];
-        [self setNeedsVolumeUpdateTomorrow];
+        [self setDailyUpdatedOn:today];
     }
 }
 

@@ -23,6 +23,7 @@ static NSDate *entryDate;
 
 @interface Todo(Testing)
 - (void)updateVolume;
++ (NSDate *)dailyUpdatedOn;
 @end
 
 @implementation Entry(Testing)
@@ -334,25 +335,31 @@ static NSDate *entryDate;
 }
 
 - (void)test_daily_update_later_volume_from_due_date {
-    NSDate *twoWeeks = [NSDate dateFromTodayWithDays:14];
     self.todo.urgency = 0.1;
-    id date = [NSDate createNiceMockDate];
-    [[[date stub] andReturn:twoWeeks] today];
+    
+    NSDate *twoWeeksAgo = [NSDate dateFromTodayWithDays:-14];
+    id todo = [OCMockObject mockForClass:[Todo class]];
+    [[[todo stub] andReturn:twoWeeksAgo] dailyUpdatedOn];
+    
     assertThatFloat(self.todo.volume, isNot(equalToFloat(1.0)));
     [Todo dailyUpdate];
     assertThatFloat(self.todo.volume, equalToFloat(1.0));
-    [NSDate releaseInstance];
+    
+    [todo stopMocking];
 }
 
 - (void)test_daily_update_soon_volume_from_due_date {
-    NSDate *tomorrow = [NSDate dateFromTodayWithDays:1];
     self.todo.urgency = 0.5;
-    id date = [NSDate createNiceMockDate];
-    [[[date stub] andReturn:tomorrow] today];
+    
+    NSDate *yesterday = [NSDate dateFromTodayWithDays:-1];
+    id todo = [OCMockObject mockForClass:[Todo class]];
+    [[[todo stub] andReturn:yesterday] dailyUpdatedOn];
+    
     assertThatFloat(self.todo.volume, equalToFloat(0.75));
     [Todo dailyUpdate];
     assertThatFloat(self.todo.volume, closeTo(0.78, 0.01));
-    [NSDate releaseInstance];
+    
+    [todo stopMocking];
 }
 
 #pragma mark -
