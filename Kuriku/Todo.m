@@ -263,7 +263,8 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     
     for (Todo *todo in todos) {
         if (todo.lastEntry.type != EntryTypeComplete) {
-            if (todo.urgency > 0.0f || [todo daysSinceLastUpdate] >= TodoMinStaleDaysAfterLastUpdate) {
+            if (todo.urgency > 0.0f || todo.frostiness > 0.0f ||
+                [todo daysSinceLastUpdate] >= TodoMinStaleDaysAfterLastUpdate) {
                 todo.volume = fratiof(todo.volume + delta);
             }
         }
