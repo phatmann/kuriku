@@ -139,12 +139,12 @@ static NSDate *entryDate;
 }
 
 - (void)test_initial_volume {
-    assertThatFloat(self.todo.volume, equalToFloat(0.75f));
+    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
 }
 
 - (void)test_warm_volume {
     self.todo.urgency = 0.5;
-    assertThatFloat(self.todo.volume, equalToFloat(0.875f));
+    assertThatFloat(self.todo.volume, equalToFloat(0.75f));
 }
 
 - (void)test_hot_volume {
@@ -155,7 +155,7 @@ static NSDate *entryDate;
 - (void)test_fresh_volume {
     entryDate = [[NSDate today] dateByAddingDays:-1];
     [self.todo updateVolume];
-    assertThatFloat(self.todo.volume, equalToFloat(0.75f));
+    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
 }
 
 - (void)test_stale_volume{
@@ -242,12 +242,12 @@ static NSDate *entryDate;
 
 - (void)test_volume_zero_when_start_date {
     self.todo.startDate = [NSDate dateFromTodayWithDays:1];
-    assertThatFloat(self.todo.volume, closeTo(0.75f, 0.1f));
+    assertThatFloat(self.todo.volume, closeTo(0.5f, 0.1f));
 }
 
 - (void)test_volume_with_distant_due_date {
     self.todo.dueDate = [[NSDate today] dateByAddingDays:365];
-    assertThatFloat(self.todo.volume, equalToFloat(0.75f));
+    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
 }
 
 - (void)test_staleness_for_old_todo {
