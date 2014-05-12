@@ -13,6 +13,11 @@
 		EA048CBF1860C93600990957 /* EntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA048CBE1860C93600990957 /* EntryCell.m */; };
 		EA10F1271861B2FF0084F6C8 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = EA10F1261861B2FF0084F6C8 /* TODO.md */; };
 		EA116BB219098FE7005EA252 /* GradientBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EA116BB119098FE7005EA252 /* GradientBar.m */; };
+		EA1ACB131920FC02000B98A7 /* NSDate+UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACB091920FC02000B98A7 /* NSDate+UnitTests.m */; };
+		EA1ACB141920FC02000B98A7 /* NSNotificationCenter+UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACB0B1920FC02000B98A7 /* NSNotificationCenter+UnitTests.m */; };
+		EA1ACB151920FC02000B98A7 /* NSObject+SupersequentImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACB0D1920FC02000B98A7 /* NSObject+SupersequentImplementation.m */; };
+		EA1ACB161920FC02000B98A7 /* NSUserDefaults+UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACB0F1920FC02000B98A7 /* NSUserDefaults+UnitTests.m */; };
+		EA1ACB171920FC02000B98A7 /* UIImage+UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACB121920FC02000B98A7 /* UIImage+UnitTests.m */; };
 		EA3C0C0B187029BF00EF1DAC /* RepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */; };
 		EA3D0113191A9B1D00AC16EF /* GlowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D0112191A9B1D00AC16EF /* GlowingTextView.m */; };
 		EA5386AC1900A37F00D6266A /* NSDate+Kuriku.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5386AB1900A37F00D6266A /* NSDate+Kuriku.m */; };
@@ -67,6 +72,17 @@
 		EA10F1261861B2FF0084F6C8 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.md; sourceTree = "<group>"; };
 		EA116BB019098FE7005EA252 /* GradientBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientBar.h; sourceTree = "<group>"; };
 		EA116BB119098FE7005EA252 /* GradientBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientBar.m; sourceTree = "<group>"; };
+		EA1ACB081920FC02000B98A7 /* NSDate+UnitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+UnitTests.h"; sourceTree = "<group>"; };
+		EA1ACB091920FC02000B98A7 /* NSDate+UnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+UnitTests.m"; sourceTree = "<group>"; };
+		EA1ACB0A1920FC02000B98A7 /* NSNotificationCenter+UnitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+UnitTests.h"; sourceTree = "<group>"; };
+		EA1ACB0B1920FC02000B98A7 /* NSNotificationCenter+UnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+UnitTests.m"; sourceTree = "<group>"; };
+		EA1ACB0C1920FC02000B98A7 /* NSObject+SupersequentImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SupersequentImplementation.h"; sourceTree = "<group>"; };
+		EA1ACB0D1920FC02000B98A7 /* NSObject+SupersequentImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SupersequentImplementation.m"; sourceTree = "<group>"; };
+		EA1ACB0E1920FC02000B98A7 /* NSUserDefaults+UnitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+UnitTests.h"; sourceTree = "<group>"; };
+		EA1ACB0F1920FC02000B98A7 /* NSUserDefaults+UnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+UnitTests.m"; sourceTree = "<group>"; };
+		EA1ACB101920FC02000B98A7 /* OCMockSingletonExtension-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMockSingletonExtension-Prefix.pch"; sourceTree = "<group>"; };
+		EA1ACB111920FC02000B98A7 /* UIImage+UnitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UnitTests.h"; sourceTree = "<group>"; };
+		EA1ACB121920FC02000B98A7 /* UIImage+UnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UnitTests.m"; sourceTree = "<group>"; };
 		EA3C0C09187029BF00EF1DAC /* RepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatViewController.h; sourceTree = "<group>"; };
 		EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatViewController.m; sourceTree = "<group>"; };
 		EA3D0111191A9B1D00AC16EF /* GlowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlowingTextView.h; sourceTree = "<group>"; };
@@ -186,6 +202,32 @@
 			name = App;
 			sourceTree = "<group>";
 		};
+		EA1ACB061920FC02000B98A7 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				EA1ACB071920FC02000B98A7 /* OCMockSingletonExtension */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		EA1ACB071920FC02000B98A7 /* OCMockSingletonExtension */ = {
+			isa = PBXGroup;
+			children = (
+				EA1ACB081920FC02000B98A7 /* NSDate+UnitTests.h */,
+				EA1ACB091920FC02000B98A7 /* NSDate+UnitTests.m */,
+				EA1ACB0A1920FC02000B98A7 /* NSNotificationCenter+UnitTests.h */,
+				EA1ACB0B1920FC02000B98A7 /* NSNotificationCenter+UnitTests.m */,
+				EA1ACB0C1920FC02000B98A7 /* NSObject+SupersequentImplementation.h */,
+				EA1ACB0D1920FC02000B98A7 /* NSObject+SupersequentImplementation.m */,
+				EA1ACB0E1920FC02000B98A7 /* NSUserDefaults+UnitTests.h */,
+				EA1ACB0F1920FC02000B98A7 /* NSUserDefaults+UnitTests.m */,
+				EA1ACB101920FC02000B98A7 /* OCMockSingletonExtension-Prefix.pch */,
+				EA1ACB111920FC02000B98A7 /* UIImage+UnitTests.h */,
+				EA1ACB121920FC02000B98A7 /* UIImage+UnitTests.m */,
+			);
+			path = OCMockSingletonExtension;
+			sourceTree = "<group>";
+		};
 		EA20528B187AEBD700B8330B /* Custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +340,7 @@
 				EAAC95801858F7D400E8BAB5 /* TodoTests.m */,
 				EA737BD9187676FD003A1BBE /* EntryTests.m */,
 				EA737BD7187676B6003A1BBE /* JournalTests.m */,
+				EA1ACB061920FC02000B98A7 /* External */,
 				EAAC957B1858F7D400E8BAB5 /* Supporting Files */,
 			);
 			name = Tests;
@@ -522,8 +565,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA737BD8187676B6003A1BBE /* JournalTests.m in Sources */,
+				EA1ACB151920FC02000B98A7 /* NSObject+SupersequentImplementation.m in Sources */,
+				EA1ACB141920FC02000B98A7 /* NSNotificationCenter+UnitTests.m in Sources */,
 				EAAC95811858F7D400E8BAB5 /* TodoTests.m in Sources */,
+				EA1ACB131920FC02000B98A7 /* NSDate+UnitTests.m in Sources */,
+				EA1ACB171920FC02000B98A7 /* UIImage+UnitTests.m in Sources */,
 				EA737BDA187676FD003A1BBE /* EntryTests.m in Sources */,
+				EA1ACB161920FC02000B98A7 /* NSUserDefaults+UnitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
