@@ -232,7 +232,7 @@ static NSDate *mockUpdateDate;
     [[[todo stub] andReturn:yesterday] dailyUpdatedOn];
     
     [Todo dailyUpdate];
-    assertThatFloat(self.todo.temperature, closeTo(77.78, 0.01));
+    assertThatFloat(self.todo.temperature, greaterThan(@(TodoNormalMaxTemperature + 1)));
     
     [todo stopMocking];
 }
@@ -251,6 +251,20 @@ static NSDate *mockUpdateDate;
     [todo stopMocking];
 }
 
+- (void)test_daily_update_soon_temperature_from_staleness {
+    self.todo.temperature = TodoColdMaxTemperature + 1;
+    mockUpdateDate = [NSDate dateFromTodayWithDays:-TodoMinStaleDaysAfterLastUpdate];
+    
+    NSDate *yesterday = [NSDate dateFromTodayWithDays:-1];
+    id todo = [OCMockObject mockForClass:[Todo class]];
+    [[[todo stub] andReturn:yesterday] dailyUpdatedOn];
+    
+    [Todo dailyUpdate];
+    assertThatFloat(self.todo.temperature, greaterThan(@(TodoColdMaxTemperature + 1)));
+    
+    [todo stopMocking];
+}
+
 - (void)test_daily_update_later_temperature_from_frostiness {
     self.todo.temperature = TodoFrozenMaxTemperature + 1;
     
@@ -260,6 +274,19 @@ static NSDate *mockUpdateDate;
     
     [Todo dailyUpdate];
     assertThatFloat(self.todo.temperature, equalToFloat(50));
+    
+    [todo stopMocking];
+}
+
+- (void)test_daily_update_soon_temperature_from_frostiness {
+    self.todo.temperature = TodoFrozenMaxTemperature + 1;
+    
+    NSDate *yesterday = [NSDate dateFromTodayWithDays:-1];
+    id todo = [OCMockObject mockForClass:[Todo class]];
+    [[[todo stub] andReturn:yesterday] dailyUpdatedOn];
+    
+    [Todo dailyUpdate];
+    assertThatFloat(self.todo.temperature, greaterThan(@(TodoFrozenMaxTemperature + 1)));
     
     [todo stopMocking];
 }
