@@ -7,8 +7,9 @@ Improvements
 
 Bugs
 ----
+* Set background color in edit todo temp slider
+* Start date not displaying
 * Slider notches wrong
-* Edit dialog wrong
 * Need to daily update temperature for due and start dates
 * Hard to see time
 * No frostiness on complete items. Instead make new item and freeze it.
@@ -17,13 +18,11 @@ Bugs
 * Cell should resize during pinch without scrolling
 * Often cell gets selected during a gesture
 * If start date in past applied, ignore it
-* Sometimes pinching happens when trying to rotate
 * Swipe recognition not reliable
 
 Missing Features
 ----------------
 * Scroll down to show blank line in edit mode
-* Normal temperature notch
 * Allow multiple todos to be entered
 * Tap inactive task goes to active task
 * Jump around to different dates in journal

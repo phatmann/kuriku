@@ -14,12 +14,10 @@
 @interface EditTodoViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *titleField;
-@property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
 @property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *urgencyLabel;
 
 @property (weak, nonatomic) UILabel *selectedDateLabel;
 
@@ -49,23 +47,19 @@ enum {
     [super viewDidLoad];
 	
     if (self.todo) {
-        self.navigationItem.title = @"Edit Todo";
-        
-        self.titleField.text                        = self.todo.title;
-        //self.urgencySlider.value                    = self.todo.urgency;
-        self.temperatureSlider.value                     = self.todo.temperature;
-        self.dueDateLabel.text                      = dateToString(self.todo.dueDate);
-        self.startDateLabel.text                    = dateToString(self.todo.startDate);
-        self.notesField.text                        = self.todo.notes;
+        self.navigationItem.title    = @"Edit Todo";
+        self.titleField.text         = self.todo.title;
+        self.temperatureSlider.value = self.todo.temperature;
+        self.dueDateLabel.text       = dateToString(self.todo.dueDate);
+        self.startDateLabel.text     = dateToString(self.todo.startDate);
+        self.notesField.text         = self.todo.notes;
     } else {
-        self.navigationItem.title = @"New Todo";
-        
-        self.titleField.text                        = nil;
-        self.urgencySlider.value                    = 0;
-        self.temperatureSlider.value                     = TodoTemperatureDefaultValue;
-        self.dueDateLabel.text                      = NoDateString;
-        self.startDateLabel.text                    = NoDateString;
-        self.notesField.text                        = nil;
+        self.navigationItem.title    = @"New Todo";
+        self.titleField.text         = nil;
+        self.temperatureSlider.value = TodoTemperatureDefaultValue;
+        self.dueDateLabel.text       = NoDateString;
+        self.startDateLabel.text     = NoDateString;
+        self.notesField.text         = nil;
         
         [self.titleField becomeFirstResponder];
     }
@@ -90,25 +84,11 @@ enum {
         self.todo = [Todo create];
     }
     
-    // TODO: make Todo model smarter so messing with due date does not mess up urgency
-    
-    NSDate *dueDate = stringToDate(self.dueDateLabel.text);
-    
-    if (!datesEqual(self.todo.dueDate, dueDate))
-        self.todo.dueDate = dueDate;
-    
-    NSDate *startDate = stringToDate(self.startDateLabel.text);
-
-    if (!datesEqual(self.todo.startDate, startDate)) {
-        self.todo.startDate = startDate;
-    }
-    
-    //if (!self.todo.dueDate)
-        //self.todo.urgency = self.urgencySlider.value;
-    
-    self.todo.title      = self.titleField.text;
-    self.todo.temperature     = self.temperatureSlider.value;
-    self.todo.notes      = self.notesField.text;
+    self.todo.dueDate     = stringToDate(self.dueDateLabel.text);
+    self.todo.startDate   = stringToDate(self.startDateLabel.text);
+    self.todo.title       = self.titleField.text;
+    self.todo.temperature = self.temperatureSlider.value;
+    self.todo.notes       = self.notesField.text;
     
     [[IBCoreDataStore mainStore] save];
     [self.delegate todoWasEdited:self.todo];
@@ -116,6 +96,7 @@ enum {
 }
 
 - (IBAction)sliderValueChanged:(UISlider *)slider {
+    // TODO: set background color
 }
 
 #pragma mark - Date Picker View Controller Delegate
@@ -178,52 +159,6 @@ NSString *dateToString(NSDate *date) {
         return NoDateString;
     
     return [date formattedDateStyle:NSDateFormatterShortStyle];
-}
-
-int stringToDays(NSString *string) {
-    if ([string isEqualToString:NoDaysString])
-        return NoDaysValue;
-    
-    if ([string isEqualToString:ImmediatelyString])
-        return ImmediatelyValue;
-    
-    if ([string isEqualToString:DailyString])
-        return DailyValue;
-    
-    if ([string isEqualToString:WeeklyString])
-        return WeeklyValue;
-    
-    if ([string isEqualToString:MonthlyString])
-        return MonthlyValue;
-    
-    if ([string isEqualToString:YearlyString])
-        return YearlyValue;
-    
-    NSArray *components = [string componentsSeparatedByString: @" "];
-    return [components[1] intValue];
-}
-
-NSString *daysToString(int days) {
-    switch (days) {
-        case NoDaysValue:       return NoDaysString;
-        case ImmediatelyValue:  return ImmediatelyString;
-        case DailyValue:        return DailyString;
-        case WeeklyValue:       return WeeklyString;
-        case MonthlyValue:      return MonthlyString;
-        case YearlyValue:       return YearlyString;
-    }
-    
-    return [NSString stringWithFormat:@"Every %d days", days];
-}
-
-BOOL datesEqual(NSDate *date1, NSDate *date2) {
-    if (!date1 && !date2)
-        return true;
-    
-    if (!date1 || !date2)
-        return false;
-    
-    return [date1 isEqualToDate:date2];
 }
 
 @end
