@@ -1,15 +1,12 @@
 Kuriku
 The visual intelligent action journal
 
-Improvements
-------------
-* Enhance edit dialog to use temperature, show gesture tips
-
 Bugs
 ----
+* Hard to read text on inactive and completed entries
 * Set background color in edit todo temp slider
 * Start date not displaying
-* Slider notches wrong
+* Filter slider notches wrong
 * Need to daily update temperature for due and start dates
 * Hard to see time
 * No frostiness on complete items. Instead make new item and freeze it.
@@ -22,6 +19,7 @@ Bugs
 
 Missing Features
 ----------------
+* Show gesture tips in edit dialog
 * Scroll down to show blank line in edit mode
 * Allow multiple todos to be entered
 * Tap inactive task goes to active task
