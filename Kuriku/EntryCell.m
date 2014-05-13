@@ -135,8 +135,7 @@
         NSDate *date = nil;
         //BOOL alwaysShowDate = NO;
         BOOL useStartDate;
-        NSString *prefix = @"";
-        
+
         if (self.entry.todo.startDate) {
             date = self.entry.todo.startDate;
             useStartDate = YES;
@@ -165,7 +164,7 @@
 //            }
             
             if (dateText) {
-                self.dateLabel.text = [prefix stringByAppendingString:dateText];
+                self.dateLabel.text = dateText;
                 [self.dateLabel applyNUI];
             }
         }

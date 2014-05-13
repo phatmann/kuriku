@@ -131,7 +131,7 @@ DueDate {
 
 StartDate {
     font-name: @timeFont;
-    font-color: white;
+    font-color: @coldColor;
     font-size: @timeFontSize;
 }
 

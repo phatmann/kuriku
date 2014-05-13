@@ -3,12 +3,12 @@ The visual intelligent action journal
 
 Bugs
 ----
-* Set background color in edit todo temp slider
-* Start date not displaying
 * Filter slider notches wrong
-* Need to daily update temperature for due and start dates
-* Hard to see time
+* Need to update temperature daily for due and start dates
+* Set background color in edit todo temp slider
+* Hard to see date when temperature is hot or cold
 * Hard to enter progress when many actions have been done
+* Hard to see time
 * No frostiness on complete items. Instead make new item and freeze it.
 * Make model createDate's and updateDate's non-optional
 * Section needs separator lines
