@@ -52,7 +52,7 @@ enum {
         self.navigationItem.title = @"Edit Todo";
         
         self.titleField.text                        = self.todo.title;
-        self.urgencySlider.value                    = self.todo.urgency;
+        //self.urgencySlider.value                    = self.todo.urgency;
         self.volumeSlider.value                     = self.todo.volume;
         self.dueDateLabel.text                      = dateToString(self.todo.dueDate);
         self.startDateLabel.text                    = dateToString(self.todo.startDate);
@@ -61,7 +61,7 @@ enum {
         self.navigationItem.title = @"New Todo";
         
         self.titleField.text                        = nil;
-        self.urgencySlider.value                    = TodoUrgencyDefaultValue;
+        self.urgencySlider.value                    = 0;
         self.volumeSlider.value                     = TodoVolumeDefaultValue;
         self.dueDateLabel.text                      = NoDateString;
         self.startDateLabel.text                    = NoDateString;
@@ -103,8 +103,8 @@ enum {
         self.todo.startDate = startDate;
     }
     
-    if (!self.todo.dueDate)
-        self.todo.urgency = self.urgencySlider.value;
+    //if (!self.todo.dueDate)
+        //self.todo.urgency = self.urgencySlider.value;
     
     self.todo.title      = self.titleField.text;
     self.todo.volume     = self.volumeSlider.value;
@@ -116,11 +116,6 @@ enum {
 }
 
 - (IBAction)sliderValueChanged:(UISlider *)slider {
-    //[slider setValue:roundf(slider.value) animated:YES];
-    
-    if (slider == self.urgencySlider) {
-        self.dueDateLabel.text = dateToString(dueDateFromUrgency(self.urgencySlider.value));
-    }
 }
 
 #pragma mark - Date Picker View Controller Delegate
@@ -132,7 +127,6 @@ enum {
         self.selectedDateLabel.text = dateString;
         
         if (self.selectedDateLabel == self.dueDateLabel) {
-            self.urgencySlider.value = urgencyFromDueDate(dateViewController.date);
             [self updateControls];
         }
     }

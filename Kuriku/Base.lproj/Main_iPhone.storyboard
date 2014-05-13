@@ -150,7 +150,6 @@
                                     <outlet property="delegate" destination="CZ4-MO-1fc" id="GvJ-wC-xXd"/>
                                     <outletCollection property="gestureRecognizers" destination="zAN-02-a5i" appends="YES" id="pSw-oG-q8O"/>
                                     <outletCollection property="gestureRecognizers" destination="Y6X-fE-B5f" appends="YES" id="33a-OA-Bbx"/>
-                                    <outletCollection property="gestureRecognizers" destination="V1I-nL-YKt" appends="YES" id="i8o-Ji-LMD"/>
                                     <outletCollection property="gestureRecognizers" destination="r7n-Bx-xwa" appends="YES" id="gGu-nE-v8Q"/>
                                 </connections>
                             </tableView>
@@ -177,7 +176,6 @@
                         <outlet property="navigationBarItem" destination="9d1-2n-bCY" id="dB6-4C-pWa"/>
                         <outlet property="panGestureRecognizer" destination="Y6X-fE-B5f" id="ZwE-lN-Din"/>
                         <outlet property="pinchGestureRecognizer" destination="r7n-Bx-xwa" id="zlR-bS-0wR"/>
-                        <outlet property="rotationGestureRecognizer" destination="V1I-nL-YKt" id="Vix-lq-D2H"/>
                         <outlet property="tableView" destination="aKD-IV-7AV" id="NrM-gl-Iga"/>
                         <segue destination="BLb-aQ-cLa" kind="modal" identifier="Repeat todo" id="ff9-5y-kUA"/>
                         <segue destination="M67-19-kMq" kind="modal" identifier="Edit todo" id="23q-7a-A3Q"/>
@@ -196,12 +194,6 @@
                         <outlet property="delegate" destination="CZ4-MO-1fc" id="R2p-t1-IxA"/>
                     </connections>
                 </panGestureRecognizer>
-                <rotationGestureRecognizer id="V1I-nL-YKt">
-                    <connections>
-                        <action selector="rotationGestureRecognizerWasChanged:" destination="CZ4-MO-1fc" id="sXh-DV-I1Y"/>
-                        <outlet property="delegate" destination="CZ4-MO-1fc" id="OZh-vm-1TR"/>
-                    </connections>
-                </rotationGestureRecognizer>
                 <pinchGestureRecognizer id="r7n-Bx-xwa">
                     <connections>
                         <action selector="pinchGestureRecognizerWasChanged:" destination="CZ4-MO-1fc" id="hwm-Fd-3os"/>

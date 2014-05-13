@@ -17,7 +17,6 @@
 @property (weak, nonatomic) JournalViewController *journalViewController;
 @property (nonatomic) CGFloat progress;
 @property (nonatomic) CGFloat volume;
-@property (nonatomic) CGFloat temperature;
 
 - (void)refresh;
 + (UIFont *)fontForEntry:(Entry *)entry;

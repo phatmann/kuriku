@@ -26,33 +26,27 @@
 @property (nonatomic, strong) Journal *journal;
 
 @property (nonatomic, weak, readonly) Entry *lastEntry;
-@property (nonatomic) float_t urgency;
-@property (nonatomic) float_t frostiness;
 @property (nonatomic, readonly) float_t staleness;
-@property (nonatomic) float_t temperature;
 
 - (Entry *)createEntry:(EntryType)type;
 
 + (BOOL)isVolumeLockedForVolume:(float_t)volume;
-+ (void)updateVolumeForAllTodosIfNeeded;
 + (void)updateAllTodosReadyToStart;
 + (void)dailyUpdate;
 + (void)migrate;
 
-float_t urgencyFromDueDate(NSDate *dueDate);
-NSDate *dueDateFromUrgency(float_t urgency);
-float_t frostinessFromStartDate(NSDate *startDate);
-NSDate *startDateFromFrostiness(float_t frostiness);
-
 extern const float_t  TodoVolumeDefaultValue;
-extern const float_t  TodoUrgencyDefaultValue;
-
-extern const int TodoVolumeVersion;
-
 extern const NSTimeInterval TodoMinStaleDaysAfterLastUpdate;
 extern const NSTimeInterval TodoMaxStaleDaysAfterLastUpdate;
 
+extern const float_t TodoFrozenMinVolume;
+extern const float_t TodoFrozenMaxVolume;
+extern const float_t TodoColdMinVolume;
 extern const float_t TodoColdMaxVolume;
+extern const float_t TodoNormalMinVolume;
+extern const float_t TodoNormalMaxVolume;
+extern const float_t TodoHotMinVolume;
+extern const float_t TodoHotMaxVolume;
 
 @end
 

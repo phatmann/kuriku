@@ -18,8 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [NUISettings initWithStylesheet:@"Kuriku"];
-    [Todo updateVolumeForAllTodosIfNeeded];
-    
+
     Journal *journal = [Journal first];
 
     if (!journal) {

@@ -196,7 +196,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
             if (indexPath) {
                 entry =  [self entryAtIndexPath:indexPath];
                 
-                if (entry.state == EntryStateActive && entry.todo.temperature == 0) {
+                if (entry.state == EntryStateActive) {
                     pinchedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
                     initialValue = entry.todo.volume * range + 1;
                 }
@@ -206,7 +206,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
             
         case UIGestureRecognizerStateChanged:
             if (pinchedCell) {
-                static const CGFloat multiplier = 2.5f;
+                static const CGFloat multiplier = 1.5f;
                 CGFloat scale = powf(recognizer.scale, multiplier);
                 CGFloat value = fclampf(initialValue * scale, 1.0, range + 1.0);
                 pinchedCell.volume = fratiof((value - 1) / range);
@@ -224,64 +224,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     }
 }
 
-- (IBAction)rotationGestureRecognizerWasChanged:(UIRotationGestureRecognizer *)recognizer {
-    static const CGFloat kWellSize = 0.4f;
-    
-    static EntryCell *rotatedCell;
-    static CGFloat initialValue;
-    static const CGFloat range = M_PI_4 / 2;
-    
-    NSIndexPath *indexPath;
-    CGPoint pt;
-    Entry *entry;
-    
-    switch (recognizer.state) {
-        case UIGestureRecognizerStateBegan:
-            pt = [recognizer locationInView:self.tableView];
-            indexPath = [self.tableView indexPathForRowAtPoint:pt];
-            rotatedCell = nil;
-            
-            if (indexPath) {
-                entry = [self entryAtIndexPath:indexPath];
-                
-                if (entry.state == EntryStateActive) {
-                    rotatedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    initialValue = entry.todo.temperature + copysign(kWellSize / 2, recognizer.rotation);
-                }
-            }
-            
-            break;
-            
-        case UIGestureRecognizerStateChanged:
-            if (rotatedCell) {
-                CGFloat value = (recognizer.rotation / range) + initialValue;
-                
-                if (fabsf(value) < kWellSize / 2)
-                    rotatedCell.temperature = 0;
-                else
-                    rotatedCell.temperature = fclampf(value - copysign(kWellSize / 2, value), -1.0, 1.0);
-            }
-            break;
-            
-        case UIGestureRecognizerStateEnded:
-            if (rotatedCell) {
-                rotatedCell.entry.todo.temperature = rotatedCell.temperature;
-                [IBCoreDataStore save];
-            }
-            break;
-            
-        default:
-            ;
-    }
-}
-
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//    if (gestureRecognizer == self.pinchGestureRecognizer && otherGestureRecognizer == self.rotationGestureRecognizer)
-//        return YES;
-//    
-//    return NO;
-//}
-
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer == self.panGestureRecognizer) {
         UIPanGestureRecognizer *panGestureRecognizer = (UIPanGestureRecognizer *)gestureRecognizer;
@@ -292,24 +234,6 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
         
         return NO;
     }
-    
-//    if (gestureRecognizer == self.pinchGestureRecognizer) {
-//        UIPinchGestureRecognizer *pinchGestureRecognizer = (UIPinchGestureRecognizer *)gestureRecognizer;
-//        
-//        if (fabsf(pinchGestureRecognizer.scale - 1.0) > 0.1)
-//            return YES;
-//        
-//        return NO;
-//    }
-    
-//    if (gestureRecognizer == self.rotationGestureRecognizer) {
-//        UIRotationGestureRecognizer *rotationGestureRecognizer = (UIRotationGestureRecognizer *)gestureRecognizer;
-//        
-//        if (fabsf(rotationGestureRecognizer.rotation) > M_PI / 32)
-//            return YES;
-//        
-//        return NO;
-//    }
     
     return YES;
 }

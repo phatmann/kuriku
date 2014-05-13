@@ -12,17 +12,21 @@
 #import "NSDate+Kuriku.h"
 
 const float_t  TodoVolumeDefaultValue     = 0.5f;
-const float_t  TodoUrgencyDefaultValue    = 0.0f;
 
-const int TodoVolumeVersion = 15;
 const NSTimeInterval TodoUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
 
 const NSTimeInterval TodoMaxStaleDaysAfterLastUpdate = 60;
 const NSTimeInterval TodoMinStaleDaysAfterLastUpdate = 14;
 
-const float_t TodoColdMaxVolume = 0.5;
-static const float_t TodoVolumeLockMax = 0.25;
+const float_t TodoFrozenMinVolume = 0.00f;
+const float_t TodoFrozenMaxVolume = 0.24f;
+const float_t TodoColdMinVolume   = 0.25f;
+const float_t TodoColdMaxVolume   = 0.49f;
+const float_t TodoNormalMinVolume = 0.50f;
+const float_t TodoNormalMaxVolume = 0.74f;
+const float_t TodoHotMinVolume    = 0.75f;
+const float_t TodoHotMaxVolume    = 1.00f;
 
 static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
 
@@ -87,7 +91,7 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
     if ([keyPath isEqualToString:@"volume"]) {
         self.volumeLocked = [Todo isVolumeLockedForVolume:self.volume];
     } else if (!self.volumeLocked && ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"])) {
-        [self updateVolume];
+        //[self updateVolume];
     } else if ([keyPath isEqualToString:@"entries"]) {
         if (kind == NSKeyValueChangeRemoval) {
             NSArray *removedEntries = change[NSKeyValueChangeOldKey];
@@ -156,45 +160,6 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
     }
 }
 
-- (float_t)frostiness {
-    return frostinessFromStartDate(self.startDate);
-}
-
-- (void)setFrostiness:(float_t)frostiness {
-    self.startDate = startDateFromFrostiness(frostiness);
-}
-
-- (float_t)urgency {
-    return urgencyFromDueDate(self.dueDate);
-}
-
-- (void)setUrgency:(float_t)urgency {
-    self.dueDate = dueDateFromUrgency(urgency);
-}
-
-- (void)setTemperature:(float_t)temperature {
-    if (temperature == 0) {
-        self.startDate = nil;
-        self.dueDate = nil;
-    } if (temperature > 0) {
-        self.startDate = nil;
-        self.urgency = temperature;
-    } else {
-        self.dueDate = nil;
-        self.frostiness = -temperature;
-    }
-}
-
-- (float_t)temperature {
-    if (self.startDate)
-        return -fratiof(self.frostiness);
-
-    if (self.dueDate)
-        return fratiof(self.urgency);
-    
-    return 0;
-}
-
 - (int)daysSinceLastUpdate {
     return -[self.updateDate daysFromToday];
 }
@@ -202,45 +167,13 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
 #pragma mark -
 
 + (BOOL)isVolumeLockedForVolume:(float_t)volume {
-    return volume < TodoVolumeLockMax;
-}
-
-float_t urgencyFromDueDate(NSDate *dueDate) {
-    if (!dueDate)
-        return 0;
-        
-    return (TodoUrgentDaysBeforeDueDate - [dueDate daysFromToday]) / TodoUrgentDaysBeforeDueDate;
-}
-
-NSDate *dueDateFromUrgency(float_t urgency) {
-    if (urgency == 0) {
-        return nil;
-    } else {
-        int daysUntilDue = roundf(TodoUrgentDaysBeforeDueDate - (urgency * TodoUrgentDaysBeforeDueDate));
-        return [[NSDate today] dateByAddingDays:daysUntilDue];
-    }
-}
-
-float_t frostinessFromStartDate(NSDate *startDate) {
-    if (!startDate)
-        return 0;
-
-    return 1.0f - (TodoFrostyDaysBeforeStartDate - [startDate daysFromToday]) / TodoFrostyDaysBeforeStartDate;
-}
-
-NSDate *startDateFromFrostiness(float_t frostiness) {
-    if (frostiness == 0) {
-        return nil;
-    } else {
-        int daysUntilThawed = roundf(frostiness * TodoFrostyDaysBeforeStartDate);
-        return [[NSDate today] dateByAddingDays:daysUntilThawed];
-    }
+    return volume <= TodoFrozenMaxVolume;
 }
 
 + (void)updateVolumeForAllTodos {
-    for (Todo *todo in [Todo all]) {
-        [todo updateVolume];
-    }
+//    for (Todo *todo in [Todo all]) {
+//        [todo updateVolume];
+//    }
     
     for (Entry *entry in [Entry all]) {
         [entry updateVolume];
@@ -263,7 +196,7 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     
     for (Todo *todo in todos) {
         if (todo.lastEntry.type != EntryTypeComplete) {
-            if (todo.urgency > 0.0f || todo.frostiness > 0.0f ||
+            if (todo.volume >= TodoNormalMaxVolume || todo.volume >= TodoFrozenMaxVolume ||
                 [todo daysSinceLastUpdate] >= TodoMinStaleDaysAfterLastUpdate) {
                 todo.volume = fratiof(todo.volume + delta);
             }
@@ -283,19 +216,6 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
     entry.todo = self;
     
     return entry;
-}
-
-+ (void)updateVolumeForAllTodosIfNeeded {
-    static NSString *priorityVersionKey = @"TodoVolumeVersion";
-    
-    int priorityVersion = [[[IBCoreDataStore mainStore] metadataObjectForKey:priorityVersionKey] intValue];
-    
-    if (priorityVersion < TodoVolumeVersion) {
-        [self updateVolumeForAllTodos];
-        
-        [[IBCoreDataStore mainStore] setMetadataObject:@(TodoVolumeVersion) forKey:priorityVersionKey];
-        [[IBCoreDataStore mainStore] save];
-    }
 }
 
 + (void)updateAllTodosReadyToStart {
@@ -338,19 +258,19 @@ NSDate *startDateFromFrostiness(float_t frostiness) {
 
 #pragma mark - Private
 
-- (void)updateVolume {
-    CGFloat temperature = self.temperature;
-    CGFloat volume;
-    
-    if (temperature < 0) {
-        volume = TodoVolumeLockMax + ((TodoColdMaxVolume - TodoVolumeLockMax) * (1.0 + temperature));
-    } else if (temperature > 0) {
-        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * temperature);
-    } else {
-        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * self.staleness);
-    }
-    
-    self.volume = fratiof(volume);
-}
+//- (void)updateVolume {
+//    CGFloat temperature = self.temperature;
+//    CGFloat volume;
+//    
+//    if (temperature < 0) {
+//        volume = TodoFrozenMaxVolume + ((TodoColdMaxVolume - TodoFrozenMaxVolume) * (1.0 + temperature));
+//    } else if (temperature > 0) {
+//        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * temperature);
+//    } else {
+//        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * self.staleness);
+//    }
+//    
+//    self.volume = fratiof(volume);
+//}
 
 @end

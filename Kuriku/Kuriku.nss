@@ -32,10 +32,6 @@ EntryCellActive {
     color: white;
 }
 
-EntryCellUncommitted {
-    color: rgb(0.85, 0.95, 1.0);
-}
-
 EntryCellStalenessVeryOld {
     color: @veryOldColor;
 }

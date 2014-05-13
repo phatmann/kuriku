@@ -22,7 +22,6 @@
 static NSDate *mockUpdateDate;
 
 @interface Todo(Testing)
-- (void)updateVolume;
 + (NSDate *)dailyUpdatedOn;
 @end
 
@@ -136,55 +135,8 @@ static NSDate *mockUpdateDate;
     assertThatBool([IBCoreDataStore save], equalToBool(NO));
 }
 
-- (void)test_update_volume_when_urgency_changes {
-    float oldVolume = self.todo.volume;
-    self.todo.urgency = 1;
-    assertThatFloat(self.todo.volume, isNot(equalToFloat(oldVolume)));
-}
-
 - (void)test_initial_volume {
     assertThatFloat(self.todo.volume, equalToFloat(0.5f));
-}
-
-- (void)test_warm_volume {
-    self.todo.urgency = 0.5;
-    assertThatFloat(self.todo.volume, equalToFloat(0.75f));
-}
-
-- (void)test_hot_volume {
-    self.todo.urgency = 1.0;
-    assertThatFloat(self.todo.volume, equalToFloat(1.0f));
-}
-
-- (void)test_fresh_volume {
-    mockUpdateDate = [[NSDate today] dateByAddingDays:-1];
-    [self.todo updateVolume];
-    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
-}
-
-- (void)test_stale_volume{
-    mockUpdateDate = [NSDate dateFromTodayWithDays:-TodoMaxStaleDaysAfterLastUpdate];
-    [self.todo updateVolume];
-    assertThatFloat(self.todo.volume, equalToFloat(1.0f));
-}
-
-- (void)test_update_all_volumes_when_volume_version_changes {
-    Todo *todo1 = self.todo;
-    Todo *todo2 = [self createTodo];
-    float oldVolume1 = todo1.volume;
-    float oldVolume2 = todo2.volume;
-    
-    assertThatFloat(oldVolume1, isNot(equalToFloat(0)));
-    assertThatFloat(oldVolume2, isNot(equalToFloat(0)));
-    
-    todo1.volume = 0;
-    todo2.volume = 0;
-    
-    [[IBCoreDataStore mainStore] setMetadataObject:@(0) forKey:@"TodoVolumeVersion"];
-    [Todo updateVolumeForAllTodosIfNeeded];
-    
-    assertThatFloat(todo1.volume, equalToFloat(oldVolume1));
-    assertThatFloat(todo2.volume, equalToFloat(oldVolume2));
 }
 
 - (void)test_update_todos_ready_to_start {
@@ -203,30 +155,6 @@ static NSDate *mockUpdateDate;
     
     assertThatInt(todo2.lastEntry.type, equalToInt(EntryTypeNew));
     assertThatInt(todo3.lastEntry.type, equalToInt(EntryTypeNew));
-}
-
-- (void)test_urgency_due_today {
-    self.todo.dueDate = [NSDate today];
-    assertThatFloat(self.todo.urgency, equalToFloat(1.0));
-}
-
-- (void)test_urgency_due_one_week {
-    self.todo.dueDate = [NSDate dateFromTodayWithDays:7];
-    assertThatFloat(self.todo.urgency, closeTo(0.5, 0.01));
-}
-
-- (void)test_no_urgency_when_no_due_date {
-    assertThatFloat(self.todo.urgency, equalToFloat(0));
-}
-
-- (void)test_urgency_with_distant_due_date {
-    self.todo.dueDate = [[NSDate today] dateByAddingDays:120];
-    assertThatFloat(self.todo.urgency, lessThan(@(0.0)));
-}
-
-- (void)test_urgency_with_past_due_date {
-    self.todo.dueDate = [[NSDate today] dateByAddingDays:-14];
-    assertThatFloat(self.todo.urgency, greaterThan(@(1.0)));
 }
 
 - (void)test_get_entries_by_date {
@@ -278,56 +206,6 @@ static NSDate *mockUpdateDate;
     assertThatFloat(self.todo.staleness, equalToFloat(0.0f));
 }
 
-- (void)test_frostiness_for_frozen_todo {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:60];
-    assertThatFloat(self.todo.frostiness, closeTo(1.0f, 0.1));
-}
-
-- (void)test_frostiness_for_thawing_todo {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:15];
-    assertThatFloat(self.todo.frostiness, closeTo(0.2f, 0.2f));
-}
-
-- (void)test_frostiness_for_thawed_todo {
-    self.todo.startDate = [NSDate today];
-    assertThatFloat(self.todo.frostiness, equalToFloat(0.0f));
-}
-
-- (void)test_frostiness_for_barely_cold_todo {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:1];
-    assertThatFloat(self.todo.frostiness, isNot(equalToFloat(0.0f)));
-}
-
-- (void)test_frostiness_with_past_start_date {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:-10];
-    assertThatFloat(self.todo.frostiness, lessThan(@(0.0f)));
-}
-
-- (void)test_frostiness_with_distant_start_date {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:120];
-    assertThatFloat(self.todo.frostiness, greaterThan(@(1.0f)));
-}
-
-- (void)test_temperature_for_new_todo {
-    assertThatFloat(self.todo.temperature, equalToFloat(0.0f));
-}
-
-- (void)test_temperature_for_frozen_todo {
-    self.todo.startDate = [[NSDate today] dateByAddingDays:60];
-    assertThatFloat(self.todo.temperature, closeTo(-1.0f, 0.1f));
-}
-
-- (void)test_temperature_for_urgent_todo {
-    self.todo.dueDate = [NSDate today];
-    assertThatFloat(self.todo.temperature, equalToFloat(1.0f));
-}
-
-- (void)test_temperature_for_urgent_stale_todo {
-    mockUpdateDate = [[NSDate today] dateByAddingDays:-TodoMaxStaleDaysAfterLastUpdate / 2];
-    self.todo.dueDate = [[NSDate today] dateByAddingDays:7];
-    assertThatFloat(self.todo.temperature, equalToFloat(0.5f));
-}
-
 - (void)test_remove_start_date_when_completed {
     self.todo.startDate = [[NSDate today] dateByAddingDays:1];
     [self.todo createEntry:EntryTypeComplete];
@@ -335,7 +213,7 @@ static NSDate *mockUpdateDate;
 }
 
 - (void)test_daily_update_later_volume_from_due_date {
-    self.todo.urgency = 0.1;
+    self.todo.volume = TodoHotMinVolume;
     
     NSDate *twoWeeksAgo = [NSDate dateFromTodayWithDays:-14];
     id todo = [OCMockObject mockForClass:[Todo class]];
@@ -349,7 +227,7 @@ static NSDate *mockUpdateDate;
 }
 
 - (void)test_daily_update_soon_volume_from_due_date {
-    self.todo.urgency = 0.5;
+    self.todo.volume = TodoHotMinVolume;
     
     NSDate *yesterday = [NSDate dateFromTodayWithDays:-1];
     id todo = [OCMockObject mockForClass:[Todo class]];
@@ -377,7 +255,7 @@ static NSDate *mockUpdateDate;
 }
 
 - (void)test_daily_update_later_volume_from_frostiness {
-    self.todo.frostiness = 0.1;
+    self.todo.volume = TodoColdMinVolume;
     
     NSDate *whileAgo = [NSDate dateFromTodayWithDays:-60];
     id todo = [OCMockObject mockForClass:[Todo class]];
