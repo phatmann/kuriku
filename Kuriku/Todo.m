@@ -11,7 +11,7 @@
 #import <InnerBand/InnerBand.h>
 #import "NSDate+Kuriku.h"
 
-const float_t  TodoVolumeDefaultValue     = 0.5f;
+const float_t TodoTemperatureDefaultValue = 50;
 
 const NSTimeInterval TodoUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
@@ -19,22 +19,18 @@ const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
 const NSTimeInterval TodoMaxStaleDaysAfterLastUpdate = 60;
 const NSTimeInterval TodoMinStaleDaysAfterLastUpdate = 14;
 
-const float_t TodoFrozenMinVolume = 0.00f;
-const float_t TodoFrozenMaxVolume = 0.24f;
-const float_t TodoColdMinVolume   = 0.25f;
-const float_t TodoColdMaxVolume   = 0.49f;
-const float_t TodoNormalMinVolume = 0.50f;
-const float_t TodoNormalMaxVolume = 0.74f;
-const float_t TodoHotMinVolume    = 0.75f;
-const float_t TodoHotMaxVolume    = 1.00f;
+const float_t TodoMinTemperature       = 0;
+const float_t TodoFrozenMaxTemperature = 25;
+const float_t TodoColdMaxTemperature   = 50;
+const float_t TodoNormalMaxTemperature = 75;
+const float_t TodoMaxTemperature       = 100;
 
-static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
+static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
 
 @implementation Todo
 
 @dynamic title;
-@dynamic volume;
-@dynamic volumeLocked;
+@dynamic temperature;
 @dynamic createDate;
 @dynamic updateDate;
 @dynamic dueDate;
@@ -47,7 +43,7 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
     [super awakeFromInsert];
     self.createDate = [NSDate date];
     self.updateDate = self.createDate;
-    self.volume = TodoVolumeDefaultValue;
+    self.temperature = TodoTemperatureDefaultValue;
     [self createEntry:EntryTypeNew];
     self.journal = [Journal first];
     [self setUp];
@@ -69,7 +65,7 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
 }
 
 - (void)setUp {
-    [self addObserver:self forKeyPath:@"volume" options:NSKeyValueObservingOptionInitial context:nil];
+    [self addObserver:self forKeyPath:@"temperature" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"urgency" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"dueDate" options:NSKeyValueObservingOptionInitial context:nil];
     [self addObserver:self forKeyPath:@"startDate" options:NSKeyValueObservingOptionInitial context:nil];
@@ -77,7 +73,7 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
 }
 
 - (void)tearDown {
-    [self removeObserver:self forKeyPath:@"volume"];
+    [self removeObserver:self forKeyPath:@"temperature"];
     [self removeObserver:self forKeyPath:@"urgency"];
     [self removeObserver:self forKeyPath:@"dueDate"];
     [self removeObserver:self forKeyPath:@"startDate"];
@@ -88,11 +84,7 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
     self.updateDate = [NSDate date];
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
-    if ([keyPath isEqualToString:@"volume"]) {
-        self.volumeLocked = [Todo isVolumeLockedForVolume:self.volume];
-    } else if (!self.volumeLocked && ([keyPath isEqualToString:@"dueDate"] || [keyPath isEqualToString:@"startDate"])) {
-        //[self updateVolume];
-    } else if ([keyPath isEqualToString:@"entries"]) {
+    if ([keyPath isEqualToString:@"entries"]) {
         if (kind == NSKeyValueChangeRemoval) {
             NSArray *removedEntries = change[NSKeyValueChangeOldKey];
             
@@ -138,10 +130,6 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
     return [NSSet setWithObjects:@"dueDate", nil];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingTemperature {
-    return [NSSet setWithObjects:@"urgency", @"staleness", @"frostiness", nil];
-}
-
 - (Entry *)lastEntry {
     return [self.entries lastObject];
 }
@@ -166,40 +154,33 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
 
 #pragma mark -
 
-+ (BOOL)isVolumeLockedForVolume:(float_t)volume {
-    return volume <= TodoFrozenMaxVolume;
++ (BOOL)isTemperatureLockedForTemperature:(float_t)temperature {
+    return temperature <= TodoFrozenMaxTemperature;
 }
 
-+ (void)updateVolumeForAllTodos {
-//    for (Todo *todo in [Todo all]) {
-//        [todo updateVolume];
-//    }
-    
-    for (Entry *entry in [Entry all]) {
-        [entry updateVolume];
-    }
-}
-
-+ (void)tickVolumeForAllTodos:(NSDate *)updatedOn {
-    static const CGFloat tick = (1.0 - TodoColdMaxVolume) / TodoUrgentDaysBeforeDueDate;
-    
-    
-    // TODO: filter frozen and non-stale todos out
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"volume < 1.0"];
-    
-    //NSDate *dateUrgentDaysFromNow = [NSDate dateFromTodayWithDays:TodoUrgentDaysBeforeDueDate];
-    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL AND dueDate < %@ AND volume < 1.0", dateUrgentDaysFromNow];
++ (void)tickTemperatureForAllTodos:(NSDate *)updatedOn {
+    // TODO: filter non-stale todos out
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temperature > %f && temperature < 100", TodoFrozenMaxTemperature];
     
     NSArray *todos = [Todo allForPredicate:predicate];
-    CGFloat daysSinceUpdate = [updatedOn daysFromToday];
-    CGFloat delta = -daysSinceUpdate * tick;
+    int daysSinceUpdate = -[updatedOn daysFromToday];
     
     for (Todo *todo in todos) {
         if (todo.lastEntry.type != EntryTypeComplete) {
-            if (todo.volume >= TodoNormalMaxVolume || todo.volume >= TodoFrozenMaxVolume ||
-                [todo daysSinceLastUpdate] >= TodoMinStaleDaysAfterLastUpdate) {
-                todo.volume = fratiof(todo.volume + delta);
+            float_t tick = 0;
+            
+            if (todo.temperature <= TodoColdMaxTemperature) {
+                tick = (TodoColdMaxTemperature - TodoFrozenMaxTemperature) / TodoFrostyDaysBeforeStartDate;
+            } else if (todo.temperature <= TodoNormalMaxTemperature) {
+                if ([todo daysSinceLastUpdate] >= TodoMinStaleDaysAfterLastUpdate) {
+                    tick = (TodoNormalMaxTemperature - TodoColdMaxTemperature) / TodoMaxStaleDaysAfterLastUpdate;
+                }
+            } else {
+                tick = (TodoMaxTemperature - TodoNormalMaxTemperature) / TodoUrgentDaysBeforeDueDate;
             }
+        
+            float_t delta = daysSinceUpdate * tick;
+            todo.temperature = fclampf(todo.temperature + delta, TodoMinTemperature, TodoMaxTemperature);
         }
     }
     
@@ -233,11 +214,11 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
 }
 
 + (NSDate *)dailyUpdatedOn {
-    return [[IBCoreDataStore mainStore] metadataObjectForKey:TodoVolumeUpdatedOnKey];
+    return [[IBCoreDataStore mainStore] metadataObjectForKey:TodoTemperatureUpdatedOnKey];
 }
 
 + (void)setDailyUpdatedOn:(NSDate *)date {
-    [[IBCoreDataStore mainStore] setMetadataObject:date forKey:TodoVolumeUpdatedOnKey];
+    [[IBCoreDataStore mainStore] setMetadataObject:date forKey:TodoTemperatureUpdatedOnKey];
     [[IBCoreDataStore mainStore] save];
 }
 
@@ -246,7 +227,7 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
     NSDate *today     = [NSDate today];
     
     if (updatedOn || ![updatedOn isSameDay:today]) {
-        [self tickVolumeForAllTodos:updatedOn];
+        [self tickTemperatureForAllTodos:updatedOn];
         [self updateAllTodosReadyToStart];
         [self setDailyUpdatedOn:today];
     }
@@ -255,22 +236,5 @@ static NSString *TodoVolumeUpdatedOnKey = @"TodoVolumeUpdatedOn";
 + (void)migrate {
     [IBCoreDataStore save];
 }
-
-#pragma mark - Private
-
-//- (void)updateVolume {
-//    CGFloat temperature = self.temperature;
-//    CGFloat volume;
-//    
-//    if (temperature < 0) {
-//        volume = TodoFrozenMaxVolume + ((TodoColdMaxVolume - TodoFrozenMaxVolume) * (1.0 + temperature));
-//    } else if (temperature > 0) {
-//        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * temperature);
-//    } else {
-//        volume = TodoColdMaxVolume + ((1.0 - TodoColdMaxVolume) * self.staleness);
-//    }
-//    
-//    self.volume = fratiof(volume);
-//}
 
 @end

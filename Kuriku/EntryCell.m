@@ -77,7 +77,7 @@
 }
 
 - (void)refresh {
-    _volume      = self.entry.todo.volume;
+    _temperature      = self.entry.todo.temperature;
     _progress    = self.entry.progress;
 
     [self updateTime];
@@ -92,15 +92,15 @@
     [self updateProgress];
 }
 
-- (void)setVolume:(CGFloat)volume {
-    _volume = volume;
+- (void)setTemperature:(float_t)temperature {
+    _temperature = temperature;
     [self updateTitle];
     [self updateBackground];
 }
 
 + (UIFont *)fontForEntry:(Entry *)entry {
-    CGFloat fontSize = [self fontSizeForVolume:entry.todo.volume];
-    NSString *nuiClass = [EntryCell titleStyleClassForEntry:entry volume:entry.volume];
+    CGFloat fontSize = [self fontSizeForTemperature:entry.todo.temperature];
+    NSString *nuiClass = [EntryCell titleStyleClassForEntry:entry temperature:entry.todo.temperature];
     return [[NUISettings getFontWithClass:nuiClass] fontWithSize:fontSize];
 }
 
@@ -113,9 +113,9 @@
         self.timeLabel.nuiClass = @"TimeCompleted";
     } else if (self.entry.state == EntryStateInactive) {
         self.timeLabel.nuiClass = @"TimeInactive";
-    } else if (self.entry.todo.volume >= TodoHotMinVolume) {
+    } else if (self.entry.todo.temperature > TodoNormalMaxTemperature) {
         self.timeLabel.nuiClass = @"TimeWarm";
-    } else if (self.entry.todo.volume <= TodoColdMinVolume) {
+    } else if (self.entry.todo.temperature <= TodoColdMaxTemperature) {
         self.timeLabel.nuiClass = @"TimeCool";
     } else {
         self.timeLabel.nuiClass = @"Time";
@@ -172,22 +172,8 @@
     }
 }
 
-//- (void)updateCellGlow {
-//    self.titleTextView.glowColor = nil;
-//    
-//    if (self.entry.state == EntryStateActive) {
-//        if (self.temperature < 0) {
-//            self.titleTextView.glowColor = [EntryCell scale:-self.temperature fromColor:_coolColor toColor:_coldColor];
-//            self.titleTextView.glowBlur = _coolBlur;
-//        } else if (self.temperature > 0 && self.entry.type != EntryTypeComplete) {
-//            self.titleTextView.glowColor = [EntryCell scale:self.temperature fromColor:_warmColor toColor:_hotColor];
-//            self.titleTextView.glowBlur = _warmBlur;
-//        }
-//    }
-//}
-
 - (void)updateTitle {
-    self.titleTextView.nuiClass = [EntryCell titleStyleClassForEntry:self.entry volume:self.volume];
+    self.titleTextView.nuiClass = [EntryCell titleStyleClassForEntry:self.entry temperature:self.temperature];
     
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     [self addStrikethroughAttribute:attributes];
@@ -199,7 +185,7 @@
     
     [self.titleTextView applyNUI];
     
-    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForVolume:self.volume]];
+    self.titleTextView.font = [self.titleTextView.font fontWithSize:[EntryCell fontSizeForTemperature:self.temperature]];
 }
 
 -(void) updateBackground {
@@ -208,21 +194,21 @@
     CGFloat scale;
     
     if (self.entry.state == EntryStateActive) {
-        if (self.volume <= TodoFrozenMaxVolume) {
+        if (self.temperature <= TodoFrozenMaxTemperature) {
             color = _coldColor;
-        } else if (self.volume <= TodoColdMaxVolume) {
-            range = TodoColdMaxVolume - TodoColdMinVolume;
-            scale = (self.volume - TodoColdMinVolume) / range;
+        } else if (self.temperature <= TodoColdMaxTemperature) {
+            range = TodoColdMaxTemperature - TodoFrozenMaxTemperature;
+            scale = (self.temperature - TodoFrozenMaxTemperature) / range;
             color = [EntryCell scale:scale fromColor:_coldColor toColor:_coolColor];
-        } else if (self.volume <= TodoNormalMaxVolume) {
+        } else if (self.temperature <= TodoNormalMaxTemperature) {
             if (self.entry.todo.staleness > 0 && self.entry.type != EntryTypeComplete) {
                 color = [EntryCell scale:self.entry.todo.staleness fromColor:_oldColor toColor:_veryOldColor];
             } else {
                 color = _activeColor;
             }
-        } else if (self.volume <= TodoHotMaxVolume && self.entry.type != EntryTypeComplete) {
-            range = TodoHotMaxVolume - TodoHotMinVolume;
-            scale = (self.volume - TodoHotMinVolume) / range;
+        } else if (self.entry.type != EntryTypeComplete) {
+            range = TodoMaxTemperature - TodoNormalMaxTemperature;
+            scale = (self.temperature - TodoNormalMaxTemperature) / range;
             color = [EntryCell scale:scale fromColor:_warmColor toColor:_hotColor];
         } else {
             color = _inactiveColor;
@@ -286,7 +272,7 @@
     attributes[NSStrikethroughStyleAttributeName] = @(strikethroughStyle);
 }
 
-+ (NSString *)titleStyleClassForEntry:(Entry *)entry volume:(CGFloat)volume {
++ (NSString *)titleStyleClassForEntry:(Entry *)entry temperature:(CGFloat)temperature {
     if (entry.type == EntryTypeComplete) {
         return @"EntryLabelCompleted";
     }
@@ -295,22 +281,22 @@
         return @"EntryLabelInactive";
     }
     
-    if (volume <= TodoColdMaxVolume) {
+    if (temperature <= TodoColdMaxTemperature) {
         return @"EntryLabelCool";
     }
     
     return @"EntryLabel";
 }
 
-+ (CGFloat)fontSizeForVolume:(CGFloat)volume {
-    static CGFloat fontSizeVolumeLow, fontSizeVolumeHigh;
++ (CGFloat)fontSizeForTemperature:(float_t)temperature {
+    static CGFloat fontSizeTemperatureLow, fontSizeTemperatureHigh;
     
-    if (!fontSizeVolumeLow) {
-        fontSizeVolumeLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelVolumeLow"];
-        fontSizeVolumeHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelVolumeHigh"];
+    if (!fontSizeTemperatureLow) {
+        fontSizeTemperatureLow  = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelTemperatureLow"];
+        fontSizeTemperatureHigh = [NUISettings getFloat:@"font-size" withClass:@"EntryLabelTemperatureHigh"];
     }
     
-    return fontSizeVolumeLow + ((fontSizeVolumeHigh - fontSizeVolumeLow ) * volume);
+    return fontSizeTemperatureLow + ((fontSizeTemperatureHigh - fontSizeTemperatureLow ) * (temperature / TodoMaxTemperature));
 }
 
 @end

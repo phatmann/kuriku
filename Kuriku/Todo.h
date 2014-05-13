@@ -15,8 +15,7 @@
 @interface Todo : NSManagedObject
 
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic) float_t volume;
-@property (nonatomic) BOOL volumeLocked;
+@property (nonatomic) float_t temperature;
 @property (nonatomic, strong) NSDate *createDate;
 @property (nonatomic, strong) NSDate *updateDate;
 @property (nonatomic, strong) NSDate *dueDate;
@@ -30,23 +29,19 @@
 
 - (Entry *)createEntry:(EntryType)type;
 
-+ (BOOL)isVolumeLockedForVolume:(float_t)volume;
 + (void)updateAllTodosReadyToStart;
 + (void)dailyUpdate;
 + (void)migrate;
 
-extern const float_t  TodoVolumeDefaultValue;
+extern const float_t  TodoTemperatureDefaultValue;
 extern const NSTimeInterval TodoMinStaleDaysAfterLastUpdate;
 extern const NSTimeInterval TodoMaxStaleDaysAfterLastUpdate;
 
-extern const float_t TodoFrozenMinVolume;
-extern const float_t TodoFrozenMaxVolume;
-extern const float_t TodoColdMinVolume;
-extern const float_t TodoColdMaxVolume;
-extern const float_t TodoNormalMinVolume;
-extern const float_t TodoNormalMaxVolume;
-extern const float_t TodoHotMinVolume;
-extern const float_t TodoHotMaxVolume;
+extern const float_t TodoMinTemperature;
+extern const float_t TodoFrozenMaxTemperature;
+extern const float_t TodoColdMaxTemperature;
+extern const float_t TodoNormalMaxTemperature;
+extern const float_t TodoMaxTemperature;
 
 @end
 

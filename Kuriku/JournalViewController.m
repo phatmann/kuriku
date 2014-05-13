@@ -26,11 +26,10 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 @property (weak, nonatomic) IBOutlet UISlider *filterSlider;
 @property (weak, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGestureRecognizer;
-@property (weak, nonatomic) IBOutlet UIRotationGestureRecognizer *rotationGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
 
 @property (strong, nonatomic) Entry *selectedEntry;
-@property (nonatomic) float_t volumeFilter;
+@property (nonatomic) float_t temperatureFilter;
 @property (nonatomic) EntryCell *activeCell;
 @property (strong, nonatomic) UIBarButtonItem *addButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
@@ -48,11 +47,11 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 
     self.tableView.estimatedRowHeight = kEstimatedRowHeight;
     
-    float_t savedVolumeFilter = [[NSUserDefaults standardUserDefaults] floatForKey:@"volumeFilter"];
+    float_t savedTemperatureFilter = [[NSUserDefaults standardUserDefaults] floatForKey:@"temperatureFilter"];
     
-    if (savedVolumeFilter > 0) {
-        self.volumeFilter = savedVolumeFilter;
-        self.filterSlider.value = self.volumeFilter;
+    if (savedTemperatureFilter > 0) {
+        self.temperatureFilter = savedTemperatureFilter;
+        self.filterSlider.value = self.temperatureFilter;
     } else {
         [self fetchData];
         [self.tableView reloadData];
@@ -73,13 +72,13 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
     }
 }
 
-- (void)setVolumeFilter:(float_t)volumeFilter {
-    if (_volumeFilter == volumeFilter)
+- (void)setTemperatureFilter:(float_t)temperatureFilter {
+    if (_temperatureFilter == temperatureFilter)
         return;
     
-    _volumeFilter = volumeFilter;
+    _temperatureFilter = temperatureFilter;
     
-    [[NSUserDefaults standardUserDefaults] setFloat:volumeFilter forKey:@"volumeFilter"];
+    [[NSUserDefaults standardUserDefaults] setFloat:temperatureFilter forKey:@"temperatureFilter"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self fetchData];
@@ -198,7 +197,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 
                 if (entry.state == EntryStateActive) {
                     pinchedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    initialValue = entry.todo.volume * range + 1;
+                    initialValue = entry.todo.temperature * range + 1;
                 }
             }
             
@@ -209,13 +208,13 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 static const CGFloat multiplier = 1.5f;
                 CGFloat scale = powf(recognizer.scale, multiplier);
                 CGFloat value = fclampf(initialValue * scale, 1.0, range + 1.0);
-                pinchedCell.volume = fratiof((value - 1) / range);
+                pinchedCell.temperature = fratiof((value - 1) / range);
             }
 
             break;
             
         case UIGestureRecognizerStateEnded:
-            pinchedCell.entry.todo.volume = pinchedCell.volume;
+            pinchedCell.entry.todo.temperature = pinchedCell.temperature;
             [IBCoreDataStore save];
             break;
             
@@ -242,23 +241,15 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 
 - (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
     static const CGFloat notchSize = 0.03;
-    CGFloat coldMaxPriority = [Entry normalVolumeFromTodoVolume:TodoColdMaxVolume];
     
-    if (filterSlider.value < notchSize)
-        filterSlider.value = 0;
-    else if (fabsf(filterSlider.value - EntryActiveMinVolume) < notchSize)
-        filterSlider.value = EntryActiveMinVolume;
-    else if (fabsf(filterSlider.value - EntryNormalMinVolume) < notchSize)
-        filterSlider.value = EntryNormalMinVolume;
-    else if (fabsf(filterSlider.value - coldMaxPriority) < notchSize)
-        filterSlider.value = coldMaxPriority;
+    if (fabsf(filterSlider.value - TodoFrozenMaxTemperature) < notchSize)
+        filterSlider.value = TodoFrozenMaxTemperature;
+    if (fabsf(filterSlider.value - TodoColdMaxTemperature) < notchSize)
+        filterSlider.value = TodoColdMaxTemperature;
+    else if (fabsf(filterSlider.value - TodoNormalMaxTemperature) < notchSize)
+        filterSlider.value = TodoNormalMaxTemperature;
     
-    if (filterSlider.value < EntryActiveMinVolume)
-        self.volumeFilter = 0;
-    else if (filterSlider.value < EntryNormalMinVolume)
-        self.volumeFilter = EntryActiveMinVolume;
-    else
-        self.volumeFilter = filterSlider.value;
+    self.temperatureFilter = filterSlider.value;
 }
 
 - (IBAction)addButtonTapped {
@@ -573,7 +564,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
         self.fetchedResultsController.delegate = self;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"volume >= %f OR updateDate > %@", self.volumeFilter, [NSDate date]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"todo.temperature >= %f OR updateDate > %@", self.temperatureFilter, [NSDate date]];
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
     
     NSError *error;

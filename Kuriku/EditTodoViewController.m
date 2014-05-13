@@ -15,7 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *titleField;
 @property (weak, nonatomic) IBOutlet UISlider *urgencySlider;
-@property (weak, nonatomic) IBOutlet UISlider *volumeSlider;
+@property (weak, nonatomic) IBOutlet UISlider *temperatureSlider;
 @property (weak, nonatomic) IBOutlet UITextView *notesField;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startDateLabel;
@@ -53,7 +53,7 @@ enum {
         
         self.titleField.text                        = self.todo.title;
         //self.urgencySlider.value                    = self.todo.urgency;
-        self.volumeSlider.value                     = self.todo.volume;
+        self.temperatureSlider.value                     = self.todo.temperature;
         self.dueDateLabel.text                      = dateToString(self.todo.dueDate);
         self.startDateLabel.text                    = dateToString(self.todo.startDate);
         self.notesField.text                        = self.todo.notes;
@@ -62,7 +62,7 @@ enum {
         
         self.titleField.text                        = nil;
         self.urgencySlider.value                    = 0;
-        self.volumeSlider.value                     = TodoVolumeDefaultValue;
+        self.temperatureSlider.value                     = TodoTemperatureDefaultValue;
         self.dueDateLabel.text                      = NoDateString;
         self.startDateLabel.text                    = NoDateString;
         self.notesField.text                        = nil;
@@ -107,7 +107,7 @@ enum {
         //self.todo.urgency = self.urgencySlider.value;
     
     self.todo.title      = self.titleField.text;
-    self.todo.volume     = self.volumeSlider.value;
+    self.todo.temperature     = self.temperatureSlider.value;
     self.todo.notes      = self.notesField.text;
     
     [[IBCoreDataStore mainStore] save];

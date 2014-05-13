@@ -49,23 +49,23 @@ static NSDate *mockUpdateDate;
 
 - (void)test_insert_create_entry {
     NSOrderedSet *entries = self.todo.entries;
-    assertThatInteger(entries.count, equalToInteger(1));
+    assertThatFloat(entries.count, equalToFloat(1));
     Entry *entry = [entries firstObject];
-    assertThatInteger(entry.type, equalToInteger(EntryTypeNew));
+    assertThatFloat(entry.type, equalToFloat(EntryTypeNew));
 }
 
 - (void)test_insert_new_entry_deactivates_previous_entry {
     Entry *entry1 = [self.todo.entries firstObject];
-    assertThatInt(entry1.state, equalToInt(EntryStateActive));
+    assertThatFloat(entry1.state, equalToFloat(EntryStateActive));
     
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
-    assertThatInt(entry1.state, equalToInt(EntryStateInactive));
-    assertThatInt(entry2.state, equalToInt(EntryStateActive));
+    assertThatFloat(entry1.state, equalToFloat(EntryStateInactive));
+    assertThatFloat(entry2.state, equalToFloat(EntryStateActive));
 }
     
 - (void)test_delete_all_entries_when_deleting_todo {
     [self.todo destroy];
-    assertThatInteger([[Entry all] count], equalToInteger(0));
+    assertThatFloat([[Entry all] count], equalToFloat(0));
 }
 
 - (void)test_delete_todo_if_no_entries {
@@ -80,7 +80,7 @@ static NSDate *mockUpdateDate;
     Entry *entry1 = [self.todo.entries firstObject];
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
     entry2.todo = nil;
-    assertThatInt(entry1.state, equalToInt(EntryStateActive));
+    assertThatFloat(entry1.state, equalToFloat(EntryStateActive));
 }
 
 - (void)test_delete_creation_entry_deletes_todo {
@@ -95,7 +95,7 @@ static NSDate *mockUpdateDate;
     Entry *completionEntry = [self.todo createEntry:EntryTypeComplete];
     [self.todo createEntry:EntryTypeReady];
     completionEntry.todo = nil;
-    assertThatInt(self.todo.lastEntry.type, equalToInt(EntryTypeNew));
+    assertThatFloat(self.todo.lastEntry.type, equalToFloat(EntryTypeNew));
 }
 
 - (void)test_delete_completion_entry_deletes_subsequent_ready_and_completed_entries {
@@ -104,9 +104,9 @@ static NSDate *mockUpdateDate;
     [self.todo createEntry:EntryTypeAction];
     [self.todo createEntry:EntryTypeComplete];
     [self.todo createEntry:EntryTypeReady];
-    assertThatInt(self.todo.entries.count, equalToInt(6));
+    assertThatFloat(self.todo.entries.count, equalToFloat(6));
     completionEntry.todo = nil;
-    assertThatInt(self.todo.entries.count, equalToInt(2));
+    assertThatFloat(self.todo.entries.count, equalToFloat(2));
 }
 
 - (void)test_delete_ready_entry_deletes_subsequent_ready_and_completion_entries {
@@ -115,11 +115,10 @@ static NSDate *mockUpdateDate;
     [self.todo createEntry:EntryTypeAction];
     [self.todo createEntry:EntryTypeComplete];
     [self.todo createEntry:EntryTypeReady];
-    assertThatInt(self.todo.entries.count, equalToInt(6));
+    assertThatFloat(self.todo.entries.count, equalToFloat(6));
     readyEntry.todo = nil;
-    assertThatInt(self.todo.entries.count, equalToInt(3));
+    assertThatFloat(self.todo.entries.count, equalToFloat(3));
 }
-
 
 - (void)test_can_save_a_new_todo_with_title {
     assertThatBool([IBCoreDataStore save], equalToBool(YES));
@@ -135,8 +134,8 @@ static NSDate *mockUpdateDate;
     assertThatBool([IBCoreDataStore save], equalToBool(NO));
 }
 
-- (void)test_initial_volume {
-    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
+- (void)test_initial_temperature {
+    assertThatFloat(self.todo.temperature, equalToFloat(50));
 }
 
 - (void)test_update_todos_ready_to_start {
@@ -150,11 +149,11 @@ static NSDate *mockUpdateDate;
     
     [Todo updateAllTodosReadyToStart];
     
-    assertThatInt(todo.lastEntry.type, equalToInt(EntryTypeReady));
+    assertThatFloat(todo.lastEntry.type, equalToFloat(EntryTypeReady));
     assertThat(todo.startDate, is(nilValue()));
     
-    assertThatInt(todo2.lastEntry.type, equalToInt(EntryTypeNew));
-    assertThatInt(todo3.lastEntry.type, equalToInt(EntryTypeNew));
+    assertThatFloat(todo2.lastEntry.type, equalToFloat(EntryTypeNew));
+    assertThatFloat(todo3.lastEntry.type, equalToFloat(EntryTypeNew));
 }
 
 - (void)test_get_entries_by_date {
@@ -177,14 +176,14 @@ static NSDate *mockUpdateDate;
     assertThat(self.todo.entries.array, is(@[createEntry, entry1, entry2]));
 }
 
-- (void)test_volume_zero_when_start_date {
+- (void)test_temperature_zero_when_start_date {
     self.todo.startDate = [NSDate dateFromTodayWithDays:1];
-    assertThatFloat(self.todo.volume, closeTo(0.5f, 0.1f));
+    assertThatFloat(self.todo.temperature, equalToFloat(50));
 }
 
-- (void)test_volume_with_distant_due_date {
+- (void)test_temperature_with_distant_due_date {
     self.todo.dueDate = [[NSDate today] dateByAddingDays:365];
-    assertThatFloat(self.todo.volume, equalToFloat(0.5f));
+    assertThatFloat(self.todo.temperature, equalToFloat(50));
 }
 
 - (void)test_staleness_for_old_todo {
@@ -212,58 +211,55 @@ static NSDate *mockUpdateDate;
     assertThat(self.todo.startDate, is(nilValue()));
 }
 
-- (void)test_daily_update_later_volume_from_due_date {
-    self.todo.volume = TodoHotMinVolume;
+- (void)test_daily_update_later_hot_temperature {
+    self.todo.temperature = TodoNormalMaxTemperature + 1;
     
     NSDate *twoWeeksAgo = [NSDate dateFromTodayWithDays:-14];
     id todo = [OCMockObject mockForClass:[Todo class]];
     [[[todo stub] andReturn:twoWeeksAgo] dailyUpdatedOn];
     
-    assertThatFloat(self.todo.volume, isNot(equalToFloat(1.0)));
     [Todo dailyUpdate];
-    assertThatFloat(self.todo.volume, equalToFloat(1.0));
+    assertThatFloat(self.todo.temperature, equalToFloat(100));
     
     [todo stopMocking];
 }
 
-- (void)test_daily_update_soon_volume_from_due_date {
-    self.todo.volume = TodoHotMinVolume;
+- (void)test_daily_update_soon_hot_temperature {
+    self.todo.temperature = TodoNormalMaxTemperature + 1;
     
     NSDate *yesterday = [NSDate dateFromTodayWithDays:-1];
     id todo = [OCMockObject mockForClass:[Todo class]];
     [[[todo stub] andReturn:yesterday] dailyUpdatedOn];
     
-    assertThatFloat(self.todo.volume, equalToFloat(0.75));
     [Todo dailyUpdate];
-    assertThatFloat(self.todo.volume, closeTo(0.78, 0.01));
+    assertThatFloat(self.todo.temperature, closeTo(77.78, 0.01));
     
     [todo stopMocking];
 }
 
-- (void)test_daily_update_later_volume_from_staleness {
+- (void)test_daily_update_later_temperature_from_staleness {
+    self.todo.temperature = TodoColdMaxTemperature + 1;
     mockUpdateDate = [NSDate dateFromTodayWithDays:-TodoMinStaleDaysAfterLastUpdate];
     
     NSDate *whileAgo = [NSDate dateFromTodayWithDays:-TodoMaxStaleDaysAfterLastUpdate];
     id todo = [OCMockObject mockForClass:[Todo class]];
     [[[todo stub] andReturn:whileAgo] dailyUpdatedOn];
     
-    assertThatFloat(self.todo.volume, equalToFloat(0.5));
     [Todo dailyUpdate];
-    assertThatFloat(self.todo.volume, equalToFloat(1.0));
+    assertThatFloat(self.todo.temperature, equalToFloat(100));
     
     [todo stopMocking];
 }
 
-- (void)test_daily_update_later_volume_from_frostiness {
-    self.todo.volume = TodoColdMinVolume;
+- (void)test_daily_update_later_temperature_from_frostiness {
+    self.todo.temperature = TodoFrozenMaxTemperature + 1;
     
     NSDate *whileAgo = [NSDate dateFromTodayWithDays:-60];
     id todo = [OCMockObject mockForClass:[Todo class]];
     [[[todo stub] andReturn:whileAgo] dailyUpdatedOn];
     
-    assertThatFloat(self.todo.volume, isNot(equalToFloat(1.0)));
     [Todo dailyUpdate];
-    assertThatFloat(self.todo.volume, equalToFloat(1.0));
+    assertThatFloat(self.todo.temperature, equalToFloat(100));
     
     [todo stopMocking];
 }

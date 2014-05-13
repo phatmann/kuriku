@@ -7,10 +7,9 @@ Improvements
 
 Bugs
 ----
-* Update volume daily for stale todos
-* Update volume daily for frozen todos
-* Overridden volume not preserved on stale items
-* Should scale automatic volume from overridden value onwards and allow pinching on items with temperature
+* Slider notches wrong
+* Edit dialog wrong
+* Need to daily update temperature for due and start dates
 * Hard to see time
 * No frostiness on complete items. Instead make new item and freeze it.
 * Make model createDate's and updateDate's non-optional
@@ -24,7 +23,7 @@ Bugs
 Missing Features
 ----------------
 * Scroll down to show blank line in edit mode
-* Normal volume notch
+* Normal temperature notch
 * Allow multiple todos to be entered
 * Tap inactive task goes to active task
 * Jump around to different dates in journal
@@ -34,7 +33,7 @@ Missing Features
 
 Newest Thoughts
 ---------------
-* Volume and temperature merged.
+* Temperature and temperature merged.
   * Frozen: no increment
   * Cold: thaws out
   * Room temp: only increments after sitting for a while

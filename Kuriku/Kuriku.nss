@@ -16,11 +16,11 @@
 
 /* Computed styles */
 
-EntryLabelVolumeLow {
+EntryLabelTemperatureLow {
     font-size: 16;
 }
 
-EntryLabelVolumeHigh {
+EntryLabelTemperatureHigh {
     font-size: 24;
 }
 

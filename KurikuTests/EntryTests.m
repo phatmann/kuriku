@@ -32,23 +32,6 @@
     [super tearDown];
 }
 
-- (void)test_volume_set_when_new {
-    assertThatFloat(self.todo.lastEntry.volume, equalToFloat(0.65f));
-}
-
-- (void)test_volume_zero_when_inactive {
-    assertThatFloat(self.todo.volume, isNot(equalToFloat(0)));
-    Entry *entry = self.todo.lastEntry;
-    [self.todo createEntry:EntryTypeAction];
-    assertThatFloat(entry.volume, equalToFloat(0));
-}
-
-- (void)test_volume_zero_for_completed {
-    assertThatFloat(self.todo.volume, isNot(equalToFloat(0)));
-    Entry *entry = [self.todo createEntry:EntryTypeComplete];
-    assertThatFloat(entry.volume, equalToFloat(EntryCompletedVolume));
-}
-
 - (Todo *)createTodo {
     Todo *todo = [Todo create];
     todo.title = @"title";

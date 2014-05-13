@@ -83,6 +83,8 @@
 		EA1ACB101920FC02000B98A7 /* OCMockSingletonExtension-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMockSingletonExtension-Prefix.pch"; sourceTree = "<group>"; };
 		EA1ACB111920FC02000B98A7 /* UIImage+UnitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UnitTests.h"; sourceTree = "<group>"; };
 		EA1ACB121920FC02000B98A7 /* UIImage+UnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UnitTests.m"; sourceTree = "<group>"; };
+		EA1ACB231921D4DC000B98A7 /* Kuriku24.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku24.xcdatamodel; sourceTree = "<group>"; };
+		EA1ACB241921DDE3000B98A7 /* Kuriku25.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kuriku25.xcdatamodel; sourceTree = "<group>"; };
 		EA3C0C09187029BF00EF1DAC /* RepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatViewController.h; sourceTree = "<group>"; };
 		EA3C0C0A187029BF00EF1DAC /* RepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatViewController.m; sourceTree = "<group>"; };
 		EA3D0111191A9B1D00AC16EF /* GlowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlowingTextView.h; sourceTree = "<group>"; };
@@ -801,6 +803,8 @@
 		EAAEEB0E187E1EE80098C4F0 /* Kuriku.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EA1ACB241921DDE3000B98A7 /* Kuriku25.xcdatamodel */,
+				EA1ACB231921D4DC000B98A7 /* Kuriku24.xcdatamodel */,
 				EACFDCAC191F006D002340F4 /* Kuriku23.xcdatamodel */,
 				EAAF426A191D7297001CBEA2 /* Kuriku22.xcdatamodel */,
 				EAC8767E191C123100F6CA62 /* Kuriku21.xcdatamodel */,
@@ -825,7 +829,7 @@
 				EAAEEB19187E1EE80098C4F0 /* Kuriku08.xcdatamodel */,
 				EAAEEB1A187E1EE80098C4F0 /* Kuriku09.xcdatamodel */,
 			);
-			currentVersion = EACFDCAC191F006D002340F4 /* Kuriku23.xcdatamodel */;
+			currentVersion = EA1ACB241921DDE3000B98A7 /* Kuriku25.xcdatamodel */;
 			path = Kuriku.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
