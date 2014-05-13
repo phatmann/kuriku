@@ -246,7 +246,7 @@ static NSDate *mockUpdateDate;
     [[[todo stub] andReturn:whileAgo] dailyUpdatedOn];
     
     [Todo dailyUpdate];
-    assertThatFloat(self.todo.temperature, equalToFloat(100));
+    assertThatFloat(self.todo.temperature, equalToFloat(75));
     
     [todo stopMocking];
 }
@@ -259,7 +259,7 @@ static NSDate *mockUpdateDate;
     [[[todo stub] andReturn:whileAgo] dailyUpdatedOn];
     
     [Todo dailyUpdate];
-    assertThatFloat(self.todo.temperature, equalToFloat(100));
+    assertThatFloat(self.todo.temperature, equalToFloat(50));
     
     [todo stopMocking];
 }

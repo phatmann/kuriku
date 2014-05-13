@@ -168,19 +168,22 @@ static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
     for (Todo *todo in todos) {
         if (todo.lastEntry.type != EntryTypeComplete) {
             float_t tick = 0;
+            float_t max = TodoMaxTemperature;
             
             if (todo.temperature <= TodoColdMaxTemperature) {
                 tick = (TodoColdMaxTemperature - TodoFrozenMaxTemperature) / TodoFrostyDaysBeforeStartDate;
+                max = TodoColdMaxTemperature;
             } else if (todo.temperature <= TodoNormalMaxTemperature) {
                 if ([todo daysSinceLastUpdate] >= TodoMinStaleDaysAfterLastUpdate) {
                     tick = (TodoNormalMaxTemperature - TodoColdMaxTemperature) / TodoMaxStaleDaysAfterLastUpdate;
+                    max = TodoNormalMaxTemperature;
                 }
             } else {
                 tick = (TodoMaxTemperature - TodoNormalMaxTemperature) / TodoUrgentDaysBeforeDueDate;
             }
         
             float_t delta = daysSinceUpdate * tick;
-            todo.temperature = fclampf(todo.temperature + delta, TodoMinTemperature, TodoMaxTemperature);
+            todo.temperature = fclampf(todo.temperature + delta, TodoMinTemperature, max);
         }
     }
     
