@@ -5,7 +5,7 @@
 @oldColor: hsl(0.09, 0.04, 1.0);
 @veryOldColor: hsl(0.09, 0.11, 0.95);
 @completedTextColor: rgb(164, 164, 164);
-@inactiveTextColor: white;
+@inactiveTextColor: gray;
 @normalFont: AvenirNext-Regular;
 @boldFont: AvenirNext-Bold;
 @italicFont: AvenirNext-UltraLightItalic;

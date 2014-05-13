@@ -11,7 +11,6 @@
 #import <InnerBand/InnerBand.h>
 #import "NSDate+Kuriku.h"
 
-const float_t TodoTemperatureDefaultValue = 50;
 
 const NSTimeInterval TodoUrgentDaysBeforeDueDate   = 14;
 const NSTimeInterval TodoFrostyDaysBeforeStartDate = 60;
@@ -24,6 +23,8 @@ const float_t TodoFrozenMaxTemperature = 25;
 const float_t TodoColdMaxTemperature   = 50;
 const float_t TodoNormalMaxTemperature = 75;
 const float_t TodoMaxTemperature       = 100;
+
+const float_t TodoTemperatureDefaultValue = TodoColdMaxTemperature + 1;
 
 static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
 

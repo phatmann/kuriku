@@ -210,9 +210,9 @@
             range = TodoMaxTemperature - TodoNormalMaxTemperature;
             scale = (self.temperature - TodoNormalMaxTemperature) / range;
             color = [EntryCell scale:scale fromColor:_warmColor toColor:_hotColor];
-        } else {
-            color = _inactiveColor;
         }
+    } else {
+        color = _inactiveColor;
     }
     
     self.backgroundView.backgroundColor = color;

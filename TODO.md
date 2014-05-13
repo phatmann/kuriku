@@ -3,12 +3,12 @@ The visual intelligent action journal
 
 Bugs
 ----
-* Hard to read text on inactive and completed entries
 * Set background color in edit todo temp slider
 * Start date not displaying
 * Filter slider notches wrong
 * Need to daily update temperature for due and start dates
 * Hard to see time
+* Hard to enter progress when many actions have been done
 * No frostiness on complete items. Instead make new item and freeze it.
 * Make model createDate's and updateDate's non-optional
 * Section needs separator lines
@@ -26,6 +26,7 @@ Missing Features
 * Jump around to different dates in journal
 * Search
 * Let user change settings for number of stale, urgent, and frosty days
+* Set entry date to keep history correct
 * Repeat icon on frozen completed todos?
 
 Newest Thoughts
