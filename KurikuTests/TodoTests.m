@@ -135,7 +135,7 @@ static NSDate *mockUpdateDate;
 }
 
 - (void)test_initial_temperature {
-    assertThatFloat(self.todo.temperature, equalToFloat(50));
+    assertThatFloat(self.todo.temperature, equalToFloat(TodoColdMaxTemperature + 1));
 }
 
 - (void)test_update_todos_ready_to_start {
@@ -174,16 +174,6 @@ static NSDate *mockUpdateDate;
     assertThat(self.todo.entries.array, is(@[createEntry, entry1]));
     Entry *entry2 = [self.todo createEntry:EntryTypeAction];
     assertThat(self.todo.entries.array, is(@[createEntry, entry1, entry2]));
-}
-
-- (void)test_temperature_zero_when_start_date {
-    self.todo.startDate = [NSDate dateFromTodayWithDays:1];
-    assertThatFloat(self.todo.temperature, equalToFloat(50));
-}
-
-- (void)test_temperature_with_distant_due_date {
-    self.todo.dueDate = [[NSDate today] dateByAddingDays:365];
-    assertThatFloat(self.todo.temperature, equalToFloat(50));
 }
 
 - (void)test_staleness_for_old_todo {
@@ -289,6 +279,41 @@ static NSDate *mockUpdateDate;
     assertThatFloat(self.todo.temperature, greaterThan(@(TodoFrozenMaxTemperature + 1)));
     
     [todo stopMocking];
+}
+
+- (void)test_setting_distant_start_date_freezes_todo {
+    self.todo.startDate = [NSDate dateFromTodayWithDays:62];
+    assertThatFloat(self.todo.temperature, equalToFloat(TodoMinTemperature));
+}
+
+- (void)test_setting_near_start_date_cools_todo {
+    self.todo.startDate = [NSDate dateFromTodayWithDays:1];
+    assertThatFloat(self.todo.temperature, greaterThan(@(TodoFrozenMaxTemperature)));
+    assertThatFloat(self.todo.temperature, lessThanOrEqualTo(@(TodoColdMaxTemperature)));
+}
+
+- (void)test_setting_near_due_date_warms_todo {
+    self.todo.dueDate = [NSDate today];
+    assertThatFloat(self.todo.temperature, equalToFloat(TodoMaxTemperature));
+}
+
+- (void)test_thaw_when_approaching_start_date {
+    self.todo.startDate = [NSDate dateFromTodayWithDays:67];
+    NSDate *oneWeekFromNow = [NSDate dateFromTodayWithDays:7];
+    id date = [NSDate createNiceMockDate];
+    [[[date stub] andReturn:oneWeekFromNow] today];
+    [Todo dailyUpdate];
+    assertThatFloat(self.todo.temperature, equalToFloat(TodoFrozenMaxTemperature + 1));
+    [NSDate releaseInstance];
+}
+
+- (void)test_warm_when_approaching_due_date {
+    self.todo.dueDate = [NSDate dateFromTodayWithDays:21];
+    NSDate *oneWeekFromNow = [NSDate dateFromTodayWithDays:7];
+    id date = [NSDate createNiceMockDate];
+    [[[date stub] andReturn:oneWeekFromNow] today];
+    [Todo dailyUpdate];
+    assertThatFloat(self.todo.temperature, equalToFloat(TodoNormalMaxTemperature + 1));
 }
 
 #pragma mark -

@@ -85,7 +85,11 @@ static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
     self.updateDate = [NSDate date];
     int kind = [change[NSKeyValueChangeKindKey] intValue];
     
-    if ([keyPath isEqualToString:@"entries"]) {
+    if ([keyPath isEqualToString:@"startDate"]) {
+        [self updateTemperatureFromStartDate];
+    } if ([keyPath isEqualToString:@"dueDate"]) {
+        [self updateTemperatureFromDueDate];
+    } else if ([keyPath isEqualToString:@"entries"]) {
         if (kind == NSKeyValueChangeRemoval) {
             NSArray *removedEntries = change[NSKeyValueChangeOldKey];
             
@@ -155,8 +159,42 @@ static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
 
 #pragma mark -
 
-+ (BOOL)isTemperatureLockedForTemperature:(float_t)temperature {
-    return temperature <= TodoFrozenMaxTemperature;
+-(void)updateTemperatureFromDueDate {
+    if (!self.dueDate)
+        return;
+    
+    int daysFromToday = [self.dueDate daysFromToday];
+    
+    if (daysFromToday > TodoUrgentDaysBeforeDueDate)
+        return;
+    
+    if (daysFromToday <= 0) {
+        self.temperature = TodoMaxTemperature;
+    } else {
+        static const float minTemp = TodoNormalMaxTemperature + 1;
+        static const float maxTemp = TodoMaxTemperature;
+        float ratio = (TodoUrgentDaysBeforeDueDate - daysFromToday) / TodoUrgentDaysBeforeDueDate;
+        self.temperature = minTemp + ((maxTemp - minTemp) * ratio);
+    }
+}
+
+-(void)updateTemperatureFromStartDate {
+    if (!self.startDate)
+        return;
+    
+    int daysFromToday = [self.startDate daysFromToday];
+    
+    if (daysFromToday > TodoFrostyDaysBeforeStartDate) {
+        self.temperature = TodoMinTemperature;
+    } else if (daysFromToday <= 0) {
+        // TODO: Handle case where start date passed but temp not updated yet
+        self.temperature = TodoColdMaxTemperature + 1;
+    } else {
+        static const float minTemp = TodoFrozenMaxTemperature + 1;
+        static const float maxTemp = TodoColdMaxTemperature;
+        float ratio = (TodoFrostyDaysBeforeStartDate - daysFromToday) / TodoFrostyDaysBeforeStartDate;
+        self.temperature = minTemp + ((maxTemp - minTemp) * ratio);
+    }
 }
 
 + (void)tickTemperatureForAllTodos:(NSDate *)updatedOn {
@@ -203,6 +241,23 @@ static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
     return entry;
 }
 
++ (void)updateTemperatureFromDate {
+    // TODO: filter more todos out
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueDate != NULL OR startDate != NULL"];
+    NSArray *todos = [Todo allForPredicate:predicate];
+    
+    // TODO: handle todo with a start date and a due date
+         
+    for (Todo *todo in todos) {
+        if (todo.startDate)
+            [todo updateTemperatureFromStartDate];
+        else
+            [todo updateTemperatureFromDueDate];
+    }
+    
+    [IBCoreDataStore save];
+}
+
 + (void)updateAllTodosReadyToStart {
     NSArray *todos = [Todo all];
     NSDate *today = [NSDate today];
@@ -232,6 +287,7 @@ static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
     
     if (updatedOn || ![updatedOn isSameDay:today]) {
         [self tickTemperatureForAllTodos:updatedOn];
+        [self updateTemperatureFromDate];
         [self updateAllTodosReadyToStart];
         [self setDailyUpdatedOn:today];
     }

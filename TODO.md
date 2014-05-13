@@ -1,11 +1,16 @@
 Kuriku
 The visual intelligent action journal
 
+Tests
+-----
+* Tests for a todo with a start date and a due date
+
 Bugs
 ----
+* Handle case where start date passed but temp not updated yet
 * Filter slider notches wrong
-* Need to update temperature daily for due and start dates
 * Set background color in edit todo temp slider
+* Should not be able to unfreeze todo with a start date
 * Hard to see date when temperature is hot or cold
 * Hard to enter progress when many actions have been done
 * Hard to see time
