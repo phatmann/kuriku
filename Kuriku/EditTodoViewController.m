@@ -107,9 +107,11 @@ enum {
     if (![dateString isEqualToString:self.selectedDateLabel.text]) {
         self.selectedDateLabel.text = dateString;
         
-        if (self.selectedDateLabel == self.dueDateLabel) {
-            [self updateControls];
-        }
+        float_t temperature = self.temperatureSlider.value;
+        NSDate *startDate   = stringToDate(self.startDateLabel.text);
+        NSDate *dueDate     = stringToDate(self.dueDateLabel.text);
+        [Todo updateTemperature:&temperature fromStartDate:startDate andDueDate:dueDate];
+        self.temperatureSlider.value = temperature;
     }
 }
 

@@ -30,6 +30,7 @@
 - (Entry *)createEntry:(EntryType)type;
 
 + (void)updateAllTodosReadyToStart;
++ (void)updateTemperature:(float_t *)temperature fromStartDate:(NSDate *)startDate andDueDate:(NSDate *)dueDate;
 + (void)dailyUpdate;
 + (void)migrate;
 

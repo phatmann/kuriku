@@ -7,6 +7,7 @@ Tests
 
 Bugs
 ----
+* Should create new todo when start date hits?
 * Handle case where start date passed but temp not updated yet
 * Set background color in edit todo temp slider
 * Should not be able to unfreeze todo with a start date
