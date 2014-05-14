@@ -60,6 +60,7 @@ Performance
 * Cache lastEntry metadata
 * Cache entry progress
 * Change `createDate` to `createdOn` and `updateDate` to `updatedOn`
+* Inactive entries should not observe property changes
 
 PRE-JOURNAL-ONLY
 

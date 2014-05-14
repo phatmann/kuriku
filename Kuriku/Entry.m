@@ -103,7 +103,12 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    self.updateDate = [NSDate date];
+    if ([keyPath isEqualToString:@"todo.temperature"]) {
+        if (self.state == EntryStateActive)
+            self.updateDate = [NSDate date];
+    } else {
+        self.updateDate = [NSDate date];
+    }
 }
 
 + (NSDate *)journalDateFromString:(NSString *)journalDateString {
