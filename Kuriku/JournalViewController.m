@@ -15,7 +15,9 @@
 #import <NUI/UILabel+NUI.h>
 #import <InnerBand.h>
 
-static const CGFloat kEstimatedRowHeight = 57.0f;
+static const CGFloat kEstimatedRowHeight             = 57.0f;
+static const CGFloat kFilterSliderValueShowAll       = -20;
+static const CGFloat kFilterSliderValueShowCompleted = -10;
 
 @interface JournalViewController ()
 {
@@ -179,9 +181,8 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 }
 
 - (IBAction)pinchGestureRecognizerWasChanged:(UIPinchGestureRecognizer *)recognizer {
-    const static CGFloat range = 100.0f;
     static EntryCell *pinchedCell;
-    static CGFloat initialValue;
+    static CGFloat initialTemperature;
     NSIndexPath *indexPath;
     CGPoint pt;
     Entry *entry;
@@ -197,7 +198,7 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
                 
                 if (entry.state == EntryStateActive) {
                     pinchedCell = (EntryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    initialValue = entry.todo.temperature * range + 1;
+                    initialTemperature = entry.todo.temperature;
                 }
             }
             
@@ -205,10 +206,10 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
             
         case UIGestureRecognizerStateChanged:
             if (pinchedCell) {
-                static const CGFloat multiplier = 1.5f;
+                static const CGFloat multiplier = 1.2f;
                 CGFloat scale = powf(recognizer.scale, multiplier);
-                CGFloat value = fclampf(initialValue * scale, 1.0, range + 1.0);
-                pinchedCell.temperature = fratiof((value - 1) / range);
+                CGFloat value = (scale * TodoMaxTemperature) - TodoMaxTemperature;
+                pinchedCell.temperature = fclampf(initialTemperature + value, TodoMinTemperature, TodoMaxTemperature);
             }
 
             break;
@@ -240,11 +241,17 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
 #pragma mark - Action Handlers
 
 - (IBAction)filterSliderValueChanged:(UISlider *)filterSlider {
-    static const CGFloat notchSize = 0.03;
+    static const CGFloat notchSize = 5;
     
-    if (fabsf(filterSlider.value - TodoFrozenMaxTemperature) < notchSize)
+    // DO: make a notched slider subclass
+    
+    if (fabsf(filterSlider.value - kFilterSliderValueShowAll) < notchSize)
+        filterSlider.value = kFilterSliderValueShowAll;
+    else if (fabsf(filterSlider.value - kFilterSliderValueShowCompleted) < notchSize)
+        filterSlider.value = kFilterSliderValueShowCompleted;
+    else if (fabsf(filterSlider.value - TodoFrozenMaxTemperature) < notchSize)
         filterSlider.value = TodoFrozenMaxTemperature;
-    if (fabsf(filterSlider.value - TodoColdMaxTemperature) < notchSize)
+    else if (fabsf(filterSlider.value - TodoColdMaxTemperature) < notchSize)
         filterSlider.value = TodoColdMaxTemperature;
     else if (fabsf(filterSlider.value - TodoNormalMaxTemperature) < notchSize)
         filterSlider.value = TodoNormalMaxTemperature;
@@ -564,7 +571,16 @@ static const CGFloat kEstimatedRowHeight = 57.0f;
         self.fetchedResultsController.delegate = self;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"todo.temperature >= %f OR updateDate > %@", self.temperatureFilter, [NSDate date]];
+    NSPredicate *predicate;
+    
+    if (self.temperatureFilter < kFilterSliderValueShowCompleted) {
+        predicate = nil;
+    } else if (self.temperatureFilter < 0) {
+        predicate = [NSPredicate predicateWithFormat:@"state = %d OR updateDate > %@", EntryStateActive, [NSDate date]];
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"(state = %d AND type != %d AND todo.temperature >= %f) OR updateDate > %@", EntryStateActive, EntryTypeComplete, self.temperatureFilter, [NSDate date]];
+    }
+    
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
     
     NSError *error;

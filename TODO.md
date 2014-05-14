@@ -7,8 +7,9 @@ Tests
 
 Bugs
 ----
-* Handle case where start date passed but temp not updated yet
 * Filter slider notches wrong
+* Cannot pinch entries
+* Handle case where start date passed but temp not updated yet
 * Set background color in edit todo temp slider
 * Should not be able to unfreeze todo with a start date
 * Hard to see date when temperature is hot or cold
