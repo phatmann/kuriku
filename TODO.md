@@ -7,12 +7,12 @@ Tests
 
 Bugs
 ----
-* Should create new todo when start date hits?
-* Handle case where start date passed but temp not updated yet
 * Set background color in edit todo temp slider
 * Should not be able to unfreeze todo with a start date
+* Handle case where start date passed but temp not updated yet
 * Hard to see date when temperature is hot or cold
 * Hard to enter progress when many actions have been done
+* Should create new todo when start date hits?
 * Hard to see time
 * No frostiness on complete items. Instead make new item and freeze it.
 * Make model createDate's and updateDate's non-optional
