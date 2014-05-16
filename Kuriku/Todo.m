@@ -156,7 +156,9 @@ static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
 -(void)updateTemperatureFromDates {
     float_t temperature = self.temperature;
     [Todo updateTemperature:&temperature fromStartDate:self.startDate andDueDate:self.dueDate];
-    self.temperature = temperature;
+    
+    if (self.temperature != temperature)
+        self.temperature = temperature;
 }
 
 +(void)updateTemperature:(float_t *)temperature fromStartDate:(NSDate *)startDate andDueDate:(NSDate *)dueDate {
@@ -230,7 +232,10 @@ static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
             }
         
             float_t delta = daysSinceUpdate * tick;
-            todo.temperature = fclampf(todo.temperature + delta, TodoMinTemperature, max);
+            float_t temperature = fclampf(todo.temperature + delta, TodoMinTemperature, max);
+            
+            if (todo.temperature != temperature)
+                todo.temperature = temperature;
         }
     }
     
@@ -285,10 +290,10 @@ static NSString *TodoTemperatureUpdatedOnKey = @"TodoTemperatureUpdatedOn";
 }
 
 + (void)dailyUpdate {
-    NSDate *updatedOn = [self dailyUpdatedOn];
+    NSDate *updatedOn = nil; //[self dailyUpdatedOn];
     NSDate *today     = [NSDate today];
     
-    if (updatedOn || ![updatedOn isSameDay:today]) {
+    if (![updatedOn isSameDay:today]) {
         [self tickTemperatureForAllTodos:updatedOn];
         [self updateAllTodosTemperatureFromDates];
         [self updateAllTodosReadyToStart];
